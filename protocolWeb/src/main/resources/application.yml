@@ -1,0 +1,17 @@
+server:
+  port: 8888
+  context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Protocol
+    username: root
+    password: rootroot
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: false
+  devtools:
+    restart:
+      enable: true
+      additional-paths: src/main/java
