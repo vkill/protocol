@@ -2,10 +2,8 @@ package com.email;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import po.PhonePo;
 
-import javax.validation.constraints.Email;
 import java.io.IOException;
 
 /**
