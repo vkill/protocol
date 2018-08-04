@@ -16,6 +16,17 @@ public class User {
     @Column(length = 255)
     private String pwd;
 
+    @Column
+    private Double balance;
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
     public int getId() {
         return id;
     }
@@ -46,6 +57,7 @@ public class User {
                 "id=" + id +
                 ", account='" + account + '\'' +
                 ", pwd='" + pwd + '\'' +
+                ", balance=" + balance +
                 '}';
     }
 }

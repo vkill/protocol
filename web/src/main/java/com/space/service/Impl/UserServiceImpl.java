@@ -20,4 +20,31 @@ public class UserServiceImpl implements UserService {
         User result = userData.findByAccountAndPwd(account, password);
         return result;
     }
+
+    @Override
+    public List<User> getAll() {
+        List<User> result = userData.findAllAccountAndPwd();
+        return result;
+    }
+
+    @Override
+    public User getOne(int id) {
+        User result = userData.getOne(id);
+        return result;
+    }
+
+    @Override
+    public void regist(int id, String account, String pwd,Double balance){
+        userData.regist(id,account,pwd,balance);
+    }
+
+    @Override
+    public void recharge(int id,Double balance){
+        userData.recharge(id,balance);
+    }
+
+    @Override
+    public void consume(int id,Double balance){
+        userData.consume(id,balance);
+    }
 }
