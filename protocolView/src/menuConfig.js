@@ -54,8 +54,8 @@ const asideMenuConfig = [
     // ],
   },
   {
-    name: '\u767B\u9646',
-    path: '/login',
+    name: '\u7528\u6237\u652F\u4ED8',
+    path: '/pay',
     icon: 'home',
   },
 ];
