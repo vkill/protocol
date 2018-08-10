@@ -12,14 +12,14 @@ public class PhonePo {
     private String time;
     private String com_Num;
     private String phone_Num;
-    private String city_Num;
+    private String Area_Num;
 
-    public PhonePo(String P_ID,String time,String com_Num,String phone_Num,String city_Num){
+    public PhonePo(String P_ID,String time,String com_Num,String phone_Num,String Area_Num){
         this.P_ID = P_ID;
         this.time = time;
         this.com_Num = com_Num;
         this.phone_Num = phone_Num;
-        this.city_Num = city_Num;
+        this.Area_Num = Area_Num;
     }
     public String getP_ID() {
         return P_ID;
@@ -53,11 +53,11 @@ public class PhonePo {
         this.phone_Num = phone_Num;
     }
 
-    public String getCity_Num() {
-        return city_Num;
+    public String getArea_Num() {
+        return Area_Num;
     }
 
-    public void setCity_Num(String city_Num) {
-        this.city_Num = city_Num;
+    public void setArea_Num(String area_Num) {
+        this.Area_Num = area_Num;
     }
 }

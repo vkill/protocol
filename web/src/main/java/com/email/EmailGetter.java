@@ -101,6 +101,11 @@ public class EmailGetter {
 
     }
 
+    /**
+     *
+     * @param P_ID 注意检查参数不能为控
+     * @return
+     */
     public String getIdentCode(String P_ID){
         String infoUrl ="http://new.wmisms.com/yhapi.ashx?Action=getPhoneMessage&token="+Usertoken+"&p_id="+P_ID;
         Document document =null;
