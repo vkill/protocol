@@ -10,6 +10,8 @@ import Home from './pages/Home';
 import BlankLayout from './layouts/BlankLayout';
 import LoginPage from './pages/LoginPage';
 import UserPay from './pages/UserPay';
+
+import DyOperation from './pages/DyOperation';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -27,6 +29,11 @@ const routerConfig = [
     path: '/pay',
     layout: BasicLayout,
     component: UserPay,
+  },
+  {
+    path: '/dyOperation',
+    layout: BasicLayout,
+    component: DyOperation,
   },
   {
     path: '*',

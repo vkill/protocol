@@ -10,7 +10,7 @@ const headerMenuConfig = [
   },
   {
     name: '用户',
-    path: '/user',
+    path: '#/pay',
     external: true,
     // newWindow: true,
     icon: 'yonghu',
@@ -25,18 +25,8 @@ const asideMenuConfig = [
   },
   {
     name: '抖音协议',
-    path: '/user',
+    path: '/dyOperation',
     icon: 'yonghu',
-    children: [
-      {
-        name: '抖音注册',
-        path: '/dyRegister',
-      },
-      {
-        name: '抖音操作',
-        path: '/dyOperation',
-      },
-    ],
   },
   {
     name: '微信协议',
