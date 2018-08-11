@@ -6,14 +6,14 @@ const headerMenuConfig = [
   {
     name: '首页',
     path: '/',
-    icon: 'home',
+    // icon: 'home',
   },
   {
     name: '用户',
     path: '#/pay',
     external: true,
     // newWindow: true,
-    icon: 'yonghu',
+    // icon: 'yonghu',
   },
 ];
 
@@ -21,17 +21,17 @@ const asideMenuConfig = [
   {
     name: '首页',
     path: '/',
-    icon: 'home',
+    // icon: 'home',
   },
   {
     name: '抖音协议',
     path: '/dyOperation',
-    icon: 'yonghu',
+    // icon: 'yonghu',
   },
   {
     name: '微信协议',
     path: '/user',
-    icon: 'yonghu',
+    // icon: 'yonghu',
     // children: [
     //   {
     //     name: '抖音帐号注册',
@@ -46,7 +46,7 @@ const asideMenuConfig = [
   {
     name: '\u7528\u6237\u652F\u4ED8',
     path: '/pay',
-    icon: 'home',
+    // icon: 'home',
   },
 ];
 

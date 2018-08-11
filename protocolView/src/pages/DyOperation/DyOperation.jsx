@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
-// import { Feedback } from '@icedesign/base';
+import { Feedback } from '@icedesign/base';
 import { Form, Select, Tooltip, Icon, Input, InputNumber, Tag, Button } from 'antd';
 
+import * as API from '../../utils/apis';
 import * as userInfoActionsFromOtherFile from '../../actions/userinfo.js';
 
 
@@ -153,6 +154,15 @@ class DyOperation extends Component {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        const userinfo = this.props.userinfo;
+        const data = {
+          type: values.select,
+          count: values.dyCount,
+          vedio: values.dyVideo,
+          dyAccount: values.dyAccount,
+          userAccount: userinfo.userid,
+        };
+        console.log(data);
       }
     });
   }
@@ -162,13 +172,16 @@ class DyOperation extends Component {
   }
 
   componentDidMount = () => {
-    // const userinfo = this.props.userinfo;
-    // if (userinfo.userid == null) {
-    //   Feedback.toast.error('尚未登录，请登录!');
-    //   this.props.history.push('/login');
-    // } else {
+    this.isLogin();
     this.getData();
-    // }
+  }
+
+  isLogin = () => {
+    const userinfo = this.props.userinfo;
+    if (userinfo.userid == null) {
+      Feedback.toast.error('尚未登录，请登录!');
+      this.props.history.push('/login');
+    }
   }
 
   handleNumberChange = (value) => {
@@ -179,6 +192,9 @@ class DyOperation extends Component {
 
   getData() {
     // 网络请求
+    API.helloWorld().then((response) => {
+      console.log(response.data);
+    });
 
     this.setState({
       typeArray: ['1-抖音刷赞', '2-抖音评论', '3-抖音关注'],
