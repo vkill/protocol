@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Register from './components/Register';
 
+import * as API from '../../utils/apis';
+
 export default class RegisterPage extends Component {
   static displayName = 'RegisterPage';
 
@@ -23,9 +25,12 @@ export default class RegisterPage extends Component {
    */
   registHandle(values) {
     console.log(values);
-
-
-    this.props.history.push('/');
-    return true;
+    API.register(values).then((response) => {
+      console.log(response.data);
+      // 传回标示
+      // TODO
+    });
+    const flag = true;
+    return flag;
   }
 }

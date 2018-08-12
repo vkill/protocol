@@ -64,7 +64,7 @@ export default class Register extends Component {
         console.log('errors', errors);
         return;
       }
-      console.log('values:', values);
+      // console.log('values:', values);
       const result = this.props.registeHandle(values);
       if (result === true) {
         Feedback.toast.success('注册成功');
