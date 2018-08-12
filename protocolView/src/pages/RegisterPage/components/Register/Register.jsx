@@ -7,12 +7,12 @@ import {
   FormError as IceFormError,
 } from '@icedesign/form-binder';
 import IceIcon from '@icedesign/icon';
-import './Login.scss';
+import './Register.scss';
 
 const { Row, Col } = Grid;
 
-export default class Login extends Component {
-  static displayName = 'Login';
+export default class Register extends Component {
+  static displayName = 'Register';
 
   static propTypes = {};
 
@@ -22,12 +22,35 @@ export default class Login extends Component {
     super(props);
     this.state = {
       value: {
-        account: '',
-        password: '',
-        checkbox: false,
+        username: '',
+        email: '',
+        passwd: '',
+        rePasswd: '',
       },
     };
   }
+
+  checkPasswd = (rule, values, callback) => {
+    if (!values) {
+      callback('请输入正确的密码');
+    } else if (values.length < 8) {
+      callback('密码必须大于8位');
+    } else if (values.length > 16) {
+      callback('密码必须小于16位');
+    } else {
+      callback();
+    }
+  };
+
+  checkPasswd2 = (rule, values, callback, stateValues) => {
+    if (!values) {
+      callback('请输入正确的密码');
+    } else if (values && values !== stateValues.passwd) {
+      callback('两次输入密码不一致');
+    } else {
+      callback();
+    }
+  };
 
   formChange = (value) => {
     this.setState({
@@ -35,23 +58,25 @@ export default class Login extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = () => {
     this.refs.form.validateAll((errors, values) => {
       if (errors) {
         console.log('errors', errors);
         return;
       }
-      this.props.loginHandle(values.account, values.password);
-      // console.log('values:', values);
-      Feedback.toast.success('登录成功');
-      // 登录成功后做对应的逻辑处理
+      console.log('values:', values);
+      const result = this.props.registeHandle(values);
+      if (result === true) {
+        Feedback.toast.success('注册成功');
+      } else {
+        Feedback.toast.error('注册失败');
+      }
     });
   };
 
   render() {
     return (
-      <div style={styles.container} className="user-login">
+      <div style={styles.container} className="user-register">
         <div style={styles.header}>
           <a href="#" style={styles.meta}>
             <img
@@ -59,12 +84,12 @@ export default class Login extends Component {
               src={require('./images/hero.png')}
               alt="logo"
             />
-            <span style={styles.title}>协议</span>
+            <span style={styles.title}>赞赞</span>
           </a>
-          <p style={styles.desc}>使用协议，简单生活</p>
+          <p style={styles.desc}>赞赞引流让你成为网红</p>
         </div>
         <div style={styles.formContainer}>
-          <h4 style={styles.formTitle}>登 录</h4>
+          <h4 style={styles.formTitle}>注 册</h4>
           <IceFormBinderWrapper
             value={this.state.value}
             onChange={this.formChange}
@@ -78,60 +103,96 @@ export default class Login extends Component {
                     size="small"
                     style={styles.inputIcon}
                   />
-                  <IceFormBinder name="account" required message="必填">
-                    <Input
-                      size="large"
-                      maxLength={20}
-                      placeholder="管理员账号"
-                    />
+                  <IceFormBinder
+                    name="username"
+                    required
+                    message="请输入正确的用户名"
+                  >
+                    <Input size="large" placeholder="用户名" />
                   </IceFormBinder>
                 </Col>
                 <Col>
-                  <IceFormError name="account" />
+                  <IceFormError name="username" />
+                </Col>
+              </Row>
+
+              <Row style={styles.formItem}>
+                <Col style={styles.formItemCol}>
+                  <IceIcon type="mail" size="small" style={styles.inputIcon} />
+                  <IceFormBinder
+                    type="email"
+                    name="email"
+                    required
+                    message="请输入正确的邮箱"
+                  >
+                    <Input size="large" maxLength={20} placeholder="邮箱" />
+                  </IceFormBinder>
+                </Col>
+                <Col>
+                  <IceFormError name="email" />
                 </Col>
               </Row>
 
               <Row style={styles.formItem}>
                 <Col style={styles.formItemCol}>
                   <IceIcon type="lock" size="small" style={styles.inputIcon} />
-                  <IceFormBinder name="password" required message="必填">
+                  <IceFormBinder
+                    name="passwd"
+                    required
+                    validator={this.checkPasswd}
+                  >
                     <Input
-                      size="large"
                       htmlType="password"
-                      placeholder="密码"
+                      size="large"
+                      placeholder="至少8位密码"
                     />
                   </IceFormBinder>
                 </Col>
                 <Col>
-                  <IceFormError name="password" />
+                  <IceFormError name="passwd" />
                 </Col>
               </Row>
 
-              {/* <Row style={styles.formItem}>
-                <Col>
-                  <IceFormBinder name="checkbox">
-                    <Checkbox style={styles.checkbox}>记住账号</Checkbox>
+              <Row style={styles.formItem}>
+                <Col style={styles.formItemCol}>
+                  <IceIcon type="lock" size="small" style={styles.inputIcon} />
+                  <IceFormBinder
+                    name="rePasswd"
+                    required
+                    validator={(rule, values, callback) =>
+                      this.checkPasswd2(
+                        rule,
+                        values,
+                        callback,
+                        this.state.value
+                      )
+                    }
+                  >
+                    <Input
+                      htmlType="password"
+                      size="large"
+                      placeholder="确认密码"
+                    />
                   </IceFormBinder>
                 </Col>
-              </Row> */}
+                <Col>
+                  <IceFormError name="rePasswd" />
+                </Col>
+              </Row>
 
               <Row style={styles.formItem}>
                 <Button
                   type="primary"
-                  onClick={this.handleSubmit}
+                  onClick={this.handleSubmit.bind(this)}
                   style={styles.submitBtn}
                 >
-                  登 录
+                  注 册
                 </Button>
               </Row>
 
-              <Row className="tips" style={styles.tips}>
-                <a href="#/registerPage" style={styles.link}>
-                  立即注册
-                </a>
-                <span style={styles.line}>|</span>
+              <Row style={styles.tips}>
                 <a href="/" style={styles.link}>
-                  忘记密码
+                  使用已有账户登录
                 </a>
               </Row>
             </div>
