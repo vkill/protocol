@@ -15,15 +15,19 @@
     "@icedesign/layout": "^0.1.1",
     "@icedesign/menu": "^0.1.1",
     "@icedesign/skin": "^0.1.0",
+    "axios": "^0.18.0",
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-document-title": "^2.0.3",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0"
   },
   "devDependencies": {
+    "antd": "^3.8.0",
     "babel-eslint": "^8.0.3",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
@@ -52,5 +56,11 @@
     "theme": "light",
     "primaryColor": "#3080FE",
     "secondaryColor": "#FFC107"
+  },
+  "proxyConfig": {
+    "/api/**": {
+      "enable": true,
+      "target": "http://127.0.0.1:8888"
+    }
   }
 }

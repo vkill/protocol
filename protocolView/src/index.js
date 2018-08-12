@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 // 载入默认全局样式 normalize 、.clearfix 和一些 mixin 方法等
 import '@icedesign/base/reset.scss';
+import 'antd/dist/antd.css';
+
 import router from './router';
 import configureStore from './stores/configureStore';
 
