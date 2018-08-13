@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import Login from './components/Login';
 
+import * as API from '../../utils/apis';
 import * as userInfoActionsFromOtherFile from '../../actions/userinfo.js';
 import { Feedback } from '../../../node_modules/@icedesign/base';
 
@@ -31,20 +32,27 @@ class LoginPage extends Component {
 
   loginHandle(account, password) {
     // 请求登录
-    // 假设登录成功的flag
-    const flag = true;
-    const userid = 1;
-    const userinfo = this.props.userinfo;
-    const actions = this.props.userInfoActions;
-    if (flag) {
-      // 登录成功
-      userinfo.userid = userid;
-      actions.update(userinfo);
-      this.props.history.push('/');
-    } else {
-      Feedback.toast.error('帐号密码错误');
-      console.log('LoginPage', account, password);
-    }
+    const loginBody = {
+      account,
+      pwd: password,
+    };
+    API.login(loginBody).then((response) => {
+      const data = response.data;
+      // 假设登录成功的flag
+      const flag = data.success;
+      if (flag) {
+        // 登录成功
+        const userid = 1;
+        const userinfo = this.props.userinfo;
+        const actions = this.props.userInfoActions;
+        userinfo.userid = userid;
+        actions.update(userinfo);
+        this.props.history.push('/');
+      } else {
+        Feedback.toast.error('帐号密码错误');
+        console.log('LoginPage', account, password);
+      }
+    });
   }
 }
 

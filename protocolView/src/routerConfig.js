@@ -12,6 +12,8 @@ import LoginPage from './pages/LoginPage';
 import UserPay from './pages/UserPay';
 
 import DyOperation from './pages/DyOperation';
+
+import RegisterPage from './pages/RegisterPage';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -34,6 +36,11 @@ const routerConfig = [
     path: '/dyOperation',
     layout: BasicLayout,
     component: DyOperation,
+  },
+  {
+    path: '/registerPage',
+    layout: BlankLayout,
+    component: RegisterPage,
   },
   {
     path: '*',
