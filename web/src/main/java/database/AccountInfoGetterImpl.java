@@ -68,4 +68,6 @@ public class AccountInfoGetterImpl {
         //infoTools.closeConnection();
         return accountPos;
     }
+
+
 }

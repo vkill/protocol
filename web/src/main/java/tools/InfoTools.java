@@ -3,7 +3,6 @@ package tools;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 /**
  * @program: web
  * @description: 数据库信息基础类
@@ -15,7 +14,7 @@ public class InfoTools {
     //mysql驱动包名
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     //数据库连接地址
-    private static final String URL = "jdbc:mysql://localhost:3306/taobao?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC\n";
+    private static final String URL = "jdbc:mysql://localhost:3306/protocol?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC\n";
     //用户名
     private static final String USER_NAME = "root";
     //密码
