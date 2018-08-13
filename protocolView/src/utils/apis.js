@@ -32,7 +32,10 @@ export const register = body => axios.post(`${userUrl}/regist`, {
 
 
 // ============================= 下订单部分api =============================
-
+/**
+ * 下订单
+ * @param {body: {type:'typeID', dyUID:'x', dyVedio:'a', count: '100'}}} body
+ */
 export const dyOrder = body => axios.post(`${orderUrl}/dyOrder`, {
   type: body.type,
   dyUID: body.dyUID,
