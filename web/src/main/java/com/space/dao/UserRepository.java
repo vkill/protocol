@@ -49,21 +49,21 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 
     /**
      * 充值
-     * @param id
+     * @param account
      * @param balance
      */
     @Transactional
-    @Query(value = "update protocol.t_user set balance=?2 where id=?1", nativeQuery = true)
+    @Query(value = "update protocol.t_user set balance=?2 where account=?1", nativeQuery = true)
     @Modifying
-    void recharge(int id,Double balance);
+    void recharge(int account,Double balance);
 
     /**
      * 消费
-     * @param id
+     * @param account
      * @param balance
      */
     @Transactional
-    @Query(value = "update protocol.t_user set balance=?2 where id=?1", nativeQuery = true)
+    @Query(value = "update protocol.t_user set balance=?2 where account=?1", nativeQuery = true)
     @Modifying
-    void consume(int id,Double balance);
+    void consume(int account,Double balance);
 }

@@ -2,6 +2,7 @@ package com.space.protocol;
 
 import com.space.entity.User;
 import com.space.service.UserService;
+import com.util.MD5Code;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,5 +78,12 @@ public class ProtocolApplicationTests {
         User data2 = userService.getOne(recharge_id);
         System.out.println(data2.getBalance());
 
+    }
+    @Test
+    public void md5_test() throws Exception{
+        String md5_test = "test";
+        String email = "ylcto@163.com";
+        String password = "ylcto";
+        System.out.println(new MD5Code().getMD5ofStr(password+email));
     }
 }
