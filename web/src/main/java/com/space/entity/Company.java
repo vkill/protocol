@@ -16,6 +16,10 @@ public class Company {
     @Column(length = 255)
     private String password;
 
+    @Column(length = 255)
+    private String sign;
+
+
 
     public int getId() {
         return id;
@@ -39,5 +43,13 @@ public class Company {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

@@ -17,6 +17,9 @@ import RegisterPage from './pages/RegisterPage';
 
 import HeaderAsideFooterResponsiveLayout from './layouts/HeaderAsideFooterResponsiveLayout';
 import Company from './pages/Company';
+
+import HeaderFooterLayout from './layouts/HeaderFooterLayout';
+import CompanyMain from './pages/CompanyMain';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -49,6 +52,11 @@ const routerConfig = [
     path: '/companyLogin',
     layout: BlankLayout,
     component: Company,
+  },
+  {
+    path: '/companyMain',
+    layout: BlankLayout,
+    component: CompanyMain,
   },
   {
     path: '*',

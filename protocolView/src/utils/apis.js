@@ -49,6 +49,6 @@ export const dyOrder = body => axios.post(`${orderUrl}/dyOrder`, {
 // ============================= 工作室api =============================
 
 export const companyLogin = body => axios.post(`${companyUrl}/login`, {
-  account: body.account,
-  pwd: body.passwd,
+  account: body.name,
+  password: body.passwd,
 });
