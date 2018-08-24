@@ -25,7 +25,7 @@ export default class LoginIntro extends Component {
           </a>
         </div>
         <div style={styles.title}>
-          协助管理 <br/>
+          协助管理 <br />
         </div>
         <p style={styles.description}>make more money</p>
         <a href="#/login" style={styles.button}>

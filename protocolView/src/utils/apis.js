@@ -3,6 +3,7 @@ import axios from 'axios';
 const indexUrl = '/api/index';
 const userUrl = '/api/user';
 const orderUrl = '/api/order';
+const companyUrl = 'api/company';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.transformRequest['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -44,3 +45,10 @@ export const dyOrder = body => axios.post(`${orderUrl}/dyOrder`, {
 });
 
 // ============================= 充值服务api =============================
+
+// ============================= 工作室api =============================
+
+export const companyLogin = body => axios.post(`${companyUrl}/login`, {
+  account: body.account,
+  pwd: body.passwd,
+});

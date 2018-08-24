@@ -22,5 +22,6 @@ export default class Company extends Component {
    */
   companyLoginHandler(values) {
     console.log('a', values);
+    // 登陆情况
   }
 }
