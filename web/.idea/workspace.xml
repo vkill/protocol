@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="500ad209-d379-4358-aed4-8e4bfffd9cbb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/space/controller/CompanyController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/space/dao/CompanyRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/space/service/CompanyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/space/service/Impl/CompanyServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../protocolView/src/pages/Company/Company.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../protocolView/src/pages/Company/Company.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../protocolView/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../protocolView/src/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../protocolView/src/routerConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/../protocolView/src/routerConfig.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../protocolView/src/utils/apis.js" beforeDir="false" afterPath="$PROJECT_DIR$/../protocolView/src/utils/apis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/space/entity/Company.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/space/entity/Company.java" afterDir="false" />
-    </list>
+    <list default="true" id="500ad209-d379-4358-aed4-8e4bfffd9cbb" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -48,7 +37,7 @@
       <file leaf-file-name="CompanyController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/space/controller/CompanyController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
+            <state relative-caret-position="84">
               <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -368,7 +357,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7440000" />
+    <option name="totallyTimeSpent" value="8583000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="5" y="27" width="1428" height="869" extended-state="0" />
@@ -826,7 +815,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/space/controller/CompanyController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
+        <state relative-caret-position="84">
           <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="imports" expanded="true" />

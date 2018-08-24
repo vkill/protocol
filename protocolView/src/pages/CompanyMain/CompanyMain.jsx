@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DataDisplay from './components/DataDisplay';
+import IncomeTable from './components/IncomeTable';
 
 import * as companyInfoActionsFromOtherFile from '../../actions/companyinfo.js';
 
@@ -17,6 +18,7 @@ class CompanyMain extends Component {
     return (
       <div className="company-main-page">
         <DataDisplay />
+        <IncomeTable />
       </div>
     );
   }
@@ -28,7 +30,7 @@ class CompanyMain extends Component {
   isLogin() {
     const companyinfo = this.props.companyinfo.companyinfo;
     if (companyinfo == null) {
-      this.props.history.push('/companyLogin');
+      // this.props.history.push('/companyLogin');
     }
   }
 }
