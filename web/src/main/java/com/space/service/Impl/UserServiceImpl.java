@@ -8,43 +8,38 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service("UserService")
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
 
     @Resource
-    private UserRepository userData;
+    private UserRepository userRepository;
 
     @Override
     public User login(String account, String password) {
-        User result = userData.findByAccountAndPwd(account, password);
+        User result = userRepository.findByAccountAndPwd(account, password);
         return result;
     }
 
-    @Override
     public List<User> getAll() {
-        List<User> result = userData.findAllAccountAndPwd();
+        List<User> result = userRepository.findAllAccountAndPwd();
         return result;
     }
 
-    @Override
     public User getOne(int id) {
-        User result = userData.getOne(id);
+        User result = userRepository.getOne(id);
         return result;
     }
 
-    @Override
     public void regist(int id, String account, String pwd,Double balance){
-        userData.regist(id,account,pwd,balance);
+        userRepository.regist(id,account,pwd,balance);
     }
 
-    @Override
     public void recharge(int id,Double balance){
-        userData.recharge(id,balance);
+        userRepository.recharge(id,balance);
     }
 
-    @Override
     public void consume(int id,Double balance){
-        userData.consume(id,balance);
+        userRepository.consume(id,balance);
     }
 }
