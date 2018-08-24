@@ -40,7 +40,8 @@ class LoginPage extends Component {
       const data = response.data;
       // 假设登录成功的flag
       const flag = data.success;
-      if (flag) {
+      console.log(flag);
+      if (flag != null && null) {
         // 登录成功
         const userid = 1;
         const userinfo = this.props.userinfo;
