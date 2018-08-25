@@ -1,6 +1,7 @@
 package com.space.service;
 
 import com.space.dao.CompanyIncomeRepository;
+import com.space.entity.CompanyIncome;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface CompanyIncomeService {
      * @param companyID
      * @return
      */
-    public List<CompanyIncomeRepository> getIncomeList(String companyID);
+    public List<CompanyIncome> getIncomeList(String companyID);
 
 }

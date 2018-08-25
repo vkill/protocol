@@ -1,27 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
 
-const data = [{
-  key: '1',
-  date: '20180529',
-  income: 32,
-  type: '抖音',
-}, {
-  key: '2',
-  date: '20180530',
-  income: 42,
-  type: '抖音',
-}, {
-  key: '3',
-  date: '20180601',
-  income: 32,
-  type: '微信',
-}, {
-  key: '4',
-  date: '20180502',
-  income: 32,
-  type: '抖音',
-}];
 export default class DataDisplay extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +17,11 @@ export default class DataDisplay extends Component {
   }
 
   render() {
+    const datalist = this.props.data;
+    datalist.forEach((element) => {
+      element.key = element.id;
+    });
+    // console.log(datalist);
     const columns = [{
       title: '日期',
       dataIndex: 'date',
@@ -45,10 +29,10 @@ export default class DataDisplay extends Component {
       sorter: (a, b) => a.date - b.date,
     }, {
       title: '收入',
-      dataIndex: 'income',
+      dataIndex: 'dayIncome',
     }, {
       title: '项目',
-      dataIndex: 'type',
+      dataIndex: 'projectID',
       filters: [{
         text: '抖音',
         value: '抖音',
@@ -56,13 +40,13 @@ export default class DataDisplay extends Component {
         text: '微信',
         value: '微信',
       }],
-      onFilter: (value, record) => record.type.indexOf(value) === 0,
+      onFilter: (value, record) => record.projectID.indexOf(value) === 0,
     }];
     return (
       <div className="income-table" style={{ marginLeft: '10%', marginRight: '10%' }}>
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={datalist}
           bordered
         //   title={() => 'Header'}
         //   footer={() => 'Footer'}

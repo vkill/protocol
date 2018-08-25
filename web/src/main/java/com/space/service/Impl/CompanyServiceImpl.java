@@ -18,9 +18,9 @@ public class CompanyServiceImpl implements CompanyService {
     public Company login(String account, String password) {
         Company result = companyRepository.findByAccountAndPassword(account, password);
         if (result != null) {
-            String sign = "COM" + account + (int)(Math.random()*(100));
-            result.setSign(sign);
-            companyRepository.save(result);
+//            String sign = "COM" + account + (int)(Math.random()*(100));
+//            result.setSign(sign);
+//            companyRepository.save(result);
             result.setPassword("");
         }
         return result;

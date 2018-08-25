@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import DataDisplay from './components/DataDisplay';
 import IncomeTable from './components/IncomeTable';
 import Logout from './components/LogoutButton';
+import { getCompanyIncomeList } from '../../utils/apis';
+
 
 import * as companyInfoActionsFromOtherFile from '../../actions/companyinfo.js';
 
@@ -12,27 +14,47 @@ class CompanyMain extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      datalist: [],
+    };
   }
 
   render() {
     return (
       <div className="company-main-page">
         <DataDisplay />
-        <IncomeTable />
+        <IncomeTable data={this.state.datalist} />
         <Logout logout={this.logout.bind(this)} />
       </div>
     );
   }
 
   componentDidMount() {
-    this.isLogin();
+    this.getIncomeList();
+  }
+
+  getIncomeList() {
+    const companyinfo = this.props.companyinfo.companyinfo;
+    if (companyinfo == null) {
+      this.props.history.push('/companyLogin');
+      return;
+    }
+    const companyid = companyinfo.account;
+    getCompanyIncomeList(companyid).then((res) => {
+      const data = res.data;
+      // console.log('a', data);
+      if (data.success) {
+        this.setState({
+          datalist: data.data,
+        });
+      }
+    });
   }
 
   isLogin() {
     const companyinfo = this.props.companyinfo.companyinfo;
     if (companyinfo == null) {
-      // this.props.history.push('/companyLogin');
+      this.props.history.push('/companyLogin');
     }
   }
 
@@ -40,6 +62,7 @@ class CompanyMain extends Component {
     // logout
     const actions = this.props.companyInfoActions;
     actions.rm();
+    this.props.history.push('/companyLogin');
   }
 }
 
