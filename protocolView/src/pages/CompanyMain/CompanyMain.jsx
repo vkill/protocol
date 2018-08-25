@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DataDisplay from './components/DataDisplay';
 import IncomeTable from './components/IncomeTable';
+import Logout from './components/LogoutButton';
 
 import * as companyInfoActionsFromOtherFile from '../../actions/companyinfo.js';
 
@@ -19,6 +20,7 @@ class CompanyMain extends Component {
       <div className="company-main-page">
         <DataDisplay />
         <IncomeTable />
+        <Logout logout={this.logout.bind(this)} />
       </div>
     );
   }
@@ -32,6 +34,12 @@ class CompanyMain extends Component {
     if (companyinfo == null) {
       // this.props.history.push('/companyLogin');
     }
+  }
+
+  logout() {
+    // logout
+    const actions = this.props.companyInfoActions;
+    actions.rm();
   }
 }
 

@@ -6,3 +6,9 @@ export function update(data) {
     data,
   };
 }
+
+export function rm() {
+  return {
+    type: actionTypes.COMPANY_RM,
+  };
+}
