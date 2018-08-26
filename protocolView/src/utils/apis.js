@@ -5,6 +5,7 @@ const userUrl = '/api/user';
 const orderUrl = '/api/order';
 const companyUrl = 'api/company';
 const companyIncomeUrl = '/api/companyIncome';
+const orderTypeUrl = 'api/orderType';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.transformRequest['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -30,6 +31,16 @@ export const register = body => axios.post(`${userUrl}/regist`, {
   account: body.username,
   pwd: body.passwd,
   email: body.email,
+});
+
+// ============================= 用户获取操作列表 =============================
+
+/**
+ * 根据项目名字获取操作类型
+ * @param {projectName:'abc'}} body
+ */
+export const getOperationList = body => axios.post(`${orderTypeUrl}/getTypeByName`, {
+  projectName: body.projectNName,
 });
 
 

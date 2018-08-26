@@ -27,7 +27,7 @@ class Home extends Component {
     const userinfo = this.props.userinfo;
     if (userinfo.userid == null) {
       Feedback.toast.error('尚未登录，请登录!');
-      this.props.history.push('/login');
+      // this.props.history.push('/login');
     } else {
       console.log('初始化');
     }

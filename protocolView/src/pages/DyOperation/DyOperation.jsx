@@ -19,6 +19,8 @@ class DyOperation extends Component {
     this.state = {
       typeArray: [],
       count: 0,
+      price: 0,
+      isDZ: false,
     };
   }
 
@@ -47,15 +49,31 @@ class DyOperation extends Component {
               { require: true, message: '请选择你需要的业务' },
             ],
           })(
-            <Select placeholder="请输入选择的业务">
+            <Select
+              placeholder="请输入选择的业务"
+              onChange={this.handlerSelectChange.bind(this)}
+            >
               {
                 this.state.typeArray.map((item, index) => {
-                  return <Option value={item.split('-')[0]} key={index}> {item}</Option>;
+                  return <Option value={`${item.operationType.split('-')[0]}-${item.price}`} key={index}> {item.operationType} - 单价 -{item.price}</Option>;
                 })
               }
             </Select>
           )
           }
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label={(
+            <span>
+              单价 ：&nbsp;
+              {/* <Tooltip title="根据不同业务进行不同收费">
+                <Icon type="question-circle-o" />
+              </Tooltip> */}
+            </span>
+          )}
+        >
+          <Tag color="#87d068" style={{ size: '100px' }}>{this.state.price}元/个</Tag>
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -75,24 +93,27 @@ class DyOperation extends Component {
           )}
         </FormItem>
 
-        <FormItem
-          {...formItemLayout}
-          label={(
-            <span>
-              视频标示 &nbsp;
-              <Tooltip title="获取视频标示">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          )}
-        >
-          {getFieldDecorator('dyVideo', {
-            rules: [{ required: true, message: '请输入视频标示', whitespace: true }],
-          })(
-            <Input />
-          )}
+        {this.state.isDZ ?
+          <FormItem
+            {...formItemLayout}
+            label={(
+              <span>
+                视频标示 &nbsp;
+                <Tooltip title="获取视频标示">
+                  <Icon type="question-circle-o" />
+                </Tooltip>
+              </span>
+            )}
+          >
+            {getFieldDecorator('dyVideo', {
+              rules: [{ required: this.state.isDZ, message: '请输入视频标示', whitespace: true }],
+            })(
+              <Input />
+            )}
 
-        </FormItem>
+          </FormItem>
+        : ''
+        }
 
         <FormItem
           {...formItemLayout}
@@ -130,7 +151,7 @@ class DyOperation extends Component {
             </span>
           )}
         >
-          <Tag color="#87d068" style={{ size: '100px' }}>{this.state.count}元</Tag>
+          <Tag color="#87d068" style={{ size: '100px' }}>{this.state.count * this.state.price}元</Tag>
         </FormItem>
 
         <FormItem style={{ marginLeft: '10%' }}>
@@ -180,7 +201,7 @@ class DyOperation extends Component {
     const userinfo = this.props.userinfo;
     if (userinfo.userid == null) {
       Feedback.toast.error('尚未登录，请登录!');
-      this.props.history.push('/login');
+      // this.props.history.push('/login');
     }
   }
 
@@ -192,13 +213,38 @@ class DyOperation extends Component {
 
   getData() {
     // 网络请求
-    API.helloWorld().then((response) => {
-      console.log(response.data);
+    // API.helloWorld().then((response) => {
+    //   console.log(response.data);
+    // });
+    const projectName = { projectName: 'dy' };
+    API.getOperationList(projectName).then((res) => {
+      if (res.data.success) {
+        const list = res.data.data;
+        console.log(list);
+        this.setState({
+          typeArray: list,
+        });
+      } else {
+        Feedback.toast.error('并无此业务');
+      }
     });
-
+  }
+  handlerSelectChange(...args) {
+    const data = args[0].split('-');
+    const price = data[1];
+    // console.log(price);
     this.setState({
-      typeArray: ['1-抖音刷赞', '2-抖音评论', '3-抖音关注'],
+      price,
     });
+    if (data[0] === 'dygz') {
+      this.setState({
+        isDZ: false,
+      });
+    } else {
+      this.setState({
+        isDZ: true,
+      });
+    }
   }
 }
 
