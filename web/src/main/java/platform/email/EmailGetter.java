@@ -1,4 +1,4 @@
-package com.email;
+package platform.email;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,19 +17,29 @@ public class EmailGetter {
     /**
      * 变量依次为：账号、密码、项目类型
      */
-    private static final String userName ="api_spacespace_fjxr";
-    private static final String password ="spacespace";
-    private static final String projectID ="1019";
-    private static final String Login_url = "http://new.wmisms.com/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+password;
-    private static String Usertoken ="BF276684B59345D28D937E83B95F1F63";
+    //api_qianbaiwan_rrgr,qianbaiwan
+    private String userName ="api_spacespace_fjxr";
+    private String password ="spacespace";
+    private String projectID ="1019";
+    private String projectPasswordID = "1024";
+    private String Login_url ;
+    private String Usertoken ="BF276684B59345D28D937E83B95F1F63";
 
     /**
      * 登陆平台初始化方法
      */
     public void loginIT(){
+        loginIT("api_spacespace_fjxr","spacespace");
+    }
+
+    public void loginIT(String user,String password){
+        this.userName = user;
+        this.password = password;
         String tag = "ERR";
         int errTime =0;
         String[] buffers = null;
+        Login_url = "http://new.wmisms.com/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+this.password;
+
         try {
 
             while (tag.equals("ERR")&&errTime<3){
@@ -63,8 +73,17 @@ public class EmailGetter {
      * 返回包含手机号码信息的po类型
      */
     public PhonePo getPhoneNumber(){
+        return getPhoneNumber("随机");
+    }
+    public PhonePo getPhoneNumber(String phoneNum){
         String tag ="ERR";
-        String phone_url="http://new.wmisms.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
+        String phone_url;
+        if(phoneNum.equals("随机")){
+            phone_url="http://new.wmisms.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
+
+        }else{
+            phone_url="http://new.wmisms.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectPasswordID+"&d_id=&p_operator=&p_qcellcore=&mobile="+phoneNum;
+        }
         Document document = null;
         String[] buffers = null;
         int worryTime =0;
@@ -78,7 +97,7 @@ public class EmailGetter {
             buffers = buff.split("\\|");
             tag =buffers[0];
             if(tag.equals("OK")){
-                System.out.println("成功获取手机号: "+buffers[4]);
+                System.out.println("成功获取手机号: "+buffers[4]+buffers[1]);
                 break;
             }else{
                 System.out.print("发生错误，错误信息为: "+buff);
@@ -100,7 +119,6 @@ public class EmailGetter {
         }
 
     }
-
     /**
      *
      * @param P_ID 注意检查参数不能为控
@@ -113,7 +131,7 @@ public class EmailGetter {
         String[] buffers;
         String tag ="ERR";
         int buffer_Num =0;
-        while(tag.equals("ERR")&buffer_Num<5){
+        while(tag.equals("ERR")&buffer_Num<10){
             try {
                 Thread.sleep(5000);
                 document =Jsoup.connect(infoUrl).get();
@@ -124,7 +142,7 @@ public class EmailGetter {
             buffers = buff.split("\\|");
             tag = buffers[0];
             if(tag.equals("OK")){
-                return buffers[1];
+                return buffers[2].substring(3,7);
             }
             else{
                 System.out.println("出现错误："+buffers[1]);
@@ -135,9 +153,15 @@ public class EmailGetter {
         return "请求超时";
     }
     public static void main(String[] args) {
+        /**
         EmailGetter emailGetter =new EmailGetter();
         emailGetter.loginIT();
-        PhonePo phonePo =emailGetter.getPhoneNumber();
-        System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
+        while(true){
+            PhonePo phonePo =emailGetter.getPhoneNumber();
+            System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
+        }
+         **/
+        System.out.println("验证码6835，用于更改密码，5分钟内有效。验证码提供给他人可能导致账号被盗，请勿泄露，谨防被骗。".substring(3,7));
+
     }
 }

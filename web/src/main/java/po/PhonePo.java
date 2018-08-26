@@ -1,5 +1,9 @@
 package po;
 
+import tools.OptionalString;
+
+import java.nio.file.OpenOption;
+
 /**
  * @program: protocol
  * @description: 短信平台手机号码信息存储类
@@ -59,5 +63,16 @@ public class PhonePo {
 
     public void setArea_Num(String area_Num) {
         this.Area_Num = area_Num;
+    }
+
+    //号码转化为账户类
+    public AccountPo changToAccount(String name ){
+        AccountPo accountPo =new AccountPo();
+        accountPo.setName(name);
+        accountPo.setPhone_Num(this.phone_Num);
+        accountPo.setPhone_Area(this.Area_Num);
+        accountPo.setPhone_PassWord(OptionalString.boss);
+        accountPo.setIMEINum("865166026804008");
+        return accountPo;
     }
 }

@@ -26,7 +26,7 @@ public class AccountInfoGetterImpl {
         //infoTools.reGetConnection();
         Connection conn = infoTools.connection;
         int i = 0;
-        String sql = "insert into account_table(name,phoneNum,phoneArea,password) value (?,?,?,?)";
+        String sql = "insert into account_table(name,phoneNum,phoneArea,password,machine) value (?,?,?,?,?)";
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
@@ -34,7 +34,7 @@ public class AccountInfoGetterImpl {
             pstmt.setString(2,accountPo.getPhone_Num());
             pstmt.setString(3,accountPo.getPhone_Area());
             pstmt.setString(4,accountPo.getPhone_PassWord());
-
+            pstmt.setString(5,accountPo.getIMEINum());
             i = pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
@@ -60,6 +60,7 @@ public class AccountInfoGetterImpl {
                 accountPo.setPhone_Num(rs.getString("phoneNum"));
                 accountPo.setPhone_Area(rs.getString("phoneArea"));
                 accountPo.setPhone_PassWord(rs.getString("password"));
+                accountPo.setIMEINum(rs.getString("machine"));
                 accountPos.add(accountPo);
             }
         } catch (SQLException e) {
@@ -69,5 +70,7 @@ public class AccountInfoGetterImpl {
         return accountPos;
     }
 
+    public static void main(String[]args){
 
+    }
 }

@@ -3,13 +3,13 @@ package tools;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
-import static tools.optionalString.Surname;
-import static tools.optionalString.namesEn;
+import static tools.OptionalString.Surname;
+import static tools.OptionalString.namesEn;
 
-public class randomName {
+public class RandomName {
 
     //获取中文随机名
-    public String getCname(){
+    public static String getCname(){
         Random random = new Random(System.currentTimeMillis());
         int index = random.nextInt(Surname.length-1);
         String name1 = Surname[index];
@@ -22,14 +22,14 @@ public class randomName {
     }
 
     //获取英文随机名
-    public String getEname(){
+    public static String getEname(){
         int num = new Random().nextInt(569);
         String name2 = namesEn[num];
         return name2;
     }
 
     //获取完整昵称，中+英+随机数字
-    public String getName(){
+    public static String getName(){
         String name1 = getCname();
         String name2 = getEname();
         int tag = new Random().nextInt(100);
@@ -38,7 +38,7 @@ public class randomName {
     }
 
 
-    public String getChinese() {
+    private static String getChinese() {
         String str = null;
         int highPos, lowPos;
         Random random = new Random();

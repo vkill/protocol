@@ -16,8 +16,17 @@ public class AccountPo {
     private String phone_Area;
     private String phone_PassWord;
     private String Account_state;
+    private String IMEINum;
 
-    public String getName() {   
+    public String getIMEINum() {
+        return IMEINum;
+    }
+
+    public void setIMEINum(String IMEINum) {
+        this.IMEINum = IMEINum;
+    }
+
+    public String getName() {
         return name;
     }
 
