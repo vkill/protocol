@@ -23,6 +23,7 @@ public class OrderTypeController {
         Map map = new HashMap();
 //        System.out.println(data.get("projectName"));,
         String projectName = (String) data.get("projectName");
+//        System.out.println(projectName);
         List<OrderType> result = orderTypeService.getOrderTypeByPro(projectName);
         if (result.size() > 0) {
             map.put("success", true);

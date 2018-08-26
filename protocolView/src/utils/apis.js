@@ -40,7 +40,7 @@ export const register = body => axios.post(`${userUrl}/regist`, {
  * @param {projectName:'abc'}} body
  */
 export const getOperationList = body => axios.post(`${orderTypeUrl}/getTypeByName`, {
-  projectName: body.projectNName,
+  projectName: body.projectName,
 });
 
 

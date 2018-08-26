@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.24.189.68:3306/Protocol
+    url: jdbc:mysql://120.24.189.68:3306/Protocol?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
   jpa:
