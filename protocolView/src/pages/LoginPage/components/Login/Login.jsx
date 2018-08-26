@@ -1,6 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
-import { Input, Button, Grid, Feedback } from '@icedesign/base';
+import { Input, Button, Grid } from '@icedesign/base';
 import {
   FormBinderWrapper as IceFormBinderWrapper,
   FormBinder as IceFormBinder,
@@ -44,7 +44,7 @@ export default class Login extends Component {
       }
       this.props.loginHandle(values.account, values.password);
       // console.log('values:', values);
-      Feedback.toast.success('登录成功');
+      // Feedback.toast.success('登录成功');
       // 登录成功后做对应的逻辑处理
     });
   };

@@ -43,7 +43,7 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping(value = "/regist")
+    @RequestMapping("/regist")
     public Map userRegist(@RequestBody Map map) {
 
         Map result = new HashMap();
@@ -93,7 +93,8 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping(value = "/recharge")
+    
+    @RequestMapping("/recharge")
     public Map userRecharge(@RequestBody Map map) {
         //这个方法涉及跟支付api接口交互，后期必然需要修改
 
@@ -123,7 +124,7 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping(value = "/consume")
+    @RequestMapping("/consume")
     public Map userConsume(@RequestBody Map map) {
         //这个方法涉及跟支付api接口交互，后期必然需要修改
         Map result = new HashMap();

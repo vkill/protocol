@@ -3,6 +3,8 @@ import axios from 'axios';
 const indexUrl = '/api/index';
 const userUrl = '/api/user';
 const orderUrl = '/api/order';
+const companyUrl = 'api/company';
+const companyIncomeUrl = '/api/companyIncome';
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // axios.defaults.transformRequest['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -44,3 +46,17 @@ export const dyOrder = body => axios.post(`${orderUrl}/dyOrder`, {
 });
 
 // ============================= 充值服务api =============================
+
+// ============================= 工作室api =============================
+
+export const companyLogin = body => axios.post(`${companyUrl}/login`, {
+  account: body.name,
+  password: body.passwd,
+});
+/**
+ * 请求收入列表
+ * @param {里面有companyid: 'company1'}} body
+ */
+export const getCompanyIncomeList = body => axios.post(`${companyIncomeUrl}/getIncome`, {
+  companyid: body.companyid,
+});

@@ -30,6 +30,8 @@ export default class RegisterPage extends Component {
       // 传回标示
       // TODO
     });
+
+
     const flag = true;
     return flag;
   }

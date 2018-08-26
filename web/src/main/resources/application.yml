@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/Protocol
+    url: jdbc:mysql://120.24.189.68:3306/Protocol
     username: root
-    password: rootroot
+    password: root
   jpa:
     hibernate.ddl-auto: update
     show-sql: false

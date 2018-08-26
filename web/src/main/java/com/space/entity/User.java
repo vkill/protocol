@@ -16,7 +16,6 @@ public class User {
     @Column(length = 255)
     private String pwd;
 
-    @Column
     private Double balance;
 
     public Double getBalance() {

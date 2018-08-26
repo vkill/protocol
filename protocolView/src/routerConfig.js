@@ -14,6 +14,12 @@ import UserPay from './pages/UserPay';
 import DyOperation from './pages/DyOperation';
 
 import RegisterPage from './pages/RegisterPage';
+
+import HeaderAsideFooterResponsiveLayout from './layouts/HeaderAsideFooterResponsiveLayout';
+import Company from './pages/Company';
+
+import HeaderFooterLayout from './layouts/HeaderFooterLayout';
+import CompanyMain from './pages/CompanyMain';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -41,6 +47,16 @@ const routerConfig = [
     path: '/registerPage',
     layout: BlankLayout,
     component: RegisterPage,
+  },
+  {
+    path: '/companyLogin',
+    layout: BlankLayout,
+    component: Company,
+  },
+  {
+    path: '/companyMain',
+    layout: BlankLayout,
+    component: CompanyMain,
   },
   {
     path: '*',
