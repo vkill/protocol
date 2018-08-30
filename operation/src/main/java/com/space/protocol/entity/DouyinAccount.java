@@ -40,6 +40,41 @@ public class DouyinAccount {
     @Column(length = 255)
     private String device_brand;
 
+
+    // 以下是随机生成的数据 可以用来真是的模拟用户操作
+    @Column(length = 255)
+    private String resolution;
+
+    @Column(length = 255)
+    private String os_api;
+
+    @Column(length = 255)
+    private String dpi;
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public String getOs_api() {
+        return os_api;
+    }
+
+    public void setOs_api(String os_api) {
+        this.os_api = os_api;
+    }
+
+    public String getDpi() {
+        return dpi;
+    }
+
+    public void setDpi(String dpi) {
+        this.dpi = dpi;
+    }
+
     public int getId() {
         return id;
     }
