@@ -29,41 +29,40 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 
     /**
      * 获取一个账户信息
-     * @param id
+     * @param regist_id
      * @return
      */
-    @Query(value = "select * from t_user where id = ?1", nativeQuery = true)
-    User getOne(int id);
+    @Query(value = "select * from t_user where regist_id = ?1", nativeQuery = true)
+    User getOne(String regist_id);
 
     /**
      * 注册
-     * @param id
      * @param account
      * @param pwd
      * @param balance
      */
     @Transactional
-    @Query(value = "insert into protocol.t_user(id,account,pwd,balance) value(?1,?2,?3,?4)", nativeQuery = true)
+    @Query(value = "insert into protocol.t_user(account,pwd,balance,regist_id) value(?1,?2,?3,?4)", nativeQuery = true)
     @Modifying
-    void regist(int id, String account, String pwd,Double balance);
+    void regist(String account, String pwd,Double balance,String registId);
 
     /**
      * 充值
-     * @param account
+     * @param regist_id
      * @param balance
      */
     @Transactional
-    @Query(value = "update protocol.t_user set balance=?2 where id=?1", nativeQuery = true)
+    @Query(value = "update protocol.t_user set balance=?2 where regist_id=?1", nativeQuery = true)
     @Modifying
-    void recharge(int account,Double balance);
+    void recharge(String regist_id,Double balance);
 
     /**
      * 消费
-     * @param account
+     * @param regist_id
      * @param balance
      */
     @Transactional
-    @Query(value = "update protocol.t_user set balance=?2 where id=?1", nativeQuery = true)
+    @Query(value = "update protocol.t_user set balance=?2 where regist_id=?1", nativeQuery = true)
     @Modifying
-    void consume(int account,Double balance);
+    void consume(String regist_id,Double balance);
 }

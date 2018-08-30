@@ -18,6 +18,40 @@ public class User {
 
     private Double balance;
 
+    @Column(length = 255)
+    private String registId;
+
+    @Column(length = 255)
+    private String email;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", balance=" + balance +
+                ", registId='" + registId + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRegistId() {
+        return registId;
+    }
+
+    public void setRegistId(String registId) {
+        this.registId = registId;
+    }
+
     public Double getBalance() {
         return balance;
     }
@@ -50,13 +84,4 @@ public class User {
         this.pwd = pwd;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", account='" + account + '\'' +
-                ", pwd='" + pwd + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
 }

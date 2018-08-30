@@ -31,24 +31,22 @@ public interface UserService {
 
     /**
      * Service层注册方法
-     * @param id
      * @param account
      * @param pwd
-     * @param balance
      */
-    public void regist(int id, String account, String pwd, Double balance);
+    public Map regist(String account, String pwd, String email);
 
     /**
      * 充值方法
-     * @param id
+     * @param regist_id
      * @param balance
      */
-    public Map recharge(int id, Double balance);
+    public Map recharge(String regist_id, Double balance);
 
     /**
      * 充值方法
-     * @param id
+     * @param regist_id
      * @param balance
      */
-    public Map consume(int id, Double balance);
+    public Map consume(String regist_id, Double balance);
 }

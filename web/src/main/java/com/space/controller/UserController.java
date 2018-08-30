@@ -27,12 +27,12 @@ public class UserController {
     private EntityTransaction transaction;
 
     @RequestMapping("/login")
-    public Map userLogin(@RequestBody Map map) {
+    public Map userLogin() {
         Map result = new HashMap();
-        String account = map.get("account").toString();
-        String password = map.get("pwd").toString();
         //密码md5加密
-        User user = userService.login(account,new MD5Code().getMD5ofStr(password));
+        String account = "abc";
+        String pwd = "def";
+        User user = userService.login(account,pwd);
 
         if (user != null) {
             result.put("success",true);
@@ -44,51 +44,17 @@ public class UserController {
     }
 
     @RequestMapping("/regist")
-    public Map userRegist(@RequestBody Map map) {
+    public Map userRegist() {
 
         Map result = new HashMap();
 
-        //获取请求注册的账号和密码，我记得说过密码只传一个给我
-        //感觉后期还需要转入其他数据，比如注册邮箱或其他
-        String account = map.get("account").toString();
-        String password = map.get("pwd").toString();
+        String account = "abcd";
+        String pwd = "efg";
+        String email = "123@qq.com";
 
         //下面是用来创建唯一注册码
-        Calendar c = Calendar.getInstance();
-        int num = new Random().nextInt(999999);
-        String temp = String.valueOf(num);
-        int size = temp.length();
-        for(int i = 0;i < 6 - size;i++){
-            temp = "0" + temp;
-        }
-        String line = String.valueOf(c.get(Calendar.YEAR)) +  String.valueOf(Calendar.MONTH) +
-                String.valueOf(c.get(Calendar.DATE) + temp);
-        int regist_id = Integer.parseInt(line);
 
-        String regist_account = "654321";
-        //密码md5加密
-        String regist_pwd = new MD5Code().getMD5ofStr("654321");
-        Double regist_balance = 0.0;
-        List<User> list = userService.getAll();
-        int sum = list.size();
-
-        int tag = 0;
-        for(int i = 0;i < result.size();i++){
-            if(list.get(i).getAccount().equals(regist_account)){
-                result.put("success",false);
-                result.put("message","this accout has exits!");
-                tag = 1;
-                break;
-            }
-        }
-        if(tag == 0){
-            //这里先用固定的数据，等确定了输入参数再进行修改
-            userService.regist(regist_id,regist_account,regist_pwd,regist_balance);
-            if(userService.getAll().size() - sum == 1){
-                result.put("success",true);
-                result.put("message","regist success!");
-            }
-        }
+        result = userService.regist(account,pwd,email);
 
         return result;
     }
@@ -105,7 +71,7 @@ public class UserController {
         //暂时用固定数据代替
 //        String account = "abc";
 //        Double balance = 100.0;
-        int recharge_account = 1;
+        String recharge_account = "20180830254739";
         Double recharge_balance = 100.0;
         result = userService.recharge(recharge_account,recharge_balance);
 
@@ -116,9 +82,9 @@ public class UserController {
     public Map userConsume() {
         //这个方法涉及跟支付api接口交互，后期必然需要修改
         Map result = new HashMap();
-        int recharge_account = 1;
-        Double recharge_balance = 100.0;
-        result = userService.consume(recharge_account,recharge_balance);
+        String consume_account = "20180830254739";
+        Double consume_balance = 100.0;
+        result = userService.consume(consume_account,consume_balance);
 
         return result;
     }
