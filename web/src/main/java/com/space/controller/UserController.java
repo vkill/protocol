@@ -93,54 +93,33 @@ public class UserController {
         return result;
     }
 
-    
+
     @RequestMapping("/recharge")
-    public Map userRecharge(@RequestBody Map map) {
+    public Map userRecharge() {
         //这个方法涉及跟支付api接口交互，后期必然需要修改
 
         Map result = new HashMap();
-        String account = map.get("account").toString();
-        Double balance = (Double)map.get("balance");
+//        String account = map.get("account").toString();
+//        Double balance = (Double)map.get("balance");
 
         //暂时用固定数据代替
-        int recharge_account = 123456;
+//        String account = "abc";
+//        Double balance = 100.0;
+        int recharge_account = 1;
         Double recharge_balance = 100.0;
-        User data1 = userService.getOne(recharge_account);
-        System.out.println(data1.getBalance());
-        Double a = data1.getBalance();
-        userService.recharge(recharge_account,data1.getBalance() + recharge_balance);
-        User data2 = userService.getOne(recharge_account);
-        System.out.println(data2.getBalance());
-        Double b = data2.getBalance();
-        if((data2.getBalance() - recharge_balance)== data1.getBalance()){
-            result.put("success",true);
-            result.put("message","recharge success!");
-        }else {
-            result.put("1:",a);
-            result.put("2:",b);
-            result.put("success", false);
-            result.put("message", "recharge failure!");
-        }
+        result = userService.recharge(recharge_account,recharge_balance);
+
         return result;
     }
 
     @RequestMapping("/consume")
-    public Map userConsume(@RequestBody Map map) {
+    public Map userConsume() {
         //这个方法涉及跟支付api接口交互，后期必然需要修改
         Map result = new HashMap();
+        int recharge_account = 1;
+        Double recharge_balance = 100.0;
+        result = userService.consume(recharge_account,recharge_balance);
 
-        int consume_id = 123456;
-        Double consume_balance = 100.0;
-        User data = userService.getOne(consume_id);
-        Double balance = data.getBalance();
-        userService.consume(consume_id,balance - consume_balance);
-        if(userService.getOne(consume_id).getBalance() + consume_balance == balance){
-            result.put("success",true);
-            result.put("message","consume success!");
-        }else {
-            result.put("success", false);
-            result.put("message", "consume failure!");
-        }
         return result;
     }
 }
