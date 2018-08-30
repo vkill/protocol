@@ -1,0 +1,17 @@
+server:
+  port: 8877
+  context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://120.24.189.68:3306/Protocol?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: false
+  devtools:
+    restart:
+      enable: true
+      additional-paths: src/main/java
