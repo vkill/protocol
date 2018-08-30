@@ -3,6 +3,7 @@ package com.space.service;
 import com.space.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -42,12 +43,12 @@ public interface UserService {
      * @param id
      * @param balance
      */
-    public void recharge(int id,Double balance);
+    public Map recharge(int id, Double balance);
 
     /**
      * 充值方法
      * @param id
      * @param balance
      */
-    public void consume(int id,Double balance);
+    public Map consume(int id, Double balance);
 }

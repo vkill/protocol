@@ -53,7 +53,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
      * @param balance
      */
     @Transactional
-    @Query(value = "update protocol.t_user set balance=?2 where account=?1", nativeQuery = true)
+    @Query(value = "update protocol.t_user set balance=?2 where id=?1", nativeQuery = true)
     @Modifying
     void recharge(int account,Double balance);
 
@@ -63,7 +63,7 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
      * @param balance
      */
     @Transactional
-    @Query(value = "update protocol.t_user set balance=?2 where account=?1", nativeQuery = true)
+    @Query(value = "update protocol.t_user set balance=?2 where id=?1", nativeQuery = true)
     @Modifying
     void consume(int account,Double balance);
 }
