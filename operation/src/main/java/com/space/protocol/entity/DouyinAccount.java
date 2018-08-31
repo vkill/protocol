@@ -35,6 +35,9 @@ public class DouyinAccount {
     private String iid;
 
     @Column(length = 255)
+    private String devicesId;
+
+    @Column(length = 255)
     private String device_type;
 
     @Column(length = 255)
@@ -50,6 +53,9 @@ public class DouyinAccount {
 
     @Column(length = 255)
     private String dpi;
+
+    @Column(length = 30)
+    private String photoArea;
 
     public String getResolution() {
         return resolution;
