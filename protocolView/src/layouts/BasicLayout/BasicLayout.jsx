@@ -38,11 +38,11 @@ export default class BasicLayout extends Component {
    */
   enquireScreenRegister = () => {
     const isMobile = 'screen and (max-width: 720px)';
-    const isTablet = 'screen and (min-width: 721px) and (max-width: 1199px)';
+    // const isTablet = 'screen and (min-width: 721px) and (max-width: 1199px)';
     const isDesktop = 'screen and (min-width: 1200px)';
 
     enquire.register(isMobile, this.enquireScreenHandle('isMobile'));
-    enquire.register(isTablet, this.enquireScreenHandle('isTablet'));
+    // enquire.register(isTablet, this.enquireScreenHandle('isTablet'));
     enquire.register(isDesktop, this.enquireScreenHandle('isDesktop'));
   };
 

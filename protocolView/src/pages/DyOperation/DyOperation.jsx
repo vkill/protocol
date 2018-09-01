@@ -174,7 +174,9 @@ class DyOperation extends Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        // console.log('Received values of form: ', values);
+
+
         const userinfo = this.props.userinfo;
         const data = {
           type: values.select,
@@ -183,7 +185,9 @@ class DyOperation extends Component {
           dyAccount: values.dyAccount,
           userAccount: userinfo.userid,
         };
-        console.log(data);
+        API.makeOrder(data).then(res => {
+          console.log(res.data);
+        });
       }
     });
   }
@@ -201,7 +205,7 @@ class DyOperation extends Component {
     const userinfo = this.props.userinfo;
     if (userinfo.userid == null) {
       Feedback.toast.error('尚未登录，请登录!');
-      // this.props.history.push('/login');
+      this.props.history.push('/login');
     }
   }
 
@@ -220,7 +224,7 @@ class DyOperation extends Component {
     API.getOperationList(projectName).then((res) => {
       if (res.data.success) {
         const list = res.data.data;
-        console.log(list);
+        // console.log(list);
         this.setState({
           typeArray: list,
         });

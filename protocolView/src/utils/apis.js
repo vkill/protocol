@@ -47,13 +47,14 @@ export const getOperationList = body => axios.post(`${orderTypeUrl}/getTypeByNam
 // ============================= 下订单部分api =============================
 /**
  * 下订单
- * @param {body: {type:'typeID', dyUID:'x', dyVedio:'a', count: '100'}}} body
+ * @param {{type: "dydz-0.005", count: 1, vedio: "2", dyAccount: "11", userAccount: "20180901507388"}} body
  */
-export const dyOrder = body => axios.post(`${orderUrl}/dyOrder`, {
+export const makeOrder = body => axios.post(`${orderUrl}/makeOrder`, {
   type: body.type,
   dyUID: body.dyUID,
-  dyVedio: body.dyVedio,
+  dyVedio: body.vedio,
   count: body.count,
+  usersign: body.userAccount
 });
 
 /**
