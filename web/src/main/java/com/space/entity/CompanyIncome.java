@@ -10,15 +10,15 @@ public class CompanyIncome {
     @GeneratedValue
     private int id;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String date;
 
     private double dayIncome;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String projectID;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String companyID;
 
 

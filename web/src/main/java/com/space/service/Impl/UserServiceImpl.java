@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService {
         Integer month = Integer.parseInt(strNow[1]);
         Integer day = Integer.parseInt(strNow[2]);
 
-        account = "abcd";
-        pwd = "efg";
+
         String regist_id = String.valueOf(strNow[0]) + String.valueOf(strNow[1]) + String.valueOf(strNow[2]) + temp;
         Double balance = 0.0;
 

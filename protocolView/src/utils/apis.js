@@ -56,6 +56,14 @@ export const dyOrder = body => axios.post(`${orderUrl}/dyOrder`, {
   count: body.count,
 });
 
+/**
+ * 用于发送获取用户订单的api
+ * @param {userid:'userid'} body
+ */
+export const getUserOrder = body => axios.post(`${orderUrl}/getOrderList`, {
+  usersign:body.userid,
+});
+
 // ============================= 充值服务api =============================
 
 // ============================= 工作室api =============================

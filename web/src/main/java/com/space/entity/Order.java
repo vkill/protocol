@@ -10,13 +10,15 @@ public class Order {
     @GeneratedValue
     private int id;
 
-    @Column(length = 255)
+    private String orderId;
+
+    @Column(length = 32)
     private String makeOrderDate;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String projectType;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String operationType;
 
     private  int count; // 点赞数
@@ -25,13 +27,31 @@ public class Order {
 
     private double totalPrice;
 
-    private boolean isFinish;
 
-    @Column(length = 255)
+    private String orderStatus;
+
+
+    @Column(length = 32)
     private String operationData;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String userSign;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
     public int getId() {
         return id;
@@ -81,14 +101,7 @@ public class Order {
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
-
-    public boolean isFinish() {
-        return isFinish;
-    }
-
-    public void setFinish(boolean finish) {
-        isFinish = finish;
-    }
+    
 
     public String getMakeOrderDate() {
         return makeOrderDate;

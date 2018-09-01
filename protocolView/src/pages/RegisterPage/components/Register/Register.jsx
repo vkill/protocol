@@ -66,11 +66,11 @@ export default class Register extends Component {
       }
       // console.log('values:', values);
       const result = this.props.registeHandle(values);
-      if (result === true) {
-        Feedback.toast.success('注册成功');
-      } else {
-        Feedback.toast.error('注册失败');
-      }
+      // if (result === true) {
+      //   Feedback.toast.success('注册成功');
+      // } else {
+      //   Feedback.toast.error('注册失败');
+      // }
     });
   };
 

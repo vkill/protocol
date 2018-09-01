@@ -41,10 +41,10 @@ class LoginPage extends Component {
       // 假设登录成功的flag
       const flag = data.success;
       // console.log(flag);
-      if (flag != null) {
+      if (flag === true) {
         // 登录成功
         // console.log(data);
-        const userid = data.registId
+        const userid = data.user.registId
         const userinfo = this.props.userinfo;
         const actions = this.props.userInfoActions;
         userinfo.userid = userid;

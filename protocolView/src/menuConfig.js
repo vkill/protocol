@@ -48,6 +48,11 @@ const asideMenuConfig = [
     path: '/pay',
     // icon: 'home',
   },
+  {
+    name: '\u6211\u7684\u8BA2\u5355',
+    path: '/userorder',
+    icon: 'home',
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };

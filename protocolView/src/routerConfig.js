@@ -20,6 +20,7 @@ import Company from './pages/Company';
 
 import HeaderFooterLayout from './layouts/HeaderFooterLayout';
 import CompanyMain from './pages/CompanyMain';
+import UserOrder from './pages/UserOrder';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -57,6 +58,11 @@ const routerConfig = [
     path: '/companyMain',
     layout: BlankLayout,
     component: CompanyMain,
+  },
+  {
+    path: '/userorder',
+    layout: BasicLayout,
+    component: UserOrder,
   },
   {
     path: '*',

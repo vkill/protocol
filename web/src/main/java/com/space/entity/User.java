@@ -10,18 +10,18 @@ public class User {
     @GeneratedValue
     private int id;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String account;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String pwd;
 
     private Double balance;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String registId;
 
-    @Column(length = 255)
+    @Column(length = 32)
     private String email;
 
     @Override
