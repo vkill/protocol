@@ -1,4 +1,4 @@
-package po;
+package vo;
 
 
 import java.util.Map;
@@ -14,8 +14,16 @@ public class RequestTokenVO {
     private String Url;
     private Map<String, String> header;
     private Map<String, String> body;
+    private Map<String, String> cookie;
+    public RequestTokenVO(){
 
+    }
 
+    public RequestTokenVO(String url, Map<String, String> header, Map<String, String> body){
+        this.Url = url;
+        this.header = header;
+        this.body = body;
+    }
     //setter&getter
 
     public String getUrl() {
@@ -42,6 +50,14 @@ public class RequestTokenVO {
         this.body = body;
     }
 
+    public Map<String, String> getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(Map<String, String> cookie) {
+        this.cookie = cookie;
+    }
+
     //toString
     @Override
     public String toString() {
@@ -50,12 +66,6 @@ public class RequestTokenVO {
                 ", header=" + header +
                 ", body=" + body +
                 '}';
-    }
-
-    public RequestTokenVO(String url, Map<String, String> header, Map<String, String> body){
-        this.Url = url;
-        this.header = header;
-        this.body = body;
     }
 
 //    public String changeToRequestToken(String name ){

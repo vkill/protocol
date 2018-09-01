@@ -14,24 +14,8 @@ import java.util.*;
 
 public class JsonTableGetter {
 
-    public static void main(String[] args){
-
-        /**
-        JSONObject result = construtJson();
-        System.out.println(result);
-
-        System.out.println(construtMap(result));
-        **/
-        JSONObject jsonObject = JsonTableGetter.construtJson();
-        System.out.println(jsonObject);
-        System.out.println(" 开始获取map");
-        String device_URL = DeviceCreater.getUrlFromJsonAndMap(jsonObject);
-        System.out.println(device_URL);
-        System.out.println(DirTable.base_DeviceRegister_Info.get(DeviceRegisterInfo.aid));
-    }
-
     //要Map的就调这个
-    public static Map<String,String> construtMap(JSONObject json){
+    public static Map<String,String> JsonToMap(JSONObject json){
         Iterator<String> iter = json.keys();
         Map result = new HashMap<String,String>();
         try {
@@ -151,7 +135,9 @@ public class JsonTableGetter {
         return result1;
     }
 
-
+    public static JSONObject mapToJson(Map<String,String> mapFromJson){
+        return null;
+    }
 
     public static String randomMac4Qemu() {
         String SEPARATOR_OF_MAC = ":";
@@ -178,5 +164,46 @@ public class JsonTableGetter {
         }
         return serial;
     }
+
+
+    private Map<String, String>  options = new HashMap<String, String>();
+
+
+    private Map<String,String> parseOptions(JSONObject json) throws JSONException {
+        Iterator<String> iter = json.keys();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            options.put(key, json.getString(key));
+        }
+        return options;
+    }
+
+    private JSONObject optionsToJSON() throws JSONException {
+        JSONObject json = new JSONObject();
+        Iterator<String> iter = options.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            json.put(key, options.get(key));
+        }
+        return json;
+    }
+    public static void main(String[] args){
+
+        /**
+         JSONObject result = construtJson();
+         System.out.println(result);
+
+         System.out.println(construtMap(result));
+        JSONObject jsonObject = JsonTableGetter.construtJson();
+        System.out.println(jsonObject);
+        System.out.println(" 开始获取map");
+        Map m = jsonObject;
+
+        String device_URL = DeviceCreater.getUrlFromJsonAndMap(jsonObject);
+        System.out.println(device_URL);
+        System.out.println(DirTable.base_DeviceRegister_Info.get(DeviceRegisterInfo.aid));
+
+         **/
+         }
 
 }
