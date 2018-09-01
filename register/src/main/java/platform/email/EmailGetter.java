@@ -156,7 +156,7 @@ public class EmailGetter {
 
         EmailGetter emailGetter =new EmailGetter();
         emailGetter.loginIT();
-        while(true){
+        while(true){ ;
             PhonePo phonePo =emailGetter.getPhoneNumber();
             System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
         }
