@@ -173,7 +173,6 @@ public class GzipGetteer {
     }
 
     public static void main(String[] args) {
-
         String register = "%22%3A%5B1%2C6%5D%7D";
         ByteArrayOutputStream out = new ByteArrayOutputStream(1000);
         try {
