@@ -34,6 +34,17 @@ public class OrderController {
             result.put("msg", "没有订单");
         }
         return result;
+    }
 
+    @RequestMapping("/makeOrder")
+    public Map makeOrderByUser(@RequestBody Map map) {
+        Map result = new HashMap();
+        String type = (String) map.get("type");
+        System.out.println(type);
+
+        result.put("a","b");
+
+
+        return result;
     }
 }
