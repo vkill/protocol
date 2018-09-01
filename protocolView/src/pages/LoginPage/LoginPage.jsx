@@ -40,10 +40,11 @@ class LoginPage extends Component {
       const data = response.data;
       // 假设登录成功的flag
       const flag = data.success;
-      console.log(flag);
-      if (flag != null && null) {
+      // console.log(flag);
+      if (flag != null) {
         // 登录成功
-        const userid = 1;
+        // console.log(data);
+        const userid = data.registId
         const userinfo = this.props.userinfo;
         const actions = this.props.userInfoActions;
         userinfo.userid = userid;
@@ -51,7 +52,7 @@ class LoginPage extends Component {
         this.props.history.push('/');
       } else {
         Feedback.toast.error('帐号密码错误');
-        console.log('LoginPage', account, password);
+        // console.log('LoginPage', account, password);
       }
     });
   }

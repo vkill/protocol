@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Register from './components/Register';
 
 import * as API from '../../utils/apis';
+import { Feedback } from '../../../node_modules/@icedesign/base';
+import { message } from 'antd';
 
 export default class RegisterPage extends Component {
   static displayName = 'RegisterPage';
@@ -24,15 +26,19 @@ export default class RegisterPage extends Component {
    * @param {values: {username: "abcs", email: "qq@qq.com", passwd: "11111111", rePasswd: "11111111"} values
    */
   registHandle(values) {
-    console.log(values);
+    // console.log(values);
     API.register(values).then((response) => {
       console.log(response.data);
+      const data = response.data;
       // 传回标示
       // TODO
+      if (data.success) {
+        message.success(data.message);
+        this.props.history.push('/');
+      } else {
+        message.error(data.message);
+      }
+      return data.success;
     });
-
-
-    const flag = true;
-    return flag;
   }
 }

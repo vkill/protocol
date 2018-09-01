@@ -27,11 +27,11 @@ public class UserController {
     private EntityTransaction transaction;
 
     @RequestMapping("/login")
-    public Map userLogin() {
+    public Map userLogin(@RequestBody Map map) {
         Map result = new HashMap();
         //密码md5加密
-        String account = "abc";
-        String pwd = "def";
+        String account = (String) map.get("account");
+        String pwd = (String)map.get("pwd");
         User user = userService.login(account,pwd);
 
         if (user != null) {
@@ -44,17 +44,13 @@ public class UserController {
     }
 
     @RequestMapping("/regist")
-    public Map userRegist() {
-
-        Map result = new HashMap();
-
-        String account = "abcd";
-        String pwd = "efg";
-        String email = "123@qq.com";
-
+    public Map userRegister(@RequestBody Map map) {
+        String account = (String) map.get("account");
+        String pwd = (String) map.get("pwd");
+        String email = (String) map.get("email");
+        System.out.println(account+" " + pwd);
         //下面是用来创建唯一注册码
-
-        result = userService.regist(account,pwd,email);
+        Map result = userService.regist(account,pwd,email);
 
         return result;
     }
