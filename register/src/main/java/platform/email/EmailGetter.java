@@ -18,8 +18,8 @@ public class EmailGetter {
      * 变量依次为：账号、密码、项目类型
      */
     //api_qianbaiwan_rrgr,qianbaiwan
-    private String userName ="api_spacespace_fjxr";
-    private String password ="spacespace";
+    private String userName ="api_qianbaiwan_fjxr";
+    private String password ="qianbaiwan";
     private String projectID ="1019";
     private String projectPasswordID = "1024";
     private String Login_url ;
@@ -29,7 +29,7 @@ public class EmailGetter {
      * 登陆平台初始化方法
      */
     public void loginIT(){
-        loginIT("api_spacespace_fjxr","spacespace");
+        loginIT("api_qianbaiwan_fjxr","qianbaiwan");
     }
 
     public void loginIT(String user,String password){
@@ -76,7 +76,7 @@ public class EmailGetter {
         return getPhoneNumber("随机");
     }
     public PhonePo getPhoneNumber(String phoneNum){
-        String tag ="ERR";
+            String tag ="ERR";
         String phone_url;
         if(phoneNum.equals("随机")){
             phone_url="http://new.wmisms.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";

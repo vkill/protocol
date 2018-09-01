@@ -1,4 +1,4 @@
-package params;
+package params.tools;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class ConstructRequestUrl {
      * @param requestToken
      * @return
      */
-    public String constructUrl(String host, String requestMsg, Map<String,Object> requestToken){
+    public String constructUrl(String host, String requestMsg, Map<String,String> requestToken){
 
         String url = "";
         url += host;
