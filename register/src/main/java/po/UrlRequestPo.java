@@ -1,10 +1,4 @@
-package po;/**
- * @ Author     ：GXDTJJC
- * @ Date       ：Created in 14:26 2018/9/1/001
- * @ Description：从数据库获取与url相关内容的po
- * @ Modified By：
- * @Version: $version$
- */
+package po;
 
 /**
  * @program: protool

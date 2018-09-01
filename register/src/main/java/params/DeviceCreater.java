@@ -27,7 +27,7 @@ public class DeviceCreater {
             "&language=zh&os_version=5.1.1&manifest_version_code=176&update_version_code=1762&tt_data=a";
 
     public static String getUrlFromJsonAndMap(JSONObject jsonObject){
-        Map <String,String> jsonMap = JsonTableGetter.construtMap(jsonObject);
+        Map <String,String> jsonMap = JsonTableGetter.JsonToMap(jsonObject);
         StringBuilder stringBuilder = new StringBuilder(REQUEST_DEVICES_HOST+DEVICE_REGISTER_API);
         for(DeviceRegisterInfo deviceRegisterInfo:DeviceRegisterInfo.values()){
 

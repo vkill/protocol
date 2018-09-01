@@ -14,7 +14,10 @@ import java.util.*;
 
 public class JsonTableGetter {
 
-    //要Map的就调这个
+    /**
+     * @param json 需要转变的json
+     * @return json解析切返回的map类型数据
+     */
     public static Map<String,String> JsonToMap(JSONObject json){
         Iterator<String> iter = json.keys();
         Map result = new HashMap<String,String>();
@@ -45,7 +48,9 @@ public class JsonTableGetter {
         return result;
     }
 
-    //要JSON的就调这个
+    /**
+     * @return 使用参数构造的JSon
+     */
     public static JSONObject construtJson(){
 
         Map mapper = DeviceInfoCreater.getResult();
@@ -135,8 +140,24 @@ public class JsonTableGetter {
         return result1;
     }
 
-    public static JSONObject mapToJson(Map<String,String> mapFromJson){
-        return null;
+    /**
+     *
+     * @param json 需要转变为map的json
+     * @return json 转成的map 子类型的json没有解析成键值对
+     */
+    public Map<String,String> parseOptions(JSONObject json)  {
+        Map<String, String>  options = new HashMap<String, String>();
+        Iterator<String> iter = json.keys();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            try {
+                options.put(key, json.getString(key));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                System.out.println("获取json "+key+"值出错");
+            }
+        }
+        return options;
     }
 
     public static String randomMac4Qemu() {
@@ -164,46 +185,5 @@ public class JsonTableGetter {
         }
         return serial;
     }
-
-
-    private Map<String, String>  options = new HashMap<String, String>();
-
-
-    private Map<String,String> parseOptions(JSONObject json) throws JSONException {
-        Iterator<String> iter = json.keys();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            options.put(key, json.getString(key));
-        }
-        return options;
-    }
-
-    private JSONObject optionsToJSON() throws JSONException {
-        JSONObject json = new JSONObject();
-        Iterator<String> iter = options.keySet().iterator();
-        while (iter.hasNext()) {
-            String key = iter.next();
-            json.put(key, options.get(key));
-        }
-        return json;
-    }
-    public static void main(String[] args){
-
-        /**
-         JSONObject result = construtJson();
-         System.out.println(result);
-
-         System.out.println(construtMap(result));
-        JSONObject jsonObject = JsonTableGetter.construtJson();
-        System.out.println(jsonObject);
-        System.out.println(" 开始获取map");
-        Map m = jsonObject;
-
-        String device_URL = DeviceCreater.getUrlFromJsonAndMap(jsonObject);
-        System.out.println(device_URL);
-        System.out.println(DirTable.base_DeviceRegister_Info.get(DeviceRegisterInfo.aid));
-
-         **/
-         }
 
 }
