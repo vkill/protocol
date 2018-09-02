@@ -25,6 +25,13 @@ public class UrlRequestEntity {
     @GeneratedValue
     private int id;
 
+    private String host;
+
+    private String message;
+
+    @Column(columnDefinition = "text")
+    private String header;
+
     public int getId() {
         return id;
     }
@@ -33,30 +40,20 @@ public class UrlRequestEntity {
         this.id = id;
     }
 
-    private String host;
-
-    private String message;
-
-    @Column(columnDefinition = "text")
-    private String header;
-
-    @Column(columnDefinition = "text")
-    private String body;
-
-    public String getHost_address() {
+    public String getHost() {
         return host;
     }
 
-    public void setHost_address(String host_address) {
-        this.host = host_address;
+    public void setHost(String host) {
+        this.host = host;
     }
 
-    public String getMessage_address() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage_address(String message_address) {
-        this.message = message_address;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getHeader() {
@@ -67,11 +64,13 @@ public class UrlRequestEntity {
         this.header = header;
     }
 
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    @Override
+    public String toString() {
+        return "UrlRequestEntity{" +
+                "id=" + id +
+                ", host='" + host + '\'' +
+                ", message='" + message + '\'' +
+                ", header='" + header + '\'' +
+                '}';
     }
 }
