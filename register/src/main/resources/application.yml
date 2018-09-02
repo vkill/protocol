@@ -1,3 +1,6 @@
+server:
+  port: 8887
+  context-path: /
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
