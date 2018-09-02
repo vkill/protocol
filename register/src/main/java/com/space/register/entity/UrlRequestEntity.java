@@ -35,7 +35,6 @@ public class UrlRequestEntity {
 
     private String host;
 
-    @Column(columnDefinition = "text")
     private String message;
 
     @Column(columnDefinition = "text")
