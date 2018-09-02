@@ -1,4 +1,4 @@
-package com.space.protocol;
+package params;
 
 
 import okhttp3.*;
@@ -113,35 +113,35 @@ public class GetCookie {
 //        });
 
 
-        Call call2=okHttpClient.newCall(request2);
-        call2.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-//                String result = GzipGetteer.uncompressToString(response.body().bytes());
-//                String sid_tt = getSessionKeyFromJsonResponse(result);
-//                String sessionid = sid_tt;
-//                System.out.println("sid_tt:"+sid_tt);
-//                System.out.println("sessionid:"+sessionid);
-                System.out.println("响应成功");
-                Headers responseHeaders = response.headers();
-
-                int responseHeadersLength = responseHeaders.size();
-                ArrayList<String> cookie = new ArrayList<String>();
-                for (int i = 0; i < responseHeadersLength; i++){
-                    String headerName = responseHeaders.name(i);
-                    String headerValue = responseHeaders.value(i);
-                    if(headerName.equals("Set-Cookie")){
-                        cookie.add(headerValue);
-                    }
-                }
-                cookie = getCookieFromResponseHeaders(cookie);
-                System.out.println(cookie);
-            }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
-            }
-        });
+//        Call call2=okHttpClient.newCall(request2);
+//        call2.enqueue(new Callback() {
+//            @Override
+//            public void onResponse(Call arg0, Response response) throws IOException {
+////                String result = GzipGetteer.uncompressToString(response.body().bytes());
+////                String sid_tt = getSessionKeyFromJsonResponse(result);
+////                String sessionid = sid_tt;
+////                System.out.println("sid_tt:"+sid_tt);
+////                System.out.println("sessionid:"+sessionid);
+//                System.out.println("响应成功");
+//                Headers responseHeaders = response.headers();
+//
+//                int responseHeadersLength = responseHeaders.size();
+//                ArrayList<String> cookie = new ArrayList<String>();
+//                for (int i = 0; i < responseHeadersLength; i++){
+//                    String headerName = responseHeaders.name(i);
+//                    String headerValue = responseHeaders.value(i);
+//                    if(headerName.equals("Set-Cookie")){
+//                        cookie.add(headerValue);
+//                    }
+//                }
+//                cookie = getCookieFromResponseHeaders(cookie);
+//                System.out.println(cookie);
+//            }
+//            @Override
+//            public void onFailure(Call arg0, IOException arg1) {
+//                System.out.println("响应失败");
+//            }
+//        });
 
 
 

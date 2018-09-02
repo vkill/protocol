@@ -18,13 +18,14 @@ public class EmailGetter {
      * 变量依次为：账号、密码、项目类型
      */
     //api_qianbaiwan_rrgr,qianbaiwan
-    private String userName ="api_qianbaiwan_rrgr";
+    private String userName ="api_qianbaiwan_o1o";
     private String password ="qianbaiwan";
-    private String projectID ="1019";
-    private String projectPasswordID = "1024";
+    private String projectID ="1003";
+    private String projectPasswordID = "1004";
     private String Login_url ;
-    private String Usertoken ="BF276684B59345D28D937E83B95F1F63";
-
+    private String Usertoken ="5eb9541386e913d9d0bfccbd212e081b";
+    private String errorStr = "0";
+    private String successStr = "1";
     /**
      * 登陆平台初始化方法
      */
@@ -35,21 +36,21 @@ public class EmailGetter {
     public void loginIT(String user,String password){
         this.userName = user;
         this.password = password;
-        String tag = "ERR";
+        String tag = errorStr;
         int errTime =0;
         String[] buffers = null;
-        //           http://new.wmisms.com/yhapi.ashx?Action=userLogin&userName=voltsoft&userPassword=8888
-        Login_url = "http://new.wmisms.com/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+this.password;
+        //http://api0.wmisms.com/yhapi.ashx?act=login&ApiName=api_yh001_0fk&PassWord=yh001
+        Login_url = "http://api0.wmisms.com/yhapi.ashx?act=login&ApiName="+userName+"&PassWord="+password;
 
         try {
 
-            while (tag.equals("ERR")&&errTime<3){
+            while (tag.equals(errorStr)&&errTime<3){
                 Document document = Jsoup.connect(Login_url).get();
                 // System.out.println(document.body().text());
                 String buff=document.body().text();
                 buffers = buff.split("\\|");
                 tag = buffers[0];
-                if(tag.equals("OK")){
+                if(tag.equals(successStr)){
                     System.out.println("登录成功");
                     break;
                 }
@@ -76,19 +77,26 @@ public class EmailGetter {
     public PhonePo getPhoneNumber(){
         return getPhoneNumber("随机");
     }
+
+    /**
+     *
+     * @param phoneNum 指定要获取的手机号
+     * @return 存储号码对象的po
+     */
     public PhonePo getPhoneNumber(String phoneNum){
-            String tag ="ERR";
+        String tag =errorStr;
         String phone_url;
         if(phoneNum.equals("随机")){
-            phone_url="http://new.wmisms.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
+            //http://api0.wmisms.com/yhapi.ashx?act=getPhone&token=ad718214bdf8e7ad80344bf9743ec307&iid=1001&did=&operator=&city=&mobile=
+            phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectID+"&did=&operator=&city=&mobile=";
 
         }else{
-            phone_url="http://new.wmisms.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectPasswordID+"&d_id=&p_operator=&p_qcellcore=&mobile="+phoneNum;
+            phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectPasswordID+"&did=&operator=&city=&mobile="+phoneNum;
         }
         Document document = null;
         String[] buffers = null;
         int worryTime =0;
-        while(tag.equals("ERR")&&worryTime<2){
+        while(tag.equals(errorStr)&&worryTime<2){
             try {
                 document = Jsoup.connect(phone_url).get();
             } catch (IOException e) {
@@ -97,8 +105,8 @@ public class EmailGetter {
             String buff=document.body().text();
             buffers = buff.split("\\|");
             tag =buffers[0];
-            if(tag.equals("OK")){
-                System.out.println("成功获取手机号: "+buffers[4]+buffers[1]);
+            if(tag.equals(successStr)){
+                System.out.println("成功获取手机号: "+buffers[4]+" "+buffers[1]+" "+buffers[6]);
                 break;
             }else{
                 System.out.print("发生错误，错误信息为: "+buff);
@@ -122,17 +130,18 @@ public class EmailGetter {
     }
     /**
      *
-     * @param P_ID 注意检查参数不能为控
-     * @return
+     * @param P_ID 监听验证码的参数
+     * @return 获取的验证码
      */
     public String getIdentCode(String P_ID){
-        String infoUrl ="http://new.wmisms.com/yhapi.ashx?Action=getPhoneMessage&token="+Usertoken+"&p_id="+P_ID;
+        //              http://api0.wmisms.com/yhapi.ashx?act=getPhoneCode&token=ad718214bdf8e7ad80344bf9743ec307&pid=100118456007026
+        String infoUrl ="http://api0.wmisms.com/yhapi.ashx?act=getPhoneCode&token="+Usertoken+"&pid="+P_ID;
         Document document =null;
         String buff = null;
         String[] buffers;
-        String tag ="ERR";
+        String tag =errorStr;
         int buffer_Num =0;
-        while(tag.equals("ERR")&buffer_Num<10){
+        while(tag.equals(errorStr)&buffer_Num<10){
             try {
                 Thread.sleep(5000);
                 document =Jsoup.connect(infoUrl).get();
@@ -142,17 +151,19 @@ public class EmailGetter {
             buff = document.body().text();
             buffers = buff.split("\\|");
             tag = buffers[0];
-            if(tag.equals("OK")){
+            if(tag.equals(successStr)){
                 return buffers[2].substring(3,7);
             }
             else{
-                System.out.println("出现错误："+buffers[1]);
+                System.out.println("出现错误："+buffers[1] +" -3 意味着等待验证码");
             }
             buffer_Num++;
         }
         System.out.print("获取验证码失败");
         return "请求超时";
     }
+
+
     public static void main(String[] args) {
 
         EmailGetter emailGetter =new EmailGetter();
@@ -160,6 +171,7 @@ public class EmailGetter {
         while(true){ ;
             PhonePo phonePo =emailGetter.getPhoneNumber();
             System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
+            System.out.println(emailGetter.getIdentCode(phonePo.getP_ID()));
         }
 
     }

@@ -98,4 +98,19 @@ public class DeviceEntity {
     public void setDevice_brand(String device_brand) {
         this.device_brand = device_brand;
     }
+
+    @Override
+    public String toString() {
+        return "DeviceEntity{" +
+                "id=" + id +
+                ", device_type='" + device_type + '\'' +
+                ", device_platform='" + device_platform + '\'' +
+                ", iid='" + iid + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", openudid='" + openudid + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", device_brand='" + device_brand + '\'' +
+                ", cookie='" + cookie + '\'' +
+                '}';
+    }
 }

@@ -1,4 +1,4 @@
-package params;
+package jsonreader.tools;
 
 
 import util.MD5Code;

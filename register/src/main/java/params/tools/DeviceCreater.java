@@ -1,4 +1,4 @@
-package params;
+package params.tools;
 
 import enums.DeviceRegisterInfo;
 import enums.paramtable.DirTable;
@@ -46,5 +46,6 @@ public class DeviceCreater {
         }
         return stringBuilder.toString();
     }
+
 
 }

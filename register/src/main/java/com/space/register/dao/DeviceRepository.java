@@ -17,4 +17,11 @@ public interface DeviceRepository extends JpaRepository<DeviceEntity, Integer>, 
     @Query(value = "select * from t_device where id = ?1", nativeQuery = true)
     DeviceEntity getDeviceMsgById(int id);
 
+
+    /**
+     * 返回device的信息
+     * @return
+     */
+    @Query(value = "select * from t_device", nativeQuery = true)
+    DeviceEntity getAllDeviceMsg();
 }

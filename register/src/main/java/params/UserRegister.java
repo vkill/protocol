@@ -2,6 +2,8 @@ package params;
 import httpmaker.ConstructRequest;
 import okhttp3.*;
 import params.tools.ConstructRequestUrl;
+import platform.email.EmailGetter;
+import po.PhonePo;
 import po.RequestTokenVo;
 
 import java.io.IOException;
@@ -20,25 +22,16 @@ public class UserRegister {
      * UserRegister类中整体管理调用的方法
      * @return
      */
-    public static Request RequestToRegister(){
+    public static Request RequestToRegister(String host,String requestMsg,Map<String,String> requestToken,Map<String,String>header,Map<String,String>body){
 
-//        //调用短信平台获取验证码
-//        EmailGetter emailGetter =new EmailGetter();
-//        emailGetter.loginIT();
-//        while(true){
-//            PhonePo phonePo =emailGetter.getPhoneNumber();
-//            System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
-//            break;
-//        }
-
-
-        //需要输入的参数待定，之后添加
-        String host = "";
-        String requestMsg = "";
-        Map<String, String> requestToken = null;
-        Map <String, String> header = null;
-        Map <String, String> body = null;
-
+        //调用短信平台获取验证码
+        EmailGetter emailGetter =new EmailGetter();
+        emailGetter.loginIT();
+        while(true){
+            PhonePo phonePo =emailGetter.getPhoneNumber();
+            System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
+            break;
+        }
         //调用了tool包中的constructUrl方法来生成url，需要输入参数host，请求地址requestedMsg以及传输键值对requestToken
         String url = new ConstructRequestUrl().constructUrl(host, requestMsg, requestToken);
 
@@ -105,7 +98,7 @@ public class UserRegister {
     }
 
     public static void main(String[] args) {
-        RequestToRegister();
+
 
     }
 }

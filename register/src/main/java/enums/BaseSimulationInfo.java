@@ -6,7 +6,7 @@ package enums;
  * @author: gaoxiang
  * @create: 2018-08-26 16:47
  **/
-public enum     BaseSimulationInfo {
+public enum BaseSimulationInfo {
     //与模拟器有关的枚举类型变量
 
     uuid("uuid"),device_type("device_type"),device_brand("device_brand");

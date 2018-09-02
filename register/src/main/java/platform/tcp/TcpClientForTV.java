@@ -56,8 +56,8 @@ public class TcpClientForTV {
         for(int i =0;i<result.length;i++){
             stringBuilder.append(result[i]+" ");
         }
-        System.out.println("传输内容: "+device_Info);
-        System.out.println("传输结果："+stringBuilder.toString());
+        //System.out.println("传输内容: "+device_Info);
+        //System.out.println("传输结果："+stringBuilder.toString());
 
         return result;
     }
@@ -67,8 +67,8 @@ public class TcpClientForTV {
         for(int i =0;i<device_Info.length;i++){
             stringBuilder.append(device_Info[i]+" ");
         }
-        System.out.println("gzip文件流长度为: "+device_Info.length);
-        System.out.println("gzip文件内容为: "+stringBuilder.toString());
+        //System.out.println("gzip文件流长度为: "+device_Info.length);
+        //System.out.println("gzip文件内容为: "+stringBuilder.toString());
         send_Bytes(socket,device_Info);
         System.out.println("开始传输数据");
         InputStream inputStream = null;
@@ -87,8 +87,8 @@ public class TcpClientForTV {
         for(int i =0;i<result.length;i++){
             stringBuilder.append(result[i]+" ");
         }
-        System.out.println("结果二进制内容为: "+stringBuilder.toString());
-        System.out.println("结果长度: "+result.length);
+        //System.out.println("结果二进制内容为: "+stringBuilder.toString());
+        //System.out.println("结果长度: "+result.length);
 
         return result;
     }
