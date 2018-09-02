@@ -7,16 +7,19 @@ import com.space.register.service.UrlRequestService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
-@Service("UrlRequestService")
+@Service("urlRequestService")
 public class UrlRequestServiceImpl implements UrlRequestService {
 
     @Resource
-    UrlRequestRepository UrlRequestRepository;
+    UrlRequestRepository urlRequestRepository;
 
     @Override
     public UrlRequestEntity getUrlRequest(int id) {
-        UrlRequestEntity UrlRequestEntity = UrlRequestRepository.findUrlById(id);
+        UrlRequestEntity UrlRequestEntity = urlRequestRepository.findUrlById(id);
+        Map a = UrlRequestEntity.getHeaderMap();
+        System.out.println(a);
         return UrlRequestEntity;
     }
 }

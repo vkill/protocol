@@ -12,14 +12,14 @@ import javax.annotation.Resource;
 public class UrlRequestController {
 
     @Resource
-    UrlRequestService UrlRequestService;
+    UrlRequestService urlRequestService;
 
     @RequestMapping("/getUrl")
     public String getUrlRequest() {
         UrlRequestEntity urlRequestEntity = new UrlRequestEntity();
-        urlRequestEntity.setHost("11224243279847931");
-        urlRequestEntity.setId(11);
-        UrlRequestService.testSaveAccount(urlRequestEntity);
+//        urlRequestEntity.setHost("11224243279847931");
+//        urlRequestEntity.setId(11);
+        urlRequestService.getUrlRequest(1);
         return "abc";
     }
 }

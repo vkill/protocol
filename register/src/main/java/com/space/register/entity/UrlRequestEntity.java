@@ -7,6 +7,8 @@ package com.space.register.entity;/**
  */
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @program: protool
@@ -63,6 +65,30 @@ public class UrlRequestEntity {
     public void setHeader(String header) {
         this.header = header;
     }
+
+    public Map<String, String> getHeaderMap() {
+        Map<String, String> result = new HashMap<String, String>();
+        String []list = header.split(",");
+        for(int i = 0;i < list.length;i ++){
+            String []temp = list[i].split("=");
+            if(temp[0].equals("Cache-Control")){
+                result.put(temp[0],temp[1]+="=0");
+            }
+            else if(!temp[0].equals("Cookie")){
+                result.put(temp[0],temp[1]);
+            }else{
+                char[]array = list[i].toCharArray();
+                String value ="";
+                for(int j = 7;j < array.length;j++){
+                    value += array[j];
+                }
+                result.put("Cookie",value);
+            }
+
+        }
+        return result;
+    }
+
 
     @Override
     public String toString() {
