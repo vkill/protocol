@@ -173,25 +173,13 @@ public class GzipGetteer {
     }
 
     public static void main(String[] args) {
-        String register = "%22%3A%5B1%2C6%5D%7D";
-        ByteArrayOutputStream out = new ByteArrayOutputStream(1000);
-        try {
-            byte[] bytes =compress("@2@@@@121213123f fsdfsfsfad呵sda呵哒哒dadad");
-            for(int i = 0;i<bytes.length;i++){
-                System.out.print((int)bytes[i]+" ");
-            }
-            System.out.println();
-            out.write(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
+        String input = "{\"event_v3\":[{\"nt\":4,\"event\":\"plugin_upload_json\",\"params\":{\"retry_count\":\"0\",\"content\":\"{\\\"plugin\\\":[{\\\"packagename\\\":\\\"com.ss.android.ugc.aweme.ffmpeg_so\\\",\\\"versioncode\\\":0},{\\\"packagename\\\":\\\"com.ss.android.ugc.aweme.shortvideo_so\\\",\\\"versioncode\\\":0}],\\\"patch\\\":[]}\"},\"event_id\":97,\"session_id\":\"fd9ebe88-8efb-4dd9-bf97-550d1a452fe2\",\"datetime\":\"2018-09-01 16:34:23\"},{\"nt\":4,\"event\":\"plugin_response_json\",\"params\":{\"retry_count\":\"2\",\"is_success\":\"1\",\"content\":\"[]\"},\"event_id\":98,\"session_id\":\"fd9ebe88-8efb-4dd9-bf97-550d1a452fe2\",\"datetime\":\"2018-09-01 16:34:23\"}],\"launch\":[{\"datetime\":\"2018-09-01 16:34:23\",\"session_id\":\"fd9ebe88-8efb-4dd9-bf97-550d1a452fe2\",\"is_background\":true}],\"magic_tag\":\"ss_app_log\",\"header\":{\"appkey\":\"57bfa27c67e58e7d920028d3\",\"udid\":\"865166024287115\",\"openudid\":\"06e7aa24d4d4c8a4\",\"sdk_version\":201,\"package\":\"com.ss.android.ugc.aweme\",\"channel\":\"baidu\",\"display_name\":\"抖音短视频\",\"app_version\":\"1.8.3\",\"version_code\":183,\"timezone\":8,\"access\":\"wifi\",\"os\":\"Android\",\"os_version\":\"5.1.1\",\"os_api\":22,\"device_model\":\"f103\",\"device_brand\":\"gionee\",\"device_manufacturer\":\"gionee\",\"language\":\"zh\",\"resolution\":\"900x1600\",\"display_density\":\"hdpi\",\"density_dpi\":240,\"mc\":\"00:81:41:de:1e:56\",\"carrier\":\"CHINA MOBILE\",\"mcc_mnc\":\"46000\",\"clientudid\":\"71cfb1e8-ca28-447b-9acf-0b5c4033cb88\",\"device_id\":\"39262138748\",\"sig_hash\":\"aea615ab910015038f73c47e45d21466\",\"aid\":1128,\"push_sdk\":[1,2,6,7,8,9],\"rom\":\"V9.5.2.0.LACCNFA\",\"release_build\":\"61b8304_20180522\",\"update_version_code\":1832,\"manifest_version_code\":183,\"cpu_abi\":\"armeabi-v7a\",\"build_serial\":\"00c7c516\",\"serial_number\":\"00c7c516\",\"sim_serial_number\":[],\"not_request_sender\":0,\"rom_version\":\"LMY48Z\",\"region\":\"CN\",\"tz_name\":\"Asia\\/Shanghai\",\"tz_offset\":28800,\"sim_region\":\"cn\"},\"_gen_time\":1535791855231}";
+        byte[] kao = GzipGetteer.compress(input);
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i =0;i<kao.length;i++){
+            stringBuilder.append(kao[i]+" ");
         }
-        try {
-            System.out.println(out.toString("utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
+        System.out.println(stringBuilder.toString());
     }
 
 

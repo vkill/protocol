@@ -17,7 +17,7 @@ public class DeviceInfoCreater {
         int size = rand.nextInt(type.length);
         String device_type = type[size];
         String device_brand = type[size].split(" ")[0];
-        String uuid_temp = String.valueOf(new Random().nextInt(9999999));
+        String uuid_temp = String.valueOf(new Random(System.currentTimeMillis()).nextInt(9999999));
         String []temp = uuid_temp.split("");
         String uuid = "";
         if(temp.length < 7){
@@ -37,17 +37,12 @@ public class DeviceInfoCreater {
         }
         Map result = new HashMap();
         //device_type=f103&device_brand=gionee&uuid=865166024287115&openudid=06e7aa24d4d4c8a4
-        /**
+
         result.put("device_type",device_type);
         result.put("device_brand",device_brand);
         result.put("uuid",uuid);
         result.put("openudid",openudid);
-        **/
-        result.put("device_type","f103");
-        result.put("device_brand","gionee");
-        result.put("uuid","865166024287115");
-        result.put("openudid","06e7aa24d4d4c8a4");
-         return result;
+        return result;
     }
 
     public static String getWholeStr(Map data){

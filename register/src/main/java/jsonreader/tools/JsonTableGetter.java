@@ -81,7 +81,7 @@ public class JsonTableGetter {
             result2.put("cpu_abi","armeabi-v7a");
 
             //clientudid和serial number采用的是随机数加md5生成，不一定正确
-            String uuid_temp = String.valueOf(new Random().nextInt(9999999));
+            String uuid_temp = String.valueOf(new Random(System.currentTimeMillis()).nextInt(9999999));
             String line = new MD5Code().getMD5ofStr(uuid_temp);
             String []temp = line.split("");
             String clientudid = "";
@@ -95,7 +95,7 @@ public class JsonTableGetter {
             result2.put("clientudid",clientudid.toLowerCase());
             String serial_number = "";
             for(int i = 0; i < 8;i++){
-                int temp_num = new Random().nextInt(31);
+                int temp_num = new Random(System.currentTimeMillis()).nextInt(31);
                 serial_number += String.valueOf(temp[temp_num]);
             }
             serial_number = serial_number.toLowerCase();
