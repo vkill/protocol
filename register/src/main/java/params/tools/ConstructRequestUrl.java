@@ -12,7 +12,7 @@ import java.util.Map;
 public class ConstructRequestUrl {
 
     /**
-     * 通过输入参数：host，requestMsg，requestToken构造用于请求的url
+     * 通过输入参数：host，requestMsg，requestToken构造用于请求的url,很傻逼的方法，tm老子要知道所有参数还要给你弄成map才能拿到结果，你妹
      * @param host
      * @param requestMsg
      * @param requestToken
@@ -28,7 +28,11 @@ public class ConstructRequestUrl {
         return url;
     }
 
-
+    /**
+     *
+     * @param map 含参数的map，保存参数键值对
+     * @return http请求的参数部分
+     */
     public static String MapToString(Map map){
         Map.Entry entry;
         StringBuffer sb = new StringBuffer();

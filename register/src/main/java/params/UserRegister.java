@@ -1,13 +1,10 @@
 package params;
+import httpmaker.ConstructRequest;
 import okhttp3.*;
-import params.tools.ConstructPostRequest;
 import params.tools.ConstructRequestUrl;
-import platform.email.EmailGetter;
-import po.PhonePo;
 import po.RequestTokenVo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -83,7 +80,7 @@ public class UserRegister {
         //调用post请求方法，构建post请求来请求发送验证码
         Request request = null;
         try {
-            request = new ConstructPostRequest().construct(requestEntity);
+            request = ConstructRequest.constructPost(requestEntity);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,7 +97,7 @@ public class UserRegister {
         //调用post请求方法，构建post请求来进行验证码确认
         Request request = null;
         try {
-            request = new ConstructPostRequest().construct(requestEntity);
+            request = ConstructRequest.constructPost(requestEntity);
         } catch (IOException e) {
             e.printStackTrace();
         }

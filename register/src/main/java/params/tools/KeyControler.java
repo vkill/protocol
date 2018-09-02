@@ -18,9 +18,4 @@ public class KeyControler {
         result.append("&cp="+cp);
         return  result.toString();
     }
-
-    public static void main(String [] args){
-        KeyControler keyControler = new KeyControler();
-        System.out.println(keyControler.getKeyForUse());
-    }
 }

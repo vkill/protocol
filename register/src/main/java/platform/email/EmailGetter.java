@@ -18,7 +18,7 @@ public class EmailGetter {
      * 变量依次为：账号、密码、项目类型
      */
     //api_qianbaiwan_rrgr,qianbaiwan
-    private String userName ="api_qianbaiwan_fjxr";
+    private String userName ="api_qianbaiwan_rrgr";
     private String password ="qianbaiwan";
     private String projectID ="1019";
     private String projectPasswordID = "1024";
@@ -29,7 +29,7 @@ public class EmailGetter {
      * 登陆平台初始化方法
      */
     public void loginIT(){
-        loginIT("api_qianbaiwan_fjxr","qianbaiwan");
+        loginIT(userName,password);
     }
 
     public void loginIT(String user,String password){
@@ -38,6 +38,7 @@ public class EmailGetter {
         String tag = "ERR";
         int errTime =0;
         String[] buffers = null;
+        //           http://new.wmisms.com/yhapi.ashx?Action=userLogin&userName=voltsoft&userPassword=8888
         Login_url = "http://new.wmisms.com/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+this.password;
 
         try {

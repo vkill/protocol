@@ -49,7 +49,9 @@ public class RequestTokenVo {
                 ", body=" + body +
                 '}';
     }
+    public RequestTokenVo(){
 
+    }
     public RequestTokenVo(String url, Map<String, String> header, Map<String, String> body){
         this.Url = url;
         this.header = header;
