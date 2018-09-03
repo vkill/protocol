@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-@Service("UrlRequestService")
+@Service("deviceService")
 public class DeviceServiceImpl implements DeviceService {
 
     @Resource

@@ -18,7 +18,7 @@ public class ConstructRequestUrl {
      * @param requestToken
      * @return
      */
-    public String constructUrl(String host, String requestMsg, Map<String,String> requestToken){
+    public static String constructUrl(String host, String requestMsg, Map<String, String> requestToken){
 
         String url = "";
         url += host;
