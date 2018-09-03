@@ -101,20 +101,21 @@ public class RequestURLCreater {
         Map<String,String> stringBuilder = new HashMap<String,String>();
         for (SendMessageBodyInfo sendMessageInfo : SendMessageBodyInfo.values()) {
             String key_Str = sendMessageInfo.getVaule();
-            System.out.println(key_Str);
+            //System.out.println(key_Str);
             if (sendMessageInfo.equals(SendMessageBodyInfo.mix_mode)) {
                 if (messages.containsKey(key_Str)) {
                     stringBuilder.put(key_Str,messages.get(key_Str));
                     //System.out.println(key_Str+"  json  "+jsonMap.get(key_Str));
                 } else {
-                    stringBuilder.put(key_Str,DirTable.sendMessageBodyInfoStringMap.get(key_Str));
+                    Map map = DirTable.sendMessageBodyInfoStringMap;
+                    stringBuilder.put(key_Str,DirTable.sendMessageBodyInfoStringMap.get(sendMessageInfo));
                 }
             } else {
                 if (messages.containsKey(key_Str)) {
                     stringBuilder.put(key_Str,messages.get(key_Str));
                     //System.out.println(key_Str+"  json  "+jsonMap.get(key_Str));
                 } else {
-                    stringBuilder.put(key_Str,DirTable.sendMessageBodyInfoStringMap.get(key_Str));
+                    stringBuilder.put(key_Str,DirTable.sendMessageBodyInfoStringMap.get(sendMessageInfo));
                 }
             }
         }

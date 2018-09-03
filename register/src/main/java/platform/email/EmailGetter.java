@@ -135,7 +135,7 @@ public class EmailGetter {
         String[] buffers;
         String tag =errorStr;
         int buffer_Num =0;
-        while(tag.equals(errorStr)&buffer_Num<10){
+        while(tag.equals(errorStr)){
             try {
                 Thread.sleep(5000);
                 document =Jsoup.connect(infoUrl).get();
@@ -148,10 +148,13 @@ public class EmailGetter {
             if(tag.equals(successStr)){
                 return buffers[2].substring(3,7);
             }
-            else{
-                System.out.println("出现错误："+buffers[1] +" -3 意味着等待验证码");
+            else if(tag.equals("-4")){
+                System.out.println("号码已经强制释放");
+                break;
+            }else{
+                System.out.println("等待验证码");
             }
-            buffer_Num++;
+
         }
         System.out.print("获取验证码失败");
         return "请求超时";

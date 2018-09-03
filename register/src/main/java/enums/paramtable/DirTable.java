@@ -15,11 +15,15 @@ import java.util.Map;
 public class DirTable {
     public static HashMap<BaseNum,String> phone_Table = new HashMap<BaseNum, String>();
     public static HashMap<BaseAppInfo,String> base_APPInfo_Table = new HashMap<BaseAppInfo,String>();
-    public static Map base_DeviceRegister_Info = new HashMap<DeviceRegisterInfo,String>();
+    public static Map<DeviceRegisterInfo,String> base_DeviceRegister_Info = new HashMap<DeviceRegisterInfo,String>();
     public static Map<SendMessageInfo,String> base_Sendmessage_Info = new HashMap<SendMessageInfo,String>();
     public static Map<UserRegisterInfo,String> base_UserRegister_Info = new HashMap<UserRegisterInfo,String>();
     public static Map<UserRegisterBodyInfo,String> userRegisterBodyInfoStringMap = new HashMap<UserRegisterBodyInfo,String>();
     public static Map<SendMessageBodyInfo,String> sendMessageBodyInfoStringMap = new HashMap<SendMessageBodyInfo,String>();
+
+    public static String getOdinTT= "https://is.snssdk.com/api/ad/splash/aweme/v14/?_unused=0&carrier=CHINA MOBILE&mcc_mnc=46000&ad_area=720x1242&os_api=22&device_platform=android&os_version=5.1.1&display_density=720x1280&resolution=1280x720&dpi=240&language=zh&device_brand=oppo&device_type=oppo r9 plustm a&display_dpi=240&density=1.5&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&update_version_code=1762&version_code=176&version_name=1.7.6&manifest_version_code=1.7.6&iid=43079687515&device_id=48541273910&openudid=a2d6c94ee4e82e0b&retry_type=no_retry&iid=43079687515&device_id=48541273910&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type=oppo+r9+plustm+a&device_brand=oppo&language=zh&os_api=22&os_version=5.1.1&uuid=865166026206394&openudid=a2d6c94ee4e82e0b&manifest_version_code=176&resolution=720*1280&dpi=240&update_version_code=1762&_rticket=1535968153157&ts=1535968152";
+    public static String OdinTTUrlHost = "https://is.snssdk.com/api/ad/splash/aweme/v14/?";
+
     static{
         phone_Table.put(BaseNum.zero,"35");
         phone_Table.put(BaseNum.one,"34");
@@ -76,7 +80,6 @@ public class DirTable {
         }
     }
 
-
     static{
         String buff="https://is.snssdk.com/passport/mobile/send_code/?os_api=22&device_type=vivo+y51a&device_platform=android&ssmix=a&iid=42690885679" +
                 "&manifest_version_code=176&dpi=240&uuid=865166029262923&version_code=176&app_name=aweme&version_name=1.7.6&" +
@@ -100,7 +103,7 @@ public class DirTable {
         for(UserRegisterInfo userRegisterInfo: UserRegisterInfo.values()){
             String vaule_Buff = (String) map.get(userRegisterInfo.getVaule());
             //System.out.println(deviceRegisterInfo.getVaule()+"   "+vaule_Buff);
-            base_DeviceRegister_Info.put(userRegisterInfo,vaule_Buff);
+            base_UserRegister_Info.put(userRegisterInfo,vaule_Buff);
         }
     }
 
@@ -112,7 +115,7 @@ public class DirTable {
         for(SendMessageBodyInfo sendMessageBodyInfo: SendMessageBodyInfo.values()){
             String vaule_Buff = (String) map.get(sendMessageBodyInfo.getVaule());
             //System.out.println(deviceRegisterInfo.getVaule()+"   "+vaule_Buff);
-            base_DeviceRegister_Info.put(sendMessageBodyInfo,vaule_Buff);
+            sendMessageBodyInfoStringMap.put(sendMessageBodyInfo,vaule_Buff);
         }
     }
 
@@ -129,12 +132,21 @@ public class DirTable {
         }
     }
 
+    static{
+        String getOdinTT="https://is.snssdk.com/api/ad/splash/aweme/v14/?_unused=0&carrier=CHINA MOBILE&mcc_mnc=46000&ad_area=720x1242&os_api=22&device_platform=android&os_version=5.1.1&display_density=720x1280&resolution=1280x720&dpi=240&language=zh&device_brand=oppo&device_type=oppo r9 plustm a&display_dpi=240&density=1.5&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&update_version_code=1762&version_code=176&version_name=1.7.6&manifest_version_code=1.7.6&iid=43079687515&device_id=48541273910&openudid=a2d6c94ee4e82e0b&retry_type=no_retry&iid=43079687515&device_id=48541273910&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type=oppo+r9+plustm+a&device_brand=oppo&language=zh&os_api=22&os_version=5.1.1&uuid=865166026206394&openudid=a2d6c94ee4e82e0b&manifest_version_code=176&resolution=720*1280&dpi=240&update_version_code=1762&_rticket=1535968153157&ts=1535968152";
+    }
+
     public static void main(String[]args){
+        /**
         String buff="ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type=vivo+y51a&device_brand=vivo&language=zh&os_api=22&os_version=5.1.1&uuid=865166029262923&openudid=b52b1961bfc67907&manifest_version_code=176&resolution=720*1280&dpi=240&update_version_code=1762&_rticket=1535619578298&tt_data=a \n";
         Map map = URLmakeTools.url_split(buff);
         for(Object key:map.keySet()){
             System.out.println(key+" kao "+map.get(key));
         }
+         **/
+
+        DirTable dirTable = new DirTable();
+        System.out.println(dirTable);
     }
 
 }

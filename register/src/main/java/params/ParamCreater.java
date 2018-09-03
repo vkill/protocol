@@ -27,18 +27,20 @@ public class ParamCreater {
     public static String get_Mobile(String area,String phoneNum){
         StringBuilder result = new StringBuilder();
         result.append("+");
-        result.append(area+" ");
-        String phoneNew = null;
-        if(phoneNum.length()==11){
-            phoneNew = phoneNum.substring(0,3)+" "+phoneNum.substring(3,7)+" "+phoneNum.substring(7);
-
-        }
-        else if(phoneNum.length()==9){
-            phoneNew = phoneNum.substring(0,2)+" "+phoneNum.substring(2,5)+" "+phoneNum.substring(5);
-        }
-        if(!phoneNew.isEmpty()){
-            result.append(phoneNew);
-        }
+        //result.append(area+" ");
+        result.append(area);
+//        String phoneNew = null;
+//        if(phoneNum.length()==11){
+//            phoneNew = phoneNum.substring(0,3)+" "+phoneNum.substring(3,7)+" "+phoneNum.substring(7);
+//
+//        }
+//        else if(phoneNum.length()==9){
+//            phoneNew = phoneNum.substring(0,2)+" "+phoneNum.substring(2,5)+" "+phoneNum.substring(5);
+//        }
+//        if(!phoneNew.isEmpty()){
+//            result.append(phoneNew);
+//        }
+        result.append(phoneNum);
         //ystem.out.println(result);
         return change_Mobile_to_Src(result.toString());
 

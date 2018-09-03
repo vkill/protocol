@@ -123,7 +123,7 @@ public class DeviceEntity {
         result.put("iid",iid);
         result.put("uuid",uuid);
         result.put("openudid",openudid);
-        result.put("deviceId",deviceId);
+        result.put("device_id",deviceId);
         result.put("device_brand",device_brand);
         result.put("cookie",cookie);
         return result;

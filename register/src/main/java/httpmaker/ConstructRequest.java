@@ -16,12 +16,12 @@ import java.util.Map;
 public class ConstructRequest
 {
 
-    public static Request constructGet(RequestTokenVo requestEntity) throws IOException {
+    public static Request constructGet(RequestTokenVo requestTokenVo){
         // 构建GET请求，并设置请求消息头
         //requestEntity中包含三部分，Url、Header，body为空
         Request.Builder builder = new Request.Builder();
-        builder.url(requestEntity.getUrl());
-        Map<String,String> headerParams = requestEntity.getHeader();
+        builder.url(requestTokenVo.getUrl());
+        Map<String,String> headerParams = requestTokenVo.getHeader();
         for(String key : headerParams.keySet()){
             builder.addHeader(key, headerParams.get(key));
         }
@@ -32,17 +32,17 @@ public class ConstructRequest
     }
 
 
-    public static Request constructPost(RequestTokenVo requestEntity) throws IOException {
+    public static Request constructPost(RequestTokenVo requestTokenVo){
         // 构建POST请求，并设置请求消息头
         //requestEntity中包含三部分，Url、Header和Body
         FormBody.Builder formBody = new FormBody.Builder();     //创建表单请求体
 
         Request.Builder builder = new Request.Builder();
-        builder.url(requestEntity.getUrl());
-        Map<String, String> headerParams = requestEntity.getHeader();
-        Map<String, String> bodyParams = requestEntity.getBody();
+        builder.url(requestTokenVo.getUrl());
+        Map<String, String> headerParams = requestTokenVo.getHeader();
+        Map<String, String> bodyParams = requestTokenVo.getBody();
         for(String key : headerParams.keySet()){        //添加header信息
-            builder.addHeader(key, headerParams.get(key));
+            builder.addHeader(key, headerParams.get(key).trim());
         }
         for(String key : bodyParams.keySet()){      //添加body信息
 //            builder.post(formBody.build()).build();

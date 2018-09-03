@@ -72,11 +72,7 @@ public class UserRegister {
 
         //调用post请求方法，构建post请求来请求发送验证码
         Request request = null;
-        try {
             request = ConstructRequest.constructPost(requestEntity);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return request;
     }
 
@@ -89,11 +85,7 @@ public class UserRegister {
 
         //调用post请求方法，构建post请求来进行验证码确认
         Request request = null;
-        try {
-            request = ConstructRequest.constructPost(requestEntity);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        request = ConstructRequest.constructPost(requestEntity);
         return request;
     }
 
