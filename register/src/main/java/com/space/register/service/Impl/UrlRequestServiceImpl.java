@@ -18,8 +18,6 @@ public class UrlRequestServiceImpl implements UrlRequestService {
     @Override
     public UrlRequestEntity getUrlRequest(int id) {
         UrlRequestEntity UrlRequestEntity = urlRequestRepository.findUrlById(id);
-        Map a = UrlRequestEntity.getHeaderMap();
-        System.out.println(a);
         return UrlRequestEntity;
     }
 }
