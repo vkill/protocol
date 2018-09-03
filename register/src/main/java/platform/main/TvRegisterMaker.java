@@ -2,6 +2,7 @@ package platform.main;
 
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
+import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import jsonreader.tools.JsonTableGetter;
 import okhttp3.Headers;
@@ -10,10 +11,19 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.servlet.tags.Param;
+import params.ParamCreater;
+import params.tools.KeyControler;
+import params.tools.RequestURLCreater;
+import platform.email.EmailGetter;
 import platform.tv.DeviceTvRegister;
+import po.PhonePo;
+import po.RequestTokenVo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class TvRegisterMaker {
 
     DeviceTvRegister deviceTvRegister;
-    OkHttpClient okHttpClient;
+    public OkHttpClient okHttpClient;
 
     public TvRegisterMaker(){
         deviceTvRegister = new DeviceTvRegister();
@@ -82,12 +92,55 @@ public class TvRegisterMaker {
         return deviceEntity;
     }
 
-    public boolean sendMessageForRegister(UrlRequestEntity urlRequestEntity,DeviceEntity deviceEntity){
+    public Request sendMessageForRegister(UrlRequestEntity urlRequestEntity,DeviceEntity deviceEntity,PhonePo phonePo,String code){
 
         String host = urlRequestEntity.getHost();
         String message = urlRequestEntity.getMessage();
-        
-        return true;
+        Map<String,String> deviceMap = deviceEntity.getDeviceMap();
+        String times = ParamCreater.get_Rticket();
+        deviceMap.put("_rticket",times);
+        deviceMap.put("ts",ParamCreater.get_Ts(times));
+        String postUrl = RequestURLCreater.getSendMessageFromMap(host,message,deviceMap);
+        postUrl+= KeyControler.getKeyForUse();
+        System.out.println("请求发送短信url"+postUrl);
+        Map<String,String> headers = new HashMap<String,String>();
+        headers.put("Accept-Encoding","gzip");
+        headers.put("Cache-Control","max-stale=0");
+        headers.put("Content-Type","application/x-www-form-urlencoded");
+        headers.put("Host","iu.snssdk.com");
+        headers.put("Connection","Keep-Alive");
+        String cookies = deviceEntity.getCookie()+"qh[360]=1";
+        headers.put("Cookie",cookies);
+        RequestTokenVo requestTokenVo = new RequestTokenVo();
+        requestTokenVo.setUrl(postUrl);
+        if(code.equals("")){
+            deviceMap =getDevice(deviceMap,phonePo);
+        }
+        else{
+            deviceMap = getDeviceCode(deviceMap,phonePo,code);
+        }
+        Map<String,String> body = RequestURLCreater.getBodyForMessage(deviceMap);
+        requestTokenVo.setHeader(headers);
+        requestTokenVo.setBody(body);
+        System.out.println(requestTokenVo.getHeader());
+        try {
+            return ConstructRequest.constructPost(requestTokenVo);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+        return  null;
+    }
+    public Map<String,String> getDevice(Map<String,String> kao,PhonePo phonePo){
+        kao.put("mobile",ParamCreater.get_Mobile("66",phonePo.getPhone_Num()));
+        return kao;
+    }
+
+    public Map<String,String> getDeviceCode(Map<String,String> kao,PhonePo phonePo,String code){
+        kao.put("mobile",ParamCreater.get_Mobile("66",phonePo.getPhone_Num()));
+        kao.put("password",ParamCreater.change_Mobile_to_Src("18805156570"));
+        kao.put("code",ParamCreater.change_Mobile_to_Src(code));
+        return kao;
     }
     /**
      *

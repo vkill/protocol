@@ -1,15 +1,10 @@
 package platform.tv;
 
 import jsonreader.tools.GzipGetteer;
-import jsonreader.tools.JsonTableGetter;
 import okhttp3.*;
 import org.json.JSONObject;
-import params.tools.DeviceCreater;
+import params.tools.RequestURLCreater;
 import platform.tcp.TcpClientForTV;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @ Author     ：GXDTJJC
@@ -23,7 +18,7 @@ public class DeviceTvRegister {
     public Request getDeviceCreaterRequest(JSONObject jsonObject){
         TcpClientForTV tcpClientForTV = new TcpClientForTV();
 
-        String device_URL = DeviceCreater.getUrlFromJsonAndMap(jsonObject);
+        String device_URL = RequestURLCreater.getUrlFromJsonAndMap(jsonObject);
         String result = jsonObject.toString();
         byte[] sendMessage = GzipGetteer.compress(result);
         sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);

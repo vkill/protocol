@@ -18,7 +18,8 @@ public class DirTable {
     public static Map base_DeviceRegister_Info = new HashMap<DeviceRegisterInfo,String>();
     public static Map<SendMessageInfo,String> base_Sendmessage_Info = new HashMap<SendMessageInfo,String>();
     public static Map<UserRegisterInfo,String> base_UserRegister_Info = new HashMap<UserRegisterInfo,String>();
-
+    public static Map<UserRegisterBodyInfo,String> userRegisterBodyInfoStringMap = new HashMap<UserRegisterBodyInfo,String>();
+    public static Map<SendMessageBodyInfo,String> sendMessageBodyInfoStringMap = new HashMap<SendMessageBodyInfo,String>();
     static{
         phone_Table.put(BaseNum.zero,"35");
         phone_Table.put(BaseNum.one,"34");
@@ -102,6 +103,32 @@ public class DirTable {
             base_DeviceRegister_Info.put(userRegisterInfo,vaule_Buff);
         }
     }
+
+    static{
+        String buff="mix_mode=1&type=34&mobile=2e3d333734363437363734363734&retry_type=no_retry&os_api=22&device_type=vivo y51a&device_platform=android&ssmix=a&iid=43016694171" +
+                "&manifest_version_code=176&dpi=240&uuid=865166029262923&version_code=176&app_name=aweme&version_name=1.7.6&openudid=b52b1961bfc67907&device_id=38678816574&resolution=720*1280" +
+                "&os_version=5.1.1&language=zh&device_brand=vivo&ac=wifi&update_version_code=1762&aid=1128&channel=tengxun&_rticket=1535888597105";
+        Map map = URLmakeTools.url_split(buff);
+        for(SendMessageBodyInfo sendMessageBodyInfo: SendMessageBodyInfo.values()){
+            String vaule_Buff = (String) map.get(sendMessageBodyInfo.getVaule());
+            //System.out.println(deviceRegisterInfo.getVaule()+"   "+vaule_Buff);
+            base_DeviceRegister_Info.put(sendMessageBodyInfo,vaule_Buff);
+        }
+    }
+
+    static{
+        String buff="password=3437363734363734363734363734&mix_mode=1&type=36&code=36343736&mobile=2e3d333734363437363734363734&retry_type=no_retry&os_api=22&device_type=vivo y51a" +
+                "&device_platform=android&ssmix=a&iid=43016694171&manifest_version_code=176&dpi=240&uuid=865166029262923&version_code=176&app_name=aweme&version_name=1.7.6" +
+                "&openudid=b52b1961bfc67907&device_id=38678816574&resolution=720*1280&os_version=5.1.1&language=zh&device_brand=vivo&ac=wifi" +
+                "&update_version_code=1762&aid=1128&channel=tengxun&_rticket=1535888618988";
+        Map map = URLmakeTools.url_split(buff);
+        for(UserRegisterBodyInfo userRegisterBodyInfo: UserRegisterBodyInfo.values()){
+            String vaule_Buff = (String) map.get(userRegisterBodyInfo.getVaule());
+            //System.out.println(deviceRegisterInfo.getVaule()+"   "+vaule_Buff);
+            userRegisterBodyInfoStringMap.put(userRegisterBodyInfo,vaule_Buff);
+        }
+    }
+
     public static void main(String[]args){
         String buff="ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type=vivo+y51a&device_brand=vivo&language=zh&os_api=22&os_version=5.1.1&uuid=865166029262923&openudid=b52b1961bfc67907&manifest_version_code=176&resolution=720*1280&dpi=240&update_version_code=1762&_rticket=1535619578298&tt_data=a \n";
         Map map = URLmakeTools.url_split(buff);

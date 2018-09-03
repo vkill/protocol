@@ -1,6 +1,8 @@
 package com.space.register.entity;
 
 import javax.persistence.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "t_device")
@@ -112,5 +114,18 @@ public class DeviceEntity {
                 ", device_brand='" + device_brand + '\'' +
                 ", cookie='" + cookie + '\'' +
                 '}';
+    }
+
+    public Map<String, String> getDeviceMap() {
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("device_type",device_type);
+        result.put("device_platform",device_platform);
+        result.put("iid",iid);
+        result.put("uuid",uuid);
+        result.put("openudid",openudid);
+        result.put("deviceId",deviceId);
+        result.put("device_brand",device_brand);
+        result.put("cookie",cookie);
+        return result;
     }
 }

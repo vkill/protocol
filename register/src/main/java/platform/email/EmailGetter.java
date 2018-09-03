@@ -88,7 +88,7 @@ public class EmailGetter {
         String phone_url;
         if(phoneNum.equals("随机")){
             //http://api0.wmisms.com/yhapi.ashx?act=getPhone&token=ad718214bdf8e7ad80344bf9743ec307&iid=1001&did=&operator=&city=&mobile=
-            phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectID+"&did=&operator=&city=&mobile=";
+            phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectID+"&did=&operator=&city=泰国&mobile=";
 
         }else{
             phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectPasswordID+"&did=&operator=&city=&mobile="+phoneNum;
@@ -117,14 +117,8 @@ public class EmailGetter {
             System.out.println("获取手机号码失败，将返回空值");
             return null;
         }else{
-            if(buffers.length==7){
                 PhonePo phonePo = new PhonePo(buffers[1],buffers[2],buffers[3],buffers[4],buffers[6]);
                 return phonePo;
-            }else{
-                System.out.println("格式出现错误，请进行更正");
-            }
-
-            return null;
         }
 
     }
@@ -168,11 +162,9 @@ public class EmailGetter {
 
         EmailGetter emailGetter =new EmailGetter();
         emailGetter.loginIT();
-        while(true){ ;
             PhonePo phonePo =emailGetter.getPhoneNumber();
-            System.out.print(emailGetter.getIdentCode(phonePo.getP_ID()));
-            System.out.println(emailGetter.getIdentCode(phonePo.getP_ID()));
-        }
+            System.out.print(phonePo.getP_ID());
+
 
     }
 }

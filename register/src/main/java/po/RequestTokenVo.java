@@ -28,7 +28,7 @@ public class RequestTokenVo {
         return header;
     }
 
-    public void setHeader(Map<String, Object> String) {
+    public void setHeader(Map<String, String> header) {
         this.header = header;
     }
 

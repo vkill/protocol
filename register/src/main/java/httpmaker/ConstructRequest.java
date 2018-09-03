@@ -33,7 +33,6 @@ public class ConstructRequest
 
 
     public static Request constructPost(RequestTokenVo requestEntity) throws IOException {
-
         // 构建POST请求，并设置请求消息头
         //requestEntity中包含三部分，Url、Header和Body
         FormBody.Builder formBody = new FormBody.Builder();     //创建表单请求体
@@ -46,9 +45,10 @@ public class ConstructRequest
             builder.addHeader(key, headerParams.get(key));
         }
         for(String key : bodyParams.keySet()){      //添加body信息
-            builder.post(formBody.build()).build();
+//            builder.post(formBody.build()).build();
+            formBody.add(key, bodyParams.get(key));
         }
-        Request request = builder.get().build();
+        Request request = builder.post(formBody.build()).build();
 
 
         return request;
