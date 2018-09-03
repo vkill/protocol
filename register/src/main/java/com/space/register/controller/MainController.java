@@ -123,11 +123,8 @@ public class MainController {
         requestToSend.setHeader(header);
         requestToSend.setBody(null);
         Request request = null;
-        try {
-            request = ConstructRequest.constructGet(requestToSend);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        request = ConstructRequest.constructGet(requestToSend);
+
 
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
@@ -238,11 +235,9 @@ public class MainController {
         requestToSend.setHeader(header);
         requestToSend.setBody(null);
         Request request = null;
-        try {
-            request = ConstructRequest.constructGet(requestToSend);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        request = ConstructRequest.constructGet(requestToSend);
+
+
 
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
