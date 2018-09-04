@@ -196,12 +196,14 @@ public class TvRegisterMaker {
     }
 
     public Map<String,String> getDevice(Map<String,String> kao,PhonePo phonePo){
-        kao.put("mobile",ParamCreater.get_Mobile("66",phonePo.getPhone_Num()));
+        String phone = "+66"+phonePo.getPhone_Num();
+        kao.put("mobile",ParamCreater.change_Mobile_to_Src(phone));
         return kao;
     }
 
     public Map<String,String> getDeviceCode(Map<String,String> kao,PhonePo phonePo,String code){
-        kao.put("mobile",ParamCreater.get_Mobile("66",phonePo.getPhone_Num()));
+        String phone = "+66"+phonePo.getPhone_Num();
+        kao.put("mobile",ParamCreater.change_Mobile_to_Src(phone));
         kao.put("password",ParamCreater.change_Mobile_to_Src("18805156570"));
         kao.put("code",ParamCreater.change_Mobile_to_Src(code));
         return kao;

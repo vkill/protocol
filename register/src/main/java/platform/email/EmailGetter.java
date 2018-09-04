@@ -23,7 +23,7 @@ public class EmailGetter {
     private String projectID ="1003";
     private String projectPasswordID = "1004";
     private String Login_url ;
-    private String Usertoken ="5eb9541386e913d9d0bfccbd212e081b";
+    public String Usertoken ="5eb9541386e913d9d0bfccbd212e081b";
     private String errorStr = "0";
     private String successStr = "1";
     /**
@@ -139,6 +139,7 @@ public class EmailGetter {
             try {
                 Thread.sleep(5000);
                 document =Jsoup.connect(infoUrl).get();
+                System.out.println(document);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -146,7 +147,7 @@ public class EmailGetter {
             buffers = buff.split("\\|");
             tag = buffers[0];
             if(tag.equals(successStr)){
-                return buffers[2].substring(3,7);
+                return buffers[1];
             }
             else if(tag.equals("-4")){
                 System.out.println("号码已经强制释放");
@@ -154,7 +155,7 @@ public class EmailGetter {
             }else{
                 System.out.println("等待验证码");
             }
-
+            System.out.println("tag : "+tag);
         }
         System.out.print("获取验证码失败");
         return "请求超时";
@@ -165,9 +166,9 @@ public class EmailGetter {
 
         EmailGetter emailGetter =new EmailGetter();
         emailGetter.loginIT();
-            PhonePo phonePo =emailGetter.getPhoneNumber();
-            System.out.print(phonePo.getP_ID());
-
-
+            //PhonePo phonePo =emailGetter.getPhoneNumber();
+            //System.out.print(phonePo.getPhone_Num());
+        //System.out.println(emailGetter.getIdentCode(phonePo.getP_ID()));
+        System.out.println(emailGetter.userName);
     }
 }
