@@ -9,20 +9,20 @@ import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 /**
  * @program: register
- * @description: 构造修改信息模块
+ * @description: 获取预加载视频id的构造模块
  * @author: Mr.Jia
- * @create: 2018-09-05 13:36
+ * @create: 2018-09-05 20:41
  **/
-public class ModifyInfoMaker {
+public class GetAwemeListMaker {
 
-    public static String modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity) {
-
+    public static ArrayList<String> getAwemeListMaker(DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
 
         //获取设备信息
         String deviceID = deviceEntity.getDeviceId();
@@ -42,6 +42,13 @@ public class ModifyInfoMaker {
         //构造token
         Map<String, String> token = new HashMap<String, String>();
 
+        token.put("type","0");
+        token.put("max_cursor","0");
+        token.put("min_cursor","-1");
+        token.put("count","6");
+        token.put("volume","0.7333333333333333");
+        token.put("pull_type","2");
+        token.put("app_type","normal");
         token.put("os_api","22");
         token.put("device_type",deviceType);
         token.put("device_platform",devicePlatform);
@@ -76,11 +83,10 @@ public class ModifyInfoMaker {
         token.put("ts",ts);
         token.put("as","a1iosdfgh");
         token.put("cp","androide1");
-
-
-        //url构建完成,其中cookie需要从前面的cookie参数中提取
         String url = ConstructRequestUrl.constructUrl(host, msg, token);
 
+
+        //下面开始构造header中的cookie
         String []line_split = cookie.split(";");
         Map <String, String> stack = new HashMap<String, String>();
         for(int i = 0;i < line_split.length;i++){
@@ -108,72 +114,58 @@ public class ModifyInfoMaker {
         header_cookie.put("qh[360]","1");
         Map<String, String> header = new HashMap<String, String>();
 
+
         String header_str = MapToString(header_cookie);
 
-        header.put("Accept-Encoding","gzip");
-        header.put("Cache-Control","max-stale=0");
+
         header.put("Host","aweme.snssdk.com");
         header.put("Connection","Keep-Alive");
+        header.put("Accept-Encoding","gzip");
         header.put("Cookie",header_str);
         header.put("User-Agent","okhttp/3.8.1");
-
-
-        Map <String, String> body = new HashMap<String, String>();
-        body.put("uid",uid);
-        body.put("is_binded_weibo","0");
-        body.put("school_type","0");
-        body.put("birthday","1991-12-15");
-        body.put("signature","gaoxiang123laji");
-        body.put("nickname","gaoxiang123laji");
-        body.put("retry_type","no_retry");
-        body.put("os_api","22");
-        body.put("device_type",deviceType);
-        body.put("device_platform",devicePlatform);
-        body.put("ssmix","a");
-        body.put("iid",iid);
-        body.put("manifest_version_code","176");
-        body.put("dpi","240");
-        body.put("uuid",uuid);
-        body.put("version_code","176");
-        body.put("app_name","awe");
-        body.put("version_name","1.7.6");
-        body.put("openudid",openudid);
-        body.put("device_id",deviceID);
-        body.put("resolution","1280*720");
-        body.put("os_version","5.1.1");
-        body.put("language","zh");
-        body.put("device_brand",deviceBrand);
-        body.put("ac","wifi");
-        body.put("update_version_code","1762");
-        body.put("aid","1128");
-        body.put("channel","tengxun");
-        body.put("_rticket",_rticket);
-
 
 
         RequestTokenVo requestToSend = new RequestTokenVo();
         requestToSend.setUrl(url);
         requestToSend.setHeader(header);
-        requestToSend.setBody(body);
+        requestToSend.setBody(null);
         Request request = null;
-        request = ConstructRequest.constructPost(requestToSend);
-
-
+        request = ConstructRequest.constructGet(requestToSend);
 
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
+        ArrayList<String> resultToReturn = new ArrayList<String>();
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 System.out.println("响应成功");
-                System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+                String result = GzipGetteer.uncompressToString(response.body().bytes());
+
+                String []temp = result.split("\"aweme_id\":");
+                ArrayList<String> id_list = new ArrayList<String>();
+                for(int i = 1;i < temp.length;i ++){
+                    String []temp1 = temp[i].split(",");
+                    char []array = temp1[0].toCharArray();
+                    String str = "";
+                    for(int j = 1;j < array.length;j++){
+                        str += array[j];
+                    }
+                    id_list.add(str);
+                }
+
+                for(int i = 0;i < id_list.size();i +=3){
+                    resultToReturn.add(id_list.get(i));
+                }
+
             }
             @Override
             public void onFailure(Call arg0, IOException arg1) {
                 System.out.println("响应失败");
+
             }
         });
-        return null;
+
+        return resultToReturn;
     }
 
     public static String MapToString(Map map){

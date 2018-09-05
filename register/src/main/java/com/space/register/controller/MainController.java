@@ -12,6 +12,7 @@ import okhttp3.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.FollowMaker;
+import params.GetAwemeListMaker;
 import params.ModifyInfoMaker;
 import params.ThumbsUpMaker;
 import params.tools.ConstructRequestUrl;
@@ -45,7 +46,7 @@ public class MainController {
     public String thumbsUpMaker() {
 
         //这个是视频id，需要参数传入
-        String aweme_id = "6597638785964444936";
+        String aweme_id = "6597344642847477000";
 
         ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
         for(int i = 0;i < dyUserEntity_list.size(); i++){
@@ -110,10 +111,10 @@ public class MainController {
     }
 
     @RequestMapping("/modify")
-    public String ModificationMaker(){
+    public String modificationMaker(){
 
         //通过id获取t_dy_user中的数据
-        DYUserEntity dyUserEntity = dyRegisterService.findById(1);
+        DYUserEntity dyUserEntity = dyRegisterService.findById(43);
         String user_cookie = dyUserEntity.getUserCookie();
         String simulationId = dyUserEntity.getSimulationID();
         String uid = dyUserEntity.getUid();
@@ -130,6 +131,34 @@ public class MainController {
         ModifyInfoMaker.modifyInfoMaker(uid, deviceEntity, urlRequestEntity);
 
 
+        return null;
+    }
+
+    @RequestMapping("/support")
+    public String supportAccountMaker(){
+
+        //通过id获取t_dy_user中的数据
+        DYUserEntity dyUserEntity = dyRegisterService.findById(43);
+        String user_cookie = dyUserEntity.getUserCookie();
+        String simulationId = dyUserEntity.getSimulationID();
+
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+        String cookie = deviceEntity.getCookie();
+        cookie += (";"+ user_cookie);
+        deviceEntity.setCookie(cookie);
+
+        //获取并构建url信息，包括host、msg、token
+        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
+
+        ArrayList<String> awemeList =  GetAwemeListMaker.getAwemeListMaker(deviceEntity, urlRequestEntity);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(awemeList);
         return null;
     }
 
