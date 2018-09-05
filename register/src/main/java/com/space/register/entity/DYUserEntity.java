@@ -29,8 +29,19 @@ public class DYUserEntity {
 
     private String belong;
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     @Column(columnDefinition = "text")
+
     private String userCookie;
+
+    private String uid;
 
     public int getId() {
         return id;

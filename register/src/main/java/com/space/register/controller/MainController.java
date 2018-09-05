@@ -12,12 +12,14 @@ import okhttp3.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.FollowMaker;
+import params.ModifyInfoMaker;
 import params.ThumbsUpMaker;
 import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,6 +36,7 @@ public class MainController {
 
     @Resource
     DYRegisterService dyRegisterService;
+
     /**
      * 点赞模块
      * @return
@@ -42,25 +45,38 @@ public class MainController {
     public String thumbsUpMaker() {
 
         //这个是视频id，需要参数传入
-        String aweme_id = "6584558440260046083";
+        String aweme_id = "6597638785964444936";
 
-        //通过id获取t_dy_user中的数据
-        DYUserEntity dyUserEntity = dyRegisterService.findById(1);
-        String mobile = dyUserEntity.getPhoneNum();
-        String password = dyUserEntity.getPassword();
-        String user_cookie = dyUserEntity.getUserCookie();
-        String simulationId = dyUserEntity.getSimulationID();
+        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
+        for(int i = 0;i < dyUserEntity_list.size(); i++){
 
-        //通过simulationid获取t_device中的数据
-        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-        String cookie = deviceEntity.getCookie();
-        cookie += (";"+ user_cookie);
-        deviceEntity.setCookie(cookie);
+            //通过id获取t_dy_user中的数据
+            DYUserEntity dyUserEntity = dyUserEntity_list.get(i);
+            String mobile = dyUserEntity.getPhoneNum();
+            String password = dyUserEntity.getPassword();
+            String user_cookie = dyUserEntity.getUserCookie();
+            String simulationId = dyUserEntity.getSimulationID();
 
-        //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
 
-        ThumbsUpMaker.thumbsUpMaker(aweme_id , deviceEntity, urlRequestEntity);
+            //通过simulationid获取t_device中的数据
+            DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+            String cookie = deviceEntity.getCookie();
+            cookie += (";"+ user_cookie);
+            deviceEntity.setCookie(cookie);
+
+            //获取并构建url信息，包括host、msg、token
+            UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
+
+            ThumbsUpMaker.thumbsUpMaker(aweme_id , deviceEntity, urlRequestEntity);
+
+            try {
+                Thread.sleep(1500);
+                System.out.println(dyUserEntity.getId());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         return "abc";
     }
@@ -88,6 +104,30 @@ public class MainController {
         UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(4);
 
         FollowMaker.FollowMaker(user_id, deviceEntity, urlRequestEntity);
+
+
+        return null;
+    }
+
+    @RequestMapping("/modify")
+    public String ModificationMaker(){
+
+        //通过id获取t_dy_user中的数据
+        DYUserEntity dyUserEntity = dyRegisterService.findById(1);
+        String user_cookie = dyUserEntity.getUserCookie();
+        String simulationId = dyUserEntity.getSimulationID();
+        String uid = dyUserEntity.getUid();
+
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+        String cookie = deviceEntity.getCookie();
+        cookie += (";"+ user_cookie);
+        deviceEntity.setCookie(cookie);
+
+        //获取并构建url信息，包括host、msg、token
+        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(5);
+
+        ModifyInfoMaker.modifyInfoMaker(uid, deviceEntity, urlRequestEntity);
 
 
         return null;

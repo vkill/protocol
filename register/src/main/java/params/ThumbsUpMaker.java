@@ -65,7 +65,7 @@ public class ThumbsUpMaker {
         token.put("uuid",uuid);
         token.put("openudid",openudid);
         token.put("manifest_version_code","176");
-        token.put("resolution","1280*720");
+        token.put("resolution","720*1280");
         token.put("dpi","240");
         token.put("update_version_code","1762");
         String _rticket = String.valueOf(System.currentTimeMillis());
@@ -116,7 +116,7 @@ public class ThumbsUpMaker {
 
         header.put("Accept-Encoding","gzip");
         header.put("Cache-Control","max-stale=0");
-        header.put("Host","aweme.snssdk.com");
+        header.put("Host","api.amemv.com");
         header.put("Connection","Keep-Alive");
         header.put("Cookie",header_str);
         header.put("User-Agent","okhttp/3.8.1");

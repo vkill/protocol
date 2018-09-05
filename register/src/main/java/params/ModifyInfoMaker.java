@@ -15,16 +15,16 @@ import java.util.Map;
 
 /**
  * @program: register
- * @description: 构造关注模块
+ * @description: 构造修改信息模块
  * @author: Mr.Jia
- * @create: 2018-09-04 15:15
+ * @create: 2018-09-05 13:36
  **/
-public class FollowMaker {
-    public static String FollowMaker(String user_id, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity) {
+public class ModifyInfoMaker {
+
+    public static String modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity) {
 
 
         //获取设备信息
-        //DeviceEntity deviceEntity = deviceService.getDeviceMsg(1);
         String deviceID = deviceEntity.getDeviceId();
         String deviceBrand = deviceEntity.getDevice_brand();
         String devicePlatform = deviceEntity.getDevice_platform();
@@ -36,38 +36,33 @@ public class FollowMaker {
 
 
         //获取并构建url信息，包括host、msg、token
-        //UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
         String host = urlRequestEntity.getHost();
         String msg = urlRequestEntity.getMessage();
 
         //构造token
         Map<String, String> token = new HashMap<String, String>();
-        token.put("user_id",user_id);
 
-        //type为1则代表点赞，0为取消赞
-        token.put("type","1");
-        token.put("retry_type","no_retry");
-        token.put("iid",iid);
-        token.put("device_id",deviceID);
-        token.put("ac","wifi");
-        token.put("channel","tengxun");
-        token.put("aid","1128");
-        token.put("app_name","aweme");
-        token.put("version_code","176");
-        token.put("version_name","1.7.6");
+        token.put("os_api","22");
+        token.put("device_type",deviceType);
         token.put("device_platform",devicePlatform);
         token.put("ssmix","a");
-        token.put("device_type",deviceType);
-        token.put("device_brand",deviceBrand);
-        token.put("language","zh");
-        token.put("os_api","22");
-        token.put("os_version","5.1.1");
-        token.put("uuid",uuid);
-        token.put("openudid",openudid);
+        token.put("iid",iid);
         token.put("manifest_version_code","176");
-        token.put("resolution","1280*720");
         token.put("dpi","240");
+        token.put("uuid",uuid);
+        token.put("version_code","176");
+        token.put("app_name","aweme");
+        token.put("version_name","1.7.6");
+        token.put("openudid",openudid);
+        token.put("device_id",deviceID);
+        token.put("resolution","1280*720");
+        token.put("os_version","5.1.1");
+        token.put("language","zh");
+        token.put("device_brand",deviceBrand);
+        token.put("ac","wifi");
         token.put("update_version_code","1762");
+        token.put("aid","1128");
+        token.put("channel","tengxun");
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
         String ts = "";
@@ -81,6 +76,7 @@ public class FollowMaker {
         token.put("ts",ts);
         token.put("as","a1iosdfgh");
         token.put("cp","androide1");
+
 
         //url构建完成,其中cookie需要从前面的cookie参数中提取
         String url = ConstructRequestUrl.constructUrl(host, msg, token);
@@ -116,17 +112,53 @@ public class FollowMaker {
 
         header.put("Accept-Encoding","gzip");
         header.put("Cache-Control","max-stale=0");
-        header.put("Host","api.amemv.com");
+        header.put("Host","aweme.snssdk.com");
         header.put("Connection","Keep-Alive");
         header.put("Cookie",header_str);
         header.put("User-Agent","okhttp/3.8.1");
 
+
+        Map <String, String> body = new HashMap<String, String>();
+        body.put("uid",uid);
+        body.put("is_binded_weibo","0");
+        body.put("school_type","0");
+        body.put("birthday","1991-12-15");
+        body.put("signature","黑子的篮球");
+        body.put("nickname","黑子之篮球");
+        body.put("retry_type","no_retry");
+        body.put("os_api","22");
+        body.put("device_type",deviceType);
+        body.put("device_platform",devicePlatform);
+        body.put("ssmix","a");
+        body.put("iid",iid);
+        body.put("manifest_version_code","176");
+        body.put("dpi","240");
+        body.put("uuid",uuid);
+        body.put("version_code","176");
+        body.put("app_name","awe");
+        body.put("version_name","1.7.6");
+        body.put("openudid",openudid);
+        body.put("device_id",deviceID);
+        body.put("resolution","1280*720");
+        body.put("os_version","5.1.1");
+        body.put("language","zh");
+        body.put("device_brand",deviceBrand);
+        body.put("ac","wifi");
+        body.put("update_version_code","1762");
+        body.put("aid","1128");
+        body.put("channel","tengxun");
+        body.put("_rticket",_rticket);
+
+
+
         RequestTokenVo requestToSend = new RequestTokenVo();
         requestToSend.setUrl(url);
         requestToSend.setHeader(header);
-        requestToSend.setBody(null);
+        requestToSend.setBody(body);
         Request request = null;
-        request = ConstructRequest.constructGet(requestToSend);
+        request = ConstructRequest.constructPost(requestToSend);
+
+
 
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
