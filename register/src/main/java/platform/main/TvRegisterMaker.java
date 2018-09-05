@@ -17,7 +17,6 @@ import org.springframework.web.servlet.tags.Param;
 import params.ParamCreater;
 import params.tools.KeyControler;
 import params.tools.RequestURLCreater;
-import platform.email.EmailGetter;
 import platform.tv.DeviceTvRegister;
 import po.PhonePo;
 import po.RequestTokenVo;
@@ -76,14 +75,18 @@ public class TvRegisterMaker {
             JSONObject headerJson = jsonObject.getJSONObject("header");
             deviceEntity.setDeviceId(resultJson.getString("device_id"));
             deviceEntity.setDevice_brand(headerJson.getString("device_brand"));
-            deviceEntity.setDevice_platform("Android");
-            deviceEntity.setDevice_type(jsonObject.getString("device_model"));
+            deviceEntity.setDevice_platform("android");
+            deviceEntity.setDevice_type(headerJson.getString("device_model"));
             deviceEntity.setIid(resultJson.getString("install_id"));
             deviceEntity.setOpenudid(headerJson.getString("openudid"));
             deviceEntity.setUuid(headerJson.getString("udid"));
-            ArrayList<String> strings = getCookieFromResponseHeaders(getStrCookie(header));
+            ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(header));
             StringBuilder cookies = new StringBuilder();
             for(int i=0;i<strings.size();i++){
+                if(i==strings.size()-1){
+                    cookies.append(strings.get(i));
+                    break;
+                }
                 cookies.append(strings.get(i)+";");
             }
             deviceEntity.setCookie(cookies.toString());
@@ -116,12 +119,12 @@ public class TvRegisterMaker {
             e.printStackTrace();
             System.out.println("注册设备odinTT失败");
         }
-        ArrayList<String> strings = getCookieFromResponseHeaders(getStrCookie(header));
+        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(header));
         StringBuilder cookies = new StringBuilder();
         for(int i=0;i<strings.size();i++){
             cookies.append(strings.get(i)+";");
         }
-        deviceEntity.setCookie(deviceEntity.getCookie()+cookies.toString());
+        deviceEntity.setCookie(deviceEntity.getCookie());
         return deviceEntity;
     }
     public String getUrlForOdinTT(String hostAndMsg,Map<String,String> allVauleMaps,DeviceEntity deviceEntity){
@@ -204,42 +207,9 @@ public class TvRegisterMaker {
     public Map<String,String> getDeviceCode(Map<String,String> kao,PhonePo phonePo,String code){
         String phone = "+66"+phonePo.getPhone_Num();
         kao.put("mobile",ParamCreater.change_Mobile_to_Src(phone));
-        kao.put("password",ParamCreater.change_Mobile_to_Src("18805156570"));
+        kao.put("password",ParamCreater.change_Mobile_to_Src("asd123456"));
         kao.put("code",ParamCreater.change_Mobile_to_Src(code));
         return kao;
-    }
-    /**
-     *
-     * @param responseHeaders 提取headers里面的cookie信息
-     * @return
-     */
-    private ArrayList<String> getStrCookie(Headers responseHeaders){
-
-        int responseHeadersLength = responseHeaders.size();
-        ArrayList<String> cookie = new ArrayList<String>();
-        for (int i = 0; i < responseHeadersLength; i++){
-            String headerName = responseHeaders.name(i);
-            String headerValue = responseHeaders.value(i);
-            if(headerName.equals("Set-Cookie")){
-                cookie.add(headerValue);
-            }
-        }
-        System.out.println(cookie.toString());
-        return cookie;
-    }
-
-    /**
-     *
-     * @param responseHeaders 包含所有cookie的链表，用于获取有用的cookie
-     * @return 只包含重要信息的cookie字符串
-     */
-    private static ArrayList<String> getCookieFromResponseHeaders(ArrayList<String> responseHeaders){
-        ArrayList<String> result = new ArrayList<String>();
-        for(int i = 0;i < responseHeaders.size();i++){
-            String []temp = responseHeaders.get(i).split(";");
-            result.add(temp[0]);
-        }
-        return result;
     }
 
     public static void main(String[]args){

@@ -9,7 +9,7 @@ package enums;
 public enum BaseNum {
     //与号码有关的枚举类型变量
     zero("0"),one("1"),two("2"),three("3"),four("4"),five("5"),six("6"),serven("7"),eight("8"),nine("9"),plus("+"),blank(" "),
-    star("*");
+    star("*"),a("a"),s("s"),d("d");
 
 
     private String vaule;

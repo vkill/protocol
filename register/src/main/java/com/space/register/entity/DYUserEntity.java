@@ -29,6 +29,12 @@ public class DYUserEntity {
 
     private String belong;
 
+    @Column(columnDefinition = "text")
+
+    private String userCookie;
+
+    private String uid;
+
     public String getUid() {
         return uid;
     }
@@ -37,11 +43,6 @@ public class DYUserEntity {
         this.uid = uid;
     }
 
-    @Column(columnDefinition = "text")
-
-    private String userCookie;
-
-    private String uid;
 
     public int getId() {
         return id;

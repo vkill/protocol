@@ -81,7 +81,7 @@ public class ParamCreater {
     public static void main(String [] args){
         ParamCreater paramCreater = new ParamCreater();
 
-        System.out.println(paramCreater.get_Mobile("86","18805156570"));
+        System.out.println(ParamCreater.change_Mobile_to_Src("asd123456"));
 
         /**
         String rticket = paramCreater.get_Rticket();

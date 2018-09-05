@@ -3,9 +3,11 @@ package params.tools;
 import enums.*;
 import enums.paramtable.DirTable;
 import jsonreader.tools.JsonTableGetter;
+import okhttp3.Headers;
 import org.apache.catalina.User;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -144,5 +146,39 @@ public class RequestURLCreater {
             }
         }
         return stringBuilder;
+    }
+
+    /**
+     *
+     * @param responseHeaders 包含所有cookie的链表，用于获取有用的cookie
+     * @return 只包含重要信息的cookie字符串
+     */
+    public static ArrayList<String> getCookieFromResponseHeaders(ArrayList<String> responseHeaders){
+        ArrayList<String> result = new ArrayList<String>();
+        for(int i = 0;i < responseHeaders.size();i++){
+            String []temp = responseHeaders.get(i).split(";");
+            result.add(temp[0]);
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @param responseHeaders 提取headers里面的cookie信息
+     * @return
+     */
+    public static ArrayList<String> getStrCookie(Headers responseHeaders){
+
+        int responseHeadersLength = responseHeaders.size();
+        ArrayList<String> cookie = new ArrayList<String>();
+        for (int i = 0; i < responseHeadersLength; i++){
+            String headerName = responseHeaders.name(i);
+            String headerValue = responseHeaders.value(i);
+            if(headerName.equals("Set-Cookie")){
+                cookie.add(headerValue);
+            }
+        }
+        System.out.println(cookie.toString());
+        return cookie;
     }
 }

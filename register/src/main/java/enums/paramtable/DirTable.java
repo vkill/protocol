@@ -38,6 +38,10 @@ public class DirTable {
         phone_Table.put(BaseNum.plus,"2e");
         phone_Table.put(BaseNum.blank,"25");
         phone_Table.put(BaseNum.star,"2f");
+        //字母表对应值
+        phone_Table.put(BaseNum.a,"64");
+        phone_Table.put(BaseNum.s,"76");
+        phone_Table.put(BaseNum.d,"61");
     }
 
     static{

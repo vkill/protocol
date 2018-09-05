@@ -45,7 +45,7 @@ public class EmailGetter {
         try {
 
             while (tag.equals(errorStr)&&errTime<3){
-                Document document = Jsoup.connect(Login_url).get();
+                Document document = Jsoup.connect(Login_url).timeout(3000).get();
                 // System.out.println(document.body().text());
                 String buff=document.body().text();
                 buffers = buff.split("\\|");
@@ -135,7 +135,7 @@ public class EmailGetter {
         String[] buffers;
         String tag =errorStr;
         int buffer_Num =0;
-        while(tag.equals(errorStr)){
+        while(tag.equals(errorStr)&buffer_Num<12){
             try {
                 Thread.sleep(5000);
                 document =Jsoup.connect(infoUrl).get();
@@ -153,9 +153,10 @@ public class EmailGetter {
                 System.out.println("号码已经强制释放");
                 break;
             }else{
-                System.out.println("等待验证码");
+               // System.out.println("nimei: "+buffers[0]+" "+buffers[1]);
             }
-            System.out.println("tag : "+tag);
+            buffer_Num++;
+            //System.out.println("tag : "+tag);
         }
         System.out.print("获取验证码失败");
         return "请求超时";
@@ -163,12 +164,12 @@ public class EmailGetter {
 
 
     public static void main(String[] args) {
-
-        EmailGetter emailGetter =new EmailGetter();
+        EmailGetter emailGetter = new EmailGetter();
         emailGetter.loginIT();
-            //PhonePo phonePo =emailGetter.getPhoneNumber();
-            //System.out.print(phonePo.getPhone_Num());
-        //System.out.println(emailGetter.getIdentCode(phonePo.getP_ID()));
-        System.out.println(emailGetter.userName);
+        PhonePo phonePo = emailGetter.getPhoneNumber();
+        System.out.println(phonePo.getPhone_Num());
+        System.out.println(phonePo.getP_ID());
+        System.out.println(emailGetter.getIdentCode(phonePo.getP_ID()));
+
     }
 }

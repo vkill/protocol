@@ -40,7 +40,7 @@ public class DeviceTvRegister {
 
 
     public static void main(String[]args) {
-
+            DeviceTvRegister deviceTvRegister =new DeviceTvRegister();
 //        OkHttpClient mOkHttpClient =
 //                new OkHttpClient.Builder()
 //                        .readTimeout(60,TimeUnit.SECONDS)//设置读取超时时间
