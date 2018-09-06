@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8431e40a-e085-417f-8bbd-98f9aa714d4e" name="Default" comment="发送短信完成">
+    <list default="true" id="8431e40a-e085-417f-8bbd-98f9aa714d4e" name="Default" comment="增加注册整个代码的流程">
+      <change afterPath="$PROJECT_DIR$/register/src/main/java/platform/Url/UrlProcess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/register/src/main/java/randomtools/OptionalString.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/register/src/main/java/randomtools/RandomName.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -41,13 +43,6 @@
         <item name="protolDataBase" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="protocol: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="protolDataBase" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="protocol: schema" type="c314c289:MysqlImplModel$Schema" />
-        <item name="t_device: table" type="98d5ac3d:MysqlImplModel$Table" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -140,35 +135,45 @@
     <session id="-1637074997">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.118" value="1" />
+          <entry key="project.open.time.139" value="1" />
+          <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.36" value="1" />
+          <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.58" value="1" />
           <entry key="project.open.time.69" value="1" />
+          <entry key="project.open.time.71" value="1" />
+          <entry key="project.open.time.72" value="1" />
+          <entry key="project.open.time.80" value="1" />
           <entry key="project.open.time.86" value="1" />
           <entry key="project.open.time.88" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="11" />
-          <entry key="java" value="295" />
+          <entry key="class" value="29" />
+          <entry key="java" value="368" />
           <entry key="sql" value="1" />
-          <entry key="t_device" value="13" />
-          <entry key="t_dy_user" value="1" />
-          <entry key="t_url_request" value="7" />
-          <entry key="xml" value="3" />
+          <entry key="t_device" value="22" />
+          <entry key="t_douyin_account" value="1" />
+          <entry key="t_dy_user" value="9" />
+          <entry key="t_url_request" value="10" />
+          <entry key="xml" value="4" />
+          <entry key="yml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="11" />
-          <entry key="Database Element" value="21" />
-          <entry key="JAVA" value="295" />
+          <entry key="CLASS" value="29" />
+          <entry key="Database Element" value="42" />
+          <entry key="JAVA" value="368" />
           <entry key="Scratch" value="1" />
-          <entry key="XML" value="3" />
+          <entry key="XML" value="4" />
+          <entry key="YAML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -176,16 +181,20 @@
           <entry key="cell" value="22" />
           <entry key="dummy" value="29" />
           <entry key="ft" value="15" />
-          <entry key="java" value="6979" />
-          <entry key="txt" value="151" />
+          <entry key="java" value="10177" />
+          <entry key="txt" value="191" />
+          <entry key="xml" value="1" />
+          <entry key="yml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="6979" />
-          <entry key="PLAIN_TEXT" value="180" />
+          <entry key="JAVA" value="10177" />
+          <entry key="PLAIN_TEXT" value="220" />
           <entry key="Scratch" value="22" />
           <entry key="VTL" value="15" />
+          <entry key="XML" value="1" />
+          <entry key="YAML" value="2" />
         </counts>
       </usages-collector>
     </session>
@@ -193,77 +202,40 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2565">
-              <caret line="162" column="37" selection-start-line="162" selection-start-column="25" selection-end-line="162" selection-end-column="37" />
+            <state relative-caret-position="174">
+              <caret line="130" column="60" selection-start-line="130" selection-start-column="53" selection-end-line="130" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#TvRegisterMaker#0;class#TvRegisterMaker#0" />
-                <element signature="method#MapToString#0;class#TvRegisterMaker#0" />
-                <element signature="method#getDevice#0;class#TvRegisterMaker#0" />
-                <element signature="method#getDeviceCode#0;class#TvRegisterMaker#0" />
-                <element signature="method#getStrCookie#0;class#TvRegisterMaker#0" />
-                <element signature="method#getCookieFromResponseHeaders#0;class#TvRegisterMaker#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DeviceEntity.java">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1539">
-              <caret line="119" column="64" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="64" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1415#1416#0" expanded="true" />
-                <element signature="e#1446#1447#0" expanded="true" />
-                <element signature="e#1569#1570#0" expanded="true" />
-                <element signature="e#1600#1601#0" expanded="true" />
-                <element signature="e#1818#1819#0" expanded="true" />
-                <element signature="e#1866#1867#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="133">
+              <caret line="62" column="87" selection-start-line="62" selection-start-column="87" selection-end-line="62" selection-end-column="87" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/service/Impl/DYRegisterServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2489">
-              <caret line="139" column="35" selection-start-line="139" selection-start-column="35" selection-end-line="139" selection-end-column="35" />
-              <folding>
-                <element signature="e#2256#2257#0" expanded="true" />
-                <element signature="e#2299#2300#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="265">
+              <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/Url/UrlProcess.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="237" column="8" selection-start-line="237" selection-start-column="8" selection-end-line="237" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1083">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/register/src/main/java/httpmaker/ConstructRequest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="817">
-              <caret line="48" column="24" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="24" />
+            <state relative-caret-position="152">
+              <caret line="74" column="41" lean-forward="true" selection-start-line="80" selection-start-column="21" selection-end-line="80" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -274,8 +246,56 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/register/src/main/java/params/ParamCreater.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="30" column="23" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
+            <state relative-caret-position="256">
+              <caret line="83" column="71" selection-start-line="83" selection-start-column="71" selection-end-line="83" selection-end-column="71" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/params/ModifyInfoMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="168" column="81" selection-start-line="168" selection-start-column="66" selection-end-line="168" selection-end-column="81" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/params/GetAwemeListMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2432">
+              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DYRegisterController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/httpmaker/ConstructRequest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="27" column="48" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/src/main/java/params/FollowMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="328">
+              <caret line="143" column="20" lean-forward="true" selection-start-line="123" selection-start-column="7" selection-end-line="143" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -310,19 +330,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/web/src/main/java/tools/OptionalString.java" />
-        <option value="$PROJECT_DIR$/web/src/main/java/po/PhonePo.java" />
-        <option value="$PROJECT_DIR$/web/src/main/java/platform/email/EmailGetter.java" />
-        <option value="$PROJECT_DIR$/web/pom.xml" />
-        <option value="$PROJECT_DIR$/web/src/main/java/platform/tv/HundredOneDay.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/po/RequestTokenVO.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/httpmaker/HttpPoster.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/po/UrlRequestPo.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/httpmaker/HttpSender.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/jsonreader/tools/GzipGetteer.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/util/SslUtils.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/jsonreader/tools/JsonTableGetter.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DYUserEntity.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/dao/DYUserRepository.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/service/Test.java" />
         <option value="$PROJECT_DIR$/web/src/main/java/com/space/service/Impl/CompanyServiceImpl.java" />
@@ -338,8 +347,6 @@
         <option value="$PROJECT_DIR$/register/src/main/java/params/DeviceInfoCreater.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/util/InstallCert.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/jsonreader/tools/DeviceInfoCreater.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/platform/tcp/TcpClientForTV.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/platform/tv/DeviceTvRegister.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/dao/DeviceRepository.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/enums/paramtable/BaseSendMessageInfo.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/enums/BaseAppInfo.java" />
@@ -350,17 +357,30 @@
         <option value="$PROJECT_DIR$/register/src/main/java/enums/UserRegisterBodyInfo.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/enums/SendMessageBodyInfo.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/po/RequestTokenVo.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/enums/paramtable/DirTable.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/params/UserRegister.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/params/GetCookie.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/httpmaker/ConstructRequest.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DeviceEntity.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/params/ParamCreater.java" />
-        <option value="$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/platform/tv/DeviceTvRegister.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/platform/tcp/TcpClientForTV.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/vpntool/VPNTools.java" />
+        <option value="$PROJECT_DIR$/register/src/main/resources/application.yml" />
+        <option value="$PROJECT_DIR$/register/src/main/java/util/database/tools/InfoTools.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/util/database/tools/UserBaseImpl.java" />
         <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/params/ThumbsUpMaker.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/util/database/tools/DeviceBaseImpl.java" />
+        <option value="$PROJECT_DIR$/register/pom.xml" />
+        <option value="$PROJECT_DIR$/register/src/main/java/platform/vpn/VpnChanger.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DYUserEntity.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/enums/BaseNum.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/enums/paramtable/DirTable.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/params/ParamCreater.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java" />
+        <option value="$PROJECT_DIR$/register/src/main/java/platform/Url/UrlProcess.java" />
       </list>
     </option>
   </component>
@@ -390,9 +410,8 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="1939" />
-    <option name="height" value="1099" />
+    <option name="width" value="1100" />
+    <option name="height" value="1090" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -400,12 +419,39 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+      <pane id="AndroidView" />
+      <pane id="PackagesPane">
+        <subPane>
           <expand>
             <path>
-              <item name="protool" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="register" type="2674bda8:ScopeViewTreeModel$GroupNode" />
+              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
+              <item name="register" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
+              <item name="register" type="616d4139:PackageViewModuleNode" />
+              <item name="com.space.register" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
+              <item name="register" type="616d4139:PackageViewModuleNode" />
+              <item name="jsonreader.tools" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
+              <item name="register" type="616d4139:PackageViewModuleNode" />
+              <item name="params" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
+              <item name="register" type="616d4139:PackageViewModuleNode" />
+              <item name="platform" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
+              <item name="register" type="616d4139:PackageViewModuleNode" />
+              <item name="platform" type="1f31426a:PackageElementNode" />
+              <item name="tv" type="1f31426a:PackageElementNode" />
             </path>
           </expand>
           <select />
@@ -486,23 +532,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="enums" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="protool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="enums" type="462c0819:PsiDirectoryNode" />
-              <item name="paramtable" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="protool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="httpmaker" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -519,15 +548,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="params" type="462c0819:PsiDirectoryNode" />
-              <item name="tools" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="protool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="platform" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -537,7 +557,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="platform" type="462c0819:PsiDirectoryNode" />
-              <item name="email" type="462c0819:PsiDirectoryNode" />
+              <item name="Url" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="protool" type="b2602c69:ProjectViewProjectNode" />
@@ -545,8 +565,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="platform" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="randomtools" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="protool" type="b2602c69:ProjectViewProjectNode" />
@@ -554,8 +573,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="platform" type="462c0819:PsiDirectoryNode" />
-              <item name="tcp" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="protool" type="b2602c69:ProjectViewProjectNode" />
@@ -563,16 +581,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="platform" type="462c0819:PsiDirectoryNode" />
-              <item name="tv" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="protool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="register" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="po" type="462c0819:PsiDirectoryNode" />
+              <item name="vpntool" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="protool" type="b2602c69:ProjectViewProjectNode" />
@@ -587,39 +596,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane">
-        <subPane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
             <path>
-              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
-              <item name="register" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
-              <item name="register" type="616d4139:PackageViewModuleNode" />
-              <item name="com.space.register" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
-              <item name="register" type="616d4139:PackageViewModuleNode" />
-              <item name="jsonreader.tools" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
-              <item name="register" type="616d4139:PackageViewModuleNode" />
-              <item name="params" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
-              <item name="register" type="616d4139:PackageViewModuleNode" />
-              <item name="platform" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="protool" type="58d84e3e:PackageViewProjectNode" />
-              <item name="register" type="616d4139:PackageViewModuleNode" />
-              <item name="platform" type="1f31426a:PackageElementNode" />
-              <item name="tv" type="1f31426a:PackageElementNode" />
+              <item name="protool" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="register" type="2674bda8:ScopeViewTreeModel$GroupNode" />
             </path>
           </expand>
           <select />
@@ -635,7 +617,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1535985639502" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536226649463" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="TestNG" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.TestNG" value="" />
     <property name="database.console.LAST_STATE" value="false" />
@@ -646,6 +628,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
   <component name="RecentsManager">
@@ -682,37 +665,9 @@
         </RuleState>
       </list>
     </option>
-    <option name="contentProportion" value="0.1010929" />
+    <option name="contentProportion" value="0.09221312" />
   </component>
-  <component name="RunManager" selected="Spring Boot.RegisterApplication">
-    <configuration name="DeviceTvRegister" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="platform.tv.DeviceTvRegister" />
-      <module name="register" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="platform.tv.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DirTable" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="enums.paramtable.DirTable" />
-      <module name="register" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="enums.paramtable.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.UrlProcess">
     <configuration name="EmailGetter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="platform.email.EmailGetter" />
       <module name="register" />
@@ -727,13 +682,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InstallCert" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="util.InstallCert" />
+    <configuration name="ParamCreater" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="params.ParamCreater" />
       <module name="register" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="util.*" />
+          <option name="PATTERN" value="params.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -741,13 +696,41 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TvRegisterMaker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="platform.main.TvRegisterMaker" />
+    <configuration name="UrlProcess" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="platform.Url.UrlProcess" />
       <module name="register" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="platform.main.*" />
+          <option name="PATTERN" value="platform.Url.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VPNTools" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="vpntool.VPNTools" />
+      <module name="register" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="vpntool.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VpnChanger" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="platform.vpn.VpnChanger" />
+      <module name="register" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="platform.vpn.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -798,19 +781,19 @@
     <list>
       <item itemvalue="Spring Boot.ProtocolApplication" />
       <item itemvalue="Spring Boot.RegisterApplication" />
-      <item itemvalue="Application.DeviceTvRegister" />
-      <item itemvalue="Application.InstallCert" />
       <item itemvalue="Application.EmailGetter" />
-      <item itemvalue="Application.TvRegisterMaker" />
-      <item itemvalue="Application.DirTable" />
+      <item itemvalue="Application.VPNTools" />
+      <item itemvalue="Application.VpnChanger" />
+      <item itemvalue="Application.ParamCreater" />
+      <item itemvalue="Application.UrlProcess" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TvRegisterMaker" />
-        <item itemvalue="Application.DirTable" />
+        <item itemvalue="Application.UrlProcess" />
         <item itemvalue="Application.EmailGetter" />
-        <item itemvalue="Application.DeviceTvRegister" />
-        <item itemvalue="Application.InstallCert" />
+        <item itemvalue="Application.ParamCreater" />
+        <item itemvalue="Application.VpnChanger" />
+        <item itemvalue="Application.VPNTools" />
       </list>
     </recent_temporary>
   </component>
@@ -840,7 +823,14 @@
       <workItem from="1535872350917" duration="27969000" />
       <workItem from="1535946674675" duration="13605000" />
       <workItem from="1535962754012" duration="20788000" />
-      <workItem from="1535986559580" duration="122000" />
+      <workItem from="1535986559580" duration="4372000" />
+      <workItem from="1536032716724" duration="23812000" />
+      <workItem from="1536068411740" duration="4353000" />
+      <workItem from="1536117393596" duration="5863000" />
+      <workItem from="1536138383295" duration="4907000" />
+      <workItem from="1536148072414" duration="2903000" />
+      <workItem from="1536151289112" duration="5835000" />
+      <workItem from="1536215432933" duration="5086000" />
     </task>
     <task id="LOCAL-00001" summary="提交数据库操作">
       <created>1534086844025</created>
@@ -926,7 +916,28 @@
       <option name="project" value="LOCAL" />
       <updated>1535984848688</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="去除不必要的IO异常">
+      <created>1535986754554</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1535986754554</updated>
+    </task>
+    <task id="LOCAL-00014" summary="完成注册过程">
+      <created>1536037053974</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1536037053975</updated>
+    </task>
+    <task id="LOCAL-00015" summary="增加注册整个代码的流程">
+      <created>1536156462186</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1536156462186</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -938,13 +949,21 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149931000" />
+    <option name="totallyTimeSpent" value="206940000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2077748" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22654155" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -952,22 +971,22 @@
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Web" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Run Dashboard" order="0" weight="0.65817696" />
+      <window_info anchor="bottom" id="Run Dashboard" order="0" weight="0.32841823" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32841823" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.2989276" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.31769437" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.43565685" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="7" />
-      <window_info anchor="bottom" id="Spring" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.48257372" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.3297587" />
+      <window_info anchor="bottom" id="Spring" order="8" weight="0.3297587" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.269437" />
       <window_info anchor="bottom" id="Inspection Results" order="10" weight="0.32901555" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Messages" order="12" visible="true" weight="0.25201073" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.44772118" />
       <window_info anchor="bottom" id="Java Enterprise" order="13" weight="0.3297587" />
-      <window_info anchor="bottom" id="Database Changes" order="14" weight="0.4576" />
-      <window_info anchor="bottom" id="Version Control" order="15" weight="0.7265416" />
+      <window_info anchor="bottom" id="Database Changes" order="14" weight="0.45710456" />
+      <window_info anchor="bottom" id="Version Control" order="15" weight="0.18900804" />
       <window_info anchor="bottom" id="Database Console" order="16" weight="0.3296" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.12859304" />
@@ -975,7 +994,7 @@
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Maven Projects" order="5" weight="0.32980332" />
-      <window_info anchor="right" id="Database" order="6" visible="true" weight="0.17292225" />
+      <window_info anchor="right" id="Database" order="6" visible="true" weight="0.19571045" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info anchor="right" id="Bean Validation" order="9" />
@@ -1036,14 +1055,17 @@
     <MESSAGE value="添加设备逻辑" />
     <MESSAGE value="备份" />
     <MESSAGE value="发送短信完成" />
-    <option name="LAST_COMMIT_MESSAGE" value="发送短信完成" />
+    <MESSAGE value="去除不必要的IO异常" />
+    <MESSAGE value="完成注册过程" />
+    <MESSAGE value="增加注册整个代码的流程" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加注册整个代码的流程" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java</url>
-          <line>59</line>
+          <line>72</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
@@ -1061,61 +1083,61 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/enums/paramtable/DirTable.java</url>
-          <line>148</line>
+          <line>152</line>
           <properties />
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java</url>
-          <line>53</line>
+          <line>55</line>
           <properties />
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java</url>
-          <line>72</line>
+          <line>74</line>
           <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java</url>
-          <line>121</line>
+          <line>123</line>
           <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java</url>
-          <line>96</line>
+          <line>98</line>
           <properties />
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java</url>
-          <line>145</line>
+          <line>147</line>
           <properties />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java</url>
-          <line>171</line>
+          <line>174</line>
           <properties />
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java</url>
-          <line>170</line>
+          <line>173</line>
           <properties />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java</url>
-          <line>176</line>
+          <line>179</line>
           <properties />
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java</url>
-          <line>177</line>
+          <line>180</line>
           <properties />
           <option name="timeStamp" value="35" />
         </line-breakpoint>
@@ -1126,54 +1148,22 @@
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java</url>
-          <line>78</line>
-          <properties />
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java</url>
-          <line>106</line>
+          <line>109</line>
           <properties />
           <option name="timeStamp" value="47" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java</url>
-          <line>163</line>
+          <line>166</line>
           <properties />
           <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java</url>
-          <line>79</line>
-          <properties />
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java</url>
-          <line>137</line>
-          <properties />
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java</url>
-          <line>120</line>
-          <properties />
-          <option name="timeStamp" value="56" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="SpringBootApplicationConfigurationType">
-        <watch expression="headerParams" />
-        <watch expression="requestEntity" language="JAVA" />
-        <watch expression="response.request.body" language="JAVA" />
-        <watch expression="((java.util.Collections.UnmodifiableRandomAccessList)((FormBody)request.body).encodedNames).get(25)" custom="java.util.Collections.UnmodifiableRandomAccessList,okhttp3.FormBody" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -1181,6 +1171,12 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>((java.util.Collections.UnmodifiableRandomAccessList)((FormBody)request1.body).encodedNames).get(0)</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>java.util.Collections.UnmodifiableRandomAccessList,okhttp3.FormBody</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>((java.util.Collections.UnmodifiableRandomAccessList)((FormBody)response.request.body).encodedNames).get(0)</expression-string>
         <language-id>JAVA</language-id>
@@ -1200,87 +1196,111 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseAppInfo.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.11.0/okhttp-3.11.0.jar!/okhttp3/Response.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="112" selection-start-line="112" selection-end-line="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://67d719c5-ebd0-4abc-9e5d-bc5f2d8dec36/schema/protocol/table/t_douyin_account">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/tools/KeyControler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/tv/DeviceTvRegister.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-171">
+          <caret line="42" column="70" selection-start-line="42" selection-start-column="70" selection-end-line="42" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/jsonreader/tools/JsonTableGetter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="14" column="43" lean-forward="true" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
+          <caret line="72" column="37" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseRequestTpyeInfo.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/FrameworkServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="484" selection-start-line="484" selection-end-line="484" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="425" selection-start-line="425" selection-end-line="425" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="571" selection-start-line="571" selection-end-line="571" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/vpntool/VPNTools.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/entity/UrlRequestEntity.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.8.RELEASE/spring-web-5.0.8.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="92" column="13" lean-forward="true" selection-start-line="92" selection-start-column="13" selection-end-line="92" selection-end-column="13" />
+        <state relative-caret-position="115">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DYUserEntity.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/util/datavase.java" />
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/util/database/AccountDataBaseImpl.java" />
+    <entry file="file://$PROJECT_DIR$/register/src/main/resources/application.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+          <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/UserRegisterBodyInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="10" column="72" selection-start-line="10" selection-start-column="72" selection-end-line="10" selection-end-column="72" />
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/util/database/tools/DataBaseTools.java" />
+    <entry file="das://67d719c5-ebd0-4abc-9e5d-bc5f2d8dec36/schema/protocol/table/t_device">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/tools/ConstructRequestUrl.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.32/tomcat-embed-core-8.5.32.jar!/org/apache/coyote/AbstractProcessorLight.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        <state relative-caret-position="44">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/jsonreader/tools/DeviceInfoCreater.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.32/tomcat-embed-core-8.5.32.jar!/org/apache/catalina/core/ApplicationFilterChain.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-98">
-          <caret line="40" column="31" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/UserRegisterInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="15" column="41" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/service/DeviceService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/service/DYRegisterService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/dao/UrlRequestRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/2.0.4.RELEASE/spring-boot-autoconfigure-2.0.4.RELEASE.jar!/org/springframework/boot/autoconfigure/web/servlet/error/ErrorMvcAutoConfiguration.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="294" column="17" selection-start-line="294" selection-start-column="17" selection-end-line="294" selection-end-column="17" />
+        <state relative-caret-position="1425">
+          <caret line="95" column="28" selection-start-line="95" selection-start-column="28" selection-end-line="95" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1291,104 +1311,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DYRegisterController.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/ThumbsUpMaker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="23" column="39" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="39" />
+        <state relative-caret-position="1501">
+          <caret line="90" column="59" selection-start-line="90" selection-start-column="59" selection-end-line="90" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="49" selection-start-line="49" selection-end-line="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/FrameworkServlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="479" selection-start-line="479" selection-end-line="479" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="515" selection-start-line="515" selection-end-line="515" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.8.RELEASE/spring-webmvc-5.0.8.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="486" selection-start-line="486" selection-end-line="486" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.8.RELEASE/spring-web-5.0.8.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="127" selection-start-line="127" selection-end-line="127" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/dao/DeviceRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="21" column="7" selection-start-line="21" selection-start-column="7" selection-end-line="22" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/jdk/internal/reflect/NativeMethodAccessorImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="68" column="33" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/SendMessageInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-10.0.2/lib/src.zip!/java.base/java/lang/Enum.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/RegisterApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
-          <caret line="144" selection-start-line="144" selection-end-line="144" />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/po/PhonePo.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/util/database/tools/DeviceBaseImpl.java" />
+    <entry file="file://$PROJECT_DIR$/register/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        <state relative-caret-position="2090">
+          <caret line="110" column="49" selection-start-line="110" selection-start-column="49" selection-end-line="110" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/tools/KeyControler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseNum.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/util/database/tools/UserBaseImpl.java" />
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/util/database/tools/InfoTools.java" />
     <entry file="file://$PROJECT_DIR$/register/src/main/java/po/RequestTokenVo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -1396,96 +1342,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.11.0/okhttp-3.11.0.jar!/okhttp3/FormBody.class">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/vpn/VpnChanger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="94" selection-start-line="94" selection-end-line="94" />
+        <state relative-caret-position="285">
+          <caret line="15" column="44" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/SendMessageBodyInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
-          <folding>
-            <element signature="method#getUrlFromJsonAndMap#0;class#RequestURLCreater#0" />
-            <element signature="e#4683#4698#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/ParamsInfoList.java" />
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseSimulationInfo.java" />
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/tv/DeviceTvRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/paramtable/DirTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-          <folding>
-            <element signature="e#666#690#0" expanded="true" />
-            <element signature="e#1025#1053#0" expanded="true" />
-            <element signature="initializer##0;class#DirTable#0" />
-            <element signature="initializer##1;class#DirTable#0" />
-            <element signature="initializer##2;class#DirTable#0" />
-            <element signature="initializer##3;class#DirTable#0" />
-            <element signature="initializer##4;class#DirTable#0" />
-            <element signature="initializer##5;class#DirTable#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/UserRegister.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1044">
-          <caret line="73" column="31" selection-start-line="73" selection-start-column="31" selection-end-line="73" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/DeviceRegisterInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/jsonreader/tools/JsonTableGetter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="72" column="37" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/tcp/TcpClientForTV.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/GetCookie.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseAppInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
-          <caret line="82" column="491" selection-start-line="82" selection-start-column="466" selection-end-line="82" selection-end-column="491" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/RegisterApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -1496,91 +1363,181 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://67d719c5-ebd0-4abc-9e5d-bc5f2d8dec36/schema/protocol/table/t_device">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/paramtable/DirTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="43" column="40" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
+          <folding>
+            <element signature="initializer##1;class#DirTable#0" />
+            <element signature="initializer##2;class#DirTable#0" />
+            <element signature="initializer##3;class#DirTable#0" />
+            <element signature="initializer##4;class#DirTable#0" />
+            <element signature="initializer##5;class#DirTable#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseNum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/enums/BaseRequestTpyeInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/tools/RequestURLCreater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="318">
+          <caret line="169" column="36" selection-start-line="169" selection-start-column="36" selection-end-line="169" selection-end-column="36" />
+          <folding>
+            <element signature="method#getUrlFromJsonAndMap#0;class#RequestURLCreater#0" />
+            <element signature="method#getBodyForMessage#0;class#RequestURLCreater#0" />
+            <element signature="method#getBodyForRegister#0;class#RequestURLCreater#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/dao/DYUserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DeviceEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="20" column="23" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/tcp/TcpClientForTV.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2109">
+          <caret line="116" selection-start-line="116" selection-end-line="116" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3325">
+          <caret line="201" column="49" selection-start-line="201" selection-start-column="37" selection-end-line="201" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/po/PhonePo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DYUserEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="41" column="16" selection-start-line="41" selection-start-column="16" selection-end-line="41" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="137" column="48" selection-start-line="137" selection-start-column="48" selection-end-line="137" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://67d719c5-ebd0-4abc-9e5d-bc5f2d8dec36/schema/protocol/table/t_dy_user">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.11.0/okhttp-3.11.0.jar!/okhttp3/Response.class">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/FollowMaker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="112" selection-start-line="112" selection-end-line="112" />
+        <state relative-caret-position="328">
+          <caret line="143" column="20" lean-forward="true" selection-start-line="123" selection-start-column="7" selection-end-line="143" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/main/TvRegisterMaker.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/service/Impl/DYRegisterServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2565">
-          <caret line="162" column="37" selection-start-line="162" selection-start-column="25" selection-end-line="162" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#TvRegisterMaker#0;class#TvRegisterMaker#0" />
-            <element signature="method#MapToString#0;class#TvRegisterMaker#0" />
-            <element signature="method#getDevice#0;class#TvRegisterMaker#0" />
-            <element signature="method#getDeviceCode#0;class#TvRegisterMaker#0" />
-            <element signature="method#getStrCookie#0;class#TvRegisterMaker#0" />
-            <element signature="method#getCookieFromResponseHeaders#0;class#TvRegisterMaker#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/entity/DeviceEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1539">
-          <caret line="119" column="64" selection-start-line="119" selection-start-column="64" selection-end-line="119" selection-end-column="64" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1415#1416#0" expanded="true" />
-            <element signature="e#1446#1447#0" expanded="true" />
-            <element signature="e#1569#1570#0" expanded="true" />
-            <element signature="e#1600#1601#0" expanded="true" />
-            <element signature="e#1818#1819#0" expanded="true" />
-            <element signature="e#1866#1867#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/email/EmailGetter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2489">
-          <caret line="139" column="35" selection-start-line="139" selection-start-column="35" selection-end-line="139" selection-end-column="35" />
-          <folding>
-            <element signature="e#2256#2257#0" expanded="true" />
-            <element signature="e#2299#2300#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
+        <state relative-caret-position="265">
+          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/register/src/main/java/httpmaker/ConstructRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
-          <caret line="48" column="24" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="24" />
+        <state relative-caret-position="273">
+          <caret line="27" column="48" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/ParamCreater.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="30" column="23" selection-start-line="30" selection-start-column="23" selection-end-line="30" selection-end-column="23" />
+        <state relative-caret-position="133">
+          <caret line="62" column="87" selection-start-line="62" selection-start-column="87" selection-end-line="62" selection-end-column="87" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/MainController.java">
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DYRegisterController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="237" column="8" selection-start-line="237" selection-start-column="8" selection-end-line="237" selection-end-column="8" />
+        <state relative-caret-position="114">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/ParamCreater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="83" column="71" selection-start-line="83" selection-start-column="71" selection-end-line="83" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/ModifyInfoMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="168" column="81" selection-start-line="168" selection-start-column="66" selection-end-line="168" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/params/GetAwemeListMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2432">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/com/space/register/controller/DeviceController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="130" column="60" selection-start-line="130" selection-start-column="53" selection-end-line="130" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/src/main/java/platform/Url/UrlProcess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="74" column="41" lean-forward="true" selection-start-line="80" selection-start-column="21" selection-end-line="80" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
