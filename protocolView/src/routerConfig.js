@@ -21,11 +21,12 @@ import Company from './pages/Company';
 import HeaderFooterLayout from './layouts/HeaderFooterLayout';
 import CompanyMain from './pages/CompanyMain';
 import UserOrder from './pages/UserOrder';
+import MainPage from './pages/MainPage';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
-    path: '/',
+    path: '/home',
     layout: BasicLayout,
     component: Home,
   },
@@ -63,6 +64,11 @@ const routerConfig = [
     path: '/userorder',
     layout: BasicLayout,
     component: UserOrder,
+  },
+  {
+    path: '/',
+    layout: BlankLayout,
+    component: MainPage,
   },
   {
     path: '*',
