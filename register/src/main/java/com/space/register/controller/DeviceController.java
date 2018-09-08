@@ -113,6 +113,7 @@ public class DeviceController {
 
     public boolean oneUserInfo(){
         TvRegisterMaker tvRegisterMaker = new TvRegisterMaker();
+
         DeviceEntity deviceEntity = tvRegisterMaker.registerUserToTv();
         //System.out.println(save.getCookie());
         OkHttpClient okHttpClient = tvRegisterMaker.okHttpClient;

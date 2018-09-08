@@ -6,6 +6,7 @@ import util.MD5Code;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 
 public class DeviceInfoCreater {
@@ -19,16 +20,7 @@ public class DeviceInfoCreater {
         String device_brand = type[size].split(" ")[0];
         String uuid_temp = String.valueOf(new Random(System.currentTimeMillis()).nextInt(9999999));
         String []temp = uuid_temp.split("");
-        String uuid = "";
-        if(temp.length < 7){
-            uuid = "86516602";
-            for(int i = 0;i < 7 - temp.length;i++){
-                uuid += "0";
-            }
-            uuid += uuid_temp;
-        }else{
-            uuid = "86516602" + uuid_temp;
-        }
+        String uuid = UUID.randomUUID().toString();
         String line = new MD5Code().getMD5ofStr(uuid_temp);
         String openudid = "";
         char []list = line.toCharArray();
