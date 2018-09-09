@@ -25,10 +25,12 @@ import java.security.spec.AlgorithmParameterSpec;
 public class ScretAES  {
 
     public static String scretKey = "eagleye_9fd&fwfl";
+    public static String ariougms = "AES";
     public static byte[] bytes = {(byte) 0, (byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6, (byte) 7, (byte) 8, (byte) 9, (byte) 10, (byte) 11, (byte) 12, KeyParam.k, KeyParam.l, KeyParam.m};
+    public static byte[] byteTwo = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
     public static byte[] encryptCodeWithCFB(String plainText){
-        Key secretKey = new SecretKeySpec(scretKey.getBytes(),"AES");
-        AlgorithmParameterSpec ivParameterSpec = new IvParameterSpec(bytes);
+        Key secretKey = new SecretKeySpec(scretKey.getBytes(),ariougms);
+        AlgorithmParameterSpec ivParameterSpec = new IvParameterSpec(byteTwo);
         try {
             Cipher cipher = Cipher.getInstance("AES/CFB/NoPadding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey,ivParameterSpec);
@@ -44,11 +46,11 @@ public class ScretAES  {
     }
 
     public static byte[] decryptCodeWithCFB(byte[] plainText){
-        Key secretKeySpec = new SecretKeySpec(scretKey.getBytes(), "AES");
-        AlgorithmParameterSpec ivParameterSpec = new IvParameterSpec(bytes);
+        Key secretKeySpec = new SecretKeySpec(scretKey.getBytes(), ariougms);
+        AlgorithmParameterSpec ivParameterSpec = new IvParameterSpec(byteTwo);
         Cipher instance = null;
         try {
-            instance = Cipher.getInstance("AES/CFB/NoPadding ");
+            instance = Cipher.getInstance("AES/CFB/NoPadding");
             instance.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
             byte[] result = instance.doFinal(plainText);
             return result;
@@ -58,23 +60,100 @@ public class ScretAES  {
         return null;
     }
 
+    public static byte[] hexStringToBytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
+        }
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    /**
+     *
+     * @param data 需要加密的数据流
+     * @return crc校验码
+     */
+    public static String Make_CRC(byte[] data) {
+        byte[] buf = new byte[data.length];// 存储需要产生校验码的数据
+        for (int i = 0; i < data.length; i++) {
+            buf[i] = data[i];
+        }
+        int len = buf.length;
+        int crc = 0xFFFF;//16位
+        for (int pos = 0; pos < len; pos++) {
+            if (buf[pos] < 0) {
+                crc ^= (int) buf[pos] + 256; // XOR byte into least sig. byte of
+                // crc
+            } else {
+                crc ^= (int) buf[pos]; // XOR byte into least sig. byte of crc
+            }
+            for (int i = 8; i != 0; i--) { // Loop over each bit
+                if ((crc & 0x0001) != 0) { // If the LSB is set
+                    crc >>= 1; // Shift right and XOR 0xA001
+                    crc ^= 0xA001;
+                } else
+                    // Else LSB is not set
+                    crc >>= 1; // Just shift right
+            }
+        }
+        String c = Integer.toHexString(crc);
+        if (c.length() == 4) {
+            c = c.substring(2, 4) + c.substring(0, 2);
+        } else if (c.length() == 3) {
+            c = "0" + c;
+            c = c.substring(2, 4) + c.substring(0, 2);
+        } else if (c.length() == 2) {
+            c = "0" + c.substring(1, 2) + "0" + c.substring(0, 1);
+        }
+        return c;
+    }
+
     public static void main(String[]args){
-        String youCanBelieve ="1f8b080000000000000025985b921c290c4537e40f098140cb8114ec7f097d549e0947d8dd559920ee13b56f7b93fc6c8d686d1cf9e4b4747779f61d59e3be1b6becf6857b0ebde77e2becf576fb98a16b5dfdc4bfc64fddf859aeef5d9f7c50fa1c6ddd6fbfd5f6dba6d25c6e8a8b45ccf1f8e03c4f62f2caefb5ef7c66f91d6fefac1e9a22ad7d7d7c57364f9b6ddc2b7a96ec996d0e3ff16c4d56ec6b64ebe35a5393bb6c7e2d3f6fd3a2adfeedaf1fff469e7524d29bc97bef8c9da37ffa62dedad96ce7ddbdecac4fcf99b6ce5ccecec236dbe883771cc91d961a21125fbc6647dfc786fbbefd8e29dae4b182dc39d36ff3fb34fbb226bded1963ad98fb351fa979f7f82c66aacacaf5325e5ffbaa99e61bae7d4e1614fba8bdc9cbee5cf38dd6593b73596fcb35f1f6c9e44ff4b1fbb6f624cf9b6c8a93b976f59d9be7fb6dbc69f7cf3763b08c7e5533e50dce63e6e9b3f5db9aacaf897616c837f8c17ad64d3e55db6d4bf77cf7ade8c062595fdf799ff4db03ecf052bfe3f51c40e76376ef452d45a79da6ccc5c71ec7fa99b1eefb5adfb3cdb3543e3ed64f86c6f97a5c3f3c44629cb95356dfc7669c1d0f98c4b97c44473c596fea3cd3552ecf4eb3fb7cc596b67c5f56b0ed1bc0704d05b1e63e791b2b550387ec4e597b0b6b96c778b66acbbceb58cb385db7f2a9c92a2d4dfbd3b3ef92efebd359021b6328fc10f4f8972d781dabed1f67211c1ba8e3fdf6529295dffd45183b7b2a6730d977ed9cf438daed6e9bbc36c1554bc60cb8f6855ca2befd833eb9fa3c50e19cdbbfb4bdb40d05d0f371409cdf5defcc8cc5da0030181a223259bb7cef29c46dfbca7d091acdce579ff4b3786deb19b1d2eb54c3a013f8596a537842ee6fefecfa3d61fe5f00c1f938671e79ec02368e9f2fc41973db364fa61ebe5bea3540948cad779b9d5974bd8db17014073e82e431019ae50045de96ce070b655b78a15d1f6779987d8e7c79f2f8e6e86c38fcbc692bf812fc87ab761e23cc33bf1222383a6d6c96c89ad7628f06c22dace717df2ac03d29ee5d98c907d197b5470e6ba135e2162d85456573d4634c8ee02d86b09ecf7e111fa6746c01111f9c3bf834f511a0fa307eebac08a16b201cfa0ca05f44d002f438501bca24e7e0a7c5687beb430b6f5f1abce47dd3f7d462851674c774682e2913b161c9dfd676079c1dad31e1dbc6f261a24b171fb9d37e6adca5cb74611588b447f48d507dd68a9b231990a317f7b43e3f76d5057a80f97bcce3427d0e2f99ca5bb31f1d80074a586da9b398111d2807ffc186b13e34253c6196bd504f909a3614ad9007368eebe51cbff78100a0260fe2f9d18fb3e0b4363343d5762ac2db106b845579d944bce10dd0f3bca339720b81e70e580871dfea039a2ded11ed4a7f7c31f778c9b1c76ed8d401401fd8da7d5d968de86970885073f660696e480a6cd005b1f645aae67c335f6b8fdd6f768630c4f11ff9ba241b6adf3dbbb3466cc85fd16e2138026b1dc94d652f1fce88f6153a7029fed28d2fadcef33120651bef893252450b00ff86a11bedaa31267285a08cc1c01304e0b32b9b392f5be84c2295480ba453c60199fce6db48fa82f43b199b8298fecdc78cc72ddfec0fddeca7df9c1dd788bef8cb082fab86e14c89c3bf2dd9864ebc0a2ca8fb9381930c073790050dde13bb96a5683beb033a270eb28a8bc023e6c6bfbbaf9fc9415f1396c970e2c323f03e4576e2100b66887d18765c6071d19c5bfb50bfe80e4234561336399fdc8b928ed11830321b12fa5e2b5546aa5442f845f72e9fe3a160375055019e58f7c56603ffc0b5f0132c0a9969db2f2a567265608eb4c119c70a8e53cee9e8a98a03688c4d12187e7b38f1813777cef56e4e3f771deba83800db643ba789cb03b94e2c614fa49fde50676212c79e45629b9b0d6140440534788d7612409341c6c3e36be7c96ecf661b9d5883099d4b0eea4496e70405fc10b37a6a3a0790653e754890acb428bf4410af6d714e3e5984435695ae45b77d08465fc0251800604872ace46bd84db451546b973121db58f183e3872ff5d7cf305f3c2c2e8f6bb311a406db8651241bd496cd7834a8140c5ead18ebbd441c41f7d5934790138105d27883237ba7cea6114d764930061d42d888b58ddf546c994b30ebbb03a4603ec829c1502f7983377e815846c794efe8cf394febdffa182198259412ca1496e394c8512b8fb8f3c2c2fc5002cf8f4deb9041306029c42b283cc87e5b2afaa0840beb591c596cc680e4e2c8bcc21f81210541468700326898980ca34850cd96218070fa8eb31a010278015afb6d1daa0ff8ca090d5c805522723c161cb13d0c0bdd412e414af4e60c5f60127fbb208d791065ac72812a7b1a408549409a4ee6000f881347fb065e8d5164080e61883f31ba974e97dca3d17830dfbf9dc3f34b48f7a69093786d0a2103b712d40569409338df85813730ff71b01b0755d4bb9fe20f12271ac4ba390a62ed97ee900ac6290081d47e89b47bc975f9666749196d126c0989df474215f4868736ab94906f3602cf24adb556814d012d4f27cd198540eced20c1425e1d2499c7a366afd4d876b29bb92ae67a6509b671c94bd81b241cecebbded735cb216492d110bbc62f26347e82f0be70dbcbb1db458d6429b01e5a6990ce5cd73b160c89d1762129ab69e6c20366176065f0f2dd206ab6d80ebea45541f498061422d0a8f1431b43d8ca2fd0f1a6d55a2c2140cd7c8fb11b2db225ce140e4c50fd2102579f4a40b090d48c6061d882721ce26e2fb0a9c179801888657323b9249d4f959f61dbd762942de6d1c38477108659dc0b97088a48771c2285d03a7643f8418b0ed1e8e035011d827fec06c106e24175ee20b7110152c0cd8579406cea5016c1301c5f509ff28e6ab088d60e7f45fa180268d87a028c0a8630f781cb326061115b5a64d462031ec7da863e5a428043f620d081f1668583b542e8b6f44365fb86f100255c495c59505c2057e478763edc3f0a8d7829a7094d203cac0f21da84d470a2fc60ed7412e258d9852783a1f350a8ea17c9d1da1e8c43cf00b3ae128672fc9e1a2d0e4402216b9a1d12a56e54ba3899a6b9d288b226bb169a173b1a8b1926474ab4060b586cdd057760cfff92b62164185f9c899930c4f825d300e9b904110fbc54a08b02b1d29ca449065f69bf5a3b9845f7c085b057ed5329d347d30884446c94650a3aa1518722a104b23eecf5f843b864a91f6e9d09f4e1458dabb32b713bce037c64eb4b65a05fdb761547008f770e2ed472d5e0dc18b6a6d7c87a08bbba53fba13b16e6342a82a643f63f0bb23f323dd907d3ad504c51e482898a7a63fc6800890bb3eaa1f4383b3b42d5044e443755f2d8d3f6486afbf12a0fd25e59aa4cbae49b4179905a7138e34e55770f751cc4005238f3128f8776ee15869428780721939934bc484a84e44c3d621d51c953e65fceac9e27810ec4708c5682957d3e821880c19c130e7beb5ba28f166cb4370487eb80b0f3b3c946c4b44fd08b77076d3651aba7b787bbae39fb6aa4bf2c6d8597518913fdb9925b1f35433c1ee18f24616a8efb016fc09e9801e8d0d44a51de4ece0ff5555764ef412221277d7924d5f3bb46cbc9bc23b28390cdd6b92e83b06c2e9b3647caa1e4ee266f72553ec1d576636744d1228f91f7a7d341ee2ee61a7ad54fd91da27c25ed9033ed8636684ffa0560139a12d23ddec16d5c774e91515c4b2ec024d24ea41325059c513fa1b2d98b6c18b898b30aa1a13391381f48bb90c3121468c40e962131e6fa106d166e45832a28ec24e03de044188b72bf265dd4af07fe9ec847be83f40216a8c8d716e61dca36314345da9aace5af73944b3cf0e3954eee6cc57f8579825871c88d0dd2abf8fabb48524da6d5eb5e7615beefc98fc43320157a5c70c8e1c3b08d8c1e9612090f490ed971107ea328ad34674971575bf1256005a774d51253f1984c2d8057fc9fa9405b6868f0c6c59f12a0e11074391000edfae69c3c4b9d8811344ec3e025a92af0f0a57d19e7c31f543310976edd20b10b76f395eed648057373d100cdd00b4600f8440728e872eb11808440654f668b4df3ba420584d7e11061a441502be665d8770a65ff501a80a32a84d681f82fe313084b30186bafce0909d87d03a7a6531f27f191d22ac8ce80b848f78432d4292838c7b2a67d821a1d15f9924dd472f40e8780fcf2314624cd06636b47f9f2ea7d2c39cb99797727cd4724506daa6a292e71a6d0bf4d53de400b14408af3e0850eb60ab1e710087accbfe9ddc47e627125567ab9bafae05b3fd7092b7c9cd15de3fd21dda3048450f4d8fea1da72e0b4143abebad8b0cb26ffe510924ead64fc508ab18e818a4eaf3b0a95b43f1f97c7d75b961a830014cf82bf95e710482e13444430938a85cb7ca14446e849a4fecd250d8c7fcce7da4db36d81322f211bc29174a2c1bf4d8ced269eb746f82382b65b056962268b1b3505ebf62cc98e42f88be20c757b90517c6b3c8db651dd57337f5f6776f8979292d7316787e379468383525906ed487526d3cb8e2ed69adeae59ee24eb167f3ac9723c277980cf1ac93cf700f08cf71812378c6f92435b51a0f3f6cc4698ad165ef0b4ad1bf0815380d591b89d32aaa6515d08c8322a5b0af45f19741ab9b3737798363537cf54d2c3a3f4a3e124477e6640511fd2e67e0adccde45f1f8eae5c41ba65317d86456b8cb7bf82d781e482b48e485b431f2836362b4a8bdc730abbdd50d074982d991a23f9cb7c22981b7cae3405bcfabd5371238fef7f00bcc1b15eb14afebf001943c0c1efa5e66066bdbacdae4a83b3983f8c497193c6990044f7846fa137febc873546064e8c41dab6952d3078deece0f7dadc28680949159b285ba6342aa3e8391c1c1e0638fed3285de8971c0485fe934711a7aa19a5453a41f32d4253512f976bda9f23db59f8c5bb7fc3fbe4e5ec0015633e7891c35be0684ea42e4eb4dea92e960e0b855d40d0898044c941a2de9426e4b1f1ac1e57c9797f631089e948cd8d5cb27bfbc4c91bad41efac98b6934f435c3f1f910600070a0e2d1e30f399af6451e8eba2498fabbae494e199950c4b6ae03f8fcac475417e148e8e9c4288b9a3129896650f74ec5d35bd7eb1bc09cbaf0c6e504315c14d5031220670a798e04a2258d1fb5a4c6b5898de5e918053192aa2c8929d775199dbe4212f60e273ea668bfad9c9d9d1d435fa20643f3c512100ea7475316ee055524bc0ff7ba15c5c929e777b348fa2e941d8ca1137b1625be505d0d82ddd0d139760234dd13863008b4e1733674892ce8cfe1e79b763cf914d9121ce1a8304e117b58cdcb89608791c2f828734422e222b8a01d863e9c8488c8b191aa715dab312205c81b5363fa937e8c9192d230b8208669d54011ec9e2636d90573e2b3060b6e352a70cb6078e2a4882002f8061d803846bca07713aceac28b79772c6a1726681a878e0eee6904b841c8a345a2c5e516c7c9884cf2e11ea84baffb55022255e9f01398d62a9c511de88ea81d1586efd3c58e923d16dca1a00c78ede5a7d5d7992f9a07d816ea85f4d01a837c4c44a4dc505ed02796f90f19e725540cfd0318d89cc1271b0000";
-        byte[] ouye = Base64.decodeBase64(youCanBelieve);
-        System.out.println(youCanBelieve.getBytes().length);
-        System.out.println(ouye.length);
-        ouye= decryptCodeWithCFB(ouye);
-        System.out.println(ouye.length);
-        String string = GzipGetteer.uncompressToString(ouye);
-        System.out.println(string);
-        //System.out.println(Cipher.);
+        String youCanBelieve ="1f8b08000000000000001d97598e25290c4537941f1803c6cbc118ef7f0979e2b5aaa5d2ab08f070a710bd67f59657f7f4de67b4dba2e75aab95de687bbe7abee7e9d7d7ca292fdeddae35fa1bd35cf67e72dbba9d5f97f25bee5b6f190fb661b3ef774fed7eeaa8b4bedacbb69abadb2c1eb4a8e6c695b7fa8dab9a3756afd8c3255bebfd8e795f3b9c667dbed724763b96dde60a2fdd46c56bcfec633eeda2ed6db5dbf3ae6eea7d8f7bee887567c68ee6b9bab6aa8a79728e2be5f6beceac47bdb335f69508d31db6179db91eda18933ba2e5714d716fcdaf57d790ba343cce1b6f5a93de8a0af2a4e57a7dbd921c5b7b1bfd98cfbddd4ef53553f29d79d52d45dace5de935f679a22a5973c930a3203f215ac665cfb6d5ec83da99cbaed39eb6d56f33fef731cf38daab6594d1149b79faa4e265dc5fe35dc6baeb30064d1f4f24b3d5641f9631ac8fd77bdbb7371914c81bfcb04b87b62ba2a79f3656d6abed03586c1dfb46dd36de70b0c3a5ebcd1a3981ce657655fe9522a6d185b9ac7966e808f3fdeaf671ac5b6c6997c746a48bc71dfe567048f31976b2ed7142cde37801138fc72332bdda2e130b5bd21e67a7eaabb5fdb4bed7795470f44e60b84d40acae65dc46a5a2e090ee84dabb6bd70ce56c919ef976684f8f214778caa852536594c479bbdd3b6c51028d31147e043deb6677aea3da71d945636da08efbb5b22595bf73dd95ce4a5a4c265b4f237279c8d077d4b836c1554fc60cb8ce835c4dd65917fae41e165021e28d9b7ab6f42900da8a05b1bfb72b2c7d531b000643b3b566d4de6e9540dc7e5e7b95a05135eef7e48acdb57da4fbcef56dd5153a819f2d6a8d13f2dc7372c8adc6fcaf03412bf6cc91a10fb0b17e5ef09876f4e84aa6eeebf494a7802819db186a83590c799db1b08a808f20791a40d39ca068f52d56b0b01df5f5a15d8a5d06b3cf999591b10eabd3b9e0e74bddce4bf01fae6a1423ccb0fb09111c359d8712a9796f7a5410aeae23afdffd01aedac7bd073379107dd967e6d4eef28db87bcf4651d917ea318d15d46608bb968d87f830a5d00d44d664efe053654d07d5c1f875501142d74138f49940ff23827c809e01b5a14cb28715dd673f470a2d7c638b73495d5bc7e463857cd09db6a079cb66880d25df23fd4d383b7b67c2afcfbda636d9b279e499fed478b4d16c35aa40a497fb3808d5d5fe717326035ae8c58b3eecd2d568d003ccbfd0e50feab3bc642ab56d844cc00325f46b6950ccf401949dff60c3dc174df195304bcb6525484d9d8256b4021bb1e4b1c75b170400b556106f855c76c1b60e3343d54e0ac2db116b8455b8cc106f7803f456bed917720b81ed382c84b8b5c784665b867b7f6d142fe69995acdd4fc7a602005db075c67e948de889b344a869c3296d2992021b6443acf3902ab3b244bcc56d4f55a6559503a398a8f8d800b90076bdcd9ec363adb7998e25e620c6d01e0a38bf52e4eeda73f162646f73bfb61e377607bcc5eec23f1a816b53652fe7eccf18cd5135fe6d8c1aa00a9c4a2d0c091cbdf96c71307a46919bd9eecf07e787a4cf041ec3048c239e2c50d570863940d1b3388000674cec150a8c6b684a556ffc05b381bda851f87bc604f4306de196bda112e807480c530d7e485bacbe30e507e9ef82b2be9069663a8a91031094d239b847a23bdafa647bd10a012bbac6b70ce9e9d301cb92f54100b06120020b33811966ab1d3c85f4326fdc87c00cf423575d790b4d5e80fb847bb48994a2289f4221d65c8ea18d05ef83ad9322caf712db824fb145647ceb053030dcb1d6579d65a8e253090bdba7c88cb19db69822f86b0066342c3a8dae190eccced93f0783530797300c00fb34c83be01210199a803b20a6936350680e3f0291081fb33fbb5f53830b41a27dce01e68810741b7716f6fe64a3f905aaf045a8839230daeaf6f609de7a38797e92f553e7c5609c0bc4d8dadaf7e4652a3a477b8fc2b87604b1e0c14070fe21399c3f77cfed2de87d7db87cfa39c0441a05bbbf1815446a901641c08d75217a89e6226ce08518588c16750246767038072620f32d14f736c48da93d463cf1a95a83217116ba86109de54816e1a8196a54df281c8294c06c8ebf28dcb953773aaa4f0f4403c552403123032350041be50d3ca6215cee39a9e704806d449d6e744c7ac2f018725c503f0f5a571fbbc83af74b02f73019ec6cb0c5e897bc25095f13c93ef1a50e2371ddd1be4c49aa42496600152431d6ae6a448b0eb5be9848b40d6a5b1beca1f1d07ee4261f0099e01a623047e1b320a4c04610184961efca46f4567ec0fdca25878dc2521521826e452a6072c01fe138c0157b44dae76d8a284c2740129f60c225a9158816320b41ca88d9098d23499913691a2483fcb2f0175e0f5aca5988436bbac7ea9f49cbfe482d042a9cb97913d99806fe7fc5daa3d5f9590791b5069440021111e84480ee0819424752dbe8af7f9182b02e858413576b7e1bb74fdfe5be0faa6bc0075b5f9825cac4e215b4fcb1e90baab63d222ff6d189acf83774aeef39fdf43c964fd44321245f096a42d93ec85a04829b1fc4c8ec1bd031c0032380deb179089cadce7bd251abc1820c5d466188fa8bf0c26a26ebe56b8338effcda02b680deef8302900d258121d01d448d4095d9ca6568abcd47919d10c9fdb0f3ddcf32e6e74be3e21db221c327aae42934be098da4adcf6e3ef33b4504000d13f9cc9fe3809383e110f409e08729734e62054befcdfc625c01b486029072c82764587152d0176d06119ad8a01d2002cc695458482bd3433647a005e3cb267c298dcff50899a0ef76d6dc018c4507184152156c49f8961be1449e4baafc44523f1f2089e13fec957cd4de1c058b771f5f739e387f6f08035a8669e56422159f23df5e8812df8ca09b50f9517735b4ebadef33064341f7830f9e29bfe8c2d4b10bfde33b6729ce61f60fc69b78f97f0e0000";
+        //byte[] ouye = Base64.decodeBase64(youCanBelieve);
+        //byte[] ouye= decryptCodeWithCFB(Base64.decodeBase64(youCanBelieve));
+        //System.out.println(GzipGetteer.uncompressToString(youCanBelieve.getBytes()));
+        //System.out.println(GzipGetteer.uncompressToString(Base64.decodeBase64(youCanBelieve)));
+        //System.out.println(Base64.encodeBase64String(ouye));
+        byte[] buff = hexStringToBytes(youCanBelieve);
+        buff = GzipGetteer.uncompress(buff);
+        String kao = new String(buff);
+        String[] hehe = kao.split(",");
+        System.out.println(hehe[0]);
+        byte[] ouyes = hexStringToBytes(hehe[0]);
+        buff = decryptCodeWithCFB(buff);
+        System.out.println(new String(buff));
+        System.out.println(Base64.encodeBase64String(buff));
+        System.out.println(GzipGetteer.uncompressToString(buff));
+//        System.out.println(Base64.encodeBase64String(encryptCodeWithCFB("1f8b0800000000000000")));
+//        System.out.println(Base64.encodeBase64String(encryptCodeWithCFB("1f8bdqwdwq0010000000")));
+//        System.out.println(Base64.encodeBase64String(encryptCodeWithCFB("1f8b080000cdce000003")));
+//        System.out.println(Base64.encodeBase64String(encryptCodeWithCFB("1f8b0400000000000000")));
+//        System.out.println(Base64.encodeBase64String(decryptCodeWithCFB("1f8b080000000000wdqe".getBytes())));
+//        System.out.println(Base64.encodeBase64String(decryptCodeWithCFB("1f8b080000000000ceqs".getBytes())));
+
+//        System.out.println(new String(buff));
+//        //byte[] result = decryptCodeWithCFB(buff);
+//        //String kao = Base64.encodeBase64String(result);
+//        System.out.println(new String(buff));
+//        System.out.println(Base64.encodeBase64String(buff));
+//        //System.out.println(Cipher.);
 //        byte[] ouye = encryptCodeWithCFB("呵呵哒哒，你能成功吗");
-//        String buff = new String(ouye);
-//        System.out.println(ouye);
+//        String buff = Base64.encodeBase64String(ouye);
 //        System.out.println(buff);
 //        byte[] result = decryptCodeWithCFB(ouye);
 //        String resultString = new String(result);
-//        System.out.println(result);
+//        System.out.println(Base64.encodeBase64String(result));
 //        System.out.println(resultString);
     }
 }
