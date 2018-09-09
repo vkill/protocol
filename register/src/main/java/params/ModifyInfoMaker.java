@@ -7,6 +7,8 @@ import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
 import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
+import randomtools.CityTable;
+import randomtools.RandomName;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,7 +23,7 @@ import java.util.Map;
  **/
 public class ModifyInfoMaker {
 
-    public static String modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity) {
+    public static void modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity1, UrlRequestEntity urlRequestEntity2) {
 
 
         //获取设备信息
@@ -36,8 +38,10 @@ public class ModifyInfoMaker {
 
 
         //获取并构建url信息，包括host、msg、token
-        String host = urlRequestEntity.getHost();
-        String msg = urlRequestEntity.getMessage();
+        String host1 = urlRequestEntity1.getHost();
+        String msg1 = urlRequestEntity1.getMessage();
+        String host2 = urlRequestEntity2.getHost();
+        String msg2 = urlRequestEntity2.getMessage();
 
         //构造token
         Map<String, String> token = new HashMap<String, String>();
@@ -79,7 +83,8 @@ public class ModifyInfoMaker {
 
 
         //url构建完成,其中cookie需要从前面的cookie参数中提取
-        String url = ConstructRequestUrl.constructUrl(host, msg, token);
+        String url1 = ConstructRequestUrl.constructUrl(host1, msg1, token);
+        String url2 = ConstructRequestUrl.constructUrl(host2, msg2, token);
 
         String []line_split = cookie.split(";");
         Map <String, String> stack = new HashMap<String, String>();
@@ -88,7 +93,7 @@ public class ModifyInfoMaker {
             stack.put(stack_split[0],stack_split[1]);
         }
 
-        Map<String, String> headerMap = urlRequestEntity.getHeaderMap();
+        Map<String, String> headerMap = urlRequestEntity1.getHeaderMap();
         Map<String, String> header_cookie = new HashMap<String, String>();
         Map<String, String> data = new HashMap<String, String>();
         String []cookie_data = cookie.split(";");
@@ -112,6 +117,8 @@ public class ModifyInfoMaker {
 
         header.put("Accept-Encoding","gzip");
         header.put("Cache-Control","max-stale=0");
+        header.put("Content-Type","application/x-www-form-urlencoded");
+        header.put("Content-Length","500");
         header.put("Host","aweme.snssdk.com");
         header.put("Connection","Keep-Alive");
         header.put("Cookie",header_str);
@@ -119,12 +126,8 @@ public class ModifyInfoMaker {
 
 
         Map <String, String> body = new HashMap<String, String>();
+
         body.put("uid",uid);
-        body.put("is_binded_weibo","0");
-        body.put("school_type","0");
-        body.put("birthday","1991-12-15");
-        body.put("signature","gaoxiang123laji");
-        body.put("nickname","gaoxiang123laji");
         body.put("retry_type","no_retry");
         body.put("os_api","22");
         body.put("device_type",deviceType);
@@ -149,20 +152,25 @@ public class ModifyInfoMaker {
         body.put("channel","tengxun");
         body.put("_rticket",_rticket);
 
+        RequestTokenVo requestToSend1 = new RequestTokenVo();
+
+        Map <String, String> body1 = body;
+        body1.put("is_binded_weibo","0");
+        body1.put("school_type","0");
+        body1.put("birthday","1992-12-15");
+        body1.put("signature",RandomName.getName());
+        body1.put("nickname",RandomName.getEname());
 
 
-        RequestTokenVo requestToSend = new RequestTokenVo();
-        requestToSend.setUrl(url);
-        requestToSend.setHeader(header);
-        requestToSend.setBody(body);
-        Request request = null;
-        request = ConstructRequest.constructPost(requestToSend);
-
-
+        requestToSend1.setUrl(url1);
+        requestToSend1.setHeader(header);
+        requestToSend1.setBody(body1);
+        Request request1 = null;
+        request1 = ConstructRequest.constructPost(requestToSend1);
 
         OkHttpClient okHttpClient=new OkHttpClient();
-        Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
+        Call call1 = okHttpClient.newCall(request1);
+        call1.enqueue(new Callback() {
             @Override
             public void onResponse(Call arg0, Response response) throws IOException {
                 System.out.println("响应成功");
@@ -173,8 +181,39 @@ public class ModifyInfoMaker {
                 System.out.println("响应失败");
             }
         });
-        return null;
+
+
+        RequestTokenVo requestToSend2 = new RequestTokenVo();
+
+
+        Map <String, String> body2 = body;
+
+        int x=(int)(Math.random()*13);
+        String cityName = CityTable.cityList[x];
+        body2.put("csinfo",cityName);
+
+        requestToSend2.setUrl(url2);
+        requestToSend2.setHeader(header);
+        requestToSend2.setBody(body2);
+        Request request2 = null;
+        request2 = ConstructRequest.constructPost(requestToSend2);
+
+        Call call2 = okHttpClient.newCall(request2);
+        call2.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call arg0, Response response) throws IOException {
+                System.out.println("响应成功");
+                System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+            }
+            @Override
+            public void onFailure(Call arg0, IOException arg1) {
+                System.out.println("响应失败");
+            }
+        });
+
     }
+
+
 
     public static String MapToString(Map map){
         java.util.Map.Entry entry;

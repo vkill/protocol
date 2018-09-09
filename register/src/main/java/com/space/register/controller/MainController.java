@@ -6,22 +6,15 @@ import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
 import com.space.register.service.UrlRequestService;
-import httpmaker.ConstructRequest;
-import jsonreader.tools.GzipGetteer;
-import okhttp3.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.FollowMaker;
-import params.GetAwemeListMaker;
+import params.SupportAccountMaker;
 import params.ModifyInfoMaker;
 import params.ThumbsUpMaker;
-import params.tools.ConstructRequestUrl;
-import po.RequestTokenVo;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -48,13 +41,11 @@ public class MainController {
         //这个是视频id，需要参数传入
         String aweme_id = "6597344642847477000";
 
-        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
-        for(int i = 0;i < dyUserEntity_list.size(); i++){
+        //ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
+
 
             //通过id获取t_dy_user中的数据
-            DYUserEntity dyUserEntity = dyUserEntity_list.get(i);
-            String mobile = dyUserEntity.getPhoneNum();
-            String password = dyUserEntity.getPassword();
+            DYUserEntity dyUserEntity = dyRegisterService.findById(73);
             String user_cookie = dyUserEntity.getUserCookie();
             String simulationId = dyUserEntity.getSimulationID();
 
@@ -76,7 +67,6 @@ public class MainController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
 
 
         return "abc";
@@ -114,7 +104,7 @@ public class MainController {
     public String modificationMaker(){
 
         //通过id获取t_dy_user中的数据
-        DYUserEntity dyUserEntity = dyRegisterService.findById(43);
+        DYUserEntity dyUserEntity = dyRegisterService.findById(2);
         String user_cookie = dyUserEntity.getUserCookie();
         String simulationId = dyUserEntity.getSimulationID();
         String uid = dyUserEntity.getUid();
@@ -126,9 +116,12 @@ public class MainController {
         deviceEntity.setCookie(cookie);
 
         //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(5);
+        UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(5);
 
-        ModifyInfoMaker.modifyInfoMaker(uid, deviceEntity, urlRequestEntity);
+
+        UrlRequestEntity urlRequestEntity2 = urlRequestService.getUrlRequest(8);
+
+        ModifyInfoMaker.modifyInfoMaker(uid, deviceEntity, urlRequestEntity1, urlRequestEntity2);
 
 
         return null;
@@ -148,17 +141,43 @@ public class MainController {
         cookie += (";"+ user_cookie);
         deviceEntity.setCookie(cookie);
 
-        //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
-
-        ArrayList<String> awemeList =  GetAwemeListMaker.getAwemeListMaker(deviceEntity, urlRequestEntity);
+//        //获取并构建url信息，包括host、msg、token
+//        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
+//
+//        ArrayList<String> awemeList =  SupportAccountMaker.getAwemeListMaker(deviceEntity, urlRequestEntity);
+//
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        awemeList.add("6597344642847477000");
+//        UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(7);
+//
+//        try {
+//            for(int i = 0;i < awemeList.size();i++){
+//                SupportAccountMaker.getVideoMaker(awemeList.get(i),deviceEntity, urlRequestEntity1);
+//                Thread.sleep(5000);
+//            }
+//
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        String a = "6597344642847477000";
+        UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(7);
 
         try {
-            Thread.sleep(2000);
+            for(int i = 0;i < 1000;i++){
+                SupportAccountMaker.getVideoMaker(a,deviceEntity, urlRequestEntity1);
+                Thread.sleep(800);
+
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println(awemeList);
+
         return null;
     }
 
