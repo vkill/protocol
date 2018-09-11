@@ -37,33 +37,13 @@ public class DeviceTvRegister {
         return request;
     }
 
+    public Request getRealDeviceInfo(JSONObject jsonObject){
+        return null;
+    }
 
 
     public static void main(String[]args) {
-            DeviceTvRegister deviceTvRegister =new DeviceTvRegister();
-//        OkHttpClient mOkHttpClient =
-//                new OkHttpClient.Builder()
-//                        .readTimeout(60,TimeUnit.SECONDS)//设置读取超时时间
-//                        .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
-//                        .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
-//                        .build();
-//        DeviceTvRegister deviceRegisterTV = new DeviceTvRegister();
-//        Request request = deviceRegisterTV.getDeviceCreaterRequest();
-//        Response response = null;
-//        String jsonString;
-//        try {
-//            response = mOkHttpClient.newCall(request).execute();
-//            System.out.println(GzipGetteer.uncompressToString(response.body().bytes()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(response.headers());
-//        System.out.println("下面是请求信息");
-//        System.out.println(request.toString());
-//        System.out.println(request.headers());
-
+        DeviceTvRegister deviceTvRegister =new DeviceTvRegister();
     }
 
 }

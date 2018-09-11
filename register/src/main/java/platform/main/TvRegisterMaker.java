@@ -7,6 +7,8 @@ import enums.paramtable.urltools.URLmakeTools;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import jsonreader.tools.JsonTableGetter;
+import keytools.Crc32;
+import keytools.ScretAES;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -99,13 +101,7 @@ public class TvRegisterMaker {
         RequestTokenVo requestTokenVo = new RequestTokenVo();
         requestTokenVo.setUrl(url);
 
-        Map<String,String> odin_header = new HashMap<String,String>();
-        odin_header.put("Accept-Encoding","gzip");
-        odin_header.put("Cache-Control","max-stale=0");
-        odin_header.put("Host","is.snssdk.com");
-        odin_header.put("Connection","Keep-Alive");
-        odin_header.put("Cookie",deviceEntity.getCookie());
-        odin_header.put("User-Agent","okhttp/3.8.1");
+        Map<String,String> odin_header = getAllGoodHeaders(deviceEntity.getCookie());
         requestTokenVo.setHeader(odin_header);
         Request request1 = ConstructRequest.constructGet(requestTokenVo);
         try {
@@ -122,29 +118,50 @@ public class TvRegisterMaker {
         ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(header));
         StringBuilder cookies = new StringBuilder();
         for(int i=0;i<strings.size();i++){
+            if(i==strings.size()-1){
+                cookies.append(strings.get(i));
+                break;
+            }
             cookies.append(strings.get(i)+";");
         }
-        deviceEntity.setCookie(deviceEntity.getCookie());
+        deviceEntity.setCookie(deviceEntity.getCookie()+";"+cookies.toString());
+        //获取添加oddin_tt的cookie
         return deviceEntity;
     }
-    public String getUrlForOdinTT(String hostAndMsg,Map<String,String> allVauleMaps,DeviceEntity deviceEntity){
+
+
+    public static String getUrlForOdinTT(String hostAndMsg,Map<String,String> allVauleMaps,DeviceEntity deviceEntity){
         Map<String,String> deviceMap = deviceEntity.getDeviceMap();
-        StringBuilder stringBuilder = new StringBuilder() ;
+        StringBuilder stringBuilder =new StringBuilder();
         stringBuilder.append(hostAndMsg);
+        stringBuilder.append(getUrlByMapAndMap(allVauleMaps,deviceMap));
+        stringBuilder.append(KeyControler.getKeyForUse());
+        return stringBuilder.toString();
+    }
+
+    public static String getUrlByMapAndMap(Map<String,String> allVauleMaps,Map<String,String> changeVaule){
+        StringBuilder stringBuilder = new StringBuilder() ;
         int i = 0;
         for(String key :allVauleMaps.keySet()){
             if(i==0){
-                stringBuilder.append(key+"="+allVauleMaps.get(key));
+                if(changeVaule.containsKey(key)){
+                    stringBuilder.append(key+"="+changeVaule.get(key));
+                }else{
+                    stringBuilder.append(key+"="+allVauleMaps.get(key));
+                }
+
             }
             else{
-                stringBuilder.append("&"+key+"="+allVauleMaps.get(key));
+                if(changeVaule.containsKey(key)){
+                    stringBuilder.append("&"+key+"="+changeVaule.get(key));
+                }else{
+                    stringBuilder.append("&"+key+"="+allVauleMaps.get(key));
+                }
             }
             i++;
         }
-        stringBuilder.append(KeyControler.getKeyForUse());
         return stringBuilder.toString();
-     }
-
+    }
     public Request sendMessageForRegister(UrlRequestEntity urlRequestEntity,DeviceEntity deviceEntity,PhonePo phonePo,String code){
 
         String host = urlRequestEntity.getHost();
@@ -212,8 +229,24 @@ public class TvRegisterMaker {
         return kao;
     }
 
+    public static Map<String, String> getAllGoodHeaders(String cookies){
+        Map<String,String> odin_header = new HashMap<String,String>();
+        odin_header.put("Accept-Encoding","gzip");
+        odin_header.put("Cache-Control","max-stale=0");
+        odin_header.put("Host","is.snssdk.com");
+        odin_header.put("Connection","Keep-Alive");
+        odin_header.put("Cookie",cookies);
+        odin_header.put("User-Agent","okhttp/3.8.1");
+        return odin_header;
+    }
+
     public static void main(String[]args){
-        TvRegisterMaker tvRegisterMaker = new TvRegisterMaker();
-        System.out.println(tvRegisterMaker.registerUserToTv().toString());
+//        DeviceEntity deviceEntity = new DeviceEntity();
+//        deviceEntity.setUuid("865166026228901");
+//        deviceEntity.setOpenudid("fa0c47b8259279fb");
+//        deviceEntity.setDevice_type("vivo x5m");
+//        TvRegisterMaker tvRegisterMaker = new TvRegisterMaker();
+//        System.out.println(tvRegisterMaker.getRealDevice_Info(JsonTableGetter.contrustJsonForReal(deviceEntity)));
+
     }
 }
