@@ -66,7 +66,7 @@ public class FollowMaker {
         token.put("openudid",openudid);
         token.put("manifest_version_code","176");
         token.put("resolution","1280*720");
-        token.put("dpi","240");
+        token.put("dpi","320");
         token.put("update_version_code","1762");
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();

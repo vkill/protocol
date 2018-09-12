@@ -52,7 +52,7 @@ public class ModifyInfoMaker {
         token.put("ssmix","a");
         token.put("iid",iid);
         token.put("manifest_version_code","176");
-        token.put("dpi","240");
+        token.put("dpi","480");
         token.put("uuid",uuid);
         token.put("version_code","176");
         token.put("app_name","aweme");
@@ -135,7 +135,7 @@ public class ModifyInfoMaker {
         body.put("ssmix","a");
         body.put("iid",iid);
         body.put("manifest_version_code","176");
-        body.put("dpi","240");
+        body.put("dpi","320");
         body.put("uuid",uuid);
         body.put("version_code","176");
         body.put("app_name","awe");
@@ -156,7 +156,9 @@ public class ModifyInfoMaker {
 
         Map <String, String> body1 = body;
         body1.put("is_binded_weibo","0");
-        body1.put("school_type","0");
+        body1.put("gender","1");
+        body1.put("school_type","1");
+        body1.put("school_name","已毕业");
         body1.put("birthday","1992-12-15");
         body1.put("signature",RandomName.getName());
         body1.put("nickname",RandomName.getEname());
