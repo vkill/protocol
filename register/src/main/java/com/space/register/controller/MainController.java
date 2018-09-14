@@ -31,7 +31,7 @@ public class MainController {
     @Resource
     DYRegisterService dyRegisterService;
 
-    private static int id = 96;
+    private static int id = 103;
 
     /**
      * 点赞模块
