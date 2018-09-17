@@ -20,7 +20,7 @@ import java.util.Map;
  * @create: 2018-09-04 11:39
  **/
 public class ThumbsUpMaker {
-    public static String thumbsUpMaker(String aweme_id, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity) {
+    public static Map thumbsUpMaker(String aweme_id, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity) {
 
 
         //获取设备信息
@@ -66,7 +66,7 @@ public class ThumbsUpMaker {
         token.put("openudid",openudid);
         token.put("manifest_version_code","176");
         token.put("resolution","720*1280");
-        token.put("dpi","240");
+        token.put("dpi","320");
         token.put("update_version_code","1762");
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
@@ -141,7 +141,11 @@ public class ThumbsUpMaker {
                 System.out.println("响应失败");
             }
         });
-        return null;
+
+        Map result = new HashMap();
+        result.put("url",url);
+        result.put("header",header);
+        return result;
     }
 
     public static String MapToString(Map map){
