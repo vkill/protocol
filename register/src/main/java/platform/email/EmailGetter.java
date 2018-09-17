@@ -135,7 +135,7 @@ public class EmailGetter {
         String[] buffers;
         String tag =errorStr;
         int buffer_Num =0;
-        while(tag.equals(errorStr)&buffer_Num<12){
+        while(tag.equals(errorStr)&buffer_Num<8){
             try {
                 Thread.sleep(10000);
                 document =Jsoup.connect(infoUrl).get();
@@ -159,9 +159,31 @@ public class EmailGetter {
             //System.out.println("tag : "+tag);
         }
         System.out.print("获取验证码失败");
+        makePhoneBlank(P_ID);
         return "请求超时";
     }
 
+    public void makePhoneBlank(String phone_PID){
+        String tag =errorStr;
+        //http://api0.wmisms.com/yhapi.ashx?act=addBlack&token=ad718214bdf8e7ad80344bf9743ec307&pid=100118456007026&reason=cannotgetCode
+        String blankList = "http://api0.wmisms.com/yhapi.ashx?act=addBlack&token="+Usertoken+"&pid="+phone_PID+"&reason=cannotgetCode";
+        Document document = null;
+        String[] buffers = null;
+        try {
+            document = Jsoup.connect(blankList).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String buff=document.body().text();
+        buffers = buff.split("\\|");
+        tag =buffers[0];
+        if(tag.equals(successStr)){
+            System.out.println("成功加黑手机号: "+tag);
+        }else{
+            System.out.print("发生错误，错误信息为: "+buff);
+        }
+        System.out.println("成功加黑手机号: "+tag);
+    }
 
     public static void main(String[] args) {
         EmailGetter emailGetter = new EmailGetter();

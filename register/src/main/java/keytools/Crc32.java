@@ -10,14 +10,14 @@ import java.util.zip.CRC32;
  **/
 public class Crc32 {
 
-    private static CRC32 crc32 = new CRC32();
+
 
     public static String encordToCrc(String strbuff){
         return encordToCrc(strbuff.getBytes());
     }
 
     public static String encordToCrc(byte[] strbytes){
-
+        CRC32 crc32 = new CRC32();
         crc32.update(strbytes);
         long value = crc32.getValue();
         return String.valueOf(value);

@@ -13,6 +13,7 @@ import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.servlet.tags.Param;
@@ -92,76 +93,16 @@ public class TvRegisterMaker {
                 cookies.append(strings.get(i)+";");
             }
             deviceEntity.setCookie(cookies.toString());
+            JSONArray jsonArray = headerJson.getJSONArray("sim_serial_number");
+            JSONObject map = jsonArray.getJSONObject(0);
+            deviceEntity.setSim_ICCid((String) map.get("sim_serial_number"));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //获取odin_tt
-        Map map = URLmakeTools.url_split(DirTable.getOdinTT);
-        String url = getUrlForOdinTT(DirTable.OdinTTUrlHost,map,deviceEntity);
-        RequestTokenVo requestTokenVo = new RequestTokenVo();
-        requestTokenVo.setUrl(url);
-
-        Map<String,String> odin_header = getAllGoodHeaders(deviceEntity.getCookie());
-        requestTokenVo.setHeader(odin_header);
-        Request request1 = ConstructRequest.constructGet(requestTokenVo);
-        try {
-            response = okHttpClient.newCall(request1).execute();
-            jsonString =GzipGetteer.uncompressToString(response.body().bytes());
-            header = response.headers();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("注册设备odinTT失败");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("注册设备odinTT失败");
-        }
-        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(header));
-        StringBuilder cookies = new StringBuilder();
-        for(int i=0;i<strings.size();i++){
-            if(i==strings.size()-1){
-                cookies.append(strings.get(i));
-                break;
-            }
-            cookies.append(strings.get(i)+";");
-        }
-        deviceEntity.setCookie(deviceEntity.getCookie()+";"+cookies.toString());
-        //获取添加oddin_tt的cookie
         return deviceEntity;
     }
 
-
-    public static String getUrlForOdinTT(String hostAndMsg,Map<String,String> allVauleMaps,DeviceEntity deviceEntity){
-        Map<String,String> deviceMap = deviceEntity.getDeviceMap();
-        StringBuilder stringBuilder =new StringBuilder();
-        stringBuilder.append(hostAndMsg);
-        stringBuilder.append(getUrlByMapAndMap(allVauleMaps,deviceMap));
-        stringBuilder.append(KeyControler.getKeyForUse());
-        return stringBuilder.toString();
-    }
-
-    public static String getUrlByMapAndMap(Map<String,String> allVauleMaps,Map<String,String> changeVaule){
-        StringBuilder stringBuilder = new StringBuilder() ;
-        int i = 0;
-        for(String key :allVauleMaps.keySet()){
-            if(i==0){
-                if(changeVaule.containsKey(key)){
-                    stringBuilder.append(key+"="+changeVaule.get(key));
-                }else{
-                    stringBuilder.append(key+"="+allVauleMaps.get(key));
-                }
-
-            }
-            else{
-                if(changeVaule.containsKey(key)){
-                    stringBuilder.append("&"+key+"="+changeVaule.get(key));
-                }else{
-                    stringBuilder.append("&"+key+"="+allVauleMaps.get(key));
-                }
-            }
-            i++;
-        }
-        return stringBuilder.toString();
-    }
     public Request sendMessageForRegister(UrlRequestEntity urlRequestEntity,DeviceEntity deviceEntity,PhonePo phonePo,String code){
 
         String host = urlRequestEntity.getHost();
@@ -180,7 +121,7 @@ public class TvRegisterMaker {
         headers.put("Host","is.snssdk.com");
         headers.put("Connection","Keep-Alive");
         headers.put("User-Agent","okhttp/3.8.1");
-        String cookies = deviceEntity.getCookie()+"qh[360]=1;";
+        String cookies = deviceEntity.getCookie()+";qh[360]=1";
         //System.out.println("cookie 内容"+ cookies);
         headers.put("Cookie",cookies);
         RequestTokenVo requestTokenVo = new RequestTokenVo();

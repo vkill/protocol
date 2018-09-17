@@ -5,17 +5,12 @@ import com.space.register.entity.DeviceEntity;
 import enums.paramtable.DirTable;
 import enums.paramtable.urltools.URLmakeTools;
 import httpmaker.ConstructRequest;
-import jsonreader.tools.GzipGetteer;
-import jsonreader.tools.JsonTableGetter;
-import keytools.KeyParam;
 import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONObject;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMethodMappingNamingStrategy;
 import params.ParamCreater;
 import params.tools.KeyControler;
 import po.RequestTokenVo;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +44,7 @@ public class UserPowerGetter {
         String sysTimes = ParamCreater.get_Rticket();
         infoChange.put("_rticket",sysTimes);
         infoChange.put("ts",ParamCreater.get_Ts(sysTimes));
-        String realInfoUrl = DirTable.friend_Register_Hoster+TvRegisterMaker.getUrlByMapAndMap(realInfoMap,infoChange)+ KeyControler.getKeyForUse();
+        String realInfoUrl = DirTable.friend_Register_Hoster+UrlBodyCreaterTool.getBodyByMapAndMap(realInfoMap,infoChange)+ KeyControler.getKeyForUse();
         requestTokenVo = new RequestTokenVo();
         //生成请求头信息
         Map<String,String> realDeviceHeader = new HashMap<String,String>();
@@ -73,7 +68,7 @@ public class UserPowerGetter {
         realDeviceBody.put("device_brand",deviceEntity.getDevice_brand());
         realDeviceBody.put("_rticket", ParamCreater.get_Rticket());
         Map<String,String> bodyMap = URLmakeTools.url_split(DirTable.friend_Register_Body);
-        realDeviceBody = URLmakeTools.url_split(TvRegisterMaker.getUrlByMapAndMap(bodyMap,realDeviceBody));
+        realDeviceBody = URLmakeTools.url_split(UrlBodyCreaterTool.getBodyByMapAndMap(bodyMap,realDeviceBody));
         requestTokenVo.setUrl(realInfoUrl);
         requestTokenVo.setHeader(realDeviceHeader);
         requestTokenVo.setBody(realDeviceBody);
@@ -94,7 +89,7 @@ public class UserPowerGetter {
         String sysTimes = ParamCreater.get_Rticket();
         infoChange.put("_rticket",sysTimes);
         infoChange.put("ts",ParamCreater.get_Ts(sysTimes));
-        String realInfoUrl = DirTable.abtest_Param_Hoster+TvRegisterMaker.getUrlByMapAndMap(realInfoMap,infoChange)+ KeyControler.getKeyForUse();
+        String realInfoUrl = DirTable.abtest_Param_Hoster+UrlBodyCreaterTool.getBodyByMapAndMap(realInfoMap,infoChange)+ KeyControler.getKeyForUse();
         requestTokenVo = new RequestTokenVo();
         //生成请求头信息
         Map<String,String> realDeviceHeader = new HashMap<String,String>();
@@ -127,7 +122,7 @@ public class UserPowerGetter {
         String sysTimes = ParamCreater.get_Rticket();
         infoChange.put("_rticket",sysTimes);
         infoChange.put("ts",ParamCreater.get_Ts(sysTimes));
-        String realInfoUrl = DirTable.abtest_Param_Hoster+TvRegisterMaker.getUrlByMapAndMap(realInfoMap,infoChange)+ KeyControler.getKeyForUse();
+        String realInfoUrl = DirTable.abtest_Param_Hoster+UrlBodyCreaterTool.getBodyByMapAndMap(realInfoMap,infoChange)+ KeyControler.getKeyForUse();
         requestTokenVo = new RequestTokenVo();
         //生成请求头信息
         Map<String,String> realDeviceHeader = new HashMap<String,String>();
@@ -145,4 +140,10 @@ public class UserPowerGetter {
         return ConstructRequest.constructGet(requestTokenVo);
 
     }
+    // 思考到更好的替代方案
+//    public static Request checkInGetAccount(DeviceEntity deviceEntity,DYUserEntity dyUserEntity){
+//        //实现参数的构造就行
+//
+//        return null;
+//    }
 }

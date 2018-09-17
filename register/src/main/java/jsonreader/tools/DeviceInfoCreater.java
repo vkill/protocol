@@ -20,7 +20,7 @@ public class DeviceInfoCreater {
         String device_brand = type[size].split(" ")[0];
         String uuid_temp = String.valueOf(new Random(System.currentTimeMillis()).nextInt(9999999));
         String []temp = uuid_temp.split("");
-        String uuid = UUID.randomUUID().toString();
+        String uuid = getUDIDCode();
         String line = new MD5Code().getMD5ofStr(uuid_temp);
         String openudid = "";
         char []list = line.toCharArray();
@@ -56,5 +56,21 @@ public class DeviceInfoCreater {
         return str;
     }
 
+    public static String getUDIDCode(){
+        String line1 = "86516602";
+        String line2 = String.valueOf(new java.util.Random(System.currentTimeMillis()).nextInt(9999999));
 
+        for(int i = 0;i < 7 - line2.length();i++){
+            line1 += "0";
+        }
+
+        String result = line1 + line2;
+        return  result;
+    }
+
+
+    public static void main(String[]args){
+        System.out.println(UUID.randomUUID().toString());
+        System.out.println(UUID.randomUUID());
+    }
 }

@@ -32,19 +32,19 @@ public class RequestURLCreater {
             //System.out.println(jsonMap.get(key_Str));
             if(deviceRegisterInfo.equals(DeviceRegisterInfo.ac)){
                 if(jsonMap.containsKey(key_Str)){
-                    stringBuilder.append(key_Str+"="+jsonMap.get(key_Str));
+                    stringBuilder.append(deviceRegisterInfo.getVaule()+"="+jsonMap.get(key_Str));
                     //System.out.println(key_Str+"  json  "+jsonMap.get(key_Str));
                 }
                 else{
-                    stringBuilder.append(key_Str+"="+DirTable.base_DeviceRegister_Info.get(deviceRegisterInfo));
+                    stringBuilder.append(deviceRegisterInfo.getVaule()+"="+DirTable.base_DeviceRegister_Info.get(deviceRegisterInfo));
                 }
             }else {
                 if(jsonMap.containsKey(key_Str)){
-                    stringBuilder.append("&"+key_Str+"="+jsonMap.get(key_Str));
+                    stringBuilder.append("&"+deviceRegisterInfo.getVaule()+"="+jsonMap.get(key_Str));
                     //System.out.println(key_Str+"  json  "+jsonMap.get(key_Str));
                 }
                 else{
-                    stringBuilder.append("&"+key_Str+"="+DirTable.base_DeviceRegister_Info.get(deviceRegisterInfo));
+                    stringBuilder.append("&"+deviceRegisterInfo.getVaule()+"="+DirTable.base_DeviceRegister_Info.get(deviceRegisterInfo));
                 }
             }
         }

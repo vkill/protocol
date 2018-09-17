@@ -9,7 +9,7 @@ import java.util.Map;
 public class DeviceEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String device_type;
@@ -26,8 +26,19 @@ public class DeviceEntity {
 
     private String device_brand;
 
+    private String sim_ICCid;
+
+
     @Column(columnDefinition = "text")
     private String cookie;
+
+    public String getSim_ICCid() {
+        return sim_ICCid;
+    }
+
+    public void setSim_ICCid(String sim_ICCid) {
+        this.sim_ICCid = sim_ICCid;
+    }
 
     public String getCookie() {
         return cookie;

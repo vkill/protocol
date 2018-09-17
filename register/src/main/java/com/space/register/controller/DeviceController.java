@@ -1,13 +1,11 @@
 package com.space.register.controller;
 
-import com.mysql.cj.x.protobuf.Mysqlx;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.dao.DeviceRepository;
 import com.space.register.dao.UrlRequestRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
-import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
 import enums.paramtable.DirTable;
 import enums.paramtable.urltools.URLmakeTools;
@@ -27,11 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import params.ParamCreater;
 import params.tools.RequestURLCreater;
 import platform.email.EmailGetter;
-import platform.main.TvRegisterMaker;
-import platform.main.UserPowerGetter;
+import platform.main.*;
 import po.PhonePo;
 import po.RequestTokenVo;
-import vpntool.VPNTools;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -64,11 +60,12 @@ public class DeviceController {
 
         allUrl = urlRequestRepository.findAll();
         int worry=0;
-        for(int i=0;i<1;i++){
+        for(int i=0;i<1 ;i++){
             try{
                 oneUserInfo();
             }catch (Exception e){
                 System.out.println("死了一个");
+                e.printStackTrace();
                 worry++;
                 continue;
             }
@@ -88,18 +85,134 @@ public class DeviceController {
         return false;
     }
 
-    public boolean oneUserInfo(){
+    public boolean oneUserInfo() throws IOException {
+        Map<String,String> kaoHeader = new HashMap<String,String>();
+        Map<String,String> deviceMapBuff = new HashMap<String,String>();
+
         TvRegisterMaker tvRegisterMaker = new TvRegisterMaker();
         //tvRegisterMaker.registerUserToTv();
-        DeviceEntity deviceEntity = tvRegisterMaker.registerUserToTv();//deviceRepository.getOne(5);
-        //System.out.println(save.getCookie());
+        DeviceEntity deviceEntity = deviceRepository.getOne(5);//
+        //注册设备之后调用的get方法
         OkHttpClient okHttpClient = tvRegisterMaker.okHttpClient;
         //获取设备真实信息。
-        JSONObject realDevice = JsonTableGetter.contrustTest();
-        Request requestUpload = sendRealDeviceInfo(deviceEntity,realDevice,"cold_start");
+        JSONObject realDevice = null;
+        Request requestUpload = null;
         Response response = null;
         String jsonString = null;
         JSONObject resultJson =null;
+        //第一个v1 setting方法
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.v1_Settings_Hoster,DirTable.v1_Settings,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第二个abtest param
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.abtest_Param_Hoster,DirTable.abtest_Param,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第三个lucky money setting, 需要传递cookie
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings_Hoster,DirTable.money_Settings,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第诗歌lucky money new user，需要传递cookie
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User_Hoster,DirTable.money_New_User,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第五个 theme package
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.theme_Package_Hoster,DirTable.theme_Package,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第六个 live answer
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.live_Answer_Hoster,DirTable.live_Answer,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第七个 rec new
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.rec_New_Hoster,DirTable.rec_New,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第八个 app_alert
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.service_2_app_Alert_Hoster,DirTable.service_2_app_Alert,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第九个 aweme v14
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.aweme_V14_Hoster,DirTable.aweme_V14,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        //获取odin_tt
+        jsonString =GzipGetteer.uncompressToString(response.body().bytes());
+        Headers headerhe = response.headers();
+        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headerhe));
+        StringBuilder cookies = new StringBuilder();
+        for(int i=0;i<strings.size();i++){
+            if(i==strings.size()-1){
+                cookies.append(strings.get(i));
+                break;
+            }
+            cookies.append(strings.get(i)+";");
+        }
+        deviceEntity.setCookie(deviceEntity.getCookie()+";"+cookies.toString());
+        //获取添加oddin_tt的cookie
+        System.out.println(jsonString);
+        //第十个 screen ad
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.screen_Ad_Hoster,DirTable.screen_Ad,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十一个 setting v2
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.setting_V2_Hoster,DirTable.setting_V2,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十二个 license
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.v1_License_Hoster,DirTable.v1_License,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
+        //第一个post body方法
+        kaoHeader.clear();
+        kaoHeader.put("Cookie",deviceEntity.getCookie()+";"+"qh[360]=1");
+        kaoHeader.put("Content-Type","application/x-www-form-urlencoded");
+        deviceMapBuff = deviceEntity.getDeviceMap();
+        requestUpload = DevicerAblePostter.getRealDeviceRequsets(DirTable.cloudpush_Updata_Sender_Hoster,DirTable.cloudpush_Updata_Sender,DirTable.cloudpush_Updata_Sender_Body,kaoHeader,deviceMapBuff,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
+        //第十三个 lucky money sittings
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings1_Hoster,DirTable.money_Settings,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十四个 lucky money new user
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十五个 sdk log
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.sdk_Log_Hoster,DirTable.sdk_Log,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十六个 v1 feed
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.v1_feed_Hoster,DirTable.v1_feed,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十七个 private_message
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.message_Account_Hoster,DirTable.message_Account,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第十八个 feedback 暂未写
+
+        realDevice = JsonTableGetter.contrustJsonForReal(deviceEntity);
+        requestUpload = sendRealDeviceInfo(deviceEntity,realDevice,"cold_start");
         try {
             response = okHttpClient.newCall(requestUpload).execute();
             jsonString = GzipGetteer.uncompressToString(response.body().bytes());
@@ -112,25 +225,59 @@ public class DeviceController {
             System.out.println("更新设备失败");
         }
         System.out.println(jsonString);
+
+        //第二个 post body 方法
+        kaoHeader.clear();
+        kaoHeader.put("Cookie",deviceEntity.getCookie()+";"+"qh[360]=1");
+        kaoHeader.put("Content-Type","application/x-www-form-urlencoded");
+        deviceMapBuff = deviceEntity.getDeviceMap();
+        requestUpload = DevicerAblePostter.getRealDeviceRequsets(DirTable.v1_Aweme_Stats_Hoster,DirTable.v1_Aweme_Stats,DirTable.v1_Aweme_Stats_Body,kaoHeader,deviceMapBuff,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
+        //第十九个 appmonitor settings
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.appmonitor_Settings_noSrckey_Hoster,DirTable.appmonitor_Settings_noSrckey,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //第二十个 app_notice_status
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.app_notice_status_Hoster,DirTable.app_notice_status,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
         //为了测试而添加的读取方法
         UrlRequestEntity urlRequestEntity= allUrl.get(0);
         UrlRequestEntity urlRequestEntity1 = allUrl.get(1);
         EmailGetter emailGetter = new EmailGetter();
         emailGetter.loginIT();
-        PhonePo phonePo = emailGetter.getPhoneNumber();
-        Request request = tvRegisterMaker.sendMessageForRegister(urlRequestEntity,deviceEntity,phonePo,"");
-        try {
-            response = okHttpClient.newCall(request).execute();
-            jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-            resultJson = new JSONObject(jsonString);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("发送验证码失败");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("发送验证码失败");
+        PhonePo phonePo = null ;
+        Request request = null;
+        String code = null;
+        while(true){
+            phonePo = emailGetter.getPhoneNumber();
+            request = tvRegisterMaker.sendMessageForRegister(urlRequestEntity,deviceEntity,phonePo,"");
+            try {
+                response = okHttpClient.newCall(request).execute();
+                jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+                resultJson = new JSONObject(jsonString);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("发送验证码失败");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("发送验证码失败");
+            }
+            System.out.println(jsonString);
+            //获取验证码
+            code = emailGetter.getIdentCode(phonePo.getP_ID());
+            if(code.equals("请求超时")){
+                continue;
+            }else{
+                break;
+            }
         }
-        System.out.println(jsonString);
         //获取设备真实信息。
         try {
             realDevice.put("time",Long.parseLong(ParamCreater.get_Rticket()));
@@ -138,6 +285,7 @@ public class DeviceController {
             System.out.println("json插入新值出错");
             e.printStackTrace();
         }
+
         requestUpload = sendRealDeviceInfo(deviceEntity,realDevice,"login");
         try {
             response = okHttpClient.newCall(requestUpload).execute();
@@ -151,12 +299,6 @@ public class DeviceController {
             System.out.println("发送验证码后更新设备失败");
         }
         System.out.println(jsonString);
-
-        //获取验证码
-        String code = emailGetter.getIdentCode(phonePo.getP_ID());
-        if(code.equals("请求超时")){
-            return false;
-        }
         Request request1 = tvRegisterMaker.sendMessageForRegister(urlRequestEntity1,deviceEntity,phonePo,code);
         Headers headers = null;
         try {
@@ -185,8 +327,8 @@ public class DeviceController {
             e.printStackTrace();
             System.out.println("读取data json 报错");
         }
-        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headers));
-        StringBuilder cookies = new StringBuilder();
+        strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headers));
+        cookies = new StringBuilder();
         int z =0;
         for(int i=0;i<strings.size();i++){
             if(i==strings.size()-1){
@@ -200,6 +342,7 @@ public class DeviceController {
             cookies.append(strings.get(i)+";");
         }
         dyUserEntity.setUserCookie(cookies.toString());
+        //此处获取第一个权限，调用的方法为/v1/friend/register/notice/
         Request request2 = UserPowerGetter.registerFriends(deviceEntity,dyUserEntity);
         try {
             response = okHttpClient.newCall(request2).execute();
@@ -213,6 +356,7 @@ public class DeviceController {
             e.printStackTrace();
             System.out.println("用户权限获取失败");
         }
+        //此处为获取权限测试的第二处请求，调取的方法为：/v1/abtest/param/
         request2 =UserPowerGetter.abTestParams(deviceEntity,dyUserEntity);
         try {
             response = okHttpClient.newCall(request2).execute();
@@ -226,8 +370,93 @@ public class DeviceController {
             e.printStackTrace();
             System.out.println("运行参数测试失败");
         }
+        //此处为获取权限的第三处请求，调取方法为：/v1/settings/
+        Map<String,String> headWithCookie = new HashMap<String,String>();
+        StringBuilder headsCookies = new StringBuilder();
+        String[] headscookies = deviceEntity.getCookie().split(";");
+        for(int i =0;i<headscookies.length;i++){
+            if(headscookies[i].startsWith(""))
+            headsCookies.append(headscookies[i]+";");
+        }
+        headsCookies.append(dyUserEntity.getUserCookie());
+        headWithCookie.put("Cookie",headsCookies.toString());
+        Map<String,String> onlyUserCookie = new HashMap<String,String>();
+        onlyUserCookie.put("Cookie",dyUserEntity.getUserCookie());
+
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Settings_User_Hoster,DirTable.v1_Settings_User,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第四处请求，调取方法为：v1/check/in/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第五处请求，调取方法为：/aweme/v1/user/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第六处请求，调取方法为：/v1/spotlight/relation/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.spotlight_relation_Hoster,DirTable.spotlight_relation,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第六处请求，调取方法为：/aweme/v1/lucky/money/newuser/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第七处请求，调取方法为：v1/lucky/money/settings/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_Settings1_Hoster,DirTable.money_Settings1,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第八处请求，调取方法为：aweme/v1/check/in/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第九处请求，调取方法为：v1/check/in/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的额外请求，调取方法为：private_message/account/login_notify/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_License_Hoster,DirTable.v1_License,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
+        //此处为获取权限的第十处请求，调取方法为：private_message/account/login_notify/
+        Map<String,String> needRealInfo = deviceEntity.getDeviceMap();
+        needRealInfo.put("client_uid",dyUserEntity.getUid());
+        requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.private_message_account_logout_notify_Hoster,DirTable.private_message_account_logout_notify,onlyUserCookie,needRealInfo,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
+        //此处为获取权限的第十一处请求，调取方法为：/aweme/v1/story/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Story_Str_Hoster,DirTable.v1_Story_Str,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
+        //此处为获取权限的第十二处请求，调取方法为：/aweme/v1/story/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Story_List_Hoster,DirTable.v1_Story_List,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取点赞权限的第十三次请求，调取的方法为：im/chatlist/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.im_Chatlist_Hoster,DirTable.im_Chatlist,onlyUserCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+
         deviceEntities.add(deviceEntity);
         userEntities.add(dyUserEntity);
+
+
         return  true;
 
     }
@@ -244,7 +473,7 @@ public class DeviceController {
         RequestTokenVo requestTokenVo;
 
         Map realInfoMap = URLmakeTools.url_split(DirTable.getRealUrlInfo);
-        String realInfoUrl = TvRegisterMaker.getUrlForOdinTT(DirTable.realUrlInfoHost,realInfoMap,deviceEntity);
+        String realInfoUrl = UrlBodyCreaterTool.getUrlFromEntityAndMap(DirTable.realUrlInfoHost,realInfoMap,deviceEntity);
         requestTokenVo = new RequestTokenVo();
         //生成请求头信息
         Map<String,String> realDeviceHeader = new HashMap<String,String>();
@@ -272,7 +501,7 @@ public class DeviceController {
         realDeviceBody.put("_rticket", ParamCreater.get_Rticket());
         realDeviceBody.put("scene",sceneStr);
         Map<String,String> bodyMap = URLmakeTools.url_split(DirTable.realUrlInfoBody);
-        realDeviceBody = URLmakeTools.url_split(TvRegisterMaker.getUrlByMapAndMap(bodyMap,realDeviceBody));
+        realDeviceBody = URLmakeTools.url_split(UrlBodyCreaterTool.getBodyByMapAndMap(bodyMap,realDeviceBody));
         requestTokenVo.setUrl(realInfoUrl);
         requestTokenVo.setHeader(realDeviceHeader);
         requestTokenVo.setBody(realDeviceBody);
@@ -289,4 +518,5 @@ public class DeviceController {
         System.out.println(allKey);
         return allKey;
     }
+
 }
