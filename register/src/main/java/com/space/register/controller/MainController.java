@@ -231,7 +231,9 @@ public class MainController {
     public Map aaaa() {
 
 
-        String aweme_id = "6602508621630672135";
+        String aweme_id1 = "6602178680200367364";
+        String aweme_id2 = "6600198700406934791";
+
 
         DYUserEntity dyUserEntity = dyRegisterService.findById(id);
         String user_cookie = dyUserEntity.getUserCookie();
@@ -247,11 +249,38 @@ public class MainController {
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
 
-        ThumbsUpMaker.thumbsUpMaker(aweme_id, deviceEntity, urlRequestEntity);
+        try {
 
-        ThumbsUpMaker.thumbsUpMaker1(aweme_id, deviceEntity, urlRequestEntity);
+            System.out.println("1");
+            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker1(aweme_id1, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker1(aweme_id1, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            System.out.println();
+            System.out.println("2");
+            ThumbsUpMaker.thumbsUpMaker(aweme_id2, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker1(aweme_id2, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker(aweme_id2, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
 
-        ThumbsUpMaker.thumbsUpMaker(aweme_id, deviceEntity, urlRequestEntity);
+
+
+
+            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
+            Thread.sleep(1000);
+            ThumbsUpMaker.thumbsUpMaker1(aweme_id1, deviceEntity, urlRequestEntity);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         return null;
     }

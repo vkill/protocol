@@ -150,7 +150,6 @@ public class SupportAccountMaker {
                     for(int j = 1;j < array.length - 1;j++){
                         str += array[j];
                     }
-                    System.out.println(str);
                     id_list.add(str);
                 }
 
