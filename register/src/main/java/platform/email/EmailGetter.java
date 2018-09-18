@@ -134,6 +134,7 @@ public class EmailGetter {
         String buff = null;
         String[] buffers;
         String tag =errorStr;
+        String result = 0+"";
         int buffer_Num =0;
         while(tag.equals(errorStr)&buffer_Num<8){
             try {
@@ -146,12 +147,13 @@ public class EmailGetter {
             buff = document.body().text();
             buffers = buff.split("\\|");
             tag = buffers[0];
+            result = buffers[1];
             if(tag.equals(successStr)){
                 return buffers[1];
             }
-            else if(tag.equals("-4")){
+            else if(result.equals("-4")){
                 System.out.println("号码已经强制释放");
-                break;
+                return "请求超时";
             }else{
                // System.out.println("nimei: "+buffers[0]+" "+buffers[1]);
             }

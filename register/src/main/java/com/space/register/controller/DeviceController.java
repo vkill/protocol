@@ -90,8 +90,8 @@ public class DeviceController {
         Map<String,String> deviceMapBuff = new HashMap<String,String>();
 
         TvRegisterMaker tvRegisterMaker = new TvRegisterMaker();
-        //tvRegisterMaker.registerUserToTv();
-        DeviceEntity deviceEntity = deviceRepository.getOne(5);//
+// tvRegisterMaker.registerUserToTv();
+        DeviceEntity deviceEntity = deviceRepository.getOne(6);
         //注册设备之后调用的get方法
         OkHttpClient okHttpClient = tvRegisterMaker.okHttpClient;
         //获取设备真实信息。
@@ -342,8 +342,26 @@ public class DeviceController {
             cookies.append(strings.get(i)+";");
         }
         dyUserEntity.setUserCookie(cookies.toString());
+        //此处构造包含不同信息的header 中cookie 请求
+        Map<String,String> headWithCookie = new HashMap<String,String>();
+        StringBuilder headsCookies = new StringBuilder();
+        String[] headscookies = deviceEntity.getCookie().split(";");
+        for(int i =0;i<headscookies.length;i++){
+            if(headscookies[i].startsWith("odin_tt")){
+                continue;
+            }
+            headsCookies.append(headscookies[i]+";");
+        }
+        headsCookies.append(dyUserEntity.getUserCookie());
+        headWithCookie.put("Cookie",headsCookies.toString());
+        Map<String,String> onlyUserCookie = new HashMap<String,String>();
+        onlyUserCookie.put("Cookie",dyUserEntity.getUserCookie());
+        //此处构造额外的设备信息
+        Map<String,String> needRealInfo = deviceEntity.getDeviceMap();
+        needRealInfo.put("client_uid",dyUserEntity.getUid());
+        needRealInfo.put("phone_number","+"+dyUserEntity.getPhoneArea()+dyUserEntity.getPhoneNum());
         //此处获取第一个权限，调用的方法为/v1/friend/register/notice/
-        Request request2 = UserPowerGetter.registerFriends(deviceEntity,dyUserEntity);
+        Request request2 =DevicerAblePostter.getRealDeviceRequsets(DirTable.friend_Register_Hoster,DirTable.friend_Register,DirTable.friend_Register_Body,headWithCookie,needRealInfo,true);
         try {
             response = okHttpClient.newCall(request2).execute();
             jsonString = GzipGetteer.uncompressToString(response.body().bytes());
@@ -357,7 +375,7 @@ public class DeviceController {
             System.out.println("用户权限获取失败");
         }
         //此处为获取权限测试的第二处请求，调取的方法为：/v1/abtest/param/
-        request2 =UserPowerGetter.abTestParams(deviceEntity,dyUserEntity);
+        request2 =DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.abtest_Param_Hoster,DirTable.abtest_Param,headWithCookie,deviceEntity,true);
         try {
             response = okHttpClient.newCall(request2).execute();
             jsonString = GzipGetteer.uncompressToString(response.body().bytes());
@@ -370,30 +388,43 @@ public class DeviceController {
             e.printStackTrace();
             System.out.println("运行参数测试失败");
         }
-        //此处为获取权限的第三处请求，调取方法为：/v1/settings/
-        Map<String,String> headWithCookie = new HashMap<String,String>();
-        StringBuilder headsCookies = new StringBuilder();
-        String[] headscookies = deviceEntity.getCookie().split(";");
-        for(int i =0;i<headscookies.length;i++){
-            if(headscookies[i].startsWith(""))
-            headsCookies.append(headscookies[i]+";");
-        }
-        headsCookies.append(dyUserEntity.getUserCookie());
-        headWithCookie.put("Cookie",headsCookies.toString());
-        Map<String,String> onlyUserCookie = new HashMap<String,String>();
-        onlyUserCookie.put("Cookie",dyUserEntity.getUserCookie());
-
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Settings_User_Hoster,DirTable.v1_Settings_User,onlyUserCookie,deviceEntity,true);
+        //此处为获取权限的第四处请求，调取方法为：v1/check/in/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
-        //此处为获取权限的第四处请求，调取方法为：v1/check/in/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
+        //此处为获取权限的第三处请求，调取方法为：/v1/settings/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Settings_User_Hoster,DirTable.v1_Settings_User,headWithCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第七处请求，调取方法为：v1/lucky/money/settings/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_Settings1_Hoster,DirTable.money_Settings1,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
         //此处为获取权限的第五处请求，调取方法为：/aweme/v1/user/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,onlyUserCookie,deviceEntity,true);
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,headWithCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第四处请求，调取方法为：v1/check/in/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,headWithCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第六处请求，调取方法为：/aweme/v1/lucky/money/newuser/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,headWithCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的第五处请求，调取方法为：/aweme/v1/user/
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,headWithCookie,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        System.out.println(jsonString);
+        //此处为获取权限的额外请求，调取方法为：aweme/v1/license
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_License_Hoster,DirTable.v1_License,onlyUserCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
@@ -402,48 +433,8 @@ public class DeviceController {
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
-        //此处为获取权限的第六处请求，调取方法为：/aweme/v1/lucky/money/newuser/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,onlyUserCookie,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //此处为获取权限的第七处请求，调取方法为：v1/lucky/money/settings/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_Settings1_Hoster,DirTable.money_Settings1,onlyUserCookie,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //此处为获取权限的第八处请求，调取方法为：aweme/v1/check/in/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //此处为获取权限的第九处请求，调取方法为：v1/check/in/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //此处为获取权限的额外请求，调取方法为：private_message/account/login_notify/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_License_Hoster,DirTable.v1_License,onlyUserCookie,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-
         //此处为获取权限的第十处请求，调取方法为：private_message/account/login_notify/
-        Map<String,String> needRealInfo = deviceEntity.getDeviceMap();
-        needRealInfo.put("client_uid",dyUserEntity.getUid());
         requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.private_message_account_logout_notify_Hoster,DirTable.private_message_account_logout_notify,onlyUserCookie,needRealInfo,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-
-        //此处为获取权限的第十一处请求，调取方法为：/aweme/v1/story/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Story_Str_Hoster,DirTable.v1_Story_Str,onlyUserCookie,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-
-        //此处为获取权限的第十二处请求，调取方法为：/aweme/v1/story/
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Story_List_Hoster,DirTable.v1_Story_List,onlyUserCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
@@ -452,6 +443,50 @@ public class DeviceController {
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
+
+
+
+
+//        //此处为获取权限的第六处请求，调取方法为：/aweme/v1/lucky/money/newuser/
+////        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,onlyUserCookie,deviceEntity,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
+////
+////        //此处为获取权限的第八处请求，调取方法为：aweme/v1/check/in/
+////        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
+////        //此处为获取权限的第九处请求，调取方法为：v1/check/in/
+////        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,onlyUserCookie,deviceEntity,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
+////
+////
+////        //此处为获取权限的第十处请求，调取方法为：private_message/account/login_notify/
+////        requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.private_message_account_logout_notify_Hoster,DirTable.private_message_account_logout_notify,onlyUserCookie,needRealInfo,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
+////
+////        //此处为获取权限的第十一处请求，调取方法为：/aweme/v1/story/
+////        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Story_Str_Hoster,DirTable.v1_Story_Str,onlyUserCookie,deviceEntity,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
+////
+////        //此处为获取权限的第十二处请求，调取方法为：/aweme/v1/storyList/
+////        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Story_List_Hoster,DirTable.v1_Story_List,onlyUserCookie,deviceEntity,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
+////        //此处为获取点赞权限的第十三次请求，调取的方法为：im/chatlist/
+////        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.im_Chatlist_Hoster,DirTable.im_Chatlist,onlyUserCookie,deviceEntity,true);
+////        response = okHttpClient.newCall(requestUpload).execute();
+////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+////        System.out.println(jsonString);
 
         deviceEntities.add(deviceEntity);
         userEntities.add(dyUserEntity);

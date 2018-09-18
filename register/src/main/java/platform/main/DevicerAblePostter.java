@@ -69,6 +69,7 @@ public class DevicerAblePostter {
         if(needKey){
             url+= KeyControler.getKeyForUse();
         }
+        headers.put("Host", hoster.split("/")[2]);
         headers = UrlBodyCreaterTool.getMyHeaders(headers);
         allVaule = URLmakeTools.url_split(allVauleBody);
         String newBody = UrlBodyCreaterTool.getBodyByMapAndMap(allVaule,deviceInfoMap);
