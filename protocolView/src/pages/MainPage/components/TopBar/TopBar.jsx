@@ -49,7 +49,8 @@ const styles={
     color: '#111',
   },
   logo: {
-    width: '80%',
+    width: '50%',
+    height: '50%',
     paddingTop: '10%',
     paddingLeft: '10%'
   }

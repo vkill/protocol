@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@icedesign/base": "^0.2.0",
-    "@icedesign/container": "^0.1.2",
+    "@icedesign/container": "^0.1.1",
     "@icedesign/form-binder": "^0.1.5",
     "@icedesign/icon": "^0.1.1",
     "@icedesign/img": "^0.1.1",
@@ -19,7 +19,7 @@
     "classnames": "^2.2.5",
     "enquire-js": "^0.1.2",
     "foundation-symbol": "^0.1.0",
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.5.8",
     "react": "^16.4.1",
     "react-document-title": "^2.0.3",
     "react-router": "^4.3.1",

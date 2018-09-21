@@ -10,13 +10,11 @@ public class OrderType {
     @GeneratedValue
     private int id;
 
-    @Column(length = 255)
-    private String projectType; // 项目类别
+    // 类型标识
+    private String typeSign;
 
-    @Column(length = 255)
-    private String operationType; // 操作类型
-
-    private double price; // 价格，浮动变化，单位：个数/元
+    // 类型描述
+    private String typeDesc;
 
     public int getId() {
         return id;
@@ -26,27 +24,19 @@ public class OrderType {
         this.id = id;
     }
 
-    public String getProjectType() {
-        return projectType;
+    public String getTypeSign() {
+        return typeSign;
     }
 
-    public void setProjectType(String projectType) {
-        this.projectType = projectType;
+    public void setTypeSign(String typeSign) {
+        this.typeSign = typeSign;
     }
 
-    public String getOperationType() {
-        return operationType;
+    public String getTypeDesc() {
+        return typeDesc;
     }
 
-    public void setOperationType(String operationType) {
-        this.operationType = operationType;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
     }
 }

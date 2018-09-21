@@ -1,6 +1,8 @@
 package com.space.controller;
 
+import com.space.entity.GoodsTypeList;
 import com.space.entity.OrderType;
+import com.space.service.GoodsTypeListService;
 import com.space.service.OrderTypeService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,9 @@ public class OrderTypeController {
 
     @Resource
     OrderTypeService orderTypeService;
+
+    @Resource
+    GoodsTypeListService goodsTypeListService;
 
     @RequestMapping("/getTypeByName")
     public Map getOrderTypeByProject(@RequestBody Map data) {
@@ -37,4 +42,21 @@ public class OrderTypeController {
 
         return map;
     }
+
+    /**
+     * 获取所有项目服务
+     * @return hashMap
+     */
+    @RequestMapping("/getType")
+    public Map getAllOrderType() {
+        // 预设用来以后做加密检测
+        Map result = new HashMap();
+
+        Map orderType = orderTypeService.getAllOrderType();
+
+        result.put("order_type",orderType);
+        return result;
+    }
+
+
 }
