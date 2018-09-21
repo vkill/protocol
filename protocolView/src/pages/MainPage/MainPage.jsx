@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import TopBar from './components/TopBar';
-import Attention from './components/Attention'
-import Order from './components/Order'
+import Attention from './components/Attention';
+import Order from './components/Order';
+import Footer from './components/NormalFooter';
 import {} from 'antd';
 
 export default class MainPage extends Component {
@@ -19,6 +20,8 @@ export default class MainPage extends Component {
           <TopBar/>
           <Attention/>
           <Order/>
+          <Footer/>
+          
         </div>
       </div>
     )
