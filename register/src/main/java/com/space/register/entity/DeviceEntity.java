@@ -28,6 +28,9 @@ public class DeviceEntity {
 
     private String sim_ICCid;
 
+    private String device_register_json;
+
+    private String device_upload_info_json;
 
     @Column(columnDefinition = "text")
     private String cookie;
@@ -110,6 +113,22 @@ public class DeviceEntity {
 
     public void setDevice_brand(String device_brand) {
         this.device_brand = device_brand;
+    }
+
+    public String getDevice_register_json() {
+        return device_register_json;
+    }
+
+    public void setDevice_register_json(String device_register_json) {
+        this.device_register_json = device_register_json;
+    }
+
+    public String getDevice_upload_info_json() {
+        return device_upload_info_json;
+    }
+
+    public void setDevice_upload_info_json(String device_upload_info_json) {
+        this.device_upload_info_json = device_upload_info_json;
     }
 
     @Override

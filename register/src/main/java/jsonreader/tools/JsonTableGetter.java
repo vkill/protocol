@@ -340,74 +340,7 @@ public class JsonTableGetter {
                 "    \"imsi\": \"460078015808988\",\n" +
                 "    \"iccid\": \""+deviceEntity.getSim_ICCid()+"\",\n" +
                 "    \"cpu\": \"abi: armeabi-v7anProcessor\\t: AArch64 Processor rev 4 (aarch64)\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nHardware\\t: Qualcomm Technologies, Inc MSM8940\\n\",\n" +
-                "    \"uid\": 10147,\n" +
-                "    \"wifimac\": \"02:00:00:00:00:00\",\n" +
-                "    \"type\": 3,\n" +
-                "    \"idfa\": \""+deviceEntity.getOpenudid()+"\",\n" +
-                "    \"file\": \"ueventd.qcom.rc,init.usb.configfs.rc,init.target.rc,init.recovery.hardware.rc,init.qcom.usb.sh,init.qcom.usb.rc,init.qcom.syspart_fixup.sh,init.qcom.sh,init.qcom.sensors.sh,init.qcom.rc,init.qcom.factory.rc,init.qcom.early_boot.sh,init.qcom.class_core.sh,init.msm.usb.configfs.rc,init.miui8.rc,init.miui.rc,init.miui.early_boot.sh,init.mdm.sh,init.environ.rc,init.class_main.sh,init.carrier.rc,fstab.qcom,\",\n" +
-                "    \"fingerprint\": \"Xiaomi\\/santoni\\/santoni:6.0.1\\/MMB29M\\/7.5.19:user\\/release-keys\",\n" +
-                "    \"description\": \"santoni-user 6.0.1 MMB29M 7.5.19 release-keys\",\n" +
-                "    \"temperature\": 1,\n" +
-                "    \"mem\": 2968424448,\n" +
-                "    \"sdtotal\": 25853116416,\n" +
-                "    \"sdused\": 6900236288,\n" +
-                "    \"battery\": 53,\n" +
-                "    \"charge\": 0,\n" +
-                "    \"os\": \"6.0.1\",\n" +
-                "    \"display\": \"720,1280\",\n" +
-                "    \"root\": 0,\n" +
-                "    \"time\": "+Long.parseLong(ParamCreater.get_Rticket())+",\n" +
-                "    \"active\": 16857,\n" +
-                "    \"lock\": 5000,\n" +
-                "    \"brand\": \"Xiaomi Redmi 4X\",\n" +
-                "    \"vpn\": 0,\n" +
-                "    \"host\": 1,\n" +
-                "    \"mac\": \"F4:F5:DB:19:61:1B\",\n" +
-                "    \"cellid\": 0,\n" +
-                "    \"provider\": \"中国移动\",\n" +
-                "    \"wifissid\": \"\\\"500K光速宽带\\\"\",\n" +
-                "    \"wifibssid\": \"dc:fe:18:62:f2:f5\",\n" +
-                "    \"h\": \"ef697000-ef705000 r--p 00000000 fd:00 665292                             \\/data\\/dalvik-cache\\/arm\\/system@framework@XposedBridge.jar@classes.dex\\n\",\n" +
-                "    \"wifiip\": \"192.168.0.110\",\n" +
-                "    \"sim\": 1,\n" +
-                "    \"applist\": [\n" +
-                "        \"com.ss.android.ugc.live\",\n" +
-                "        \"com.smile.gifmaker\",\n" +
-                "        \"com.tencent.mobileqq\",\n" +
-                "        \"eu.chainfire.supersu\",\n" +
-                "        \"com.duokan.reader\",\n" +
-                "        \"com.mi.misupport\",\n" +
-                "        \"com.mfashiongallery.emag\",\n" +
-                "        \"com.google.android.marvin.talkback\",\n" +
-                "        \"com.baidu.duersdk.opensdk\",\n" +
-                "        \"com.miui.klo.bugreport\",\n" +
-                "        \"com.baidu.input_mi\",\n" +
-                "        \"com.tencent.mm\",\n" +
-                "        \"com.touchsprite.android\",\n" +
-                "        \"com.example.administrator.hooktest\",\n" +
-                "        \"com.ss.android.ugc.aweme\",\n" +
-                "        \"de.robv.android.xposed.installer\"\n" +
-                "    ],\n" +
-                "    \"apkcount\": \"16\",\n" +
-                "    \"photolist\": [\n" +
-                "        \"1f39ec7cda1316ec882977ffdad40292\",\n" +
-                "        \"102867425ba098468d22617d7c67e228\",\n" +
-                "        \"46ed2f670a0c13c3c03544e2456d6618\",\n" +
-                "        \"4ca39f509832e3d3cbbb584dc61c65cb\",\n" +
-                "        \"dfab85a11c0cea14e4f3eb6ce0d2c29d\",\n" +
-                "        \"1db83d875add26883ef68981de17cc97\",\n" +
-                "        \"f39e827dfe288711f0867232875ea7f0\",\n" +
-                "        \"2ffc56dfd74b7434e38e5ad05d585b72\",\n" +
-                "        \"c6dd43ae631a614c9ee8d699d2c14459\",\n" +
-                "        \"5f7faeeefb2c3348abb5719d6dace2ac\"\n" +
-                "    ]\n" +
-                "}";
-        jsonStr ="{\n" +
-                "    \"imei\": \""+deviceEntity.getUuid()+"\",\n" +
-                "    \"imsi\": \"460078015808988\",\n" +
-                "    \"iccid\": \""+deviceEntity.getSim_ICCid()+"\",\n" +
-                "    \"cpu\": \"abi: armeabi-v7anProcessor\\t: AArch64 Processor rev 4 (aarch64)\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nFeatures\\t: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\\nCPU implementer\\t: 0x41\\nCPU architecture: 8\\nCPU variant\\t: 0x0\\nCPU part\\t: 0xd03\\nCPU revision\\t: 4\\n\\nHardware\\t: Qualcomm Technologies, Inc MSM8940\\n\",\n" +
-                "    \"uid\": 10160,\n" +
+                "    \"uid\": 10161,\n" +
                 "    \"wifimac\": \"02:00:00:00:00:00\",\n" +
                 "    \"type\": 3,\n" +
                 "    \"idfa\": \""+deviceEntity.getOpenudid()+"\",\n" +
@@ -417,14 +350,14 @@ public class JsonTableGetter {
                 "    \"temperature\": 1,\n" +
                 "    \"mem\": 2968424448,\n" +
                 "    \"sdtotal\": 25753878528,\n" +
-                "    \"sdused\": 9465757696,\n" +
-                "    \"battery\": 31,\n" +
-                "    \"charge\": 1,\n" +
+                "    \"sdused\": 9505460224,\n" +
+                "    \"battery\": 32,\n" +
+                "    \"charge\": 0,\n" +
                 "    \"os\": \"6.0.1\",\n" +
                 "    \"display\": \"720,1280\",\n" +
                 "    \"root\": 0,\n" +
                 "    \"time\": "+Long.parseLong(ParamCreater.get_Rticket())+",\n" +
-                "    \"active\": 5703,\n" +
+                "    \"active\": 15237,\n" +
                 "    \"lock\": 5000,\n" +
                 "    \"brand\": \"Xiaomi Redmi 4X\",\n" +
                 "    \"vpn\": 0,\n" +
@@ -447,13 +380,7 @@ public class JsonTableGetter {
                 "        \"com.mfashiongallery.emag\",\n" +
                 "        \"com.google.android.marvin.talkback\",\n" +
                 "        \"com.baidu.duersdk.opensdk\",\n" +
-                "        \"com.miui.klo.bugreport\",\n" +
-                "        \"com.duokan.phone.remotecontroller\",\n" +
-                "        \"com.baidu.input_mi\",\n" +
-                "        \"eu.chainfire.supersu\",\n" +
-                "        \"de.robv.android.xposed.installer\",\n" +
-                "        \"com.tencent.mm\",\n" +
-                "        \"com.touchsprite.android\"\n" +
+                "        \"com.miui.klo.bugreport\"\n" +
                 "    ],\n" +
                 "    \"apkcount\": \"16\",\n" +
                 "    \"photolist\": [\n" +

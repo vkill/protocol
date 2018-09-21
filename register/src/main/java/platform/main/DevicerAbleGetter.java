@@ -58,6 +58,7 @@ public class DevicerAbleGetter {
             url+= KeyControler.getKeyForUse();
         }
         headers = UrlBodyCreaterTool.getMyHeaders(headers);
+        headers.put("Host",hoster.split("/")[2]);
         RequestTokenVo requestTokenVo = new RequestTokenVo();
         requestTokenVo.setUrl(url);
         requestTokenVo.setHeader(headers);
@@ -70,6 +71,7 @@ public class DevicerAbleGetter {
         if(needKey){
             url+= KeyControler.getKeyForUse();
         }
+        headers.put("Host",hoster.split("/")[2]);
         headers = UrlBodyCreaterTool.getMyHeaders(headers);
         RequestTokenVo requestTokenVo = new RequestTokenVo();
         requestTokenVo.setUrl(url);

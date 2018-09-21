@@ -25,6 +25,8 @@ import po.PhonePo;
 import po.RequestTokenVo;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -49,6 +51,18 @@ public class TvRegisterMaker {
                 .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
                 .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
                 .build();
+
+    }
+
+    public TvRegisterMaker(String hostname,int port){
+        deviceTvRegister = new DeviceTvRegister();
+        okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostname, port)))
+                .build();
+
     }
 
     public DeviceEntity registerUserToTv(){
@@ -83,6 +97,7 @@ public class TvRegisterMaker {
             deviceEntity.setIid(resultJson.getString("install_id"));
             deviceEntity.setOpenudid(headerJson.getString("openudid"));
             deviceEntity.setUuid(headerJson.getString("udid"));
+            deviceEntity.setDevice_register_json(jsonObject.toString());
             ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(header));
             StringBuilder cookies = new StringBuilder();
             for(int i=0;i<strings.size();i++){

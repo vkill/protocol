@@ -1,5 +1,8 @@
 package keytools;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * @program: protool
  * @description: 参数数值表格
@@ -23,4 +26,23 @@ public class KeyParam {
     public static final byte m = (byte) 15;
     public static final byte n = (byte) 16;
 
+    public static void main(String[] args) throws Exception {
+        while (true){
+            Scanner input = new Scanner(System.in);
+            ArrayList<Integer> array = new ArrayList<>();
+            String allString = input.nextLine();
+            String kao ="\\{";
+            String vauleString = allString.split(kao)[1];
+            vauleString = vauleString.split("\\}")[0];
+            String[] vaules = vauleString.split(",");
+            for(int i =0;i<vaules.length;i++){
+                array.add(Integer.parseInt(vaules[i].substring(3).trim(),16));
+            }
+            for (Integer e : array) {
+                System.out.print(e + " ");
+            }
+            System.out.println();
+        }
+
+    }
 }
