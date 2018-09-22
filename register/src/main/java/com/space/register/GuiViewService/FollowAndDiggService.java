@@ -25,4 +25,12 @@ public interface FollowAndDiggService {
      */
     void digg(String dyid, String videoId, JTextArea log);
 
+    /**
+     * 修改信息的接口
+     * @param dyid
+     * @param videoId
+     * @param log
+     */
+    void modify(String dyid, String videoId, JTextArea log);
+
 }
