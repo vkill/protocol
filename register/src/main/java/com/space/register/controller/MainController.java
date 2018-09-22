@@ -31,7 +31,7 @@ public class MainController {
     @Resource
     DYRegisterService dyRegisterService;
 
-    private static int id = 138;
+    private static int id = 23;
 
     /**
      * 点赞模块
@@ -41,11 +41,12 @@ public class MainController {
     public Map thumbsUpMaker() {
 
         //这个是视频id，需要参数传入
-        //String aweme_id = "6601079867616267528";
+        //String aweme_id = "6597344642847477000";
         //String aweme_id = "6602390827073277197";
-        //String aweme_id = "6601800939487628558";
+        //String aweme_id = "6602797333635665156";
         //String aweme_id = "6599566234746883335";
-        String aweme_id = "6602508621630672135";
+        String aweme_id = "6602990623727291651";
+        //String aweme_id = "6598666622192323844";
 
 //        ArrayList<String> aaaa = new ArrayList<String>();
 //        aaaa.add("6601079867616267528");
@@ -87,7 +88,7 @@ public class MainController {
 
 
 
-        return null;
+        return result;
     }
 
     @RequestMapping("/follow")
@@ -170,7 +171,7 @@ public class MainController {
             e.printStackTrace();
         }
 
-        awemeList.add("6597344642847477000");
+        awemeList.add("6602390827073277197");
         UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(7);
 
         try {
@@ -217,69 +218,6 @@ public class MainController {
 //            Thread.sleep(1000);
 //        }
 
-
-
-        return null;
-    }
-
-
-    /**
-     * 点赞模块
-     * @return
-     */
-    @RequestMapping("/gaoxiang")
-    public Map aaaa() {
-
-
-        String aweme_id1 = "6602178680200367364";
-        String aweme_id2 = "6600198700406934791";
-
-
-        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-        String user_cookie = dyUserEntity.getUserCookie();
-        String simulationId = dyUserEntity.getSimulationID();
-
-
-        //通过simulationid获取t_device中的数据
-        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-        String cookie = deviceEntity.getCookie();
-        cookie += (";" + user_cookie);
-        deviceEntity.setCookie(cookie);
-
-        //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
-
-        try {
-
-            System.out.println("1");
-            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker1(aweme_id1, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker1(aweme_id1, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            System.out.println();
-            System.out.println("2");
-            ThumbsUpMaker.thumbsUpMaker(aweme_id2, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker1(aweme_id2, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker(aweme_id2, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-
-
-
-
-            ThumbsUpMaker.thumbsUpMaker(aweme_id1, deviceEntity, urlRequestEntity);
-            Thread.sleep(1000);
-            ThumbsUpMaker.thumbsUpMaker1(aweme_id1, deviceEntity, urlRequestEntity);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
 
         return null;
