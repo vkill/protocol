@@ -28,12 +28,24 @@ public class DeviceEntity {
 
     private String sim_ICCid;
 
+    private String session_id;
+
+    @Column(columnDefinition = "text")
     private String device_register_json;
 
+    @Column(columnDefinition = "text")
     private String device_upload_info_json;
 
     @Column(columnDefinition = "text")
     private String cookie;
+
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
+    }
 
     public String getSim_ICCid() {
         return sim_ICCid;

@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import po.HostIPPo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @program: protool
@@ -17,15 +18,21 @@ import java.io.IOException;
  **/
 public class HostIPGetter {
 
-    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189193312tH3ZAE&returnType=2&count=1";
+    public static String spiderId = "8d58e76da82e431cb6021e32d1b875c3";
+    public static String orderno = "YZ20189193312tH3ZAE";
+    public static int returnType = 2;
+    public static int count = 5;
+    //包含上面参数的URL
+    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId="+spiderId+"&orderno="+orderno+"&returnType="+returnType+"&count="+count;
     public static String endStr ="10032";
     public static String errorStr ="10036";
     public static String successStr = "0";
-    public static HostIPPo getIpByXdali(){
+    public static ArrayList<HostIPPo> getIpByXdali(){
         String tag =errorStr;
         Document document = null;
         HostIPPo hostIPPo = null;
         JSONArray jsonArray  = null;
+        ArrayList<HostIPPo> hostIPPos = new ArrayList<>();
         try {
             document = Jsoup.connect(ipHostGetter).get();
         } catch (IOException e) {
@@ -45,22 +52,26 @@ public class HostIPGetter {
         if(tag.equals("0")){
             try {
                 jsonArray = jsonObject.getJSONArray("RESULT");
-                JSONObject jsonObject1 = jsonArray.getJSONObject(0);
-                String hoster = jsonObject1.getString("ip");
-                int port = jsonObject1.getInt("port");
-                hostIPPo = new HostIPPo(hoster,port);
-                return hostIPPo;
+                JSONObject jsonObject1 = null;
+                for(int i=0;i<jsonArray.length();i++){
+                    jsonArray.getJSONObject(i);
+                    String hoster = jsonObject1.getString("ip");
+                    int port = jsonObject1.getInt("port");
+                    hostIPPo = new HostIPPo(hoster,port);
+                    hostIPPos.add(hostIPPo);
+                }
+                return hostIPPos;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         else if(tag.equals(endStr)){
-            return new HostIPPo("-1",-1);
+            return hostIPPos;
         }
         else{
-            return new HostIPPo("0",0);
+            return hostIPPos;
         }
-        return new HostIPPo("-2",-2);
+        return hostIPPos;
     }
 
 }

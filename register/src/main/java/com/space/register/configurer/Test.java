@@ -1,6 +1,9 @@
 package com.space.register.configurer;
 
+import com.space.register.dao.DYUserRepository;
+import com.space.register.dao.DeviceRepository;
 import com.space.register.dao.UrlRequestRepository;
+import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DeviceService;
@@ -23,13 +26,45 @@ import java.util.concurrent.Future;
 public class Test {
 
     @Resource
-    protected  DeviceService deviceService;
+    protected DeviceService deviceService;
+    @Resource
+    protected DYUserRepository dyUserRepository;
+    @Resource
+    protected DeviceRepository deviceRepository;
+
     private static Test test;
 
-    @PostConstruct
-    public void init() {
-        test = this;
-        test.deviceService = this.deviceService;
+    public static Test getInstrance(){
+        if(test==null){
+            test = new Test();
+            return test;
+        }
+        else{
+            return test;
+        }
+    }
+
+    private Test(){
+
+    }
+
+    /**
+     * 存储deviceEntity
+     * @param deviceEntity
+     * @return
+     */
+    public DeviceEntity saveDevice(DeviceEntity deviceEntity) {
+        DeviceEntity result = test.deviceRepository.save(deviceEntity);
+        return result;
+    }
+
+    /**
+     * 存储用户实体类方法
+     * @param dyUserEntity
+     * @return
+     */
+    public DYUserEntity saveUser(DYUserEntity dyUserEntity){
+        return test.dyUserRepository.save(dyUserEntity);
     }
 
 
