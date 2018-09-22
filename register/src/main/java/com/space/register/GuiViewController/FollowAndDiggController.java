@@ -31,7 +31,19 @@ public class FollowAndDiggController {
      * @param log
      */
     public static void digg(String dyid, String videoId, JTextArea log) {
+        FollowAndDiggService followAndDiggService = new FollowAndDiggServiceImpl();
+        followAndDiggService.digg(dyid, videoId, log);
+    }
 
+    /**
+     * 更改个人资料
+     * @param dyid
+     * @param videoId
+     * @param log
+     */
+    public static void modify(String dyid, String videoId, JTextArea log) {
+        FollowAndDiggService followAndDiggService = new FollowAndDiggServiceImpl();
+        followAndDiggService.modify(dyid, videoId, log);
     }
 
 

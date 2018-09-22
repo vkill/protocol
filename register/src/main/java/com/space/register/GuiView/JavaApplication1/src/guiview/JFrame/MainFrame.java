@@ -38,11 +38,15 @@ public class MainFrame extends javax.swing.JFrame {
         register = new javax.swing.JButton();
         digg = new javax.swing.JButton();
         follow = new javax.swing.JButton();
+        bu2 = new javax.swing.JButton();
+        bu1 = new javax.swing.JButton();
+        bu4 = new javax.swing.JButton();
+        bu3 = new javax.swing.JButton();
+        bu5 = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         followPanel = new FollowPanel();
         registerPanel = new RegisterPanel();
         layout = new CardLayout();
-
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1250, 800));
@@ -56,7 +60,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        digg.setText("点赞");
+        digg.setText("查看账号");
         digg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 diggActionPerformed(evt);
@@ -70,16 +74,56 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        bu2.setText("后备按钮");
+        bu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bu2ActionPerformed(evt);
+            }
+        });
+
+        bu1.setText("后备按钮");
+        bu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bu1ActionPerformed(evt);
+            }
+        });
+
+        bu4.setText("后备按钮");
+        bu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bu4ActionPerformed(evt);
+            }
+        });
+
+        bu3.setText("后备按钮");
+        bu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bu3ActionPerformed(evt);
+            }
+        });
+
+        bu5.setText("后备按钮");
+        bu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bu5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(digg, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                    .addComponent(follow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(register, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(digg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(follow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(register, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bu2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bu4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bu3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bu5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -91,14 +135,23 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(follow)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(digg)
-                .addContainerGap(679, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bu1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bu2)
+                .addGap(11, 11, 11)
+                .addComponent(bu3)
+                .addGap(14, 14, 14)
+                .addComponent(bu4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bu5)
+                .addContainerGap(509, Short.MAX_VALUE))
         );
 
         mainPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         mainPanel.setLayout(layout);
         mainPanel.add("register",registerPanel);
         mainPanel.add("follow",followPanel);
-
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,7 +161,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1055, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1049, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,6 +203,26 @@ public class MainFrame extends javax.swing.JFrame {
         layout.show(mainPanel,"register");
     }//GEN-LAST:event_registerActionPerformed
 
+    private void bu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bu2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bu2ActionPerformed
+
+    private void bu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bu1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bu1ActionPerformed
+
+    private void bu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bu4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bu4ActionPerformed
+
+    private void bu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bu3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bu3ActionPerformed
+
+    private void bu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bu5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bu5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -190,13 +263,18 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bu1;
+    private javax.swing.JButton bu2;
+    private javax.swing.JButton bu3;
+    private javax.swing.JButton bu4;
+    private javax.swing.JButton bu5;
     private javax.swing.JButton digg;
     private javax.swing.JButton follow;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton register;
-    private JPanel registerPanel;
-    private JPanel followPanel;
     private CardLayout layout;
+    private RegisterPanel registerPanel;
+    private FollowPanel followPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,7 +30,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="mainPanel" pref="1055" max="32767" attributes="0"/>
+              <Component id="mainPanel" pref="1049" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -61,12 +61,17 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="digg" pref="75" max="32767" attributes="0"/>
-                      <Component id="follow" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="digg" alignment="1" max="32767" attributes="0"/>
+                      <Component id="follow" alignment="1" max="32767" attributes="0"/>
                       <Component id="register" alignment="1" max="32767" attributes="0"/>
+                      <Component id="bu2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="bu1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="bu4" alignment="1" max="32767" attributes="0"/>
+                      <Component id="bu3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="bu5" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -81,7 +86,17 @@
                   <Component id="follow" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="digg" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="679" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="bu1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="bu2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <Component id="bu3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Component id="bu4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="bu5" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="509" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -97,7 +112,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="digg">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x70b9;&#x8d5e;"/>
+            <Property name="text" type="java.lang.String" value="&#x67e5;&#x770b;&#x8d26;&#x53f7;"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="diggActionPerformed"/>
@@ -109,6 +124,46 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="followActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bu2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x540e;&#x5907;&#x6309;&#x94ae;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bu2ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bu1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x540e;&#x5907;&#x6309;&#x94ae;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bu1ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bu4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x540e;&#x5907;&#x6309;&#x94ae;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bu4ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bu3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x540e;&#x5907;&#x6309;&#x94ae;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bu3ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="bu5">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x540e;&#x5907;&#x6309;&#x94ae;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bu5ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
