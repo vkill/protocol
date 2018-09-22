@@ -58,5 +58,19 @@ public class OrderTypeController {
         return result;
     }
 
+    /**
+     * 根据sign来获取商品信息
+     * @return
+     */
+    @RequestMapping("/goods")
+    public Map getGoodsListByTypeSign() {
+        String sign = "dy";
+        Map result = new HashMap();
+
+        Map goodsListByType = goodsTypeListService.getGoodsListByType(sign);
+        result.put("data",goodsListByType);
+
+        return result;
+    }
 
 }

@@ -1,0 +1,38 @@
+package com.space.register.GuiViewController;
+
+import com.space.register.GuiViewService.FollowAndDiggService;
+import com.space.register.GuiViewService.impl.FollowAndDiggServiceImpl;
+
+import javax.swing.*;
+
+/**
+* @Description: 关注和点赞的控制器
+* @Author: Space
+* @Date: 2018/9/22/022
+*/
+public class FollowAndDiggController {
+
+
+    /**
+     * 关注
+     * @param dyid
+     * @param userid
+     * @param jTextArea
+     */
+    public static void follow(String dyid,String userid, JTextArea jTextArea) {
+        FollowAndDiggService followAndDiggService = new FollowAndDiggServiceImpl();
+        followAndDiggService.follow(dyid,userid, jTextArea);
+    }
+
+    /**
+     * 点赞
+     * @param dyid
+     * @param videoId
+     * @param log
+     */
+    public static void digg(String dyid, String videoId, JTextArea log) {
+
+    }
+
+
+}
