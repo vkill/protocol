@@ -47,7 +47,7 @@ public class AccountManageServiceImpl implements AccountManageService {
 
 
     @Override
-    public void digg(String dyid, String videoId, JTextArea log) {
+    public void appLog(String dyid, JTextArea log) {
 
         DYUserEntity dyUserEntity = ams.DYUserRepository.findById(Integer.parseInt(dyid));
         String user_cookie = dyUserEntity.getUserCookie();

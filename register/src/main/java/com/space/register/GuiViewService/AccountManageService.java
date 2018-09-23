@@ -9,6 +9,6 @@ public interface AccountManageService {
      * 实现抖音注册登录所需要一系列操作的方法接口
      * @param
      */
-    void digg(String dyid, String videoId, JTextArea log);
+    void appLog(String dyid, JTextArea log);
 
 }
