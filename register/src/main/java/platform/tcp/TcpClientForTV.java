@@ -83,7 +83,7 @@ public class TcpClientForTV {
         //接受传入的信息，并转化为字节流
         byte[] result = get_Bytes(dataInputStream);
         //  输出为了测试而已
-        System.out.println(new String(result));
+        //System.out.println(new String(result));
         stringBuilder = new StringBuilder();
         for(int i =0;i<result.length;i++){
             stringBuilder.append(result[i]+" ");

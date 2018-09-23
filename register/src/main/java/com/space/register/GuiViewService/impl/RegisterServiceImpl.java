@@ -33,10 +33,12 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public void beginRegister(JTextArea log) {
         log.append("开始注册\n");
+
     }
 
     @Override
     public void stopRegister(JTextArea log) {
         log.append("停止注册\n");
+
     }
 }

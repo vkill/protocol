@@ -37,10 +37,6 @@ public class DeviceTvRegister {
         return request;
     }
 
-    public Request getRealDeviceInfo(JSONObject jsonObject){
-        return null;
-    }
-
 
     public static void main(String[]args) {
         DeviceTvRegister deviceTvRegister =new DeviceTvRegister();

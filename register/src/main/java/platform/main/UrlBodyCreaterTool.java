@@ -36,6 +36,7 @@ public class UrlBodyCreaterTool {
         String rticket =ParamCreater.get_Rticket();
         deviceMap.put("_rticket", rticket);
         deviceMap.put("ts",ParamCreater.get_Ts(rticket));
+        deviceMap.put("max_time",ParamCreater.get_Rticket());
         stringBuilder.append(getBodyByMapAndMap(allVauleMaps,deviceMap));
         return stringBuilder.toString();
     }

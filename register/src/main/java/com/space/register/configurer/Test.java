@@ -1,5 +1,6 @@
 package com.space.register.configurer;
 
+import com.space.register.GuiViewService.impl.RegisterServiceImpl;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.dao.DeviceRepository;
 import com.space.register.dao.UrlRequestRepository;
@@ -28,24 +29,22 @@ public class Test {
     @Resource
     protected DeviceService deviceService;
     @Resource
-    protected DYUserRepository dyUserRepository;
+    protected DYUserRepository DYUserRepository;
     @Resource
     protected DeviceRepository deviceRepository;
 
     private static Test test;
 
-    public static Test getInstrance(){
-        if(test==null){
-            test = new Test();
-            return test;
-        }
-        else{
-            return test;
-        }
-    }
+    @PostConstruct
+    public void init() {
+        if(test == null){
+            test = this;
+            test.deviceService = this.deviceService;
+            test.DYUserRepository = this.DYUserRepository;
+            test.deviceRepository = this.deviceRepository;
+        }else{
 
-    private Test(){
-
+        }
     }
 
     /**
@@ -64,7 +63,7 @@ public class Test {
      * @return
      */
     public DYUserEntity saveUser(DYUserEntity dyUserEntity){
-        return test.dyUserRepository.save(dyUserEntity);
+        return test.DYUserRepository.save(dyUserEntity);
     }
 
 
@@ -72,7 +71,6 @@ public class Test {
         DeviceEntity deviceMsg = test.deviceService.getDeviceMsg(3);
         System.out.println(deviceMsg.getCookie());
     }
-
 
 
 

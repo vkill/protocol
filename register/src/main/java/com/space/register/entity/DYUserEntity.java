@@ -35,6 +35,27 @@ public class DYUserEntity {
 
     private String uid;
 
+    @Column(columnDefinition = "text")
+    private String app_Log;
+
+    private int likePower;
+
+    public int getLikePower() {
+        return likePower;
+    }
+
+    public void setLikePower(int likePower) {
+        this.likePower = likePower;
+    }
+
+    public String getApp_Log() {
+        return app_Log;
+    }
+
+    public void setApp_Log(String app_Log) {
+        this.app_Log = app_Log;
+    }
+
     public String getUid() {
         return uid;
     }

@@ -19,22 +19,25 @@ import java.util.ArrayList;
 public class HostIPGetter {
 
     public static String spiderId = "8d58e76da82e431cb6021e32d1b875c3";
-    public static String orderno = "YZ20189193312tH3ZAE";
+    public static String orderno = "YZ20189222135SFVprZ";
     public static int returnType = 2;
     public static int count = 5;
-    //包含上面参数的URL
-    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId="+spiderId+"&orderno="+orderno+"&returnType="+returnType+"&count="+count;
+    //http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=10
+    //包含上面参数的URL                   http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=5
+    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId="+spiderId+"&orderno="+orderno+"&returnType="+returnType+"&count=";
     public static String endStr ="10032";
     public static String errorStr ="10036";
     public static String successStr = "0";
-    public static ArrayList<HostIPPo> getIpByXdali(){
+    public static ArrayList<HostIPPo> getIpByXdali(int count){
+        count = count;
+        String ipHostGetterAll = ipHostGetter+count;
         String tag =errorStr;
         Document document = null;
         HostIPPo hostIPPo = null;
         JSONArray jsonArray  = null;
         ArrayList<HostIPPo> hostIPPos = new ArrayList<>();
         try {
-            document = Jsoup.connect(ipHostGetter).get();
+            document = Jsoup.connect(ipHostGetterAll).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +57,7 @@ public class HostIPGetter {
                 jsonArray = jsonObject.getJSONArray("RESULT");
                 JSONObject jsonObject1 = null;
                 for(int i=0;i<jsonArray.length();i++){
-                    jsonArray.getJSONObject(i);
+                    jsonObject1 = jsonArray.getJSONObject(i);
                     String hoster = jsonObject1.getString("ip");
                     int port = jsonObject1.getInt("port");
                     hostIPPo = new HostIPPo(hoster,port);

@@ -118,10 +118,17 @@ public class TvRegisterMaker {
         return deviceEntity;
     }
 
-    public Request sendMessageForRegister(UrlRequestEntity urlRequestEntity,DeviceEntity deviceEntity,PhonePo phonePo,String code){
+    public Request sendMessageForRegister(DeviceEntity deviceEntity,PhonePo phonePo,String code){
 
-        String host = urlRequestEntity.getHost();
-        String message = urlRequestEntity.getMessage();
+        String host = null;
+        String message = null;
+        if(code.equals("")){
+            host = "https://is.snssdk.com";
+            message = "/passport/mobile/send_code/?";
+        }else{
+            host = "https://is.snssdk.com";
+            message = "/passport/mobile/register/?";
+        }
         Map<String,String> deviceMap = deviceEntity.getDeviceMap();
         String times = ParamCreater.get_Rticket();
         deviceMap.put("_rticket",times);
