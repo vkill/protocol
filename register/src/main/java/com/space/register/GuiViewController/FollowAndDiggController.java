@@ -1,6 +1,8 @@
 package com.space.register.GuiViewController;
 
+import com.space.register.GuiViewService.AccountManageService;
 import com.space.register.GuiViewService.FollowAndDiggService;
+import com.space.register.GuiViewService.impl.AccountManageServiceImpl;
 import com.space.register.GuiViewService.impl.FollowAndDiggServiceImpl;
 
 import javax.swing.*;
@@ -43,7 +45,17 @@ public class FollowAndDiggController {
      */
     public static void modify(String dyid, String videoId, JTextArea log) {
         FollowAndDiggService followAndDiggService = new FollowAndDiggServiceImpl();
-        followAndDiggService.modify(dyid, videoId, log);
+        followAndDiggService.modify(dyid, log);
+    }
+
+    /**
+     * applog前段调用
+     * @param userid
+     * @param log
+     */
+    public static void app_log(String userid, JTextArea log) {
+        AccountManageService accountManageService = new AccountManageServiceImpl();
+        accountManageService.appLog(userid, log);
     }
 
 

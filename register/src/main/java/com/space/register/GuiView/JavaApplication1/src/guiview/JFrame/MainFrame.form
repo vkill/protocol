@@ -30,7 +30,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="mainPanel" pref="1049" max="32767" attributes="0"/>
+              <Component id="mainPanel" pref="1117" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -136,7 +136,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="bu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&#x540e;&#x5907;&#x6309;&#x94ae;"/>
+            <Property name="text" type="java.lang.String" value="&#x6ce8;&#x518c;&#x914d;&#x7f6e;"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bu1ActionPerformed"/>
