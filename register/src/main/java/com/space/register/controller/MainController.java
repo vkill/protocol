@@ -8,10 +8,7 @@ import com.space.register.service.DeviceService;
 import com.space.register.service.UrlRequestService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import params.FollowMaker;
-import params.SupportAccountMaker;
-import params.ModifyInfoMaker;
-import params.ThumbsUpMaker;
+import params.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -31,7 +28,7 @@ public class MainController {
     @Resource
     DYRegisterService dyRegisterService;
 
-    private static int id = 23;
+    private static int id = 333;
 
     /**
      * 点赞模块
@@ -96,24 +93,15 @@ public class MainController {
 
         //这个是视频id，需要参数传入
 //        String user_id = "104512020815";
-        String user_id = "101947485841";
+        String user_id = "104578018304";
         //通过id获取t_dy_user中的数据
         DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-        String mobile = dyUserEntity.getPhoneNum();
-        String password = dyUserEntity.getPassword();
-        String user_cookie = dyUserEntity.getUserCookie();
         String simulationId = dyUserEntity.getSimulationID();
 
         //通过simulationid获取t_device中的数据
         DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-        String cookie = deviceEntity.getCookie();
-        cookie += (";"+ user_cookie);
-        deviceEntity.setCookie(cookie);
 
-        //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(4);
-
-        FollowMaker.FollowMaker(user_id, deviceEntity, urlRequestEntity);
+        FollowMaker.FollowMaker(user_id, dyUserEntity, deviceEntity);
 
 
         return null;
@@ -183,45 +171,25 @@ public class MainController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        String a = "6597344642847477000";
-//        UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(7);
-//
-//        try {
-//            for(int i = 0;i < 1000;i++){
-//                SupportAccountMaker.getVideoMaker(a,deviceEntity, urlRequestEntity1);
-//                Thread.sleep(800);
-//
-//            }
-//
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
 
         return null;
     }
 
-    @RequestMapping("/start")
+    @RequestMapping("/appLog")
     public String mainController() throws InterruptedException {
 
-        ArrayList<DYUserEntity> dyUserEntityList = dyRegisterService.findAll();
+        //通过id获取t_dy_user中的数据
+        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
+        String simulationId = dyUserEntity.getSimulationID();
 
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
 
-//        for(int i = 0;i < dyUserEntityList.size();i++){
-//            DYUserEntity dyUserEntity = dyUserEntityList.get(i);
-////            supportAccountMaker(dyUserEntity);
-////            Thread.sleep(20000);
-//            modificationMaker(dyUserEntity);
-//            Thread.sleep(1000);
-//            thumbsUpMaker(dyUserEntity);
-//            Thread.sleep(1000);
-//            followMaker(dyUserEntity);
-//            Thread.sleep(1000);
-//        }
-
-
-
+        AppLogMaker.app_log(deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 180000));
         return null;
     }
+
+
 
     public static String MapToString(Map map){
         java.util.Map.Entry entry;

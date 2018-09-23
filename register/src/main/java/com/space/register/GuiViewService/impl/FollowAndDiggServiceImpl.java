@@ -53,6 +53,7 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
 
     @Override
     public void follow(String dyid, String userid, JTextArea textLog) {
+
 //        textLog.append("-----关注id:" + userid + "----- 抖音号数据库id:"+ dyid + "-----\n");
 //        String cookie = fad.deviceRepository.getDeviceMsgById(1).getCookie();
 //        textLog.append(cookie + "\n");
@@ -76,7 +77,7 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = fad.urlRequestRepository.findUrlById(4);
 
-        FollowMaker.FollowMaker(user_id, deviceEntity, urlRequestEntity);
+//        FollowMaker.FollowMaker(user_id, deviceEntity, urlRequestEntity);
 
     }
 
