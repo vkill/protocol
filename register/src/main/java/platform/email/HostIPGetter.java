@@ -21,15 +21,14 @@ public class HostIPGetter {
     public static String spiderId = "8d58e76da82e431cb6021e32d1b875c3";
     public static String orderno = "YZ20189222135SFVprZ";
     public static int returnType = 2;
-    public static int count = 5;
+    public static int count = 10;
     //http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=10
     //包含上面参数的URL                   http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=5
     public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId="+spiderId+"&orderno="+orderno+"&returnType="+returnType+"&count=";
     public static String endStr ="10032";
     public static String errorStr ="10036";
     public static String successStr = "0";
-    public static ArrayList<HostIPPo> getIpByXdali(int count){
-        count = count;
+    public static ArrayList<HostIPPo> getIpByXdali(){
         String ipHostGetterAll = ipHostGetter+count;
         String tag =errorStr;
         Document document = null;
@@ -69,7 +68,8 @@ public class HostIPGetter {
             }
         }
         else if(tag.equals(endStr)){
-            return hostIPPos;
+            System.out.println("可以关了啦");
+            return null;
         }
         else{
             return hostIPPos;

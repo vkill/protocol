@@ -30,7 +30,6 @@ public class DYUserEntity {
     private String belong;
 
     @Column(columnDefinition = "text")
-
     private String userCookie;
 
     private String uid;

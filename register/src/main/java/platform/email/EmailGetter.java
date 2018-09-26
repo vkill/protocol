@@ -136,7 +136,7 @@ public class EmailGetter {
         String tag =errorStr;
         String result = 0+"";
         int buffer_Num =0;
-        while(tag.equals(errorStr)&buffer_Num<8){
+        while(tag.equals(errorStr)&buffer_Num<15){
             try {
                 Thread.sleep(10000);
                 document =Jsoup.connect(infoUrl).get();

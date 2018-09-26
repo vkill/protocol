@@ -70,7 +70,7 @@ public class UserPowerGetter {
         int event_id = new Random().nextInt(100) + 50;
 
         //这个session_id随机生成
-        String session_id = "efcac683-308e-410f-a79f-e12ed76e56fc";
+        String session_id = deviceEntity.getSession_id();
 
         String event1 = "{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in\",\"label\":\"phone\",\"session_id\":\"" + session_id + "\",\"datetime\":\"" + time.format(time1) + "\",\"event_id\":" + event_id + "}";
         String event2 = "{\"enter_from\":\"sign_in\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"verification_in\",\"label\":\"verification_code\",\"session_id\":\"" + session_id + "\",\"datetime\":\"" + time.format(time2) + "\",\"event_id\":" + (event_id + 1) + "}";
@@ -83,7 +83,7 @@ public class UserPowerGetter {
         String _gen_time = "\"_gen_time\":" + _rticket + "";
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch + "," + magic_tag + "," + time_sync + "," + header1 + "," + _gen_time + "}";
-
+        dyUserEntity.setApp_Log(sign_in_json);
         TcpClientForTV tcpClientForTV = new TcpClientForTV();
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
         sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);

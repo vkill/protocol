@@ -22,4 +22,5 @@ public class Crc32 {
         long value = crc32.getValue();
         return String.valueOf(value);
     }
+
 }

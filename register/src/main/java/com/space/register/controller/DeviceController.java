@@ -54,34 +54,48 @@ public class DeviceController {
     @Resource
     DYUserRepository dyUserRepository;
     public static List<UrlRequestEntity> allUrl;
-    public static int thread_num = 5;
+    public static int thread_num = 1;//HostIPGetter.count;
     public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
     public static Vector<DeviceEntity> deviceEntities = new Vector<DeviceEntity>();
     public static Vector<DYUserEntity> userEntities = new Vector<DYUserEntity>();
     @RequestMapping("/maker")
     public String deviceMain(){
-        int number = 1;
         //getNeedIPFromWeb();
-        Thread[] registerThreads =new Thread[number];
-        for(int i=0;i<number;i++){
-            registerThreads[i] = new Thread(new RegisterThread());
-            registerThreads[i].start();
+//        Thread[] registerThreads =new Thread[thread_num];
+//        for(int i=0;i<thread_num;i++){
+//            registerThreads[i] = new Thread(new RegisterThread());
+//            registerThreads[i].start();
+//        }
+        RegisterThread registerThread = new RegisterThread();
+        try {
+            registerThread.oneUserInfo("",0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
         return "呵呵哒哒";
     }
 
     public static void getNeedIPFromWeb(){
-        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(HostIPGetter.count);
+        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali();
+        if(hostIpQuene.size()>HostIPGetter.count*2-1){
+            return;
+        }
+        if(hostIPPos == null){
+            System.out.println("IP用完了，结束线程");
+            return;
+        }
         for(HostIPPo hostIPPo:hostIPPos){
-            if(!hostIpQuene.offer(hostIPPo)){
-                System.out.println("队列都插不进去 你敢信？？");
+            try {
+                hostIpQuene.put(hostIPPo);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        if(hostIpQuene.size()<HostIPGetter.count){
+        if(hostIpQuene.size()<HostIPGetter.count*2-1){
             getNeedIPFromWeb();
         }
-        return;
     }
 }
 //    ArrayList<DYUserEntity> dyUserEntities1 = dyUserRepository.findAll();

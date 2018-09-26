@@ -55,14 +55,22 @@ public class TvRegisterMaker {
     }
 
     public TvRegisterMaker(String hostname,int port){
-        deviceTvRegister = new DeviceTvRegister();
-        okHttpClient = new OkHttpClient.Builder()
-                .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
-                .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
-                .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
-                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostname, port)))
-                .build();
-
+        if(port == 0){
+            deviceTvRegister = new DeviceTvRegister();
+            okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                    .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                    .build();
+        }else{
+            deviceTvRegister = new DeviceTvRegister();
+            okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                    .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostname, port)))
+                    .build();
+        }
     }
 
     public DeviceEntity registerUserToTv(){

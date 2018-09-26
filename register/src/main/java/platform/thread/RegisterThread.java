@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import params.ParamCreater;
 import params.tools.RequestURLCreater;
 import platform.email.EmailGetter;
+import platform.email.HostIPGetter;
 import platform.main.*;
 import po.HostIPPo;
 import po.PhonePo;
@@ -30,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @program: protool
@@ -43,24 +45,34 @@ public class RegisterThread implements Runnable{
     @Override
     public void run() {
         do{
-//            HostIPPo hostIPPo = DeviceController.hostIpQuene.peek();
-//            if(DeviceController.hostIpQuene.size()==4){
-//                DeviceController.getNeedIPFromWeb();
-//            }
-            for(int i =0;i<1;i++){
+            HostIPPo hostIPPo = null;
+            if(DeviceController.hostIpQuene.size()<= HostIPGetter.count-1){
+                DeviceController.getNeedIPFromWeb();
+            }
+            try {
+                hostIPPo = DeviceController.hostIpQuene.take();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                continue;
+            }
+
+            for(int i =0;i<4;i++){
                 try {
-                    oneUserInfo("",0);
+                    oneUserInfo(hostIPPo.host,hostIPPo.port);
                     System.out.println("线程注册成功喽");
                 } catch (IOException e) {
                     System.out.println("死掉了 一个  IP");
                     e.printStackTrace();
+                    break;
                 } catch (JSONException e){
                     System.out.println("json格式出错");
                     e.printStackTrace();
-                    return;
+                }catch (Exception e){
+                    System.out.println("瞎几把的错误");
+                    e.printStackTrace();
                 }
             }
-        }while (false);
+        }while (true);
     }
 
 
@@ -72,7 +84,7 @@ public class RegisterThread implements Runnable{
         Map<String,String> kaoHeader = new HashMap<String,String>();
         Map<String,String> deviceMapBuff = new HashMap<String,String>();
 
-        TvRegisterMaker tvRegisterMaker = new TvRegisterMaker();
+        TvRegisterMaker tvRegisterMaker = new TvRegisterMaker(host,port);
 //
         DeviceEntity deviceEntity = tvRegisterMaker.registerUserToTv();
 //                deviceRepository.getOne(11);
@@ -243,7 +255,7 @@ public class RegisterThread implements Runnable{
         String code = null;
         int kao = 0;
         String app_Log_Time = null;
-        while(kao<5){
+        while(kao<3){
             phonePo = emailGetter.getPhoneNumber();
             app_Log_Time = ParamCreater.get_Rticket();
             request = tvRegisterMaker.sendMessageForRegister(deviceEntity,phonePo,"");
@@ -464,6 +476,9 @@ public class RegisterThread implements Runnable{
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
+        deviceEntity.setSession_id(UUID.randomUUID().toString());
+        UserPowerGetter.app_log(deviceEntity,dyUserEntity,app_Log_Time);
+
         deviceEntity = test.saveDevice(deviceEntity);
         dyUserEntity.setSimulationID(deviceEntity.getId()+"");
         test.saveUser(dyUserEntity);

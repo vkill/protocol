@@ -11,6 +11,10 @@ public class HostIPPo {
     public String host;
     public int port;
 
+    public HostIPPo(){
+
+    }
+
     public HostIPPo(String host,int port){
         this.host = host;
         this.port = port;

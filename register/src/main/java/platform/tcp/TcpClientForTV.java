@@ -1,6 +1,7 @@
 package platform.tcp;
 
 import jsonreader.tools.GzipGetteer;
+import keytools.SSEntty;
 
 import java.io.*;
 import java.net.Socket;
@@ -64,33 +65,8 @@ public class TcpClientForTV {
     }
 
     public byte[] get_Key_For_Devices(byte[] device_Info) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(int i =0;i<device_Info.length;i++){
-            stringBuilder.append(device_Info[i]+" ");
-        }
-        //System.out.println("gzip文件流长度为: "+device_Info.length);
-        //System.out.println("gzip文件内容为: "+stringBuilder.toString());
-        send_Bytes(socket,device_Info);
-        System.out.println("开始传输数据");
-        InputStream inputStream = null;
-        try {
-            inputStream = socket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        DataInputStream dataInputStream = new DataInputStream(inputStream);
-        //接受传入的信息，并转化为字节流
-        byte[] result = get_Bytes(dataInputStream);
-        //  输出为了测试而已
-        //System.out.println(new String(result));
-        stringBuilder = new StringBuilder();
-        for(int i =0;i<result.length;i++){
-            stringBuilder.append(result[i]+" ");
-        }
-        System.out.println("结果二进制内容为: "+stringBuilder.toString());
-        //System.out.println("结果长度: "+result.length);
-
+        byte[] result = SSEntty.getTTEnttyResult(device_Info);
+        System.out.println("使用测试方法传输一次数据");
         return result;
     }
 
@@ -152,3 +128,29 @@ public class TcpClientForTV {
         tcpClientForTV.get_Key_For_Devices(GzipGetteer.compress(syrBuff));
     }
 }
+//    StringBuilder stringBuilder = new StringBuilder();
+//        for(int i =0;i<device_Info.length;i++){
+//        stringBuilder.append(device_Info[i]+" ");
+//        }
+//        //System.out.println("gzip文件流长度为: "+device_Info.length);
+//        //System.out.println("gzip文件内容为: "+stringBuilder.toString());
+//        send_Bytes(socket,device_Info);
+//        System.out.println("开始传输数据");
+//        InputStream inputStream = null;
+//        try {
+//        inputStream = socket.getInputStream();
+//        } catch (IOException e) {
+//        e.printStackTrace();
+//        }
+//
+//        DataInputStream dataInputStream = new DataInputStream(inputStream);
+//        //接受传入的信息，并转化为字节流
+//        byte[] result = get_Bytes(dataInputStream);
+//        //  输出为了测试而已
+//        //System.out.println(new String(result));
+//        stringBuilder = new StringBuilder();
+//        for(int i =0;i<result.length;i++){
+//        stringBuilder.append(result[i]+" ");
+//        }
+//        System.out.println("结果二进制内容为: "+stringBuilder.toString());
+////System.out.println("结果长度: "+result.length);
