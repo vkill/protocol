@@ -28,9 +28,8 @@ public interface FollowAndDiggService {
     /**
      * 修改信息的接口
      * @param dyid
-     * @param videoId
      * @param log
      */
-    void modify(String dyid, String videoId, JTextArea log);
+    void modify(String dyid, JTextArea log);
 
 }

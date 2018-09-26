@@ -30,29 +30,40 @@ public class DYUserEntity {
     private String belong;
 
     @Column(columnDefinition = "text")
+
     private String userCookie;
 
     private String uid;
 
     @Column(columnDefinition = "text")
-    private String app_Log;
+    private String appLog;
 
-    private int likePower;
+    private int like_power;
 
-    public int getLikePower() {
-        return likePower;
+    private int event_id;
+
+    public String getAppLog() {
+        return appLog;
     }
 
-    public void setLikePower(int likePower) {
-        this.likePower = likePower;
+    public void setAppLog(String appLog) {
+        this.appLog = appLog;
     }
 
-    public String getApp_Log() {
-        return app_Log;
+    public int getLike_power() {
+        return like_power;
     }
 
-    public void setApp_Log(String app_Log) {
-        this.app_Log = app_Log;
+    public void setLike_power(int like_power) {
+        this.like_power = like_power;
+    }
+
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
     }
 
     public String getUid() {
@@ -139,6 +150,10 @@ public class DYUserEntity {
                 ", simulationID='" + simulationID + '\'' +
                 ", belong='" + belong + '\'' +
                 ", userCookie='" + userCookie + '\'' +
+                ", uid='" + uid + '\'' +
+                ", appLog='" + appLog + '\'' +
+                ", like_power=" + like_power +
+                ", event_id=" + event_id +
                 '}';
     }
 }

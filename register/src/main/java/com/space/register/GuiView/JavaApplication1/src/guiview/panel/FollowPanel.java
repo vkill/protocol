@@ -41,6 +41,7 @@ public class FollowPanel extends javax.swing.JPanel {
         dyid = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         modify = new javax.swing.JButton();
+        appLog = new javax.swing.JButton();
 
         followButton.setText("关注");
         followButton.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +95,13 @@ public class FollowPanel extends javax.swing.JPanel {
             }
         });
 
+        appLog.setText("app_log");
+        appLog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appLogActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,14 +111,16 @@ public class FollowPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(dyid, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(modify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 318, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(modify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(appLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -136,14 +146,15 @@ public class FollowPanel extends javax.swing.JPanel {
                     .addComponent(userAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(dyid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(modify))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(diggButton)
                         .addComponent(videoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
-                        .addComponent(modify))
+                        .addComponent(appLog))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
@@ -166,9 +177,9 @@ public class FollowPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_followButtonActionPerformed
 
     private void diggButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diggButtonActionPerformed
-        String userid = userAccount.getText();
-        if (!videoId.equals("") && userid!=null) {
-            FollowAndDiggController.digg(dyid.getText(), userid, logText);
+        String userid = dyid.getText();
+        if (!videoId.getText().equals("") && userid!=null) {
+            FollowAndDiggController.digg(userid, videoId.getText(), logText);
         } else {
             logText.append("视频id不能为空\n");
         }
@@ -182,17 +193,34 @@ public class FollowPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_dyidActionPerformed
 
+    /**
+     * 修改资料监听
+     * @param evt
+     */
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
-        String userid = userAccount.getText();
-        if (!videoId.equals("") && userid!=null) {
-            FollowAndDiggController.digg(dyid.getText(), userid, logText);
+        String userid = dyid.getText();
+        if (!userid.equals("") && userid!=null) {
+            FollowAndDiggController.modify(dyid.getText(), null, logText );
         } else {
             logText.append("视频id不能为空\n");
         }
     }//GEN-LAST:event_modifyActionPerformed
 
+    /**
+     * applog监听
+     * @param evt
+     */
+    private void appLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appLogActionPerformed
+        // TODO add your handling code here:
+        String userid = dyid.getText();
+        if (!userid.equals("")&& userid!=null) {
+            FollowAndDiggController.app_log(userid, logText);
+        }
+    }//GEN-LAST:event_appLogActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton appLog;
     private javax.swing.JButton diggButton;
     private javax.swing.JTextField dyid;
     private javax.swing.JButton followButton;

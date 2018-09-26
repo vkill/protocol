@@ -10,6 +10,7 @@ import com.space.register.entity.UrlRequestEntity;
 import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
+import params.AppLogMaker;
 import params.ThumbsUpMaker;
 import platform.tcp.TcpClientForTV;
 
@@ -43,6 +44,25 @@ public class AccountManageServiceImpl implements AccountManageService {
         ams.DYUserRepository = this.DYUserRepository;
         ams.deviceRepository = this.deviceRepository;
         ams.urlRequestRepository = this.urlRequestRepository;
+    }
+
+
+    @Override
+    public void appLog(String dyid, JTextArea textLog) {
+
+
+        DYUserEntity dyUserEntity = ams.DYUserRepository.findById(Integer.parseInt(dyid));
+        String simulationId = dyUserEntity.getSimulationID();
+
+
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = ams.deviceRepository.getDeviceMsgById(Integer.parseInt(simulationId));
+
+
+        String text = AppLogMaker.app_log(deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 36000));
+
+        textLog.append("-----AppLog----- 抖音号数据库id:"+ dyid + "-----\n");
+        textLog.append(text + "\n");
     }
 
 }
