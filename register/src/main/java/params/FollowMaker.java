@@ -57,21 +57,17 @@ public class FollowMaker {
         ArrayList <String> resultToReturn = new ArrayList<>();
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-                String result = GzipGetteer.uncompressToString(response.body().bytes());
-                //System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
-                System.out.println(result);
-                resultToReturn.add(result);
-                resultToReturn.add(followTest(user_id, dyUserEntity, deviceEntity));
+        try {
+            Response response = call.execute();
+            String result = GzipGetteer.uncompressToString(response.body().bytes());
+            //System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+            System.out.println(result);
+            resultToReturn.add(result);
+            resultToReturn.add(followTest(user_id, dyUserEntity, deviceEntity));
 
-            }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
-            }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return resultToReturn;
     }
 
@@ -109,35 +105,26 @@ public class FollowMaker {
         ArrayList<String> resultToReturn = new ArrayList<>();
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-                try {
-                    Thread.sleep(100);
-                    String responseLine = GzipGetteer.uncompressToString(response.body().bytes());
-                    System.out.println(responseLine);
-                    String []temp = responseLine.split(user_id);
-                    if(temp.length == 0){
-                        Thread.sleep(100);
-                    }
-                    if(temp.length >=2){
-                        System.out.println("关注成功");
-                        resultToReturn.add("success");
-                    }else{
-                        System.out.println("关注失败");
-                        resultToReturn.add("failure");
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
+        try {
+            Response response = call.execute();
+            Thread.sleep(100);
+            String responseLine = GzipGetteer.uncompressToString(response.body().bytes());
+            String []responseLineList = responseLine.split(user_id);
+            if(responseLineList.length == 0){
+                Thread.sleep(100);
             }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
+            if(responseLineList.length >=2){
+                System.out.println("关注成功");
+                resultToReturn.add("关注成功");
+            }else{
+                System.out.println("关注失败");
+                resultToReturn.add("关注失败");
             }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return resultToReturn.get(0);
     }

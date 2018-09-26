@@ -35,6 +35,37 @@ public class DYUserEntity {
 
     private String uid;
 
+    @Column(columnDefinition = "text")
+    private String appLog;
+
+    private int like_power;
+
+    private int event_id;
+
+    public String getAppLog() {
+        return appLog;
+    }
+
+    public void setAppLog(String appLog) {
+        this.appLog = appLog;
+    }
+
+    public int getLike_power() {
+        return like_power;
+    }
+
+    public void setLike_power(int like_power) {
+        this.like_power = like_power;
+    }
+
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -119,6 +150,10 @@ public class DYUserEntity {
                 ", simulationID='" + simulationID + '\'' +
                 ", belong='" + belong + '\'' +
                 ", userCookie='" + userCookie + '\'' +
+                ", uid='" + uid + '\'' +
+                ", appLog='" + appLog + '\'' +
+                ", like_power=" + like_power +
+                ", event_id=" + event_id +
                 '}';
     }
 }

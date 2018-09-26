@@ -15,6 +15,7 @@ import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 import params.FollowMaker;
+import params.ModifyInfoMaker;
 import params.ThumbsUpMaker;
 import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
@@ -70,6 +71,7 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
         UrlRequestEntity urlRequestEntity = fad.urlRequestRepository.findUrlById(4);
 
         ArrayList <String> output = FollowMaker.FollowMaker(userid, dyUserEntity, deviceEntity);
+        System.out.println(output.size());
 
         textLog.append("-----关注id:" + userid + "----- 抖音号数据库id:"+ dyid + "-----\n");
         textLog.append(output.get(0) + "\n");
@@ -98,7 +100,31 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
     }
 
     @Override
-    public void modify(String dyid, JTextArea log){};
+    public void modify(String dyid, JTextArea textLog){
+
+        //通过id获取t_dy_user中的数据
+        DYUserEntity dyUserEntity = fad.DYUserRepository.findById(Integer.parseInt(dyid));
+        String user_cookie = dyUserEntity.getUserCookie();
+        String simulationId = dyUserEntity.getSimulationID();
+        String uid = dyUserEntity.getUid();
+
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = fad.deviceRepository.getDeviceMsgById(Integer.parseInt(simulationId));
+        String cookie = deviceEntity.getCookie();
+        cookie += (";"+ user_cookie);
+        deviceEntity.setCookie(cookie);
+
+        //获取并构建url信息，包括host、msg、token
+        UrlRequestEntity urlRequestEntity1 = fad.urlRequestRepository.findUrlById(5);
+
+
+        UrlRequestEntity urlRequestEntity2 = fad.urlRequestRepository.findUrlById(8);
+
+        String id = ModifyInfoMaker.modifyInfoMaker(uid, deviceEntity, urlRequestEntity1, urlRequestEntity2);
+
+        textLog.append("-----Modify----- 抖音号数据库id:"+ dyid + "-----\n");
+        textLog.append("short:"+ id + "\n");
+    }
 
 
     public static String MapToString(Map map){

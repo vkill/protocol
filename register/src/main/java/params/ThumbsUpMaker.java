@@ -6,6 +6,7 @@ import com.space.register.entity.UrlRequestEntity;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
+import org.jsoup.helper.HttpConnection;
 import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
 
@@ -37,7 +38,7 @@ public class ThumbsUpMaker {
         temp_ts ++;
         ts = String.valueOf(temp_ts);
 
-        String url = "https://api.amemv.com/aweme/v1/commit/item/digg/?aweme_id="+aweme_id+"&type=1&retry_type=no_retry&iid="+deviceEntity.getIid()+"&device_id="+deviceEntity.getDeviceId()+"&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type="+deviceEntity.getDevice_type()+"&device_brand="+deviceEntity.getDevice_brand()+"&language=zh&os_api=25&os_version=7.1.2&openudid="+deviceEntity.getOpenudid()+"&manifest_version_code=176&resolution=1280*720&dpi=320&update_version_code=1762&_rticket="+_rticket+"&ts="+ts+"&as=a1iosdfgh&cp=androide1";
+        String url = "https://api.amemv.com/aweme/v1/commit/item/digg/?aweme_id="+aweme_id+"&type=1&retry_type=no_retry&iid="+deviceEntity.getIid()+"&device_id="+deviceEntity.getDeviceId()+"&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type="+deviceEntity.getDevice_type()+"&device_brand="+deviceEntity.getDevice_brand()+"&language=zh&os_api=25&os_version=7.1.2&uuid="+deviceEntity.getUuid()+"&openudid="+deviceEntity.getOpenudid()+"&manifest_version_code=176&resolution=1280*720&dpi=480&update_version_code=1762&_rticket="+_rticket+"&ts="+ts+"&as=a1iosdfgh&cp=androide1";
 
         Map<String, String> header = new HashMap<String, String>();
         header.put("Accept-Encoding","gzip");
@@ -54,25 +55,18 @@ public class ThumbsUpMaker {
         Request request = null;
         request = ConstructRequest.constructGet(requestToSend);
 
-        ArrayList<String> resultToReturn = new ArrayList<>();
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-                System.out.println("点赞" + _rticket);
-                String result = GzipGetteer.uncompressToString(response.body().bytes());
-                resultToReturn.add(result);
+        String result = "";
+        try {
+            Response response = call.execute();
+            result =  GzipGetteer.uncompressToString(response.body().bytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                //System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
-            }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
-            }
-        });
 
-        return resultToReturn.get(0);
+        return result;
     }
 
     public static String MapToString(Map map){

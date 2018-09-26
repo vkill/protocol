@@ -23,7 +23,7 @@ import java.util.Map;
  **/
 public class ModifyInfoMaker {
 
-    public static void modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity1, UrlRequestEntity urlRequestEntity2) {
+    public static String modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity1, UrlRequestEntity urlRequestEntity2) {
 
 
         //获取设备信息
@@ -172,17 +172,20 @@ public class ModifyInfoMaker {
 
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call1 = okHttpClient.newCall(request1);
-        call1.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-                System.out.println("响应成功");
-                System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+        String strToReturn = "";
+        try {
+            Response responseToReturn = call1.execute();
+            String result = GzipGetteer.uncompressToString(responseToReturn.body().bytes());
+            String []result_list = result.split(",");
+            for(int i = 0;i < result_list.length;i++){
+                String []result_list_split = result_list[i].split(":");
+                if(result_list_split[0].equals(" \"short_id\"")){
+                    strToReturn = result_list_split[1];
+                }
             }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
-            }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         RequestTokenVo requestToSend2 = new RequestTokenVo();
@@ -213,6 +216,7 @@ public class ModifyInfoMaker {
             }
         });
 
+        return strToReturn;
     }
 
 

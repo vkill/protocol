@@ -177,9 +177,9 @@ public class FollowPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_followButtonActionPerformed
 
     private void diggButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_diggButtonActionPerformed
-        String userid = userAccount.getText();
+        String userid = dyid.getText();
         if (!videoId.getText().equals("") && userid!=null) {
-            FollowAndDiggController.digg(dyid.getText(), userid, logText);
+            FollowAndDiggController.digg(userid, videoId.getText(), logText);
         } else {
             logText.append("视频id不能为空\n");
         }
@@ -198,9 +198,9 @@ public class FollowPanel extends javax.swing.JPanel {
      * @param evt
      */
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
-        String userid = userAccount.getText();
+        String userid = dyid.getText();
         if (!userid.equals("") && userid!=null) {
-            FollowAndDiggController.digg(dyid.getText(), userid, logText);
+            FollowAndDiggController.modify(dyid.getText(), null, logText );
         } else {
             logText.append("视频id不能为空\n");
         }
@@ -212,8 +212,8 @@ public class FollowPanel extends javax.swing.JPanel {
      */
     private void appLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appLogActionPerformed
         // TODO add your handling code here:
-        String userid = userAccount.getText();
-        if (userid.equals("")&& userid!=null) {
+        String userid = dyid.getText();
+        if (!userid.equals("")&& userid!=null) {
             FollowAndDiggController.app_log(userid, logText);
         }
     }//GEN-LAST:event_appLogActionPerformed
