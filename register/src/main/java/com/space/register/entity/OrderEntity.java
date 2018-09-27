@@ -16,7 +16,7 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String vedioID;
+    private String videoID;
 
     private Double thumbUpOrFollowNum;
 
@@ -32,12 +32,12 @@ public class OrderEntity {
         this.id = id;
     }
 
-    public String getVedioID() {
-        return vedioID;
+    public String getVideoID() {
+        return videoID;
     }
 
-    public void setVedioID(String vedioID) {
-        this.vedioID = vedioID;
+    public void setVideoID(String videoID) {
+        this.videoID = videoID;
     }
 
     public Double getThumbUpOrFollowNum() {

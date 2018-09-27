@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
                 return result;
             }
             GoodsTypeList byGoodsType = goodsTypeListRepository.getByGoodsType(webOrderEntity.getGoodsType());
+            webOrderEntity.setOrderNumber(String.valueOf(System.currentTimeMillis())+webOrderEntity.getVideoId());
             webOrderEntity.setOrderStatus(1);// 未完成订单
             webOrderEntity.setOperaCount(byGoodsType.getCount()*webOrderEntity.getOrderCount()); // 需要操作的次数
             webOrderEntity.setTotalPrice(byGoodsType.getPrice() * webOrderEntity.getOrderCount()); // 总价

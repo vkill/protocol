@@ -49,6 +49,11 @@ public class OrderController {
         return result;
     }
 
+    /**
+     * 下单
+     * @param map
+     * @return
+     */
     @RequestMapping("/make_web_order")
     public Map makeWebOrder(@RequestBody Map map) {
         Map result = new HashMap();

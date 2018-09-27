@@ -18,6 +18,9 @@ public class WebOrderEntity {
     @GeneratedValue
     private int id;
 
+    // 订单号
+    private String orderNumber;
+
     // 项目类型
     private String proType;
 
@@ -40,6 +43,14 @@ public class WebOrderEntity {
 
     // 0 已付款 1 未付款
     private int isPay;
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
 
     public int getId() {
         return id;

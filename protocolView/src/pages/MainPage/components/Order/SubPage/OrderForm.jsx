@@ -173,10 +173,11 @@ class OrderForm extends Component {
                     postData.order_count = this.state.orderCount;
                     // 下订单
                     ORDER_API.make_order(postData).then(response => {
-                        console.log(response.data.data);
+                        
                         const data = response.data;
                         if (data.status === '0') {
                             // 下单成功，跳转支付
+                            // TO-DO
                         } else {
                             message.error(data.message)
                         }
