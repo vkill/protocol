@@ -1,0 +1,23 @@
+.container {
+    width: 100%
+}
+
+p {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    font: caption;
+    font-size: 80px;
+    font-weight: 900;
+    text-shadow: 5px 5px 0px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+.gradient {
+  background: -webkit-linear-gradient(270deg, #C9FFBF, #FFAFBD);
+  background: linear-gradient(180deg, #C9FFBF, #FFAFBD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

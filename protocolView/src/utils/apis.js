@@ -54,7 +54,7 @@ export const makeOrder = body => axios.post(`${orderUrl}/makeOrder`, {
   dyUID: body.dyUID,
   dyVedio: body.vedio,
   count: body.count,
-  usersign: body.userAccount
+  usersign: body.userAccount,
 });
 
 /**
@@ -62,7 +62,7 @@ export const makeOrder = body => axios.post(`${orderUrl}/makeOrder`, {
  * @param {userid:'userid'} body
  */
 export const getUserOrder = body => axios.post(`${orderUrl}/getOrderList`, {
-  usersign:body.userid,
+  usersign: body.userid,
 });
 
 // ============================= 充值服务api =============================
