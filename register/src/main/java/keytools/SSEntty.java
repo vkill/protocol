@@ -1,5 +1,7 @@
 package keytools;
 
+import jsonreader.tools.GzipGetteer;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
@@ -120,11 +122,7 @@ public class SSEntty {
     }
 
     public static byte[] getTTEnttyResult(byte[] ttEnttyString){
-        int num = ttEnttyString.length/16;
-        if(ttEnttyString.length%16!=0){
-            num++;
-        }
-        int[] enttyString = new int[16 * num];
+        int[] enttyString = new int[ttEnttyString.length];
         for(int i = 0;i<enttyString.length;i++){
             if(i<ttEnttyString.length){
                 enttyString[i] = ttEnttyString[i];
@@ -133,33 +131,35 @@ public class SSEntty {
                 enttyString[i] = 32;
             }
         }
-        int[] newBytes = new int[enttyString.length];
-        for(int i = 0;i<newBytes.length;i++){
-            newBytes[i] = byteTable[enttyString[i]];
-        }
+        ArrayList<Integer> newBytes = new ArrayList<>();
+        for(int i = 0;i<ttEnttyString.length;i++){
+            newBytes.add(byteTable[enttyString[i]&0xff]);
 
+        }
         return getFinallResult(newBytes);
     }
 
-    public static byte[] getFinallResult(int[] tableEntty){
-        if(tableEntty.length%16!=0){
-            System.out.println("数据格式不是十六的倍数，不符合要求");
-            return null;
+    public static byte[] getFinallResult(ArrayList<Integer> tableEntty){
+        int shortNum = 16 - tableEntty.size()%16;
+        for(int i =0;i<shortNum;i++){
+            tableEntty.add(32);
         }
-        else {
-            byte[] result = new byte[tableEntty.length];
-            for(int z=0;z*16<tableEntty.length;z++){
-                int[] myself = new int[16];
-                for(int k =0;k<16;k++){
-                    myself[k] = tableEntty[z*16+k];
-                }
-                byte[] kao = dofinalEntty(myself);
-                for(int i=0;i<16;i++){
-                    result[z*16+i] = kao[i];
-                }
+        byte[] result = new byte[tableEntty.size()+4];
+        result[0] = 116;
+        result[1] = 99;
+        result[2] = 2;
+        result[3] = (byte) (shortNum&0xff);
+        for(int z=0;z*16<tableEntty.size();z++){
+            int[] myself = new int[16];
+            for(int k =0;k<16;k++){
+                myself[k] = tableEntty.get(z*16+k);
             }
-            return result;
+            byte[] kao = dofinalEntty(myself);
+            for(int i=0;i<16;i++){
+                result[z*16+i+4] = kao[i];
+            }
         }
+        return result;
     }
 
     public static byte[] dofinalEntty(int[] waitString){
@@ -183,6 +183,7 @@ public class SSEntty {
             }
             resulrString[z] = waitString[i];
         }
+        //什么玩意
         for(int i =0;i<resulrString.length;i++){
             System.out.print(resulrString[i]+" ");
         }
@@ -223,11 +224,11 @@ public class SSEntty {
     }
     public static void main(String[]args){
         int[] kao = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-        byte[] whyNot = "0123456789abcde".getBytes();
-        System.out.println();
-        byte[] result = getTTEnttyResult(whyNot);
-        for (int i=0;i<result.length;i++){
-            System.out.print(result[i]+" ");
+        String kaohe =  "0123456789ab";
+        byte[] hehe = getTTEnttyResult(kaohe.getBytes());
+        for(int k=0;k<hehe.length;k++){
+            System.out.print(hehe[k]+" ");
         }
+        System.out.println();
     }
 }

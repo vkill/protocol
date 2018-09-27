@@ -3,8 +3,8 @@ package params;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import jsonreader.tools.GzipGetteer;
+import keytools.SSEntty;
 import okhttp3.*;
-import platform.tcp.TcpClientForTV;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -73,9 +73,9 @@ public class AppLogMaker {
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch + "," + magic_tag + "," + time_sync + "," + header1 + "," + _gen_time + "}";
 
-        TcpClientForTV tcpClientForTV = new TcpClientForTV();
+
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
-        sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);
+        sendMessage = SSEntty.getTTEnttyResult(sendMessage);
 
         MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
         RequestBody body = RequestBody.create(type, sendMessage);

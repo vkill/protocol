@@ -1,10 +1,10 @@
 package platform.tv;
 
 import jsonreader.tools.GzipGetteer;
+import keytools.SSEntty;
 import okhttp3.*;
 import org.json.JSONObject;
 import params.tools.RequestURLCreater;
-import platform.tcp.TcpClientForTV;
 
 /**
  * @ Author     ：GXDTJJC
@@ -16,12 +16,12 @@ import platform.tcp.TcpClientForTV;
 public class DeviceTvRegister {
 
     public Request getDeviceCreaterRequest(JSONObject jsonObject){
-        TcpClientForTV tcpClientForTV = new TcpClientForTV();
+        //TcpClientForTV tcpClientForTV = new TcpClientForTV();
 
         String device_URL = RequestURLCreater.getUrlFromJsonAndMap(jsonObject);
         String result = jsonObject.toString();
         byte[] sendMessage = GzipGetteer.compress(result);
-        sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);
+        sendMessage = SSEntty.getTTEnttyResult(sendMessage);
         //数据准备完毕
         MediaType type=MediaType.parse("application/octet-stream");
         RequestBody fileBody= RequestBody.create(type,sendMessage);

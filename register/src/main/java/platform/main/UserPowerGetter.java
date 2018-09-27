@@ -2,26 +2,16 @@ package platform.main;
 
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
-import enums.paramtable.DirTable;
-import enums.paramtable.urltools.URLmakeTools;
-import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
+import keytools.SSEntty;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMethodMappingNamingStrategy;
-import params.ParamCreater;
-import params.tools.KeyControler;
-import platform.tcp.TcpClientForTV;
-import po.RequestTokenVo;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * @program: protool
@@ -83,10 +73,9 @@ public class UserPowerGetter {
         String _gen_time = "\"_gen_time\":" + _rticket + "";
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch + "," + magic_tag + "," + time_sync + "," + header1 + "," + _gen_time + "}";
-        dyUserEntity.setApp_Log(sign_in_json);
-        TcpClientForTV tcpClientForTV = new TcpClientForTV();
+        dyUserEntity.setAppLog(sign_in_json);
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
-        sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);
+        sendMessage = SSEntty.getTTEnttyResult(sendMessage);
 
         MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
         RequestBody body = RequestBody.create(type, sendMessage);
@@ -193,11 +182,10 @@ public class UserPowerGetter {
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch +"," + magic_tag +"," + time_sync + "," + header1 + "," + _gen_time + "}";
 
-        dyUserEntity.setApp_Log(sign_in_json);
-        TcpClientForTV tcpClientForTV = new TcpClientForTV();
-        byte[] sendMessage = GzipGetteer.compress(sign_in_json);
-        sendMessage  = tcpClientForTV.get_Key_For_Devices(sendMessage);
+        dyUserEntity.setAppLog(sign_in_json);
 
+        byte[] sendMessage = GzipGetteer.compress(sign_in_json);
+        sendMessage  = SSEntty.getTTEnttyResult(sendMessage);
 
         MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
         RequestBody body = RequestBody.create(type,sendMessage);

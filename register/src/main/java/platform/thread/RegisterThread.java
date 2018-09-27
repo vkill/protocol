@@ -477,7 +477,7 @@ public class RegisterThread implements Runnable{
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
         deviceEntity.setSession_id(UUID.randomUUID().toString());
-        UserPowerGetter.app_log(deviceEntity,dyUserEntity,app_Log_Time);
+//        UserPowerGetter.app_log(deviceEntity,dyUserEntity,app_Log_Time);
 
         deviceEntity = test.saveDevice(deviceEntity);
         dyUserEntity.setSimulationID(deviceEntity.getId()+"");
