@@ -280,6 +280,8 @@ public class AllAppLogConstruct {
         //server_time = "1537966750000";
         //follow_time = "1537967450000";
 
+
+
         String follow = "{\"enter_from\":\"homepage_hot\",\"request_id\":\""+request_id+"\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"follow\",\"label\":\"homepage_hot\",\"value\":"+user_id1+",\"ext_value\":"+aweme_id+",\"user_id\":"+user_id2+",\"session_id\":\""+session_id+"\",\"datetime\":\""+follow_time+"\",\"event_id\":"+(++event_id)+"}";
 
         String result_launch = "{\"datetime\": \""+server_time+"\",\"session_id\": \""+session_id+"\"}";

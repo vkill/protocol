@@ -61,6 +61,7 @@ public class ThumbsUpMaker {
         try {
             Response response = call.execute();
             result.add(GzipGetteer.uncompressToString(response.body().bytes()));
+            System.out.println("点赞返回信息：" + result.get(0));
             Headers responseHeaders = response.headers();
             int responseHeadersLength = responseHeaders.size();
             for (int i = 0; i < responseHeadersLength; i++){
@@ -70,6 +71,7 @@ public class ThumbsUpMaker {
                     result.add(headerValue);
                 }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

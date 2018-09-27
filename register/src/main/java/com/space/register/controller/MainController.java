@@ -32,7 +32,7 @@ public class MainController {
     @Resource
     DYUserRepository dyUserRepository;
 
-    private static int id = 732;
+    private static int id = 748;
     private static int event_id = 0;
     private static String session_id = "";
     private static long serverTime = 0;
@@ -44,11 +44,11 @@ public class MainController {
     public String thumbsUpMaker() {
 
         //这个是视频id，需要参数传入
-        //String aweme_id = "6597344642847477000";
+        String aweme_id = "6597344642847477000";
         //String aweme_id = "6602390827073277197";
         //String aweme_id = "6602797333635665156";
         //String aweme_id = "6599566234746883335";
-        String aweme_id = "6599758421971438862";
+//        String aweme_id = "6599758421971438862";
         //String aweme_id = "6598666622192323844";
 
 //        ArrayList<String> aaaa = new ArrayList<String>();
@@ -80,6 +80,7 @@ public class MainController {
         ArrayList<String> body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));;
 
         event_id = Integer.valueOf(body_msg.get(0));
+        System.out.println("点赞的applog：");
         String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
         System.out.println(appLogResult);
         dyUserEntity.setEvent_id(event_id);
@@ -92,8 +93,8 @@ public class MainController {
     public String followMaker(){
 
         //这个是视频id，需要参数传入
-//        String user_id = "104512020815";
-        String user_id = "57703628135";
+        String user_id = "101947485841";
+//        String user_id = "57703628135";
         //通过id获取t_dy_user中的数据
         DYUserEntity dyUserEntity = dyRegisterService.findById(id);
         String simulationId = dyUserEntity.getSimulationID();
@@ -102,7 +103,7 @@ public class MainController {
         DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
 
         long time = System.currentTimeMillis();
-        FollowMaker.FollowMaker(user_id, dyUserEntity, deviceEntity);
+        ArrayList<String> follow_result = FollowMaker.FollowMaker(user_id, dyUserEntity, deviceEntity);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -111,9 +112,10 @@ public class MainController {
 
         String result = SupportAccountMaker.getAwemeId(deviceEntity, dyUserEntity, user_id);
 
-        ArrayList<String> body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid(),"");;
+        ArrayList<String> body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid(),follow_result.get(2));;
 
         event_id = Integer.valueOf(body_msg.get(0));
+        System.out.println("关注的applog:");
         String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
         System.out.println(appLogResult);
         dyUserEntity.setEvent_id(event_id);
@@ -216,6 +218,34 @@ public class MainController {
     }
 
 
+    @RequestMapping("/test")
+    public void testStart() throws InterruptedException {
+
+
+        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
+        int site = 0;
+        for(int i = 0;i < dyUserEntity_list.size();i++){
+            if(dyUserEntity_list.get(i).getId() == 754){
+                site = i;
+            }
+        }
+
+        for(int i = site;i < dyUserEntity_list.size();i++){
+            id = dyUserEntity_list.get(i).getId();
+            System.out.println(id);
+            launchApp();
+            Thread.sleep(1000);
+            thumbsUpMaker();
+            Thread.sleep(1000);
+            followMaker();
+            Thread.sleep(1000);
+
+            System.out.println("-----------------------------------------------------");
+            System.out.println("----------------------烧楼上屁股----------------------");
+            System.out.println("-----------------------------------------------------");
+        }
+
+    }
 
     public static String MapToString(Map map){
         java.util.Map.Entry entry;

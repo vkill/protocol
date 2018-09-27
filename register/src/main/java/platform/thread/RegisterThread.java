@@ -509,7 +509,8 @@ public class RegisterThread implements Runnable{
         String sendCodeTime =test_time;
         ArrayList<String> register_body_msg = AllAppLogConstruct.register(dyUserEntity.getAppLog(), AllAppLogConstruct.constructRandomSessionId(), dyUserEntity.getEvent_id(), String.valueOf(serverTime), sendCodeTime, dyUserEntity.getUid());
         //修改数据库中event_id的值
-        dyUserEntity.setEvent_id(event_id);
+
+        dyUserEntity.setEvent_id(Integer.valueOf(register_body_msg.get(0)));
         //修改全局变量serverTime
         String register_result = AppLogMaker.app_log(deviceEntity, dyUserEntity, register_body_msg.get(1));
         System.out.println("注册账号结果：" + register_result);

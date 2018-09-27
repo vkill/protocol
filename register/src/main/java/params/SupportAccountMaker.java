@@ -356,9 +356,14 @@ public class SupportAccountMaker {
             String []temp_result = result.split(",");
             for(int i = 0;i < temp_result.length;i++){
 
-                String []line_split = temp_result[i].split(":");
-                if(line_split[0].equals(" \"aweme_id\"")){
-                    result_awemeId = line_split[1];
+                String []line_split = temp_result[i].split("\"aweme_id\":");
+                if(line_split.length == 2){
+                    char []array = line_split[1].toCharArray();
+                    String awemeId = "";
+                    for(int j = 1;j < array.length - 2;j++){
+                        awemeId += array[j];
+                    }
+                    result_awemeId = awemeId;
                     break;
                 }
 
