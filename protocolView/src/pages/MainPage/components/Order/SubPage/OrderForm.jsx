@@ -178,8 +178,9 @@ class OrderForm extends Component {
                         if (data.status === '0') {
                             // 下单成功，跳转支付
                             // TO-DO
+                            message.success(data.message);
                         } else {
-                            message.error(data.message)
+                            message.error(data.message);
                         }
 
                     });

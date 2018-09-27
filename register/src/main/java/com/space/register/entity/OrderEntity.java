@@ -16,13 +16,15 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String videoID;
+    private String orderNumber; // 订单号
 
-    private Double thumbUpOrFollowNum;
+    private String videoID; // 视频id
 
-    private String status;
+    private Double thumbUpOrFollowNum; // 点赞数
 
-    private String types;
+    private String status; // 订单状态
+
+    private String types; // 订单类型
 
     public int getId() {
         return id;
@@ -30,6 +32,14 @@ public class OrderEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public String getVideoID() {
@@ -62,5 +72,17 @@ public class OrderEntity {
 
     public void setTypes(String types) {
         this.types = types;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "id=" + id +
+                ", OrderNumber='" + orderNumber + '\'' +
+                ", videoID='" + videoID + '\'' +
+                ", thumbUpOrFollowNum=" + thumbUpOrFollowNum +
+                ", status='" + status + '\'' +
+                ", types='" + types + '\'' +
+                '}';
     }
 }

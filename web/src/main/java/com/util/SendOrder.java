@@ -23,17 +23,23 @@ public class SendOrder {
      * @return
      */
     public static boolean sendOrder(WebOrderEntity entity) {
-        String params = "orderNumber=" + entity.getOrderNumber() + "&";
+        String params = "orderNumber=" + entity.getOrderNumber() + "&videoID="+entity.getVideoId() + "&thumbUpOrFollowNum=" + entity.getOperaCount()+"&status=1" +"&types="+entity.getGoodsType();
         String url = HOST + API + params;
-        System.out.println(url);
+//        System.out.println(url);
+        String result = "";
         try {
             Document document = Jsoup.connect(url).timeout(3000).get();
-            System.out.println(document.body().text());
+//            System.out.println(document.body().text());
+            result = document.body().text();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return true;
+//        System.out.println(result);
+        if (result.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
 }
