@@ -1,11 +1,13 @@
 package com.space.register.controller;
 
+import com.space.register.dao.DYUserRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
 import com.space.register.service.UrlRequestService;
+import org.omg.CORBA.SystemException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.*;
@@ -28,8 +30,13 @@ public class MainController {
     @Resource
     DYRegisterService dyRegisterService;
 
-    private static int id = 454;
+    @Resource
+    DYUserRepository dyUserRepository;
 
+    private static int id = 732;
+    private static int event_id = 0;
+    private static String session_id = "";
+    private static long serverTime = 0;
     /**
      * 点赞模块
      * @return
@@ -52,20 +59,34 @@ public class MainController {
 //        aaaa.add("6599566234746883335");
 //        aaaa.add("6601500048515665166");
 
-           //通过id获取t_dy_user中的数据
-           DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-           String simulationId = dyUserEntity.getSimulationID();
+        //通过id获取t_dy_user中的数据
+        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
+        String simulationId = dyUserEntity.getSimulationID();
 
-           //通过simulationid获取t_device中的数据
-           DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
 
-           //获取并构建url信息，包括host、msg、token
-           UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
+        //获取并构建url信息，包括host、msg、token
+        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
 
-           String result = ThumbsUpMaker.thumbsUpMaker(aweme_id, deviceEntity, dyUserEntity);
+        long time = System.currentTimeMillis();
+        ArrayList<String> result = ThumbsUpMaker.thumbsUpMaker(aweme_id, deviceEntity, dyUserEntity);
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        return result;
+        ArrayList<String> body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));;
+
+        event_id = Integer.valueOf(body_msg.get(0));
+        String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
+        System.out.println(appLogResult);
+        dyUserEntity.setEvent_id(event_id);
+        dyUserRepository.save(dyUserEntity);
+
+        return result.get(0);
     }
 
     @RequestMapping("/follow")
@@ -81,8 +102,23 @@ public class MainController {
         //通过simulationid获取t_device中的数据
         DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
 
+        long time = System.currentTimeMillis();
         FollowMaker.FollowMaker(user_id, dyUserEntity, deviceEntity);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        String result = SupportAccountMaker.getAwemeId(deviceEntity, dyUserEntity, user_id);
+
+        ArrayList<String> body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid());;
+
+        event_id = Integer.valueOf(body_msg.get(0));
+        String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
+        System.out.println(appLogResult);
+        dyUserEntity.setEvent_id(event_id);
+        dyUserRepository.save(dyUserEntity);
 
         return null;
     }
@@ -155,8 +191,8 @@ public class MainController {
         return null;
     }
 
-    @RequestMapping("/appLog")
-    public String mainController() throws InterruptedException {
+    @RequestMapping("/launchApp")
+    public String launchApp() throws InterruptedException {
 
         //通过id获取t_dy_user中的数据
         DYUserEntity dyUserEntity = dyRegisterService.findById(id);
@@ -165,7 +201,18 @@ public class MainController {
         //通过simulationid获取t_device中的数据
         DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
 
-        AppLogMaker.app_log(deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 180000));
+        //随机生成的session_id
+        session_id = AllAppLogConstruct.constructRandomSessionId();
+        ArrayList<String> body_msg = AllAppLogConstruct.launchApp(dyUserEntity.getAppLog(), session_id, dyUserEntity.getEvent_id());
+        //修改全部变量event_id
+        event_id = Integer.valueOf(body_msg.get(0));
+        //修改数据库中event_id的值
+        dyUserEntity.setEvent_id(event_id);
+        dyUserRepository.save(dyUserEntity);
+        //修改全局变量serverTime
+        serverTime = System.currentTimeMillis();
+        String result = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
+        System.out.println(result);
         return null;
     }
 

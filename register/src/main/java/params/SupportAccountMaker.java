@@ -1,5 +1,6 @@
 package params;
 
+import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
 import httpmaker.ConstructRequest;
@@ -316,6 +317,57 @@ public class SupportAccountMaker {
 
     }
 
+    public static String getAwemeId(DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String user_id){
+
+        String _rticket = String.valueOf(System.currentTimeMillis());
+        char []temp = _rticket.toCharArray();
+        String ts = "";
+        for(int i = 0;i < temp.length - 3;i++){
+            ts += temp[i];
+        }
+        long temp_ts = Long.parseLong(ts);
+        temp_ts ++;
+        ts = String.valueOf(temp_ts);
+
+        String url = "https://aweme.snssdk.com/aweme/v1/aweme/post/?user_id="+user_id+"&max_cursor=0&count=20&retry_type=no_retry&iid="+deviceEntity.getIid()+"&device_id="+deviceEntity.getDeviceId()+"&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type="+deviceEntity.getDevice_type()+"&device_brand="+deviceEntity.getDevice_brand()+"&language=zh&os_api=25&os_version=7.1.2&uuid="+deviceEntity.getUuid()+"&openudid="+deviceEntity.getOpenudid()+"&manifest_version_code=176&resolution=1280*720&dpi=320&update_version_code=1762&_rticket="+_rticket+"&ts="+ts+"&as=a1iosdfgh&cp=androide1";
+
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("Accept-Encoding","gzip");
+        header.put("Host","aweme.snssdk.com");
+        header.put("Cache-Control","max-stale=60");
+        header.put("Connection","Keep-Alive");
+        header.put("User-Agent","okhttp/3.8.1");
+        header.put("Cookie",dyUserEntity.getUserCookie());
+
+
+        RequestTokenVo requestToSend = new RequestTokenVo();
+        requestToSend.setUrl(url);
+        requestToSend.setHeader(header);
+        requestToSend.setBody(null);
+        Request request = null;
+        request = ConstructRequest.constructGet(requestToSend);
+
+        OkHttpClient okHttpClient=new OkHttpClient();
+        Call call = okHttpClient.newCall(request);
+        String result_awemeId = "";
+        try {
+            Response response = call.execute();
+            String result = GzipGetteer.uncompressToString(response.body().bytes(),"utf-8");
+            String []temp_result = result.split(",");
+            for(int i = 0;i < temp_result.length;i++){
+
+                String []line_split = temp_result[i].split(":");
+                if(line_split[0].equals(" \"aweme_id\"")){
+                    result_awemeId = line_split[1];
+                    break;
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result_awemeId;
+    }
     public static String MapToString(Map map){
         java.util.Map.Entry entry;
         StringBuffer sb = new StringBuffer();

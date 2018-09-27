@@ -25,7 +25,7 @@ import java.util.Map;
 public class ThumbsUpMaker {
 
 
-    public static String thumbsUpMaker(String aweme_id, DeviceEntity deviceEntity, DYUserEntity dyUserEntity) {
+    public static ArrayList<String> thumbsUpMaker(String aweme_id, DeviceEntity deviceEntity, DYUserEntity dyUserEntity) {
 
 
         String _rticket = String.valueOf(System.currentTimeMillis());
@@ -57,14 +57,22 @@ public class ThumbsUpMaker {
 
         OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
-        String result = "";
+        ArrayList<String> result = new ArrayList<>();
         try {
             Response response = call.execute();
-            result =  GzipGetteer.uncompressToString(response.body().bytes());
+            result.add(GzipGetteer.uncompressToString(response.body().bytes()));
+            Headers responseHeaders = response.headers();
+            int responseHeadersLength = responseHeaders.size();
+            for (int i = 0; i < responseHeadersLength; i++){
+                String headerName = responseHeaders.name(i);
+                String headerValue = responseHeaders.value(i);
+                if(headerName.equals("X_TT_LOGID")){
+                    result.add(headerValue);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return result;
     }

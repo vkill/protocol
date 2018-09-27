@@ -1,9 +1,17 @@
 package params;
 
+import com.space.register.entity.DYUserEntity;
+import com.space.register.entity.DeviceEntity;
+import jsonreader.tools.GzipGetteer;
+import okhttp3.*;
+import platform.tcp.TcpClientForTV;
 import util.MD5Code;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -57,7 +65,7 @@ public class AllAppLogConstruct {
 
         //这里第一个时间采用加载第一个event的时间，四二个时间采用加载最后一个event的时间
         //session_id选用传入的session_id，是随机生成的，后面每个app_log都需要用到
-        session_id = "4dfd5399-3141-48b1-9b10-3323c5993f71";
+//        session_id = "4dfd5399-3141-48b1-9b10-3323c5993f71";
         String result_launch = "{\"datetime\":\""+datetime1+"\",\"session_id\":\""+session_id_random+"\",\"is_background\":true},{\"datetime\":\""+datetime4+"\",\"session_id\":\""+session_id+"\"}";
 
         String magic_tag = "\"ss_app_log\"";
@@ -66,7 +74,7 @@ public class AllAppLogConstruct {
         //理由：加载抖音app时发送的字段不需要那么多，没有device_id、install_id等
         //写的太糙了，需要后期进行修改，如果有时间的话
         //appLog暂代数据库获取的app_log字段
-        appLog = "{\"event\":[{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:38\",\"event_id\":70},{\"enter_from\":\"sign_in\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"verification_in\",\"label\":\"verification_code\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:42\",\"event_id\":71},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"registered_success\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":72},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in_success\",\"label\":\"phone\",\"user_id\":104685449990,\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":73}],\"launch\":[{\"datetime\":\"2018-09-23 19:35:55\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\"}],\"magic_tag\":\"ss_app_log\",\"time_sync\":{\"server_time\":1537702562,\"local_time\":1537702561},\"header\":{\"appkey\":\"57bfa27c67e58e7d920028d3\",\"openudid\":\"586040e47a883ed4\",\"sdk_version\":201,\"package\":\"com.ss.android.ugc.aweme\",\"channel\":\"tengxun\",\"display_name\":\"抖音短视频\",\"app_version\":\"1.7.6\",\"version_code\":176,\"timezone\":8,\"access\":\"wifi\",\"os\":\"Android\",\"os_version\":\"7.1.2\",\"os_api\":25,\"device_model\":\"Redmi 4X\",\"device_brand\":\"Xiaomi\",\"device_manufacturer\":\"Xiaomi\",\"language\":\"zh\",\"resolution\":\"1280*720\",\"display_density\":\"xhdpi\",\"density_dpi\":320,\"mc\":\"F4:F5:DB:19:78:22\",\"carrier\":\"中国移动\",\"mcc_mnc\":\"46000\",\"clientudid\":\"e7d7c35d-aadf-457b-a1e8-b581bcb6fb6f\",\"install_id\":\"44771193224\",\"device_id\":\"57679504084\",\"sig_hash\":\"aea615ab910015038f73c47e45d21466\",\"aid\":1128,\"push_sdk\":[1,2,6,7,8,9],\"rom\":\"MIUI-8.9.13\",\"release_build\":\"67a6344_20180308\",\"update_version_code\":1762,\"manifest_version_code\":176,\"cpu_abi\":\"armeabi-v7a\",\"build_serial\":\"6d16cfb7d440\",\"serial_number\":\"6d16cfb7d440\",\"sim_serial_number\":[],\"not_request_sender\":0,\"rom_version\":\"miui_V10_8.9.13\",\"region\":\"CN\",\"tz_name\":\"Asia/Shanghai\",\"tz_offset\":28800000,\"sim_region\":\"cn\"},\"_gen_time\":1537702615946}";
+//        appLog = "{\"event\":[{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:38\",\"event_id\":70},{\"enter_from\":\"sign_in\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"verification_in\",\"label\":\"verification_code\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:42\",\"event_id\":71},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"registered_success\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":72},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in_success\",\"label\":\"phone\",\"user_id\":104685449990,\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":73}],\"launch\":[{\"datetime\":\"2018-09-23 19:35:55\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\"}],\"magic_tag\":\"ss_app_log\",\"time_sync\":{\"server_time\":1537702562,\"local_time\":1537702561},\"header\":{\"appkey\":\"57bfa27c67e58e7d920028d3\",\"openudid\":\"586040e47a883ed4\",\"sdk_version\":201,\"package\":\"com.ss.android.ugc.aweme\",\"channel\":\"tengxun\",\"display_name\":\"抖音短视频\",\"app_version\":\"1.7.6\",\"version_code\":176,\"timezone\":8,\"access\":\"wifi\",\"os\":\"Android\",\"os_version\":\"7.1.2\",\"os_api\":25,\"device_model\":\"Redmi 4X\",\"device_brand\":\"Xiaomi\",\"device_manufacturer\":\"Xiaomi\",\"language\":\"zh\",\"resolution\":\"1280*720\",\"display_density\":\"xhdpi\",\"density_dpi\":320,\"mc\":\"F4:F5:DB:19:78:22\",\"carrier\":\"中国移动\",\"mcc_mnc\":\"46000\",\"clientudid\":\"e7d7c35d-aadf-457b-a1e8-b581bcb6fb6f\",\"install_id\":\"44771193224\",\"device_id\":\"57679504084\",\"sig_hash\":\"aea615ab910015038f73c47e45d21466\",\"aid\":1128,\"push_sdk\":[1,2,6,7,8,9],\"rom\":\"MIUI-8.9.13\",\"release_build\":\"67a6344_20180308\",\"update_version_code\":1762,\"manifest_version_code\":176,\"cpu_abi\":\"armeabi-v7a\",\"build_serial\":\"6d16cfb7d440\",\"serial_number\":\"6d16cfb7d440\",\"sim_serial_number\":[],\"not_request_sender\":0,\"rom_version\":\"miui_V10_8.9.13\",\"region\":\"CN\",\"tz_name\":\"Asia/Shanghai\",\"tz_offset\":28800000,\"sim_region\":\"cn\"},\"_gen_time\":1537702615946}";
 
         String header = appLog.split("\"header\":")[1].split(",\"_gen_time\"")[0];
 
@@ -90,7 +98,7 @@ public class AllAppLogConstruct {
         ArrayList<String> resultToReturn = new ArrayList<>();
         resultToReturn.add(String.valueOf(event_id));
         resultToReturn.add(result);
-       return resultToReturn;
+        return resultToReturn;
     }
 
     /**
@@ -217,12 +225,9 @@ public class AllAppLogConstruct {
      * @param aweme_id 是被点赞视频的id
      * @return
      */
-    public static ArrayList<String> digg(String appLog, String session_id, int event_id, String server_time, String digg_time, String user_id, String aweme_id){
+    public static ArrayList<String> digg(String appLog, String session_id, int event_id, String server_time, String digg_time, String user_id, String aweme_id, String request_id){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String request_id = "20180925231116010015068167639ECF";
-        server_time = "1537966750000";
-        digg_time = "1537967450000";
 
         String like = "{\"request_id\":\""+request_id+"\",\"order\":0,\"enter_from\":\"homepage_hot\",\"enter_method\":\"click\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"like\",\"label\":\"homepage_hot\",\"value\":"+aweme_id+",\"user_id\":"+user_id+",\"session_id\":\""+session_id+"\",\"datetime\":\""+sdf.format(Long.parseLong(digg_time))+"\",\"event_id\":"+(++event_id)+"}";
 
@@ -234,7 +239,7 @@ public class AllAppLogConstruct {
         String time_sync = "{\"server_time\": "+(Long.parseLong(digg_time) /1000 - time /10)+",\"local_time\": "+(Long.parseLong(digg_time) /1000 - time /10)+"}";
 
         //这里的applog选用传入参数，临时使用数据库截取内容代替
-        appLog = "{\"event\":[{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:38\",\"event_id\":70},{\"enter_from\":\"sign_in\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"verification_in\",\"label\":\"verification_code\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:42\",\"event_id\":71},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"registered_success\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":72},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in_success\",\"label\":\"phone\",\"user_id\":104685449990,\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":73}],\"launch\":[{\"datetime\":\"2018-09-23 19:35:55\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\"}],\"magic_tag\":\"ss_app_log\",\"time_sync\":{\"server_time\":1537702562,\"local_time\":1537702561},\"header\":{\"appkey\":\"57bfa27c67e58e7d920028d3\",\"openudid\":\"586040e47a883ed4\",\"sdk_version\":201,\"package\":\"com.ss.android.ugc.aweme\",\"channel\":\"tengxun\",\"display_name\":\"抖音短视频\",\"app_version\":\"1.7.6\",\"version_code\":176,\"timezone\":8,\"access\":\"wifi\",\"os\":\"Android\",\"os_version\":\"7.1.2\",\"os_api\":25,\"device_model\":\"Redmi 4X\",\"device_brand\":\"Xiaomi\",\"device_manufacturer\":\"Xiaomi\",\"language\":\"zh\",\"resolution\":\"1280*720\",\"display_density\":\"xhdpi\",\"density_dpi\":320,\"mc\":\"F4:F5:DB:19:78:22\",\"carrier\":\"中国移动\",\"mcc_mnc\":\"46000\",\"clientudid\":\"e7d7c35d-aadf-457b-a1e8-b581bcb6fb6f\",\"install_id\":\"44771193224\",\"device_id\":\"57679504084\",\"sig_hash\":\"aea615ab910015038f73c47e45d21466\",\"aid\":1128,\"push_sdk\":[1,2,6,7,8,9],\"rom\":\"MIUI-8.9.13\",\"release_build\":\"67a6344_20180308\",\"update_version_code\":1762,\"manifest_version_code\":176,\"cpu_abi\":\"armeabi-v7a\",\"build_serial\":\"6d16cfb7d440\",\"serial_number\":\"6d16cfb7d440\",\"sim_serial_number\":[],\"not_request_sender\":0,\"rom_version\":\"miui_V10_8.9.13\",\"region\":\"CN\",\"tz_name\":\"Asia/Shanghai\",\"tz_offset\":28800000,\"sim_region\":\"cn\"},\"_gen_time\":1537702615946}";
+//        appLog = "{\"event\":[{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:38\",\"event_id\":70},{\"enter_from\":\"sign_in\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"verification_in\",\"label\":\"verification_code\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:42\",\"event_id\":71},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"registered_success\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":72},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in_success\",\"label\":\"phone\",\"user_id\":104685449990,\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":73}],\"launch\":[{\"datetime\":\"2018-09-23 19:35:55\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\"}],\"magic_tag\":\"ss_app_log\",\"time_sync\":{\"server_time\":1537702562,\"local_time\":1537702561},\"header\":{\"appkey\":\"57bfa27c67e58e7d920028d3\",\"openudid\":\"586040e47a883ed4\",\"sdk_version\":201,\"package\":\"com.ss.android.ugc.aweme\",\"channel\":\"tengxun\",\"display_name\":\"抖音短视频\",\"app_version\":\"1.7.6\",\"version_code\":176,\"timezone\":8,\"access\":\"wifi\",\"os\":\"Android\",\"os_version\":\"7.1.2\",\"os_api\":25,\"device_model\":\"Redmi 4X\",\"device_brand\":\"Xiaomi\",\"device_manufacturer\":\"Xiaomi\",\"language\":\"zh\",\"resolution\":\"1280*720\",\"display_density\":\"xhdpi\",\"density_dpi\":320,\"mc\":\"F4:F5:DB:19:78:22\",\"carrier\":\"中国移动\",\"mcc_mnc\":\"46000\",\"clientudid\":\"e7d7c35d-aadf-457b-a1e8-b581bcb6fb6f\",\"install_id\":\"44771193224\",\"device_id\":\"57679504084\",\"sig_hash\":\"aea615ab910015038f73c47e45d21466\",\"aid\":1128,\"push_sdk\":[1,2,6,7,8,9],\"rom\":\"MIUI-8.9.13\",\"release_build\":\"67a6344_20180308\",\"update_version_code\":1762,\"manifest_version_code\":176,\"cpu_abi\":\"armeabi-v7a\",\"build_serial\":\"6d16cfb7d440\",\"serial_number\":\"6d16cfb7d440\",\"sim_serial_number\":[],\"not_request_sender\":0,\"rom_version\":\"miui_V10_8.9.13\",\"region\":\"CN\",\"tz_name\":\"Asia/Shanghai\",\"tz_offset\":28800000,\"sim_region\":\"cn\"},\"_gen_time\":1537702615946}";
 
         String header = appLog.split("\"header\":")[1].split(",\"_gen_time\"")[0];
         String []list = header.split(",");

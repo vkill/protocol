@@ -7,15 +7,25 @@ import com.space.register.dao.UrlRequestRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
+import com.space.register.service.DYRegisterService;
+import com.space.register.service.UrlRequestService;
+import httpmaker.ConstructRequest;
+import jsonreader.tools.GzipGetteer;
+import okhttp3.*;
 import org.springframework.stereotype.Component;
 import params.FollowMaker;
 import params.ModifyInfoMaker;
 import params.ThumbsUpMaker;
+import params.tools.ConstructRequestUrl;
+import po.RequestTokenVo;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -82,10 +92,10 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = fad.urlRequestRepository.findUrlById(3);
 
-        String output = ThumbsUpMaker.thumbsUpMaker(videoId, deviceEntity, dyUserEntity);
+        ArrayList<String> output = ThumbsUpMaker.thumbsUpMaker(videoId, deviceEntity, dyUserEntity);
 
         textLog.append("-----点赞id:" + videoId + "----- 抖音号数据库id:"+ dyid + "-----\n");
-        textLog.append(output + "\n");
+        textLog.append(output.get(0) + "\n");
     }
 
     @Override
