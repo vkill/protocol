@@ -1,32 +1,21 @@
 package com.space.register.GuiViewService.impl;
 
 import com.space.register.GuiViewService.FollowAndDiggService;
-import com.space.register.configurer.Test;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.dao.DeviceRepository;
 import com.space.register.dao.UrlRequestRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
-import com.space.register.service.DYRegisterService;
-import com.space.register.service.UrlRequestService;
-import httpmaker.ConstructRequest;
-import jsonreader.tools.GzipGetteer;
-import okhttp3.*;
 import org.springframework.stereotype.Component;
 import params.FollowMaker;
 import params.ModifyInfoMaker;
 import params.ThumbsUpMaker;
-import params.tools.ConstructRequestUrl;
-import po.RequestTokenVo;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 

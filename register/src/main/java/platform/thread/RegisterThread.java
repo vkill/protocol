@@ -1,6 +1,6 @@
 package platform.thread;
 
-import com.space.register.configurer.Test;
+import com.space.register.configurer.RegisterThreadDatabaseImpl;
 import com.space.register.controller.DeviceController;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
@@ -41,7 +41,7 @@ import java.util.UUID;
  **/
 public class RegisterThread implements Runnable{
 
-    Test test = new Test();
+    RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
     @Override
     public void run() {
         do{
@@ -477,12 +477,13 @@ public class RegisterThread implements Runnable{
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
         deviceEntity.setSession_id(UUID.randomUUID().toString());
+        //注释掉的app_Log方法
 //        UserPowerGetter.app_log(deviceEntity,dyUserEntity,app_Log_Time);
-
-        deviceEntity = test.saveDevice(deviceEntity);
-        dyUserEntity.setSimulationID(deviceEntity.getId()+"");
-        test.saveUser(dyUserEntity);
-
+        synchronized (registerThreadDatabaseImpl){
+            deviceEntity = registerThreadDatabaseImpl.saveDevice(deviceEntity);
+            dyUserEntity.setSimulationID(deviceEntity.getId()+"");
+            registerThreadDatabaseImpl.saveUser(dyUserEntity);
+        }
         return  true;
 
     }

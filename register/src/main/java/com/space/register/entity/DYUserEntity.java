@@ -41,6 +41,16 @@ public class DYUserEntity {
     private int like_power;
 
     private int event_id;
+    // 0或空表示还未被使用，1表示该用户已在当前轮次内使用
+    private int used_turn;
+
+    public int getUsed_turn() {
+        return used_turn;
+    }
+
+    public void setUsed_turn(int used_turn) {
+        this.used_turn = used_turn;
+    }
 
     public String getAppLog() {
         return appLog;

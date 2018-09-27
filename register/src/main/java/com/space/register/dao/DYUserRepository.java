@@ -24,4 +24,7 @@ public interface DYUserRepository extends JpaRepository<DYUserEntity, Integer>, 
      */
     @Query(value = "select * from t_dy_user", nativeQuery = true)
     ArrayList<DYUserEntity> findAll();
+
+    @Query(value = "select * from t_dy_user ", nativeQuery = true)
+    ArrayList<DYUserEntity> getNumsUser();
 }
