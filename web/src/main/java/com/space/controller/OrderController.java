@@ -1,6 +1,7 @@
 package com.space.controller;
 
 import com.space.entity.Order;
+import com.space.entity.WebOrderEntity;
 import com.space.service.OrderService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,30 @@ public class OrderController {
         result.put("a","b");
 
 
+        return result;
+    }
+
+    @RequestMapping("/make_web_order")
+    public Map makeWebOrder(@RequestBody Map map) {
+        Map result = new HashMap();
+        String proType = (String) map.get("pro_type");
+        String goodsType = (String) map.get("goods");
+        String videoId = (String) map.get("video_id");
+        int orderCount = (int) map.get("order_count");
+
+
+        WebOrderEntity webOrderEntity = new WebOrderEntity();
+        webOrderEntity.setGoodsType(goodsType);
+        webOrderEntity.setOrderCount(orderCount);
+        webOrderEntity.setVideoId(videoId);
+        webOrderEntity.setProType(proType);
+//        System.out.println(webOrderEntity);
+        try {
+            Map orderMap = orderService.makeWebOrder(webOrderEntity);
+            result = orderMap;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 }

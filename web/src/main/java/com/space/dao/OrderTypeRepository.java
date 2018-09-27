@@ -12,4 +12,5 @@ public interface OrderTypeRepository extends JpaRepository<OrderType, Integer>, 
     @Query(value = "select * from t_order_type where project_type=?1", nativeQuery = true)
     List<OrderType> getAllByProjectType(String projectType);
 
+
 }

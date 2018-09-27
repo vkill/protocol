@@ -83,7 +83,7 @@ public class UserPowerGetter {
         String _gen_time = "\"_gen_time\":" + _rticket + "";
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch + "," + magic_tag + "," + time_sync + "," + header1 + "," + _gen_time + "}";
-        dyUserEntity.setApp_Log(sign_in_json);
+        dyUserEntity.setAppLog(sign_in_json);
         TcpClientForTV tcpClientForTV = new TcpClientForTV();
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
         sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);
@@ -193,7 +193,7 @@ public class UserPowerGetter {
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch +"," + magic_tag +"," + time_sync + "," + header1 + "," + _gen_time + "}";
 
-        dyUserEntity.setApp_Log(sign_in_json);
+        dyUserEntity.setAppLog(sign_in_json);
         TcpClientForTV tcpClientForTV = new TcpClientForTV();
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
         sendMessage  = tcpClientForTV.get_Key_For_Devices(sendMessage);

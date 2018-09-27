@@ -11,4 +11,8 @@ public interface GoodsTypeListRepository extends JpaRepository<GoodsTypeList, In
 
     @Query(value = "select * from t_goods_type_list where type_sign = ?1", nativeQuery = true)
     List<GoodsTypeList> getAllByTypeSign(String typeSign);
+
+
+    @Query(value = "select * from t_goods_type_list where goods_type=?1", nativeQuery = true)
+    GoodsTypeList getByGoodsType(String goodsType);
 }

@@ -28,6 +28,9 @@ public class GoodsTypeList {
 
     private double price;
 
+    // 操作次数
+    private int count;
+
     public int getId() {
         return id;
     }
@@ -66,5 +69,13 @@ public class GoodsTypeList {
 
     public void setGoodTypeDesc(String goodTypeDesc) {
         this.goodTypeDesc = goodTypeDesc;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
