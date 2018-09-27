@@ -141,6 +141,9 @@ public class SSEntty {
 
     public static byte[] getFinallResult(ArrayList<Integer> tableEntty){
         int shortNum = 16 - tableEntty.size()%16;
+        if(shortNum==16){
+            shortNum =0;
+        }
         for(int i =0;i<shortNum;i++){
             tableEntty.add(32);
         }
