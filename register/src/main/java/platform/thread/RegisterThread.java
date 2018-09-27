@@ -2,6 +2,7 @@ package platform.thread;
 
 import com.space.register.configurer.RegisterThreadDatabaseImpl;
 import com.space.register.controller.DeviceController;
+import com.space.register.dao.DYUserRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.UrlRequestEntity;
@@ -18,6 +19,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import params.AllAppLogConstruct;
+import params.AppLogMaker;
 import params.ParamCreater;
 import params.tools.RequestURLCreater;
 import platform.email.EmailGetter;
@@ -27,6 +30,7 @@ import po.HostIPPo;
 import po.PhonePo;
 import po.RequestTokenVo;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +46,9 @@ import java.util.UUID;
 public class RegisterThread implements Runnable{
 
     public static int thread_num = 10;
+
+    @Resource
+    DYUserRepository dyUserRepository;
 
     RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
     @Override
@@ -83,6 +90,9 @@ public class RegisterThread implements Runnable{
     }
 
     public boolean oneUserInfo(String host,int port) throws IOException, JSONException {
+
+        long serverTime = System.currentTimeMillis();
+
         Map<String,String> kaoHeader = new HashMap<String,String>();
         Map<String,String> deviceMapBuff = new HashMap<String,String>();
 
@@ -256,10 +266,10 @@ public class RegisterThread implements Runnable{
         Request request = null;
         String code = null;
         int kao = 0;
-        String app_Log_Time = null;
+        String test_time = null;
         while(kao<3){
             phonePo = emailGetter.getPhoneNumber();
-            app_Log_Time = ParamCreater.get_Rticket();
+            test_time = String.valueOf(System.currentTimeMillis());
             request = tvRegisterMaker.sendMessageForRegister(deviceEntity,phonePo,"");
             try {
                 response = okHttpClient.newCall(request).execute();
@@ -479,12 +489,37 @@ public class RegisterThread implements Runnable{
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
         deviceEntity.setSession_id(UUID.randomUUID().toString());
-        //注释掉的app_Log方法
-//        UserPowerGetter.app_log(deviceEntity,dyUserEntity,app_Log_Time);
+
+
+        UserPowerGetter.getAppLogs(dyUserEntity,deviceEntity,test_time);
+        //注册帐号前需要加载appLog
+        //随机生成的session_id
+        String session_id = AllAppLogConstruct.constructRandomSessionId();
+        ArrayList<String> launch_body_msg = AllAppLogConstruct.launchApp(dyUserEntity.getAppLog(), session_id, dyUserEntity.getEvent_id());
+        //修改全部变量event_id
+        int event_id = Integer.valueOf(launch_body_msg.get(0));
+        //修改数据库中event_id的值
+        dyUserEntity.setEvent_id(event_id);
+        //修改全局变量serverTime
+        String launch_result = AppLogMaker.app_log(deviceEntity, dyUserEntity, launch_body_msg.get(1));
+        System.out.println("加载app结果：" + launch_result);
+
+        //下面的是注册账号完成时发送的appLog
+        //sendCodeTime是sendcode请求的ticket，纯数字格式
+        String sendCodeTime =test_time;
+        ArrayList<String> register_body_msg = AllAppLogConstruct.register(dyUserEntity.getAppLog(), AllAppLogConstruct.constructRandomSessionId(), dyUserEntity.getEvent_id(), String.valueOf(serverTime), sendCodeTime, dyUserEntity.getUid());
+        //修改数据库中event_id的值
+        dyUserEntity.setEvent_id(event_id);
+        //修改全局变量serverTime
+        String register_result = AppLogMaker.app_log(deviceEntity, dyUserEntity, register_body_msg.get(1));
+        System.out.println("注册账号结果：" + register_result);
+
+
         synchronized (registerThreadDatabaseImpl){
             deviceEntity = registerThreadDatabaseImpl.saveDevice(deviceEntity);
             dyUserEntity.setSimulationID(deviceEntity.getId()+"");
-            registerThreadDatabaseImpl.saveUser(dyUserEntity);
+            dyUserEntity = registerThreadDatabaseImpl.saveUser(dyUserEntity);
+            System.out.println("注册设备、用户成功");
         }
         return  true;
 

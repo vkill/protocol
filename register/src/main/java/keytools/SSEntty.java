@@ -159,6 +159,10 @@ public class SSEntty {
                 result[z*16+i+4] = kao[i];
             }
         }
+        for(int i=0;i<result.length;i++){
+            System.out.print(result[i]+" ");
+        }
+        System.out.println();
         return result;
     }
 
@@ -183,11 +187,6 @@ public class SSEntty {
             }
             resulrString[z] = waitString[i];
         }
-        //什么玩意
-        for(int i =0;i<resulrString.length;i++){
-            System.out.print(resulrString[i]+" ");
-        }
-        System.out.println();
         byte[] resultByte = new byte[resulrString.length];
         for(int i= 0;i<resulrString.length;i++){
             resultByte[i]=xor(resulrString[i],all.substring(2*i,2*i+2));

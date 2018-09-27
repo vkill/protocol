@@ -67,7 +67,10 @@ public class DeviceController {
 //        }
         RegisterThread registerThread = new RegisterThread();
         try {
-            registerThread.oneUserInfo("",0);
+            for (int i =0;i<4;i++){
+                registerThread.oneUserInfo("",0);
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

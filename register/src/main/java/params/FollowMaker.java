@@ -64,7 +64,15 @@ public class FollowMaker {
             System.out.println(result);
             resultToReturn.add(result);
             resultToReturn.add(followTest(user_id, dyUserEntity, deviceEntity));
-
+            Headers responseHeaders = response.headers();
+            int responseHeadersLength = responseHeaders.size();
+            for (int i = 0; i < responseHeadersLength; i++){
+                String headerName = responseHeaders.name(i);
+                String headerValue = responseHeaders.value(i);
+                if(headerName.equals("X_TT_LOGID")){
+                    resultToReturn.add(headerValue);
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

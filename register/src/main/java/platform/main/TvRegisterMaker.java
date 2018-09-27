@@ -86,7 +86,7 @@ public class TvRegisterMaker {
             jsonString =GzipGetteer.uncompressToString(response.body().bytes());
             header = response.headers();
             resultJson = new JSONObject(jsonString);
-            //System.out.println(jsonString);
+            System.out.println(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("注册设备结果获取失败");

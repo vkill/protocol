@@ -7,7 +7,6 @@ import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
 import com.space.register.service.UrlRequestService;
-import org.omg.CORBA.SystemException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.*;
@@ -112,7 +111,7 @@ public class MainController {
 
         String result = SupportAccountMaker.getAwemeId(deviceEntity, dyUserEntity, user_id);
 
-        ArrayList<String> body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid());;
+        ArrayList<String> body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid(),"");;
 
         event_id = Integer.valueOf(body_msg.get(0));
         String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
