@@ -12,7 +12,7 @@ public class OrderController {
 
     @RequestMapping("/acceptOrder")
     public String acceptOrder(OrderEntity orderEntity) {
-        System.out.println(orderEntity.getVedioID());
+        //System.out.println(orderEntity.getVedioID());
         return "success";
     }
 }

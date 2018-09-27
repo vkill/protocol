@@ -56,8 +56,7 @@ public class DeviceController {
     public static List<UrlRequestEntity> allUrl;
     public static int thread_num = 1;//HostIPGetter.count;
     public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
-    public static Vector<DeviceEntity> deviceEntities = new Vector<DeviceEntity>();
-    public static Vector<DYUserEntity> userEntities = new Vector<DYUserEntity>();
+
     @RequestMapping("/maker")
     public String deviceMain(){
         //getNeedIPFromWeb();
@@ -77,9 +76,9 @@ public class DeviceController {
         return "呵呵哒哒";
     }
 
-    public static void getNeedIPFromWeb(){
-        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali();
-        if(hostIpQuene.size()>HostIPGetter.count*2-1){
+    public static void getNeedIPFromWeb(LinkedBlockingQueue<HostIPPo> hostIpQuene){
+        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(RegisterThread.thread_num);
+        if(hostIpQuene.size()>RegisterThread.thread_num*2-1){
             return;
         }
         if(hostIPPos == null){
@@ -93,8 +92,8 @@ public class DeviceController {
                 e.printStackTrace();
             }
         }
-        if(hostIpQuene.size()<HostIPGetter.count*2-1){
-            getNeedIPFromWeb();
+        if(hostIpQuene.size()<RegisterThread.thread_num*2-1){
+            getNeedIPFromWeb(hostIpQuene);
         }
     }
 }

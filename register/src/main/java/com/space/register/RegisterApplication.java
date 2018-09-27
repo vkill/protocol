@@ -1,7 +1,6 @@
 package com.space.register;
 
 import com.space.register.GuiView.JavaApplication1.src.guiview.JFrame.MainFrame;
-import com.space.register.configurer.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

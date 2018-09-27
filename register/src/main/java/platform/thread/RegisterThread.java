@@ -41,13 +41,15 @@ import java.util.UUID;
  **/
 public class RegisterThread implements Runnable{
 
+    public static int thread_num = 10;
+
     RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
     @Override
     public void run() {
         do{
             HostIPPo hostIPPo = null;
-            if(DeviceController.hostIpQuene.size()<= HostIPGetter.count-1){
-                DeviceController.getNeedIPFromWeb();
+            if(DeviceController.hostIpQuene.size()<= thread_num-1){
+                DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
             }
             try {
                 hostIPPo = DeviceController.hostIpQuene.take();

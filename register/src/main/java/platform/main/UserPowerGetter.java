@@ -6,13 +6,13 @@ import enums.paramtable.DirTable;
 import enums.paramtable.urltools.URLmakeTools;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
+import keytools.SSEntty;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMethodMappingNamingStrategy;
 import params.ParamCreater;
 import params.tools.KeyControler;
-import platform.tcp.TcpClientForTV;
 import po.RequestTokenVo;
 
 import javax.swing.*;
@@ -84,9 +84,9 @@ public class UserPowerGetter {
 
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch + "," + magic_tag + "," + time_sync + "," + header1 + "," + _gen_time + "}";
         dyUserEntity.setAppLog(sign_in_json);
-        TcpClientForTV tcpClientForTV = new TcpClientForTV();
+
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
-        sendMessage = tcpClientForTV.get_Key_For_Devices(sendMessage);
+        sendMessage = SSEntty.getTTEnttyResult(sendMessage);
 
         MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
         RequestBody body = RequestBody.create(type, sendMessage);
@@ -194,9 +194,8 @@ public class UserPowerGetter {
         String sign_in_json = "{\"event\":[" + event1 + "," + event2 + "," + event3 + "," + event4 + "]," + launch +"," + magic_tag +"," + time_sync + "," + header1 + "," + _gen_time + "}";
 
         dyUserEntity.setAppLog(sign_in_json);
-        TcpClientForTV tcpClientForTV = new TcpClientForTV();
         byte[] sendMessage = GzipGetteer.compress(sign_in_json);
-        sendMessage  = tcpClientForTV.get_Key_For_Devices(sendMessage);
+        sendMessage  = SSEntty.getTTEnttyResult(sendMessage);
 
 
         MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
