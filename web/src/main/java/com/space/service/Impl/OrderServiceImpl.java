@@ -8,6 +8,7 @@ import com.space.entity.GoodsTypeList;
 import com.space.entity.Order;
 import com.space.entity.WebOrderEntity;
 import com.space.service.OrderService;
+import com.util.SendOrder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,6 +59,15 @@ public class OrderServiceImpl implements OrderService {
             result.put("status","0");
             result.put("message","下单成功");
             result.put("data", save);
+
+            // 跳转支付
+            // TO-DO
+
+            // 支付成功，向注册机发送订单(应该在支付成功的地方写)
+            while (!SendOrder.sendOrder(webOrderEntity)) {
+                System.out.println("数据库异常，重新发送订单");
+                Thread.sleep(1000);
+            }
         }
         return result;
     }
