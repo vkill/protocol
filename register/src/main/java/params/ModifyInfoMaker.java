@@ -23,7 +23,7 @@ import java.util.Map;
  **/
 public class ModifyInfoMaker {
 
-    public static String modifyInfoMaker(String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity1, UrlRequestEntity urlRequestEntity2) {
+    public static String modifyInfoMaker(OkHttpClient okHttpClient, String uid, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity1, UrlRequestEntity urlRequestEntity2) {
 
 
         //获取设备信息
@@ -170,7 +170,7 @@ public class ModifyInfoMaker {
         Request request1 = null;
         request1 = ConstructRequest.constructPost(requestToSend1);
 
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call1 = okHttpClient.newCall(request1);
         String strToReturn = "";
         try {

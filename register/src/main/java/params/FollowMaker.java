@@ -23,7 +23,7 @@ import java.util.Map;
  **/
 public class FollowMaker {
 
-    public static ArrayList<String> FollowMaker(String user_id, DYUserEntity dyUserEntity, DeviceEntity deviceEntity) {
+    public static ArrayList<String> FollowMaker(OkHttpClient okHttpClient, String user_id, DYUserEntity dyUserEntity, DeviceEntity deviceEntity) {
 
 
         String _rticket = String.valueOf(System.currentTimeMillis());
@@ -55,7 +55,7 @@ public class FollowMaker {
         request = ConstructRequest.constructGet(requestToSend);
 
         ArrayList <String> resultToReturn = new ArrayList<>();
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         try {
             Response response = call.execute();

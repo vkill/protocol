@@ -20,7 +20,7 @@ import java.util.Random;
  **/
 public class AppLogMaker {
 
-    public static String app_log(DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String body_msg) {
+    public static String app_log(OkHttpClient okHttpClient, DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String body_msg) {
 
         String _rticket = String.valueOf(System.currentTimeMillis());
         char[] temp = _rticket.toCharArray();
@@ -59,7 +59,7 @@ public class AppLogMaker {
 
         Request request = builder.post(body).build();
 
-        OkHttpClient okHttpClient = new OkHttpClient();
+//        OkHttpClient okHttpClient = new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         String result = "";
         try {

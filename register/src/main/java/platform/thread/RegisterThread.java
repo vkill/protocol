@@ -501,7 +501,7 @@ public class RegisterThread implements Runnable{
         //修改数据库中event_id的值
         dyUserEntity.setEvent_id(event_id);
         //修改全局变量serverTime
-        String launch_result = AppLogMaker.app_log(deviceEntity, dyUserEntity, launch_body_msg.get(1));
+        String launch_result = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, launch_body_msg.get(1));
         System.out.println("加载app结果：" + launch_result);
 
         //下面的是注册账号完成时发送的appLog
@@ -512,7 +512,7 @@ public class RegisterThread implements Runnable{
 
         dyUserEntity.setEvent_id(Integer.valueOf(register_body_msg.get(0)));
         //修改全局变量serverTime
-        String register_result = AppLogMaker.app_log(deviceEntity, dyUserEntity, register_body_msg.get(1));
+        String register_result = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, register_body_msg.get(1));
         System.out.println("注册账号结果：" + register_result);
 
 

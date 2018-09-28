@@ -23,7 +23,7 @@ import java.util.Map;
  **/
 public class SupportAccountMaker {
 
-    public static ArrayList<String> getAwemeListMaker(DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
+    public static ArrayList<String> getAwemeListMaker(OkHttpClient okHttpClient, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
 
         //获取设备信息
         String deviceID = deviceEntity.getDeviceId();
@@ -133,7 +133,7 @@ public class SupportAccountMaker {
         Request request = null;
         request = ConstructRequest.constructGet(requestToSend);
 
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         ArrayList<String> resultToReturn = new ArrayList<String>();
         call.enqueue(new Callback() {
@@ -170,7 +170,7 @@ public class SupportAccountMaker {
         return resultToReturn;
     }
 
-    public static void getVideoMaker(String awemeId, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
+    public static void getVideoMaker(OkHttpClient okHttpClient, String awemeId, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
 
 
         String cookie = deviceEntity.getCookie();
@@ -301,7 +301,7 @@ public class SupportAccountMaker {
         Request request = null;
         request = ConstructRequest.constructPost(requestToSend);
 
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -353,6 +353,7 @@ public class SupportAccountMaker {
         try {
             Response response = call.execute();
             String result = GzipGetteer.uncompressToString(response.body().bytes(),"utf-8");
+
             String []temp_result = result.split(",");
             for(int i = 0;i < temp_result.length;i++){
 
@@ -360,8 +361,10 @@ public class SupportAccountMaker {
                 if(line_split.length == 2){
                     char []array = line_split[1].toCharArray();
                     String awemeId = "";
-                    for(int j = 1;j < array.length - 2;j++){
-                        awemeId += array[j];
+                    for(int j = 0; j < array.length;j++){
+                        if (Character.isDigit(array[j])){
+                            awemeId += array[j];
+                        }
                     }
                     result_awemeId = awemeId;
                     break;

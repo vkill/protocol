@@ -7,6 +7,7 @@ import com.space.register.dao.DYUserRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.OrderEntity;
+import okhttp3.OkHttpClient;
 import org.json.JSONException;
 import params.*;
 import platform.threadManager.BussinessController;
@@ -64,7 +65,10 @@ public class BussinessThread implements Runnable {
             dyUserRepository.save(dyUserEntity);
             //修改全局变量serverTime
             serverTime = System.currentTimeMillis();
-            String launchResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, body_msg.get(1));
+
+            //okhttp需要代理，new一个新的okhttpclient
+            OkHttpClient okHttpClient = new OkHttpClient();
+            String launchResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
             System.out.println(launchResult);
 
             if("点赞".equals("点赞")){
@@ -73,7 +77,7 @@ public class BussinessThread implements Runnable {
                 //这个aweme_id是视频id
                 String aweme_id = "";
                 long time = System.currentTimeMillis();
-                ArrayList<String> result = ThumbsUpMaker.thumbsUpMaker(aweme_id, deviceEntity, dyUserEntity);
+                ArrayList<String> result = ThumbsUpMaker.thumbsUpMaker(okHttpClient, aweme_id, deviceEntity, dyUserEntity);
 
                 try {
                     Thread.sleep(1000);
@@ -84,7 +88,7 @@ public class BussinessThread implements Runnable {
                 ArrayList<String> digg_body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));;
 
                 event_id = Integer.valueOf(body_msg.get(0));
-                String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, digg_body_msg.get(1));
+                String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, digg_body_msg.get(1));
                 System.out.println(appLogResult);
                 dyUserEntity.setEvent_id(event_id);
                 //保存数据库，数据修改
@@ -96,7 +100,7 @@ public class BussinessThread implements Runnable {
                 //需要关注的用户id
                 String user_id = "";
                 long time = System.currentTimeMillis();
-                ArrayList<String> follow_result = FollowMaker.FollowMaker(user_id, dyUserEntity, deviceEntity);
+                ArrayList<String> follow_result = FollowMaker.FollowMaker(okHttpClient, user_id, dyUserEntity, deviceEntity);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -108,7 +112,7 @@ public class BussinessThread implements Runnable {
                 ArrayList<String> follow_body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid(), follow_result.get(2));;
 
                 event_id = Integer.valueOf(body_msg.get(0));
-                String appLogResult = AppLogMaker.app_log(deviceEntity, dyUserEntity, follow_body_msg.get(1));
+                String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, follow_body_msg.get(1));
                 System.out.println(appLogResult);
                 dyUserEntity.setEvent_id(event_id);
                 //数据库存储操作

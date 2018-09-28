@@ -5,6 +5,7 @@ import com.space.register.dao.DeviceRepository;
 import com.space.register.dao.UrlRequestRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
+import org.openqa.selenium.remote.internal.OkHttpClient;
 import org.springframework.stereotype.Component;
 import params.AppLogMaker;
 
@@ -47,8 +48,8 @@ public class AccountManageServiceImpl implements AccountManageService {
         //通过simulationid获取t_device中的数据
         DeviceEntity deviceEntity = ams.deviceRepository.getDeviceMsgById(Integer.parseInt(simulationId));
 
-
-        String text = AppLogMaker.app_log(deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 36000));
+        okhttp3.OkHttpClient okHttpClient = new okhttp3.OkHttpClient();
+        String text = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 36000));
 
         textLog.append("-----AppLog----- 抖音号数据库id:"+ dyid + "-----\n");
         textLog.append(text + "\n");

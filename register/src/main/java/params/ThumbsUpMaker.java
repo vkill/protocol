@@ -25,7 +25,7 @@ import java.util.Map;
 public class ThumbsUpMaker {
 
 
-    public static ArrayList<String> thumbsUpMaker(String aweme_id, DeviceEntity deviceEntity, DYUserEntity dyUserEntity) {
+    public static ArrayList<String> thumbsUpMaker(OkHttpClient okHttpClient, String aweme_id, DeviceEntity deviceEntity, DYUserEntity dyUserEntity) {
 
 
         String _rticket = String.valueOf(System.currentTimeMillis());
@@ -55,7 +55,7 @@ public class ThumbsUpMaker {
         Request request = null;
         request = ConstructRequest.constructGet(requestToSend);
 
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         ArrayList<String> result = new ArrayList<>();
         try {
