@@ -317,7 +317,7 @@ public class SupportAccountMaker {
 
     }
 
-    public static String getAwemeId(DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String user_id){
+    public static String getAwemeId(OkHttpClient okHttpClient, DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String user_id){
 
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
@@ -347,7 +347,7 @@ public class SupportAccountMaker {
         Request request = null;
         request = ConstructRequest.constructGet(requestToSend);
 
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         String result_awemeId = "";
         try {

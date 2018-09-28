@@ -1,7 +1,6 @@
 package com.space.register.dao;
 
 import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;

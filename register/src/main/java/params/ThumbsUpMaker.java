@@ -2,12 +2,9 @@ package params;
 
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
-import org.jsoup.helper.HttpConnection;
-import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
 
 import java.io.IOException;

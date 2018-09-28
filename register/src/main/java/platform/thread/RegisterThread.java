@@ -5,7 +5,6 @@ import com.space.register.controller.DeviceController;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import enums.paramtable.DirTable;
 import enums.paramtable.urltools.URLmakeTools;
 import httpmaker.ConstructRequest;
@@ -55,17 +54,16 @@ public class RegisterThread implements Runnable{
     public void run() {
         do{
             HostIPPo hostIPPo = null;
-            if(DeviceController.hostIpQuene.size()<= thread_num-1){
-                DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
-            }
             try {
                 hostIPPo = DeviceController.hostIpQuene.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 continue;
             }
-
-            for(int i =0;i<4;i++){
+            if(DeviceController.hostIpQuene.size()== thread_num-1){
+                DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
+            }
+            for(int i =0;i<6;i++){
                 try {
                     oneUserInfo(hostIPPo.host,hostIPPo.port);
                     System.out.println("线程注册成功喽");
@@ -76,17 +74,14 @@ public class RegisterThread implements Runnable{
                 } catch (JSONException e){
                     System.out.println("json格式出错");
                     e.printStackTrace();
+                    continue;
                 }catch (Exception e){
                     System.out.println("瞎几把的错误");
                     e.printStackTrace();
+                    continue;
                 }
             }
         }while (true);
-    }
-
-
-    public boolean sendMessage(Request request, OkHttpClient okHttpClient){
-        return false;
     }
 
     public boolean oneUserInfo(String host,int port) throws IOException, JSONException {
@@ -258,8 +253,6 @@ public class RegisterThread implements Runnable{
 //        System.out.println(jsonString);
 
         //为了测试而添加的读取方法################################################
-        UrlRequestEntity urlRequestEntity= null;//DeviceController.allUrl.get(0);
-        UrlRequestEntity urlRequestEntity1 = null;//DeviceController.allUrl.get(1);
         EmailGetter emailGetter = new EmailGetter();
         emailGetter.loginIT();
         PhonePo phonePo = null ;

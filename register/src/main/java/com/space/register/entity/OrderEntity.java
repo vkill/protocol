@@ -26,6 +26,16 @@ public class OrderEntity {
 
     private String types; // 订单类型
 
+    public int langestDYId;
+
+    public int getLangestDYId() {
+        return langestDYId;
+    }
+
+    public void setLangestDYId(int langestDYId) {
+        this.langestDYId = langestDYId;
+    }
+
     public int getId() {
         return id;
     }

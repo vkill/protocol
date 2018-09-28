@@ -41,8 +41,8 @@ public class OrderThreadDatabaseImpl {
         }
     }
 
-    public ArrayList<OrderEntity> getAllOrder(){
-        return orderThreadDatabase.orderRepository.findAll();
+    public ArrayList<OrderEntity> getAllOrder(String status){
+        return orderThreadDatabase.orderRepository.findAllByStatus(status);
     }
 
     public DYUserEntity saveDyUser(DYUserEntity dyUserEntity){
@@ -53,7 +53,12 @@ public class OrderThreadDatabaseImpl {
         return orderThreadDatabase.orderRepository.save(orderEntity);
     }
 
-    public ArrayList<DYUserEntity> getNumsUser(){
-        return orderThreadDatabase.DYUserRepository.getNumsUser();
+    public ArrayList<DYUserEntity> getNumsUser(long lessId,long number){
+        return orderThreadDatabase.DYUserRepository.getUserByIdAndNum(lessId,number);
     }
+
+    public DeviceEntity getDeviceByID(int id){
+        return orderThreadDatabase.deviceRepository.getOne(id);
+    }
+
 }

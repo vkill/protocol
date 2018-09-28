@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_dy_user")
-public class DYUserEntity {
+public class DYUserEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -166,4 +166,5 @@ public class DYUserEntity {
                 ", event_id=" + event_id +
                 '}';
     }
+
 }

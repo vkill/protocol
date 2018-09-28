@@ -1,13 +1,14 @@
 package com.space.register.service.Impl;
 
 
+
 import com.space.register.dao.UrlRequestRepository;
+
 import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.UrlRequestService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Map;
 
 @Service("urlRequestService")
 public class UrlRequestServiceImpl implements UrlRequestService {
@@ -17,7 +18,7 @@ public class UrlRequestServiceImpl implements UrlRequestService {
 
     @Override
     public UrlRequestEntity getUrlRequest(int id) {
-        UrlRequestEntity UrlRequestEntity = urlRequestRepository.findUrlById(id);
-        return UrlRequestEntity;
+        UrlRequestEntity urlRequestEntity = urlRequestRepository.findUrlById(id);
+        return urlRequestEntity;
     }
 }

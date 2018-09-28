@@ -15,14 +15,7 @@ public class RegisterApplication {
             public void run() {
                 //new MainFrame().setVisible(true);
                 SpringApplication.run(RegisterApplication.class, args);
-                RegisterThreadDatabaseImpl registerThreadDatabase = new RegisterThreadDatabaseImpl();
-                DYUserEntity dyUserEntity = new DYUserEntity();
-                dyUserEntity.setSimulationID(1+"");
-                DeviceEntity deviceEntity = new DeviceEntity();
-                deviceEntity.setSession_id("wewe");
-                registerThreadDatabase.saveDevice(deviceEntity);
-                registerThreadDatabase.saveUser(dyUserEntity);
-
+                //RegisterThreadDatabaseImpl registerThreadDatabase = new RegisterThreadDatabaseImpl();
             }
         });
 //        SpringApplication.run(RegisterApplication.class, args);

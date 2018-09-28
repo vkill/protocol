@@ -22,6 +22,6 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer>, Jp
      * 返回全部数据
      * @return
      */
-    @Query(value = "select * from t_dy_order", nativeQuery = true)
-    ArrayList<OrderEntity> findAll();
+    @Query(value = "select * from t_dy_order where status = ?1", nativeQuery = true)
+    ArrayList<OrderEntity> findAllByStatus(String status);
 }

@@ -4,9 +4,12 @@ import com.mysql.cj.x.protobuf.Mysqlx;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
+
+
 import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
+
 import com.space.register.service.UrlRequestService;
 import okhttp3.OkHttpClient;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,7 +118,7 @@ public class MainController {
             e.printStackTrace();
         }
 
-        String result = SupportAccountMaker.getAwemeId(deviceEntity, dyUserEntity, user_id);
+        String result = SupportAccountMaker.getAwemeId(okHttpClient, deviceEntity, dyUserEntity, user_id);
 
         ArrayList<String> body_msg = AllAppLogConstruct.follow(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), user_id, result, dyUserEntity.getUid(),follow_result.get(2));;
 
@@ -145,7 +148,7 @@ public class MainController {
         deviceEntity.setCookie(cookie);
 
         //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(5);
+        UrlRequestEntity urlRequestEntity1 =urlRequestService.getUrlRequest(5);
 
 
         UrlRequestEntity urlRequestEntity2 = urlRequestService.getUrlRequest(8);

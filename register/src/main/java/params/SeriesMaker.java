@@ -1,14 +1,11 @@
 package params;
 
 import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
 import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
-import randomtools.CityTable;
-import randomtools.RandomName;
 
 import java.io.IOException;
 import java.util.HashMap;

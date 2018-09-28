@@ -2,11 +2,9 @@ package params;
 
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
-import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
 
 import java.io.IOException;
@@ -64,7 +62,7 @@ public class FollowMaker {
             //System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
             System.out.println(result);
             resultToReturn.add(result);
-            resultToReturn.add(followTest(user_id, dyUserEntity, deviceEntity));
+            resultToReturn.add(followTest(okHttpClient, user_id, dyUserEntity, deviceEntity));
             Headers responseHeaders = response.headers();
             int responseHeadersLength = responseHeaders.size();
             for (int i = 0; i < responseHeadersLength; i++){
@@ -80,7 +78,7 @@ public class FollowMaker {
         return resultToReturn;
     }
 
-    public static String followTest(String user_id, DYUserEntity dyUserEntity, DeviceEntity deviceEntity){
+    public static String followTest(OkHttpClient okHttpClient, String user_id, DYUserEntity dyUserEntity, DeviceEntity deviceEntity){
 
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
@@ -112,7 +110,7 @@ public class FollowMaker {
         request = ConstructRequest.constructGet(requestToSend);
 
         ArrayList<String> resultToReturn = new ArrayList<>();
-        OkHttpClient okHttpClient=new OkHttpClient();
+//        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         try {
             Response response = call.execute();
@@ -124,10 +122,10 @@ public class FollowMaker {
             }
             if(responseLineList.length >=2){
                 System.out.println("关注成功");
-                resultToReturn.add("关注成功");
+                resultToReturn.add("success");
             }else{
                 System.out.println("关注失败");
-                resultToReturn.add("关注失败");
+                resultToReturn.add("failure");
             }
         } catch (IOException e) {
             e.printStackTrace();

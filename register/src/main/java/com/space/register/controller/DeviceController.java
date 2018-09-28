@@ -2,44 +2,18 @@ package com.space.register.controller;
 
 import com.space.register.dao.DYUserRepository;
 import com.space.register.dao.DeviceRepository;
-import com.space.register.dao.UrlRequestRepository;
-import com.space.register.entity.DYUserEntity;
-import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DeviceService;
-import enums.paramtable.DirTable;
-import enums.paramtable.urltools.URLmakeTools;
-import httpmaker.ConstructRequest;
-import jsonreader.tools.GzipGetteer;
-import jsonreader.tools.JsonTableGetter;
-import keytools.Crc32;
-import keytools.ScretAES;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import params.ParamCreater;
-import params.tools.RequestURLCreater;
-import platform.email.EmailGetter;
 import platform.email.HostIPGetter;
-import platform.main.*;
 import platform.thread.RegisterThread;
 import po.HostIPPo;
-import po.PhonePo;
-import po.RequestTokenVo;
 
 import javax.annotation.Resource;
-import javax.management.Query;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/device")
@@ -53,29 +27,28 @@ public class DeviceController {
 
     @Resource
     DYUserRepository dyUserRepository;
-    public static List<UrlRequestEntity> allUrl;
-    public static int thread_num = 1;//HostIPGetter.count;
+    public static int thread_num = RegisterThread.thread_num;
     public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
 
     @RequestMapping("/maker")
     public String deviceMain(){
-        //getNeedIPFromWeb();
-//        Thread[] registerThreads =new Thread[thread_num];
-//        for(int i=0;i<thread_num;i++){
-//            registerThreads[i] = new Thread(new RegisterThread());
-//            registerThreads[i].start();
-//        }
-        RegisterThread registerThread = new RegisterThread();
-        try {
-            for (int i =0;i<4;i++){
-                registerThread.oneUserInfo("",0);
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        getNeedIPFromWeb(hostIpQuene);
+        Thread[] registerThreads =new Thread[thread_num];
+        for(int i=0;i<thread_num;i++){
+            registerThreads[i] = new Thread(new RegisterThread());
+            registerThreads[i].start();
         }
+//        RegisterThread registerThread = new RegisterThread();
+//        try {
+//            for (int i =0;i<4;i++){
+//                registerThread.oneUserInfo("",0);
+//
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         return "呵呵哒哒";
     }
 
