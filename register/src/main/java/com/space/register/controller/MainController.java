@@ -4,22 +4,24 @@ import com.mysql.cj.x.protobuf.Mysqlx;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
-
-
 import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
-
 import com.space.register.service.UrlRequestService;
 import okhttp3.OkHttpClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.*;
+import platform.email.HostIPGetter;
+import po.HostIPPo;
 
 import javax.annotation.Resource;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/main")
@@ -37,7 +39,7 @@ public class MainController {
     @Resource
     DYUserRepository dyUserRepository;
 
-    private static int id = 748;
+    private static int id = 780;
     private static int event_id = 0;
     private static String session_id = "";
     private static long serverTime = 0;
@@ -46,12 +48,12 @@ public class MainController {
      * @return
      */
     @RequestMapping("/thumbsUp")
-    public String thumbsUpMaker() {
+    public String thumbsUpMaker(String aweme_id, OkHttpClient okHttpClient) {
 
         //这个是视频id，需要参数传入
         //String aweme_id = "6597344642847477000";
         //String aweme_id = "6596873554115955971";
-        String aweme_id = "6602797333635665156";
+        //String aweme_id = "6602797333635665156";
         //String aweme_id = "6599566234746883335";
 //        String aweme_id = "6599758421971438862";
         //String aweme_id = "6598666622192323844";
@@ -74,7 +76,7 @@ public class MainController {
         UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
 
         long time = System.currentTimeMillis();
-        OkHttpClient okHttpClient = new OkHttpClient();
+//        OkHttpClient okHttpClient = new OkHttpClient();
         ArrayList<String> result = ThumbsUpMaker.thumbsUpMaker(okHttpClient, aweme_id, deviceEntity, dyUserEntity);
 
         try {
@@ -148,7 +150,7 @@ public class MainController {
         deviceEntity.setCookie(cookie);
 
         //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity1 =urlRequestService.getUrlRequest(5);
+        UrlRequestEntity urlRequestEntity1 = urlRequestService.getUrlRequest(5);
 
 
         UrlRequestEntity urlRequestEntity2 = urlRequestService.getUrlRequest(8);
@@ -247,7 +249,7 @@ public class MainController {
 //            System.out.println(id);
 //            launchApp();
 //            Thread.sleep(1000);
-            thumbsUpMaker();
+//            thumbsUpMaker();
 //            Thread.sleep(1000);
 ////            followMaker();
 ////            Thread.sleep(1000);
@@ -259,37 +261,85 @@ public class MainController {
 
 
         //下面是单个id循环测试
-//        //通过id获取t_dy_user中的数据
-//        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-//        String user_cookie = dyUserEntity.getUserCookie();
-//        String simulationId = dyUserEntity.getSimulationID();
-//
-//        //通过simulationid获取t_device中的数据
-//        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-//        String cookie = deviceEntity.getCookie();
-//        cookie += (";"+ user_cookie);
-//        deviceEntity.setCookie(cookie);
-//
-//        //获取并构建url信息，包括host、msg、token
-//        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
-//
-//        ArrayList<String> result = new ArrayList<>();
-//        for(int i = 0;i < 10;i ++){
-//            ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(deviceEntity, urlRequestEntity);
-//            System.out.println("取到视频id");
-//            try {
-//                Thread.sleep(2000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
+        //通过id获取t_dy_user中的数据
+        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
+        String user_cookie = dyUserEntity.getUserCookie();
+        String simulationId = dyUserEntity.getSimulationID();
+
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+        String cookie = deviceEntity.getCookie();
+        cookie += (";"+ user_cookie);
+        deviceEntity.setCookie(cookie);
+
+        //获取并构建url信息，包括host、msg、token
+        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
+
+        ArrayList<String> result = new ArrayList<>();
+        int success = 0;
+        int failure = 0;
+        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(1);
+        HostIPPo hostIPPo = hostIPPos.get(0);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
+                .build();
+
+        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
+        int site = 0;
+        for(int i = 0;i < dyUserEntity_list.size();i++){
+            if(dyUserEntity_list.get(i).getId() == 782){
+                site = i;
+            }
+        }
+        for(int m = site;m < dyUserEntity_list.size();m ++){
+            id = dyUserEntity_list.get(m).getId();
+            for(int i = 0;i < 5;i ++){
+
+                ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, urlRequestEntity);
+                System.out.println("取到视频id");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+//            for(int j = 0;j < temp.size();j++){
+//                result.add(temp.get(j));
 //            }
-////            for(int j = 0;j < temp.size();j++){
-////                result.add(temp.get(j));
-////            }
-//            for(int j = 0;j < temp.size();j ++){
-//                thumbsUpMaker(temp.get(j));
-//                Thread.sleep(500);
-//            }
-//        }
+
+
+                for(int j = 0;j < temp.size();j ++){
+                    System.out.println(temp.get(j));
+                    String digg_result = thumbsUpMaker(temp.get(j), okHttpClient);
+                    String []digg_temp = digg_result.split(",");
+                    for(int k = 0;k < digg_temp.length;k++){
+                        if(digg_temp[k].split(":")[0].equals(" \"is_digg\"")){
+                            if(digg_temp[k].split(":")[1].equals(" 0")){
+                                success ++;
+                            }else {
+                                String digg_result1 = thumbsUpMaker(temp.get(j), okHttpClient);
+                                String []digg_temp1 = digg_result1.split(",");
+                                if(digg_temp1[k].split(":")[0].equals(" \"is_digg\"")){
+                                    if(digg_temp1[k].split(":")[1].equals(" 0")){
+                                        success ++;
+                                    }else{
+                                        failure ++;
+                                    }
+
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    Thread.sleep(500);
+                }
+
+            }
+        }
+        System.out.println("success:" + success);
+        System.out.println("failure:" + failure);
         //ArrayList<String> awemeList =  SupportAccountMaker.getAwemeListMaker(deviceEntity, urlRequestEntity);
 
 
@@ -299,11 +349,11 @@ public class MainController {
     }
 
     public static String MapToString(Map map){
-        java.util.Map.Entry entry;
+        Map.Entry entry;
         StringBuffer sb = new StringBuffer();
         for(Iterator iterator = map.entrySet().iterator(); iterator.hasNext();)
         {
-            entry = (java.util.Map.Entry)iterator.next();
+            entry = (Map.Entry)iterator.next();
             sb.append(entry.getKey().toString()).append( "=" ).append(null==entry.getValue()?"":
                     entry.getValue().toString()).append (iterator.hasNext() ? ";" : "");
         }
