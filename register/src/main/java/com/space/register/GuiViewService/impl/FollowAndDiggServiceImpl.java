@@ -69,7 +69,8 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = fad.urlRequestRepository.findUrlById(4);
 
-        ArrayList <String> output = FollowMaker.FollowMaker(userid, dyUserEntity, deviceEntity);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        ArrayList <String> output = FollowMaker.FollowMaker(okHttpClient, userid, dyUserEntity, deviceEntity);
         System.out.println(output.size());
 
         textLog.append("-----关注id:" + userid + "----- 抖音号数据库id:"+ dyid + "-----\n");
@@ -92,7 +93,8 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = fad.urlRequestRepository.findUrlById(3);
 
-        ArrayList<String> output = ThumbsUpMaker.thumbsUpMaker(videoId, deviceEntity, dyUserEntity);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        ArrayList<String> output = ThumbsUpMaker.thumbsUpMaker(okHttpClient, videoId, deviceEntity, dyUserEntity);
 
         textLog.append("-----点赞id:" + videoId + "----- 抖音号数据库id:"+ dyid + "-----\n");
         textLog.append(output.get(0) + "\n");
@@ -119,7 +121,8 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
 
         UrlRequestEntity urlRequestEntity2 = fad.urlRequestRepository.findUrlById(8);
 
-        String id = ModifyInfoMaker.modifyInfoMaker(uid, deviceEntity, urlRequestEntity1, urlRequestEntity2);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        String id = ModifyInfoMaker.modifyInfoMaker(okHttpClient, uid, deviceEntity, urlRequestEntity1, urlRequestEntity2);
 
         textLog.append("-----Modify----- 抖音号数据库id:"+ dyid + "-----\n");
         textLog.append("short:"+ id + "\n");
