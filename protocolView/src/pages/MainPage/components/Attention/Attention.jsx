@@ -11,7 +11,11 @@ export default class Attention extends Component {
   }
 
   render() {
-    const data = ['1', '2', '3', '4'];
+    const data = ['1、本平台点赞关注稳定',
+                  '2、可选择评论和点赞',
+                  '3、填写您的视频分享链接即可自动生成视频id，无需您手动查找', 
+                  '4、下单后必须等待完成方可继续下单'
+                ];
     return (
       <div style={styles.container}>
         <List

@@ -30,3 +30,11 @@ export const make_order = (postData) => axios.post(`${web_order_url}/make_web_or
     video_id: postData.videoid,
     order_count: postData.order_count
 });
+
+/**
+ * order_id
+ * @param {*} response 
+ */
+export const search_order = (order_id) => axios.post(`${web_order_url}/get_order_data`, {
+    order_id: order_id,
+});

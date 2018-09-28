@@ -36,8 +36,11 @@ public class WebOrderEntity {
     // 操作数量
     private int operaCount;
 
-    // 订单状态 1 未完成 0 完成
+    // 订单状态 -1 订单异常 1 未完成 0 完成 2 进行中
     private int orderStatus;
+
+    // 下单时间
+    private String time;
 
     private double totalPrice;
 
@@ -47,9 +50,16 @@ public class WebOrderEntity {
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
     }
-
     public String getOrderNumber() {
         return orderNumber;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getId() {

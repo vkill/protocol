@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Form, Select, Input, Button, InputNumber, Tooltip, Icon, message } from 'antd';
 import * as ORDER_API from '../../../../../utils/OrderApi/apis';
+import * as HELPER_API from '../../../../../utils/HelperApis/HelperApi';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -15,6 +16,8 @@ class OrderForm extends Component {
         commodity: [],
         price: 0,
         orderCount: 1,
+        shareUrl: '',
+        videoId: '',
       };
     }
     render() {
@@ -62,7 +65,7 @@ class OrderForm extends Component {
               {...formItemLayout}
               label={(
                 <span>
-                                选择商品
+                    选择商品
                 </span>
                         )}
             >
@@ -109,11 +112,35 @@ class OrderForm extends Component {
                 </span>
                         )}
             >
-              {getFieldDecorator('videoid', {
+              {/* {getFieldDecorator('videoid', {
                             rules: [{ required: true, message: '请输入视频分享链接', whitespace: true }],
-                        })(
-                          <Input />
+                        })( */}
+                <Input 
+                    placeholder='请输入分享链接'
+                    value={this.state.shareUrl}
+                    onChange={this.handleVideoidChange}
+                    ref="videoId"
+
+                />
+                {/* )} */}
+            </FormItem>
+
+            <FormItem
+              {...formItemLayout}
+              label={(
+                <span>
+                  视频id &nbsp;
+                  <Tooltip title="自动提取的视频id">
+                    <Icon type="question-circle-o" />
+                  </Tooltip>
+                </span>
                         )}
+            >
+              
+                <Input 
+                    readOnly
+                    value={this.state.videoId}
+                />
             </FormItem>
 
             <FormItem
@@ -121,7 +148,7 @@ class OrderForm extends Component {
               label={
                 <span>
                             订单数目 &nbsp;
-                  <Tooltip title="最多下单10份">
+                  <Tooltip title="最多下单100份">
                     <Icon type="question-circle-o" />
                   </Tooltip>
                 </span>
@@ -130,7 +157,7 @@ class OrderForm extends Component {
 
               <InputNumber
                 min={1}
-                max={10}
+                max={100}
                 value={this.state.orderCount}
                 onChange={this.handleNumberChange}
                 style={{ width: '100%' }}
@@ -170,22 +197,50 @@ class OrderForm extends Component {
           if (values.pro_type != null || values.goods != null) {
             const postData = values;
             postData.order_count = this.state.orderCount;
-            // 下订单
-            ORDER_API.make_order(postData).then((response) => {
-              const data = response.data;
-              if (data.status === '0') {
-                // 下单成功，跳转支付
-                // TO-DO
-                message.success(data.message);
-              } else {
-                message.error(data.message);
-              }
-            });
+            postData.videoid = this.state.videoId;
+            if (this.state.videoId!=='') {
+                // 下订单
+                ORDER_API.make_order(postData).then((response) => {
+                  const data = response.data;
+                  if (data.status === '0') {
+                    // 下单成功，跳转支付
+                    // TO-DO
+                    message.success(data.message);
+                  } else {
+                    message.error(data.message);
+                  }
+                });
+            } else {
+                message.error('请填写正确的分享链接');
+            }
+            
           } else {
             message.error('尚未选择商品，请选择商品后再试');
           }
         }
       });
+    }
+
+    /**
+     * 获取
+     */
+    handleVideoidChange = (value) => {
+        const url = value.target.value
+        HELPER_API.toVideoId(url).then(response => {
+            const data = response.data;
+            if (data.status === "0") {
+                this.setState({
+                    
+                    videoId: data.video_id
+                });
+            } else {
+                message.error(data.message);
+            }
+        });
+        this.setState({
+            shareUrl: url,
+        })
+        
     }
 
     /**

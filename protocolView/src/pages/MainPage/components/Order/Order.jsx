@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Icon } from 'antd';
 import OrderForm from './SubPage/OrderForm';
+import CheckForm from './SubPage/CheckForm';
 
 import * as ORDER_API from '../../../../utils/OrderApi/apis';
 
@@ -23,7 +24,7 @@ export default class Order extends Component {
               <OrderForm type_list={this.state.pro_list} />
             </TabPane>
             <TabPane tab={<span><Icon type="search" />查单</span>} key="2">
-                    2
+                    <CheckForm />
             </TabPane>
             {/* <TabPane tab='Tab 1' key = '3'>3</TabPane> */}
 
