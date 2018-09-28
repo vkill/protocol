@@ -119,6 +119,7 @@ class OrderForm extends Component {
                     placeholder='请输入分享链接'
                     value={this.state.shareUrl}
                     onChange={this.handleVideoidChange}
+                    onBlur={this.handleBlur}
                     ref="videoId"
 
                 />
@@ -221,22 +222,35 @@ class OrderForm extends Component {
       });
     }
 
-    /**
-     * 获取
-     */
-    handleVideoidChange = (value) => {
-        const url = value.target.value
-        HELPER_API.toVideoId(url).then(response => {
+    handleBlur = () => {
+        HELPER_API.toVideoId(this.state.shareUrl).then(response => {
             const data = response.data;
             if (data.status === "0") {
                 this.setState({
-                    
                     videoId: data.video_id
                 });
             } else {
                 message.error(data.message);
             }
         });
+    }
+
+    /**
+     * 获取
+     */
+    handleVideoidChange = (value) => {
+        const url = value.target.value
+        // HELPER_API.toVideoId(url).then(response => {
+        //     const data = response.data;
+        //     if (data.status === "0") {
+        //         this.setState({
+                    
+        //             videoId: data.video_id
+        //         });
+        //     } else {
+        //         message.error(data.message);
+        //     }
+        // });
         this.setState({
             shareUrl: url,
         })
