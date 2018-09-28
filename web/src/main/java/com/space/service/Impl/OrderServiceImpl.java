@@ -64,10 +64,10 @@ public class OrderServiceImpl implements OrderService {
             // TO-DO
 
             // 支付成功，向注册机发送订单(应该在支付成功的地方写)
-            while (!SendOrder.sendOrder(webOrderEntity)) {
-                System.out.println("数据库异常，重新发送订单");
-                Thread.sleep(1000);
-            }
+//            while (!SendOrder.sendOrder(webOrderEntity)) {
+//                System.out.println("数据库异常，重新发送订单");
+//                Thread.sleep(1000);
+//            }
         }
         return result;
     }
