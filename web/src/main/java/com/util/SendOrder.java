@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
 * @Description: 向注册机发送订单
@@ -71,9 +73,9 @@ public class SendOrder {
                 if (line.contains("/share/video")) {
                     int start = line.indexOf("/share/video");
                     result = line.substring(start + 13, start + 13+ 19);
-                    System.out.println(result);
-                    System.out.println(start);
-                    System.out.println(line);
+//                    System.out.println(result);
+//                    System.out.println(start);
+//                    System.out.println(line);
                 }
             }
             reader.close();
@@ -89,8 +91,20 @@ public class SendOrder {
         return result;
     }
 
-//    public static void main(String[] args) {
-//        getVideoId("http://v.douyin.com/dVWwDQ/ ");
-//    }
+    public static void main(String[] args) {
+        Date dNow = new Date( );
+        SimpleDateFormat ft =
+                new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+        String a1 = ft.format(dNow);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Date d2 = new Date();
+        String a2 = ft.format(d2);
+        System.out.println("Current Date: " + a1);
+        System.out.println("Current Date: " + a2);
+    }
 
 }

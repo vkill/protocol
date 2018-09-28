@@ -22,4 +22,11 @@ public interface OrderService {
      */
     Map makeWebOrder(WebOrderEntity webOrderEntity) throws Exception;
 
+    /**
+     * 根据id获取订单
+     * @param id
+     * @return
+     */
+    Map getWebOrderById(String id);
+
 }

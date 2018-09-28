@@ -12,8 +12,8 @@ export default class MainPage extends Component {
 
   render() {
     return (
-      <div style={styles.container} className="container">
-        <p className="gradient">空格点赞</p>
+      <div style={styles.container} className="container-main">
+        <p className="gradient-main">空格点赞</p>
       </div>
     );
   }

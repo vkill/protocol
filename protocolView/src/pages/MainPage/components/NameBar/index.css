@@ -1,8 +1,8 @@
-.container {
+.container-main {
     width: 100%
 }
 
-p {
+.container-main p {
     position: relative;
     z-index: 5;
     text-align: center;
@@ -15,7 +15,7 @@ p {
     margin: 0 auto;
   }
 
-.gradient {
+.gradient-main {
   background: -webkit-linear-gradient(270deg, #C9FFBF, #FFAFBD);
   background: linear-gradient(180deg, #C9FFBF, #FFAFBD);
   -webkit-background-clip: text;

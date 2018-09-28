@@ -3,6 +3,7 @@ package com.space.controller;
 import com.space.entity.Order;
 import com.space.entity.WebOrderEntity;
 import com.space.service.OrderService;
+import com.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,6 +76,21 @@ public class OrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    @RequestMapping("/get_order_data")
+    public Map getWebOrder(@RequestBody Map map) {
+        Map result = new HashMap();
+        String id = (String) map.get("order_id");
+        if (StringUtil.isNumeric(id)) { // 判断输入是否全数字
+            result = orderService.getWebOrderById(id);
+
+        } else {
+            result.put("status","1");
+            result.put("message", "输入有误，请重新输入");
+        }
+
         return result;
     }
 }
