@@ -5,6 +5,7 @@ import com.space.register.controller.DeviceController;
 import com.space.register.dao.DYUserRepository;
 import com.space.register.dao.DeviceRepository;
 import org.springframework.stereotype.Component;
+import platform.email.HostIPGetter;
 import platform.thread.RegisterThread;
 import po.HostIPPo;
 
@@ -27,7 +28,7 @@ public class RegisterServiceImpl implements RegisterService {
     private static RegisterServiceImpl rs;
 
     public static int thread_num = RegisterThread.thread_num;
-    public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
+
     Thread[] registerThreads =new Thread[thread_num];
     @PostConstruct
     public void init() {
@@ -41,7 +42,14 @@ public class RegisterServiceImpl implements RegisterService {
     public void beginRegister(JTextArea log, String api) {
         log.append("开始注册\n");
         log.append(api+"\n");
-        DeviceController.getNeedIPFromWeb(hostIpQuene);
+        if(!api.isEmpty()){
+            api = api.substring(0,api.length()-1);
+            HostIPGetter.ipHostGetter = api;
+        }
+        DeviceController.getNeedIPFromWeb(RegisterThread.hostIpQuene);
+        if(!api.isEmpty()){
+            HostIPGetter.ipHostGetter = api;
+        }
         Thread[] registerThreads =new Thread[thread_num];
         for(int i=0;i<thread_num;i++){
             registerThreads[i] = new Thread(new RegisterThread(log));

@@ -1,5 +1,7 @@
 package platform.thread;
 
+import com.space.register.GuiViewService.RegisterService;
+import com.space.register.GuiViewService.impl.RegisterServiceImpl;
 import com.space.register.configurer.RegisterThreadDatabaseImpl;
 import com.space.register.controller.DeviceController;
 import com.space.register.dao.DYUserRepository;
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Logger;
 
 /**
@@ -55,22 +58,24 @@ public class RegisterThread implements Runnable{
 
     RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
 
+    public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
     public RegisterThread(JTextArea log){
         this.loggs = log;
     }
     @Override
     public void run() {
+        loggs.append("创建线程\n");
         do{
             HostIPPo hostIPPo = null;
             try {
-                hostIPPo = DeviceController.hostIpQuene.take();
+                hostIPPo = hostIpQuene.take();
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 continue;
             }
-            if(DeviceController.hostIpQuene.size()== 0){
-                synchronized (DeviceController.hostIpQuene){
-                    if(DeviceController.hostIpQuene.size()== 0){
+            if(hostIpQuene.size()== thread_num-1){
+                synchronized (hostIpQuene) {
+                    if (DeviceController.hostIpQuene.size() == 0) {
                         DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
                     }
                 }
@@ -93,8 +98,9 @@ public class RegisterThread implements Runnable{
                     continue;
                 }catch (Exception e){
                     System.out.println("瞎几把的错误");
+                    loggs.append("死掉了一个 IP");
                     e.printStackTrace();
-                    continue;
+                    break;
                 }
             }
         }while (true);
