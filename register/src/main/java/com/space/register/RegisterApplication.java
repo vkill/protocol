@@ -6,6 +6,7 @@ import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import platform.threadManager.BussinessController;
 
 @SpringBootApplication
 public class RegisterApplication {
@@ -15,6 +16,7 @@ public class RegisterApplication {
             public void run() {
                 //new MainFrame().setVisible(true);
                 SpringApplication.run(RegisterApplication.class, args);
+
                 //RegisterThreadDatabaseImpl registerThreadDatabase = new RegisterThreadDatabaseImpl();
             }
         });

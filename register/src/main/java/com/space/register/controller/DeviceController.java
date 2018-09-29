@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import platform.email.HostIPGetter;
 import platform.thread.RegisterThread;
+import platform.threadManager.BussinessController;
 import po.HostIPPo;
 
 import javax.annotation.Resource;
@@ -32,12 +33,15 @@ public class DeviceController {
 
     @RequestMapping("/maker")
     public String deviceMain(){
-        getNeedIPFromWeb(hostIpQuene);
-        Thread[] registerThreads =new Thread[thread_num];
-        for(int i=0;i<thread_num;i++){
-            registerThreads[i] = new Thread(new RegisterThread());
-            registerThreads[i].start();
-        }
+        BussinessController bussinessController =new BussinessController();
+        bussinessController.doBusinessWork();
+//        getNeedIPFromWeb(hostIpQuene);
+////        Thread[] registerThreads =new Thread[thread_num];
+////        for(int i=0;i<thread_num;i++){
+////            registerThreads[i] = new Thread(new RegisterThread());
+////            registerThreads[i].start();
+////        }
+        //切换
 //        RegisterThread registerThread = new RegisterThread();
 //        try {
 //            for (int i =0;i<4;i++){

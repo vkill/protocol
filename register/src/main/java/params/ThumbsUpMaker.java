@@ -64,7 +64,7 @@ public class ThumbsUpMaker {
             for (int i = 0; i < responseHeadersLength; i++){
                 String headerName = responseHeaders.name(i);
                 String headerValue = responseHeaders.value(i);
-                if(headerName.equals("X_TT_LOGID")){
+                if(headerName.equals("X_TT_LOGID")||headerName.equals("x_tt_logid")){
                     result.add(headerValue);
                 }
             }

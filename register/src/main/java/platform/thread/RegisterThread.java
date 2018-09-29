@@ -16,6 +16,7 @@ import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.hibernate.JDBCException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import params.AllAppLogConstruct;
@@ -30,11 +31,13 @@ import po.PhonePo;
 import po.RequestTokenVo;
 
 import javax.annotation.Resource;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * @program: protool
@@ -45,11 +48,16 @@ import java.util.UUID;
 public class RegisterThread implements Runnable{
 
     public static int thread_num = 10;
+    public static JTextArea loggs;
 
     @Resource
     DYUserRepository dyUserRepository;
 
     RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
+
+    public RegisterThread(JTextArea log){
+        this.loggs = log;
+    }
     @Override
     public void run() {
         do{
@@ -60,19 +68,27 @@ public class RegisterThread implements Runnable{
                 e.printStackTrace();
                 continue;
             }
-            if(DeviceController.hostIpQuene.size()== thread_num-1){
-                DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
+            if(DeviceController.hostIpQuene.size()== 0){
+                synchronized (DeviceController.hostIpQuene){
+                    if(DeviceController.hostIpQuene.size()== 0){
+                        DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
+                    }
+                }
+
             }
             for(int i =0;i<6;i++){
                 try {
                     oneUserInfo(hostIPPo.host,hostIPPo.port);
                     System.out.println("线程注册成功喽");
+                    loggs.append("线程注册成功喽\n");
                 } catch (IOException e) {
                     System.out.println("死掉了 一个  IP");
+                    loggs.append("死掉了 一个  IP\n");
                     e.printStackTrace();
                     break;
                 } catch (JSONException e){
                     System.out.println("json格式出错");
+                    System.out.println("IP单次运行出错");
                     e.printStackTrace();
                     continue;
                 }catch (Exception e){
@@ -317,6 +333,10 @@ public class RegisterThread implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("注册用户结果获取失败");
+        } catch (JDBCException e){
+            e.printStackTrace();
+            loggs.append("数据库出错，请重启");
+            Thread.interrupted();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("注册用户结果获取失败");
@@ -514,6 +534,8 @@ public class RegisterThread implements Runnable{
             dyUserEntity.setSimulationID(deviceEntity.getId()+"");
             dyUserEntity = registerThreadDatabaseImpl.saveUser(dyUserEntity);
             System.out.println("注册设备、用户成功");
+            loggs.append("注册设备、用户成功\n");
+            loggs.append("账号为："+dyUserEntity.getPhoneNum()+"  "+"密码为："+"asd123456\n");
         }
         return  true;
 

@@ -24,8 +24,6 @@ public class BussinessController {
 
     public static ArrayList<DYUserEntity> dyUserEntities = new ArrayList<DYUserEntity>();
 
-    public static ArrayList<OrderEntity> orderEntities = new ArrayList<>();
-
     //1代表需要点赞的订单，0代表已完成的订单，-1代表异常订单
     public static String orderStatus ="1";
     //单个线程分配的订单数量
@@ -35,6 +33,7 @@ public class BussinessController {
         ArrayList<OrderEntity> orderEntities = orderThreadDatabase.getAllOrder(orderStatus);
         long lessId =0;
         double number = 0;
+        BussinessThread.getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
         for(OrderEntity orderEntity:orderEntities){
             if(orderEntity.getLangestDYId()>lessId){
                 lessId = orderEntity.getLangestDYId();
@@ -43,11 +42,11 @@ public class BussinessController {
                 number = orderEntity.getThumbUpOrFollowNum();
             }
         }
-        number = 1.5*number;
+        number = 2*number;
         long numsInt = Math.round(number);
         dyUserEntities = orderThreadDatabase.getNumsUser(lessId,numsInt);
         int threadNum = orderEntities.size()/orderNumber;
-        if(threadNum%orderNumber!=0){
+        if(orderEntities.size()%orderNumber!=0){
             threadNum++;
         }
         Thread[] threads = new Thread[threadNum];
@@ -61,7 +60,7 @@ public class BussinessController {
                     break;
                 }
             }
-            threads[i] = new Thread(new BussinessThread(orderEntities1));
+            threads[i] = new Thread(new BussinessThread(orderEntities1,dyUserEntities));
             threads[i].start();
         }
     }

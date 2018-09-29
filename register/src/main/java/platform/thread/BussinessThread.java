@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,48 +34,93 @@ import java.util.concurrent.TimeUnit;
  **/
 public class BussinessThread implements Runnable {
 
-    public static int thread_num = 10;
+    public static int thread_num = 2;
     public static String successInfo ="success";
     public static String failureInfo = "failure";
-    public ArrayList<OrderEntity> orderEntities;
+    public static int oneIpThumbUp = 20;
 
-    @Resource
-    DYUserRepository dyUserRepository;
+    public ArrayList<OrderEntity> orderEntities;
+    public ArrayList<DYUserEntity> dyUserEntities;
 
     OrderThreadDatabaseImpl orderThreadDatabase = new OrderThreadDatabaseImpl();
-    public BussinessThread(ArrayList<OrderEntity> orderEntities){
-        orderEntities = orderEntities;
-
+    public BussinessThread(ArrayList<OrderEntity> orderEntitiy,ArrayList<DYUserEntity> dyUserEntities1){
+        orderEntities = new ArrayList<>(orderEntitiy);
+        dyUserEntities = dyUserEntities1;
     }
 
     @Override
     public void run() {
+        OkHttpClient okHttpClient = null;
+        DYUserEntity dyUserEntity ;
+        DeviceEntity deviceEntity;
+        OrderEntity orderEntity;
+        int ipInfo = 0;
+        int userNum = 0;
+        int orderEntitySize = orderEntities.size();
         do{
-            HostIPPo hostIPPo = null;
-            try {
-                hostIPPo = BussinessController.hostIpQueneForBusiness.take();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                continue;
+            if(userNum>=BussinessController.dyUserEntities.size()){
+                System.out.println("用户使用完毕");
+                for(OrderEntity orderEntity1:orderEntities){
+                    orderEntity1.setStatus("-1");
+                    orderThreadDatabase.updataOrderInfo(orderEntity1);
+                }
+                break;
+            }else if(orderEntities.size()==0){
+                System.out.println("订单全部完成");
+                break;
             }
-            OkHttpClient okHttpClient;
-            if(hostIPPo.port==0){
-                okHttpClient = new OkHttpClient.Builder()
-                        .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
-                        .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
-                        .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
-                        .build();
-            }else{
-                okHttpClient = new OkHttpClient.Builder()
-                        .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
-                        .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
-                        .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
-                        .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
-                        .build();
+            dyUserEntity =dyUserEntities.get(userNum);
+            deviceEntity = orderThreadDatabase.getDeviceByID(Integer.parseInt(dyUserEntity.getSimulationID()));
+            if(ipInfo%oneIpThumbUp==0){
+                okHttpClient = changeOkHttpHost();
             }
-            DYUserEntity dyUserEntity ;
-            OrderEntity orderEntity = BussinessController.orderEntities.get(0);
-            //DeviceEntity deviceEntity = orderThreadDatabase.getDeviceByID(dyUserEntity.getId());
+
+            for(int i =0;i<orderEntitySize;i++){
+                orderEntity = orderEntities.get(i);
+                try {
+                    if(makeThumbUpAndFollow(okHttpClient,deviceEntity,dyUserEntity,orderEntity)){
+                        System.out.println("订单点赞完成");
+                        orderEntities.remove(i);
+                        i--;
+                        orderEntitySize = orderEntities.size();
+                    }
+                    ipInfo++;
+                    if(ipInfo%oneIpThumbUp==0){
+                        okHttpClient = changeOkHttpHost();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if(i<=0){
+                        userNum--;
+                        ipInfo=0;
+                        break;
+
+                    }
+                    else{
+                        okHttpClient =changeOkHttpHost();
+                        i--;
+                        ipInfo=0;
+                        continue;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    if(i<=0){
+                        userNum--;
+                        ipInfo=0;
+                        break;
+
+                    }
+                    else{
+                        okHttpClient =changeOkHttpHost();
+                        i--;
+                        ipInfo=0;
+                        continue;
+                    }
+                }
+            }
+            orderThreadDatabase.saveDyUser(dyUserEntity);
+            userNum++;
+
 
 
 
@@ -109,9 +155,7 @@ public class BussinessThread implements Runnable {
                 nums = nums - 1;
                 orderEntity.setThumbUpOrFollowNum(nums);
                 if(orderEntity.getThumbUpOrFollowNum()==0){
-                    orderEntity.setStatus(0+"");
-                    orderThreadDatabase.updataOrderInfo(orderEntity);
-                    return true;
+                    return finallyOrderAction(dyUserEntity,orderEntity);
                 }
             }else{
                 result = digg(okHttpClient, event_id, session_id, serverTime, dyUserEntity, deviceEntity, orderEntity);
@@ -124,9 +168,7 @@ public class BussinessThread implements Runnable {
                     nums = nums - 1;
                     orderEntity.setThumbUpOrFollowNum(nums);
                     if(orderEntity.getThumbUpOrFollowNum()==0){
-                        orderEntity.setStatus(0+"");
-                        orderThreadDatabase.updataOrderInfo(orderEntity);
-                        return true;
+                        return finallyOrderAction(dyUserEntity,orderEntity);
                     }
                     return false;
                 }else{
@@ -147,9 +189,7 @@ public class BussinessThread implements Runnable {
                 nums = nums - 1;
                 orderEntity.setThumbUpOrFollowNum(nums);
                 if(orderEntity.getThumbUpOrFollowNum()==0){
-                    orderEntity.setStatus(0+"");
-                    orderThreadDatabase.updataOrderInfo(orderEntity);
-                    return true;
+                    return finallyOrderAction(dyUserEntity,orderEntity);
                 }
             }else{
 
@@ -164,9 +204,7 @@ public class BussinessThread implements Runnable {
                     nums = nums - 1;
                     orderEntity.setThumbUpOrFollowNum(nums);
                     if(orderEntity.getThumbUpOrFollowNum()==0){
-                        orderEntity.setStatus(0+"");
-                        orderThreadDatabase.updataOrderInfo(orderEntity);
-                        return true;
+                        return finallyOrderAction(dyUserEntity,orderEntity);
                     }
                     boolean kao = false;
                     return kao;
@@ -259,5 +297,68 @@ public class BussinessThread implements Runnable {
         resultToReturn.add(status);
         resultToReturn.add(follow_body_msg.get(0));
         return resultToReturn;
+    }
+
+    public static void getNeedIPFromWeb(LinkedBlockingQueue<HostIPPo> hostIpQuene){
+        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(thread_num);
+        if(hostIpQuene.size()>thread_num*2-1){
+            return;
+        }
+        if(hostIPPos == null){
+            System.out.println("IP用完了，结束线程");
+            return;
+        }
+        for(HostIPPo hostIPPo:hostIPPos){
+            try {
+                hostIpQuene.put(hostIPPo);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if(hostIpQuene.size()<RegisterThread.thread_num*2-1){
+            getNeedIPFromWeb(hostIpQuene);
+        }
+    }
+
+    //修改okhttp代理的方法
+    public static OkHttpClient changeOkHttpHost(){
+        HostIPPo hostIPPo;
+        try {
+            hostIPPo = BussinessController.hostIpQueneForBusiness.take();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return changeOkHttpHost();
+        }
+        if(BussinessController.hostIpQueneForBusiness.size()== 0){
+            synchronized (BussinessController.hostIpQueneForBusiness){
+                if(BussinessController.hostIpQueneForBusiness.size()== 0){
+                    getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
+                }
+            }
+
+        }
+        OkHttpClient okHttpClient;
+        if(hostIPPo.port==0){
+            okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                    .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                    .build();
+        }else{
+            okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                    .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                    .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
+                    .build();
+        }
+        return okHttpClient;
+    }
+
+    public boolean finallyOrderAction(DYUserEntity dyUserEntity,OrderEntity orderEntity){
+        orderEntity.setStatus(0+"");
+        orderEntity.setLangestDYId(dyUserEntity.getId());
+        orderThreadDatabase.updataOrderInfo(orderEntity);
+        return true;
     }
 }

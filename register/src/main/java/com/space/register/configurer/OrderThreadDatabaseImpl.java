@@ -58,7 +58,7 @@ public class OrderThreadDatabaseImpl {
     }
 
     public DeviceEntity getDeviceByID(int id){
-        return orderThreadDatabase.deviceRepository.getOne(id);
+        return orderThreadDatabase.deviceRepository.getDeviceMsgById(id);
     }
 
 }
