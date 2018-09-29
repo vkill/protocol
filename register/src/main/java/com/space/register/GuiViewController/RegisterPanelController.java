@@ -16,9 +16,10 @@ public class RegisterPanelController {
      * 开始注册监听
      * @param log
      */
-    public static void beginRegister(JTextArea log) {
+    public static void beginRegister(JTextArea log, String api) {
         RegisterService registerService = new RegisterServiceImpl();
-        registerService.beginRegister(log);
+        registerService.beginRegister(log, api);
+
     }
 
     /**

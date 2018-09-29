@@ -31,8 +31,9 @@ public class RegisterServiceImpl implements RegisterService {
 
 
     @Override
-    public void beginRegister(JTextArea log) {
+    public void beginRegister(JTextArea log, String api) {
         log.append("开始注册\n");
+        log.append(api+"\n");
 
     }
 

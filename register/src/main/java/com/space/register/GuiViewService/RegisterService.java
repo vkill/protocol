@@ -13,7 +13,7 @@ public interface RegisterService {
      * 注册抖音账号的实现
      * @param log
      */
-    void beginRegister(JTextArea log);
+    void beginRegister(JTextArea log, String api);
 
     /**
      * 停止注册的接口
