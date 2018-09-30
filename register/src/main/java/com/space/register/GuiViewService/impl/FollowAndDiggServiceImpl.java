@@ -34,6 +34,8 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
     protected UrlRequestRepository urlRequestRepository;
     private static FollowAndDiggServiceImpl fad;
 
+    private static String session_id;
+
     @PostConstruct
     public void init() {
         fad = this;
@@ -80,9 +82,6 @@ public class FollowAndDiggServiceImpl implements FollowAndDiggService {
 
         //通过simulationid获取t_device中的数据
         DeviceEntity deviceEntity = fad.deviceRepository.getDeviceMsgById(Integer.parseInt(simulationId));
-
-        //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = fad.urlRequestRepository.findUrlById(3);
 
         OkHttpClient okHttpClient = new OkHttpClient();
         ArrayList<String> output = ThumbsUpMaker.thumbsUpMaker(okHttpClient, videoId, deviceEntity, dyUserEntity);

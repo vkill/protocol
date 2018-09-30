@@ -7,11 +7,13 @@ import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import org.openqa.selenium.remote.internal.OkHttpClient;
 import org.springframework.stereotype.Component;
+import params.AllAppLogConstruct;
 import params.AppLogMaker;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
 * @Description: 注册层实现类
@@ -49,10 +51,33 @@ public class AccountManageServiceImpl implements AccountManageService {
         DeviceEntity deviceEntity = ams.deviceRepository.getDeviceMsgById(Integer.parseInt(simulationId));
 
         okhttp3.OkHttpClient okHttpClient = new okhttp3.OkHttpClient();
-        String text = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 36000));
+        //String text = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, String.valueOf(System.currentTimeMillis() - 36000));
 
+        //注册帐号前需要加载appLog
+        //随机生成的session_id
+        String session_id = AllAppLogConstruct.constructRandomSessionId();
+        ArrayList<String> launch_body_msg = AllAppLogConstruct.launchApp(dyUserEntity.getAppLog(), session_id, dyUserEntity.getEvent_id());
+        //修改全部变量event_id
+        int event_id = Integer.valueOf(launch_body_msg.get(0));
+        //修改数据库中event_id的值
+        dyUserEntity.setEvent_id(event_id);
+        //修改全局变量serverTime
+        String launch_result = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, launch_body_msg.get(1));
+        System.out.println("加载app结果：" + launch_result);
+
+        //下面的是注册账号完成时发送的appLog
+        //sendCodeTime是sendcode请求的ticket，纯数字格式
+        String sendCodeTime =String.valueOf(System.currentTimeMillis() - 12000);
+        String serverTime = String.valueOf(Long.parseLong(sendCodeTime) - 12000);
+        ArrayList<String> register_body_msg = AllAppLogConstruct.register(dyUserEntity.getAppLog(), AllAppLogConstruct.constructRandomSessionId(), dyUserEntity.getEvent_id(), String.valueOf(serverTime), sendCodeTime, dyUserEntity.getUid());
+        //修改数据库中event_id的值
+
+        dyUserEntity.setEvent_id(Integer.valueOf(register_body_msg.get(0)));
+        //修改全局变量serverTime
+        String register_result = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, register_body_msg.get(1));
+        System.out.println("注册账号结果：" + register_result);
         textLog.append("-----AppLog----- 抖音号数据库id:"+ dyid + "-----\n");
-        textLog.append(text + "\n");
+        textLog.append(register_result + "\n");
     }
 
 }

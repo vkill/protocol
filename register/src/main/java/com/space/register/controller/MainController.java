@@ -18,6 +18,7 @@ import po.HostIPPo;
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class MainController {
     @Resource
     DYUserRepository dyUserRepository;
 
-    private static int id = 780;
+    private static int id = 760;
     private static int event_id = 0;
     private static String session_id = "";
     private static long serverTime = 0;
@@ -48,7 +49,7 @@ public class MainController {
      * @return
      */
     @RequestMapping("/thumbsUp")
-    public String thumbsUpMaker(String aweme_id, OkHttpClient okHttpClient) {
+    public ArrayList<String> thumbsUpMaker(String aweme_id, OkHttpClient okHttpClient) {
 
         //这个是视频id，需要参数传入
         //String aweme_id = "6597344642847477000";
@@ -84,18 +85,22 @@ public class MainController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        String like = "{\"request_id\":\""+request_id+"\",\"order\":0,\"enter_from\":\"homepage_hot\",\"enter_method\":\"click\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"like\",\"label\":\"homepage_hot\",\"value\":"+aweme_id+",\"user_id\":"+user_id+",\"session_id\":\""+session_id+"\",\"datetime\":\""+sdf.format(Long.parseLong(digg_time))+"\",\"event_id\":"+(++event_id)+"}";
 
-        ArrayList<String> body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));
-
-        event_id = Integer.valueOf(body_msg.get(0));
-        System.out.println("点赞的applog：");
-        String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
-        System.out.println(appLogResult);
+//        ArrayList<String> body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));
+//
+//        event_id = Integer.valueOf(body_msg.get(0));
+//        System.out.println("点赞的applog：");
+//        String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
+//        System.out.println(appLogResult);
         dyUserEntity.setEvent_id(event_id);
         dyUserRepository.save(dyUserEntity);
 
-        return result.get(0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String like = "{\"request_id\":\""+result.get(1)+"\",\"order\":0,\"enter_from\":\"homepage_hot\",\"enter_method\":\"click\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"like\",\"label\":\"homepage_hot\",\"value\":"+aweme_id+",\"user_id\":"+ dyUserEntity.getUid()+",\"session_id\":\""+session_id+"\",\"datetime\":\""+sdf.format(Long.parseLong(String.valueOf(time)))+"\",\"event_id\":"+(++event_id)+"}";
+        result.add(like);
+
+        return result;
     }
 
     @RequestMapping("/follow")
@@ -235,118 +240,102 @@ public class MainController {
     @RequestMapping("/test")
     public void testStart() throws InterruptedException {
 
-
-//        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
-//        int site = 0;
-//        for(int i = 0;i < dyUserEntity_list.size();i++){
-//            if(dyUserEntity_list.get(i).getId() == 746){
-//                site = i;
-//            }
-//        }
-//
-//        for(int i = site;i < dyUserEntity_list.size();i++){
-//            id = dyUserEntity_list.get(i).getId();
-//            System.out.println(id);
-//            launchApp();
-//            Thread.sleep(1000);
-//            thumbsUpMaker();
-//            Thread.sleep(1000);
-////            followMaker();
-////            Thread.sleep(1000);
-//
-//            System.out.println("-----------------------------------------------------");
-//            System.out.println("----------------------烧楼上屁股----------------------");
-//            System.out.println("-----------------------------------------------------");
-//        }
-
-
-        //下面是单个id循环测试
-        //通过id获取t_dy_user中的数据
-        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-        String user_cookie = dyUserEntity.getUserCookie();
-        String simulationId = dyUserEntity.getSimulationID();
-
-        //通过simulationid获取t_device中的数据
-        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-        String cookie = deviceEntity.getCookie();
-        cookie += (";"+ user_cookie);
-        deviceEntity.setCookie(cookie);
-
-        //获取并构建url信息，包括host、msg、token
-        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
-
-        ArrayList<String> result = new ArrayList<>();
-        int success = 0;
-        int failure = 0;
-        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(1);
-        HostIPPo hostIPPo = hostIPPos.get(0);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
-                .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
-                .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
-                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
-                .build();
+        System.out.println("开始");
 
         ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
         int site = 0;
         for(int i = 0;i < dyUserEntity_list.size();i++){
-            if(dyUserEntity_list.get(i).getId() == 782){
+            if(dyUserEntity_list.get(i).getId() == 753){
                 site = i;
             }
         }
-        for(int m = site;m < dyUserEntity_list.size();m ++){
-            id = dyUserEntity_list.get(m).getId();
-            for(int i = 0;i < 5;i ++){
+
+        //获取并构建url信息，包括host、msg、token
+        UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
+
+//        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(1);
+//        HostIPPo hostIPPo = hostIPPos.get(0);
+         OkHttpClient okHttpClient = new OkHttpClient();
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+//                .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+//                .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+//                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
+//                .build();
+
+        for(int i = site;i < site + 10;i++){
+            int success = 0;
+            int failure = 0;
+            id = dyUserEntity_list.get(i).getId();
+
+            //下面是单个id循环测试
+            //通过id获取t_dy_user中的数据
+            DYUserEntity dyUserEntity = dyRegisterService.findById(id);
+            String user_cookie = dyUserEntity.getUserCookie();
+            String simulationId = dyUserEntity.getSimulationID();
+
+            //通过simulationid获取t_device中的数据
+            DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+            String cookie = deviceEntity.getCookie();
+            cookie += (";"+ user_cookie);
+            deviceEntity.setCookie(cookie);
+
+            for (int j = 0; j < 5; j++) {
 
                 ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, urlRequestEntity);
                 System.out.println("取到视频id");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-//            for(int j = 0;j < temp.size();j++){
-//                result.add(temp.get(j));
-//            }
+                if (temp.size() == 0) {
+                    i--;
+                }
 
-
-                for(int j = 0;j < temp.size();j ++){
-                    System.out.println(temp.get(j));
-                    String digg_result = thumbsUpMaker(temp.get(j), okHttpClient);
-                    String []digg_temp = digg_result.split(",");
-                    for(int k = 0;k < digg_temp.length;k++){
-                        if(digg_temp[k].split(":")[0].equals(" \"is_digg\"")){
-                            if(digg_temp[k].split(":")[1].equals(" 0")){
-                                success ++;
-                            }else {
-                                String digg_result1 = thumbsUpMaker(temp.get(j), okHttpClient);
-                                String []digg_temp1 = digg_result1.split(",");
-                                if(digg_temp1[k].split(":")[0].equals(" \"is_digg\"")){
-                                    if(digg_temp1[k].split(":")[1].equals(" 0")){
-                                        success ++;
-                                    }else{
-                                        failure ++;
-                                    }
-
+                ArrayList<String> like_list = new ArrayList<>();
+                for (int k = 0; k < temp.size(); k++) {
+                    System.out.println(temp.get(k));
+                    ArrayList<String> digg_result = thumbsUpMaker(temp.get(j), okHttpClient);
+                    String[] digg_temp = digg_result.get(0).split(",");
+                    for (int m = 0; m < digg_temp.length; m++) {
+                        if (digg_temp[m].split(":")[0].equals(" \"is_digg\"")) {
+                            if (digg_temp[m].split(":")[1].equals(" 0")) {
+                                success++;
+                            } else {
+                                ArrayList<String> digg_result1 = thumbsUpMaker(temp.get(j), okHttpClient);
+                                String[] digg_temp1 = digg_result1.get(0).split(",");
+                                if (digg_temp1[m].split(":")[1].equals(" 0")) {
+                                    success++;
+                                } else {
+                                    failure++;
                                 }
                             }
                             break;
                         }
                     }
+                    like_list.add(digg_result.get(2));
+
                     Thread.sleep(500);
                 }
-
+                if (like_list.size() != 0) {
+                    ArrayList<String> body_msg = AllAppLogConstruct.digg_temp(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(System.currentTimeMillis()), like_list);
+                    event_id = Integer.valueOf(body_msg.get(0));
+                    String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
+                    System.out.println(appLogResult);
+                }
             }
+            dyUserRepository.save(dyUserEntity);
+            System.out.println("id:" + id);
+            System.out.println("success:" + success);
+            System.out.println("failure:" + failure);
+            System.out.println("-----------------------------------------------------");
+            System.out.println("----------------------烧楼上屁股----------------------");
+            System.out.println("-----------------------------------------------------");
         }
-        System.out.println("success:" + success);
-        System.out.println("failure:" + failure);
-        //ArrayList<String> awemeList =  SupportAccountMaker.getAwemeListMaker(deviceEntity, urlRequestEntity);
-
-
-
-
 
     }
+
 
     public static String MapToString(Map map){
         Map.Entry entry;

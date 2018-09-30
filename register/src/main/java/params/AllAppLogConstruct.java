@@ -318,6 +318,49 @@ public class AllAppLogConstruct {
         return resultToReturn;
     }
 
+
+    public static ArrayList<String> digg_temp(String appLog, String session_id, int event_id, String server_time, String digg_time, ArrayList<String> like_list){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String like = like_list.get(0);
+        for(int i = 1;i < like_list.size();i++){
+           like += ","+like_list.get(i);
+        }
+        String result_launch = "{\"datetime\": \""+server_time+"\",\"session_id\": \""+session_id+"\"}";
+
+        String magic_tag = "\"ss_app_log\"";
+
+        Long time = System.currentTimeMillis() - Long.parseLong(digg_time);
+        String time_sync = "{\"server_time\": "+(Long.parseLong(digg_time) /1000 - time /10)+",\"local_time\": "+(Long.parseLong(digg_time) /1000 - time /10)+"}";
+
+        //这里的applog选用传入参数，临时使用数据库截取内容代替
+//        appLog = "{\"event\":[{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:38\",\"event_id\":70},{\"enter_from\":\"sign_in\",\"nt\":4,\"category\":\"umeng\",\"tag\":\"verification_in\",\"label\":\"verification_code\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:42\",\"event_id\":71},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"registered_success\",\"label\":\"phone\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":72},{\"nt\":4,\"category\":\"umeng\",\"tag\":\"sign_in_success\",\"label\":\"phone\",\"user_id\":104685449990,\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\",\"datetime\":\"2018-09-23 19:36:53\",\"event_id\":73}],\"launch\":[{\"datetime\":\"2018-09-23 19:35:55\",\"session_id\":\"e36a3165-d7fe-47a8-b520-5f79ea0929fa\"}],\"magic_tag\":\"ss_app_log\",\"time_sync\":{\"server_time\":1537702562,\"local_time\":1537702561},\"header\":{\"appkey\":\"57bfa27c67e58e7d920028d3\",\"openudid\":\"586040e47a883ed4\",\"sdk_version\":201,\"package\":\"com.ss.android.ugc.aweme\",\"channel\":\"tengxun\",\"display_name\":\"抖音短视频\",\"app_version\":\"1.7.6\",\"version_code\":176,\"timezone\":8,\"access\":\"wifi\",\"os\":\"Android\",\"os_version\":\"7.1.2\",\"os_api\":25,\"device_model\":\"Redmi 4X\",\"device_brand\":\"Xiaomi\",\"device_manufacturer\":\"Xiaomi\",\"language\":\"zh\",\"resolution\":\"1280*720\",\"display_density\":\"xhdpi\",\"density_dpi\":320,\"mc\":\"F4:F5:DB:19:78:22\",\"carrier\":\"中国移动\",\"mcc_mnc\":\"46000\",\"clientudid\":\"e7d7c35d-aadf-457b-a1e8-b581bcb6fb6f\",\"install_id\":\"44771193224\",\"device_id\":\"57679504084\",\"sig_hash\":\"aea615ab910015038f73c47e45d21466\",\"aid\":1128,\"push_sdk\":[1,2,6,7,8,9],\"rom\":\"MIUI-8.9.13\",\"release_build\":\"67a6344_20180308\",\"update_version_code\":1762,\"manifest_version_code\":176,\"cpu_abi\":\"armeabi-v7a\",\"build_serial\":\"6d16cfb7d440\",\"serial_number\":\"6d16cfb7d440\",\"sim_serial_number\":[],\"not_request_sender\":0,\"rom_version\":\"miui_V10_8.9.13\",\"region\":\"CN\",\"tz_name\":\"Asia/Shanghai\",\"tz_offset\":28800000,\"sim_region\":\"cn\"},\"_gen_time\":1537702615946}";
+
+        String header = appLog.split("\"header\":")[1].split(",\"_gen_time\"")[0];
+        String []list = header.split(",");
+        String result_header = "";
+        for(int i = 0;i < list.length;i ++){
+            String []temp_line = list[i].split(":");
+            if(temp_line[0].equals("\"carrier\"") || temp_line[0].equals("\"mcc_mnc\"") || temp_line[0].equals("\"sim_region\"")){
+                continue;
+            }else{
+                result_header += (i!=list.length - 2)? list[i]+",":list[i];
+            }
+        }
+        result_header += "}";
+
+        //gen_time采用最后一次加载的系统时间戳
+        String _gen_time = String.valueOf(System.currentTimeMillis());
+
+        String result = "{\"event\": ["+like+"],\"launch\": ["+result_launch+"],\"magic_tag\":"+magic_tag+",\"time_sync\": "+time_sync+",\"header\":"+result_header+",\"_gen_time\":"+_gen_time+"}";
+
+        ArrayList<String> resultToReturn = new ArrayList<>();
+        resultToReturn.add(String.valueOf(event_id));
+        resultToReturn.add(result);
+        return resultToReturn;
+    }
+
     /**
      * 用来构造随机生成的sessionId的方法
      * @return
