@@ -56,13 +56,18 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/make_web_order")
-    public Map makeWebOrder(@RequestBody Map map) {
+//    public Map makeWebOrder(@RequestBody Map map) {
+        public Map makeWebOrder() {
         Map result = new HashMap();
-        String proType = (String) map.get("pro_type");
-        String goodsType = (String) map.get("goods");
-        String videoId = (String) map.get("video_id");
-        int orderCount = (int) map.get("order_count");
+//        String proType = (String) map.get("pro_type");
+//        String goodsType = (String) map.get("goods");
+//        String videoId = (String) map.get("video_id");
+//        int orderCount = (int) map.get("order_count");
 
+        String proType = "dy";
+        String goodsType = "dydz100";
+        String videoId = "testPay1";
+        int orderCount = 10;
 
         WebOrderEntity webOrderEntity = new WebOrderEntity();
         webOrderEntity.setGoodsType(goodsType);
@@ -90,6 +95,18 @@ public class OrderController {
             result.put("status","1");
             result.put("message", "输入有误，请重新输入");
         }
+
+        return result;
+    }
+
+    /**
+     * 支付回调
+     * @return
+     */
+    @RequestMapping("/payCallBack")
+    public Map payCallBack() {
+        Map result = new HashMap();
+        System.out.println("支付成功");
 
         return result;
     }

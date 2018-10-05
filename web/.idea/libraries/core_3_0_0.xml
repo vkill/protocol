@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="core-3.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/core-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/fastjson-1.2.49.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/jstl-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/QRCode-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/standard.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/resources/lib/zxing3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
