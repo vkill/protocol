@@ -56,18 +56,18 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/make_web_order")
-//    public Map makeWebOrder(@RequestBody Map map) {
-        public Map makeWebOrder() {
+    public Map makeWebOrder(@RequestBody Map map) {
+//        public Map makeWebOrder() {
         Map result = new HashMap();
-//        String proType = (String) map.get("pro_type");
-//        String goodsType = (String) map.get("goods");
-//        String videoId = (String) map.get("video_id");
-//        int orderCount = (int) map.get("order_count");
+        String proType = (String) map.get("pro_type");
+        String goodsType = (String) map.get("goods");
+        String videoId = (String) map.get("video_id");
+        int orderCount = (int) map.get("order_count");
 
-        String proType = "dy";
-        String goodsType = "dydz100";
-        String videoId = "testPay1";
-        int orderCount = 10;
+//        String proType = "dy";
+//        String goodsType = "dydz100";
+//        String videoId = "testPay1";
+//        int orderCount = 10;
 
         WebOrderEntity webOrderEntity = new WebOrderEntity();
         webOrderEntity.setGoodsType(goodsType);
