@@ -66,6 +66,9 @@ public class OrderServiceImpl implements OrderService {
             // 支付信息生成成功
             if (payData.get("status").equals("0")) {
                 webOrderRepository.save(webOrderEntity);// 存到数据库
+                // TO-DO
+                // 加到计时器列表 讲订单号放进去，如果在5分钟内没有成功支付，把状态设置成-2为未支付订单，如果转账成功，则修改数据库
+
                 result.put("status", "0");
                 result.put("message","下单成功");
                 result.put("data", webOrderEntity);

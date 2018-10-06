@@ -20,7 +20,7 @@ export default class MainPage extends Component {
           <TopBar />
           <NameBar />
           <Attention />
-          <Order />
+          <Order props={this.props} />
           <Footer />
         </div>
       </div>

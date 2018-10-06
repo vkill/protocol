@@ -38,3 +38,10 @@ export const make_order = (postData) => axios.post(`${web_order_url}/make_web_or
 export const search_order = (order_id) => axios.post(`${web_order_url}/get_order_data`, {
     order_id: order_id,
 });
+
+
+/**
+ * 轮训访问判断是否付款成功
+ * @param {123456}} order_no 订单号码
+ */
+export const pay_check = (order_no) => axios.get(`${web_order_url}/checkPay?orderNo=${order_no}`);

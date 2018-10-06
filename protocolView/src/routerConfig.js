@@ -23,6 +23,7 @@ import CompanyMain from './pages/CompanyMain';
 import UserOrder from './pages/UserOrder';
 import MainPage from './pages/MainPage';
 import NotFound from './pages/NotFound';
+import PayPage from './pages/PayPage';
 
 const routerConfig = [
   {
@@ -69,6 +70,11 @@ const routerConfig = [
     path: '/',
     layout: BlankLayout,
     component: MainPage,
+  },
+  {
+    path:'/paypage',
+    layout: BlankLayout,
+    component: PayPage,
   },
   {
     path: '*',

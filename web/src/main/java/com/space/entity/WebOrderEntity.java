@@ -36,7 +36,7 @@ public class WebOrderEntity {
     // 操作数量
     private int operaCount;
 
-    // 订单状态 -1 订单异常 1 未完成 0 完成 2 进行中
+    // 订单状态 -2 未付款 -1 订单异常 1 未完成 0 完成 2 进行中
     private int orderStatus;
 
     // 下单时间

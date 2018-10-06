@@ -21,10 +21,10 @@ export default class Order extends Component {
         <div style={styles.container}>
           <Tabs defaultActiveKey="1">
             <TabPane tab={<span><Icon type="shopping-cart" />下单</span>} key="1">
-              <OrderForm type_list={this.state.pro_list} />
+              <OrderForm type_list={this.state.pro_list} toOtherPage={this.toOtherPage.bind(this)} />
             </TabPane>
             <TabPane tab={<span><Icon type="search" />查单</span>} key="2">
-                    <CheckForm />
+              <CheckForm />
             </TabPane>
             {/* <TabPane tab='Tab 1' key = '3'>3</TabPane> */}
 
@@ -46,6 +46,11 @@ export default class Order extends Component {
         });
         // console.log(data.order_type.type_list)
       });
+    }
+
+    toOtherPage(page, body) {
+      // console.log(this.props.props);
+      this.props.props.history.push({pathname: `${page}`, state: body});
     }
     /**
      * 获取商品的列表
