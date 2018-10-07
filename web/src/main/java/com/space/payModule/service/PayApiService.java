@@ -19,6 +19,13 @@ public interface PayApiService {
     public Map makeOrderPay(WebOrderEntity webOrderEntity, String payType);
 
 
+    /**
+     * 根据订单号码查询是否付账
+     * @param orderNo
+     * @return
+     */
+    public boolean isPay(String orderNo);
+
 
 
 }

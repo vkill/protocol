@@ -23,4 +23,5 @@ public class StringUtil {
 //        System.out.println(isNumeric("1s23"));
 //    }
 
+
 }

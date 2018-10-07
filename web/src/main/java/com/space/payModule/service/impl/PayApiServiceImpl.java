@@ -1,6 +1,7 @@
 package com.space.payModule.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.space.dao.WebOrderRepository;
 import com.space.entity.WebOrderEntity;
 import com.space.payModule.api.EpayclientAop;
 import com.space.payModule.domian.EpayclientConfig;
@@ -8,7 +9,9 @@ import com.space.payModule.domian.EpayclientRequest;
 import com.space.payModule.service.PayApiService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +24,9 @@ public class PayApiServiceImpl implements PayApiService {
 
     // 回调通知地址
     private static final String NOTIFY_URL = "http://localhost:8888/pay/notify";
+
+    @Resource
+    WebOrderRepository webOrderRepository;
 
     @Override
     public Map makeOrderPay(WebOrderEntity webOrderEntity, String payType) {
@@ -81,6 +87,21 @@ public class PayApiServiceImpl implements PayApiService {
             result.put("msg","二维码生成失败");
         }
         return result;
+    }
+
+    @Override
+    public boolean isPay(String orderNo) {
+        List<WebOrderEntity> allByOrderId = webOrderRepository.getAllByOrderId(orderNo);
+        if (allByOrderId.size() == 1) {
+            WebOrderEntity webOrderEntity = allByOrderId.get(0);
+            if (webOrderEntity.getIsPay() == 0) {// 付款完成
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 //    private static void makeOrder() throws Exception {
 //        EpayclientConfig conf 	= new EpayclientConfig();

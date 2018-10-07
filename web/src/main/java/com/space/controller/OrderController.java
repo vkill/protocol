@@ -2,7 +2,9 @@ package com.space.controller;
 
 import com.space.entity.Order;
 import com.space.entity.WebOrderEntity;
+import com.space.payModule.service.PayApiService;
 import com.space.service.OrderService;
+import com.space.timerConfig.TimerConfig;
 import com.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,12 @@ public class OrderController {
 
     @Resource
     OrderService orderService;
+
+    @Resource
+    private TimerConfig timerConfig;
+
+    @Resource
+    PayApiService payApiService;
 
     @RequestMapping("/getOrderList")
     public Map getOrderListByUser(@RequestBody Map map) {
@@ -66,7 +74,7 @@ public class OrderController {
 
 //        String proType = "dy";
 //        String goodsType = "dydz100";
-//        String videoId = "testPay1";
+//        String videoId = "testPay2";
 //        int orderCount = 10;
 
         WebOrderEntity webOrderEntity = new WebOrderEntity();
@@ -81,6 +89,7 @@ public class OrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println(result);
         return result;
     }
 
@@ -104,10 +113,32 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/payCallBack")
-    public Map payCallBack() {
+    public void payCallBack(String orderNumber) {
         Map result = new HashMap();
-        System.out.println("支付成功");
+//        System.out.println("支付成功");
+        WebOrderEntity webOrderEntity = new WebOrderEntity();
+        webOrderEntity.setOrderNumber(orderNumber);
+        timerConfig.donePay(webOrderEntity);
+        System.out.println("完成支付");
+        //        return result;
+    }
 
+    /**
+     * 轮循查询是否完成订单
+     * @param orderNo
+     * @return
+     */
+    @RequestMapping("/checkPay")
+    public Map checkPay(String orderNo) {
+        Map result = new HashMap();
+//        System.out.println(orderNo);
+        if (payApiService.isPay(orderNo)) {
+            result.put("status","0");
+            result.put("msg","付款成功");
+        } else {
+            result.put("status","1");
+            result.put("msg","还没付款");
+        }
         return result;
     }
 }

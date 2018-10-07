@@ -192,7 +192,8 @@ class OrderForm extends Component {
     }
 
     handleSubmit = (e) => {
-      e.preventDefault();
+      e.preventDefault();      
+
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           if (values.pro_type != null || values.goods != null) {
@@ -205,8 +206,11 @@ class OrderForm extends Component {
                   const data = response.data;
                   if (data.status === '0') {
                     // 下单成功，跳转支付
-                    // TO-DO
+
                     message.success(data.message);
+                    this.props.toOtherPage('/paypage',data)
+
+
                   } else {
                     message.error(data.message);
                   }

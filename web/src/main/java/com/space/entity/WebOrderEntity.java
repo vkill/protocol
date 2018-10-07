@@ -36,7 +36,7 @@ public class WebOrderEntity {
     // 操作数量
     private int operaCount;
 
-    // 订单状态 -1 订单异常 1 未完成 0 完成 2 进行中
+    // 订单状态 -2 未付款 -1 订单异常 1 未完成 0 完成 2 进行中
     private int orderStatus;
 
     // 下单时间
@@ -138,12 +138,14 @@ public class WebOrderEntity {
     public String toString() {
         return "WebOrderEntity{" +
                 "id=" + id +
+                ", orderNumber='" + orderNumber + '\'' +
                 ", proType='" + proType + '\'' +
                 ", goodsType='" + goodsType + '\'' +
                 ", videoId='" + videoId + '\'' +
                 ", orderCount=" + orderCount +
                 ", operaCount=" + operaCount +
                 ", orderStatus=" + orderStatus +
+                ", time='" + time + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", isPay=" + isPay +
                 '}';

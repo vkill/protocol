@@ -21,6 +21,19 @@ public interface WebOrderRepository extends JpaRepository<WebOrderEntity, Intege
     List<WebOrderEntity> hasOrder(String videoId,  String goods_type,int status);
 
     /**
+     * 两个状态，未完成和进行中
+     * @param videoId
+     * @param goods_type
+     * @param status
+     * @param status2
+     * @return
+     */
+    @Query(value = "select * from t_web_order where video_id=?1 and goods_type=?2 and order_status=?3 or order_status=?4", nativeQuery = true)
+    List<WebOrderEntity> hasOrder(String videoId,  String goods_type,int status, int status2);
+
+
+
+    /**
      * 根据id获取
      * @param videoId
      * @return
@@ -35,5 +48,16 @@ public interface WebOrderRepository extends JpaRepository<WebOrderEntity, Intege
      */
     @Query(value = "select * from t_web_order where order_number=?1", nativeQuery = true)
     List<WebOrderEntity> getAllByOrderId(String orderId);
+
+    /**
+     * 获取未付款的订单
+     * @param isPay
+     * @return
+     */
+    @Query(value = "select * from t_web_order where is_pay=?1 and order_status=?2", nativeQuery = true)
+    List<WebOrderEntity> getAllByIsPay(int isPay, int orderStatus);
+
+//    @Query(value = "select * from t_web_order where is_pay=?")
+//    List<WebOrderEntity> getAllByIsPayAndOrderStatus(int ispay, int orderStatus);
 
 }
