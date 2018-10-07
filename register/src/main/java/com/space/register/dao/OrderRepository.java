@@ -18,6 +18,9 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer>, Jp
     @Query(value = "select * from t_dy_order where id = ?1", nativeQuery = true)
     DeviceEntity findById(int id);
 
+    @Query(value = "select * from t_dy_order where videoid = ?1", nativeQuery = true)
+    ArrayList<OrderEntity> findByNum(String num);
+
     /**
      * 返回全部数据
      * @return
