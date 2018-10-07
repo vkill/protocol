@@ -4,6 +4,7 @@ import com.space.entity.Order;
 import com.space.entity.WebOrderEntity;
 import com.space.payModule.service.PayApiService;
 import com.space.service.OrderService;
+import com.space.timerConfig.TimerConfig;
 import com.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,9 @@ public class OrderController {
 
     @Resource
     OrderService orderService;
+
+    @Resource
+    private TimerConfig timerConfig;
 
     @Resource
     PayApiService payApiService;
@@ -109,11 +113,14 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/payCallBack")
-    public Map payCallBack() {
+    public void payCallBack(String orderNumber) {
         Map result = new HashMap();
-        System.out.println("支付成功");
-
-        return result;
+//        System.out.println("支付成功");
+        WebOrderEntity webOrderEntity = new WebOrderEntity();
+        webOrderEntity.setOrderNumber(orderNumber);
+        timerConfig.donePay(webOrderEntity);
+        System.out.println("完成支付");
+        //        return result;
     }
 
     /**

@@ -29,4 +29,10 @@ public interface OrderService {
      */
     Map getWebOrderById(String id);
 
+    /**
+     * 讲点赞和关注订单发送到点赞服务器和关注服务器
+     * @return
+     */
+    Map putOrderToDigg();
+
 }

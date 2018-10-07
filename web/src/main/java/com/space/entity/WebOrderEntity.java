@@ -138,12 +138,14 @@ public class WebOrderEntity {
     public String toString() {
         return "WebOrderEntity{" +
                 "id=" + id +
+                ", orderNumber='" + orderNumber + '\'' +
                 ", proType='" + proType + '\'' +
                 ", goodsType='" + goodsType + '\'' +
                 ", videoId='" + videoId + '\'' +
                 ", orderCount=" + orderCount +
                 ", operaCount=" + operaCount +
                 ", orderStatus=" + orderStatus +
+                ", time='" + time + '\'' +
                 ", totalPrice=" + totalPrice +
                 ", isPay=" + isPay +
                 '}';
