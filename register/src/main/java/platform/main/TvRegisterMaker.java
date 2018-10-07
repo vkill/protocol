@@ -165,7 +165,7 @@ public class TvRegisterMaker {
 
         requestTokenVo.setHeader(headers);
         requestTokenVo.setBody(body);
-        System.out.println(requestTokenVo.getBody());
+        //System.out.println(requestTokenVo.getBody());
         return ConstructRequest.constructPost(requestTokenVo);
     }
     public static String MapToString(Map map){
@@ -181,13 +181,13 @@ public class TvRegisterMaker {
     }
 
     public Map<String,String> getDevice(Map<String,String> kao,PhonePo phonePo){
-        String phone = "+66"+phonePo.getPhone_Num();
+        String phone = phonePo.getArea_Num()+phonePo.getPhone_Num();
         kao.put("mobile",ParamCreater.change_Mobile_to_Src(phone));
         return kao;
     }
 
     public Map<String,String> getDeviceCode(Map<String,String> kao,PhonePo phonePo,String code){
-        String phone = "+66"+phonePo.getPhone_Num();
+        String phone = phonePo.getArea_Num()+phonePo.getPhone_Num();
         kao.put("mobile",ParamCreater.change_Mobile_to_Src(phone));
         kao.put("password",ParamCreater.change_Mobile_to_Src("asd123456"));
         kao.put("code",ParamCreater.change_Mobile_to_Src(code));

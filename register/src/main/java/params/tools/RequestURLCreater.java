@@ -79,7 +79,7 @@ public class RequestURLCreater {
         StringBuilder stringBuilder = new StringBuilder(host + msg);
         for (UserRegisterInfo userRegisterInfo : UserRegisterInfo.values()) {
             String key_Str = userRegisterInfo.getVaule();
-            System.out.println(key_Str);
+            //System.out.println(key_Str);
             if (userRegisterInfo.equals(UserRegisterInfo.os_api)) {
                 if (messageInfoMap.containsKey(key_Str)) {
                     stringBuilder.append(key_Str + "=" + messageInfoMap.get(key_Str));

@@ -37,7 +37,7 @@ public class BussinessThread implements Runnable {
     public static int thread_num = 2;
     public static String successInfo ="success";
     public static String failureInfo = "failure";
-    public static int oneIpThumbUp = 20;
+    public static int oneIpThumbUp = 30;
 
     public ArrayList<OrderEntity> orderEntities;
     public ArrayList<DYUserEntity> dyUserEntities;
@@ -67,6 +67,7 @@ public class BussinessThread implements Runnable {
                 break;
             }else if(orderEntities.size()==0){
                 System.out.println("订单全部完成");
+                System.out.println("一共用时:  "+ (System.currentTimeMillis() - BussinessController.beginTime));
                 break;
             }
             dyUserEntity =dyUserEntities.get(userNum);
@@ -151,7 +152,7 @@ public class BussinessThread implements Runnable {
             event_id = Integer.valueOf(result.get(1));
             dyUserEntity.setEvent_id(event_id);
             if(status.equals(successInfo)){
-                double nums = orderEntity.getThumbUpOrFollowNum();
+                int nums = orderEntity.getThumbUpOrFollowNum();
                 nums = nums - 1;
                 orderEntity.setThumbUpOrFollowNum(nums);
                 if(orderEntity.getThumbUpOrFollowNum()==0){
@@ -164,7 +165,7 @@ public class BussinessThread implements Runnable {
                 dyUserEntity.setEvent_id(event_id);
                 if(status.equals(successInfo)){
                     //第二次跑如果成功
-                    double nums = orderEntity.getThumbUpOrFollowNum();
+                    int nums = orderEntity.getThumbUpOrFollowNum();
                     nums = nums - 1;
                     orderEntity.setThumbUpOrFollowNum(nums);
                     if(orderEntity.getThumbUpOrFollowNum()==0){
@@ -185,7 +186,7 @@ public class BussinessThread implements Runnable {
             dyUserEntity.setEvent_id(event_id);
 
             if(status.equals(successInfo)){
-                double nums = orderEntity.getThumbUpOrFollowNum();
+                int nums = orderEntity.getThumbUpOrFollowNum();
                 nums = nums - 1;
                 orderEntity.setThumbUpOrFollowNum(nums);
                 if(orderEntity.getThumbUpOrFollowNum()==0){
@@ -200,7 +201,7 @@ public class BussinessThread implements Runnable {
 
                 if(status1.equals(successInfo)){
                     //第二次跑如果成功
-                    double nums = orderEntity.getThumbUpOrFollowNum();
+                    int nums = orderEntity.getThumbUpOrFollowNum();
                     nums = nums - 1;
                     orderEntity.setThumbUpOrFollowNum(nums);
                     if(orderEntity.getThumbUpOrFollowNum()==0){
@@ -214,6 +215,13 @@ public class BussinessThread implements Runnable {
                 }
 
             }
+        }
+        //第二次跑如果成功
+        int nums = orderEntity.getThumbUpOrFollowNum();
+        nums = nums - 1;
+        orderEntity.setThumbUpOrFollowNum(nums);
+        if(orderEntity.getThumbUpOrFollowNum()==0){
+            return finallyOrderAction(dyUserEntity,orderEntity);
         }
         return false;
     }
@@ -273,11 +281,6 @@ public class BussinessThread implements Runnable {
         String user_id = orderEntity.getVideoID();
         long time = System.currentTimeMillis();
         ArrayList<String> follow_result = FollowMaker.FollowMaker(okHttpClient,user_id, dyUserEntity, deviceEntity);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         //这个方法用来获取该用户的一个视频id
         String result = SupportAccountMaker.getAwemeId(okHttpClient, deviceEntity, dyUserEntity, user_id);
 
@@ -329,9 +332,9 @@ public class BussinessThread implements Runnable {
             e.printStackTrace();
             return changeOkHttpHost();
         }
-        if(BussinessController.hostIpQueneForBusiness.size()== 0){
+        if(BussinessController.hostIpQueneForBusiness.size()==thread_num-1){
             synchronized (BussinessController.hostIpQueneForBusiness){
-                if(BussinessController.hostIpQueneForBusiness.size()== 0){
+                if(BussinessController.hostIpQueneForBusiness.size()<=thread_num-1){
                     getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
                 }
             }
@@ -352,7 +355,7 @@ public class BussinessThread implements Runnable {
                     .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
                     .build();
         }
-        return okHttpClient;
+        return new OkHttpClient();
     }
 
     public boolean finallyOrderAction(DYUserEntity dyUserEntity,OrderEntity orderEntity){

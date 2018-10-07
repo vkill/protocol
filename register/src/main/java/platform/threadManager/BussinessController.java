@@ -23,7 +23,7 @@ public class BussinessController {
     public static LinkedBlockingQueue<HostIPPo> hostIpQueneForBusiness = new LinkedBlockingQueue<HostIPPo>();
 
     public static ArrayList<DYUserEntity> dyUserEntities = new ArrayList<DYUserEntity>();
-
+    public static long beginTime;
     //1代表需要点赞的订单，0代表已完成的订单，-1代表异常订单
     public static String orderStatus ="1";
     //单个线程分配的订单数量
@@ -33,7 +33,7 @@ public class BussinessController {
         ArrayList<OrderEntity> orderEntities = orderThreadDatabase.getAllOrder(orderStatus);
         long lessId =0;
         double number = 0;
-        BussinessThread.getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
+       // BussinessThread.getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
         for(OrderEntity orderEntity:orderEntities){
             if(orderEntity.getLangestDYId()>lessId){
                 lessId = orderEntity.getLangestDYId();
@@ -50,6 +50,7 @@ public class BussinessController {
             threadNum++;
         }
         Thread[] threads = new Thread[threadNum];
+        beginTime = System.currentTimeMillis();
         for(int i =0;i<threadNum;i++){
             ArrayList<OrderEntity> orderEntities1 = new ArrayList<OrderEntity>();
             for(int k=0;k<orderNumber;k++){

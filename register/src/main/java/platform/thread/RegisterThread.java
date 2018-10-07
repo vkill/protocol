@@ -56,7 +56,7 @@ public class RegisterThread implements Runnable{
     @Resource
     DYUserRepository dyUserRepository;
 
-    RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
+    public static RegisterThreadDatabaseImpl registerThreadDatabaseImpl = new RegisterThreadDatabaseImpl();
 
     public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
     public RegisterThread(JTextArea log){
@@ -75,30 +75,33 @@ public class RegisterThread implements Runnable{
             }
             if(hostIpQuene.size()== thread_num-1){
                 synchronized (hostIpQuene) {
-                    if (DeviceController.hostIpQuene.size() == 0) {
-                        DeviceController.getNeedIPFromWeb(DeviceController.hostIpQuene);
+                    if (hostIpQuene.size() <= thread_num-1) {
+                        DeviceController.getNeedIPFromWeb(hostIpQuene);
                     }
                 }
 
             }
-            for(int i =0;i<6;i++){
+            for(int i =0;i<11;i++){
                 try {
                     oneUserInfo(hostIPPo.host,hostIPPo.port);
                     System.out.println("线程注册成功喽");
                     loggs.append("线程注册成功喽\n");
                 } catch (IOException e) {
                     System.out.println("死掉了 一个  IP");
+                    System.out.println(hostIPPo.host+" "+hostIPPo.port);
                     loggs.append("死掉了 一个  IP\n");
                     e.printStackTrace();
                     break;
                 } catch (JSONException e){
                     System.out.println("json格式出错");
                     System.out.println("IP单次运行出错");
+                    System.out.println(hostIPPo.host+" "+hostIPPo.port);
                     e.printStackTrace();
-                    continue;
+                    break;
                 }catch (Exception e){
                     System.out.println("瞎几把的错误");
                     loggs.append("死掉了一个 IP");
+                    System.out.println(hostIPPo.host+" "+hostIPPo.port);
                     e.printStackTrace();
                     break;
                 }
@@ -126,26 +129,26 @@ public class RegisterThread implements Runnable{
         Response response = null;
         String jsonString = null;
         JSONObject resultJson =null;
-        //第一个v1 setting方法
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.v1_Settings_Hoster,DirTable.v1_Settings,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //第二个abtest param
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.abtest_Param_Hoster,DirTable.abtest_Param,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //第三个lucky money setting, 需要传递cookie
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings_Hoster,DirTable.money_Settings,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //第诗歌lucky money new user，需要传递cookie
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User_Hoster,DirTable.money_New_User,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
+//        //第一个v1 setting方法
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.v1_Settings_Hoster,DirTable.v1_Settings,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+//        //第二个abtest param
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.abtest_Param_Hoster,DirTable.abtest_Param,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+//        //第三个lucky money setting, 需要传递cookie
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings_Hoster,DirTable.money_Settings,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+//        //第诗歌lucky money new user，需要传递cookie
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User_Hoster,DirTable.money_New_User,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
 //        //第五个 theme package
 //        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.theme_Package_Hoster,DirTable.theme_Package,deviceEntity,true);
 //        response = okHttpClient.newCall(requestUpload).execute();
@@ -210,16 +213,16 @@ public class RegisterThread implements Runnable{
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
         System.out.println(jsonString);
 
-        //第十三个 lucky money sittings
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings1_Hoster,DirTable.money_Settings,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
-        //第十四个 lucky money new user
-        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,deviceEntity,true);
-        response = okHttpClient.newCall(requestUpload).execute();
-        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
+//        //第十三个 lucky money sittings
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings1_Hoster,DirTable.money_Settings,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+//        //第十四个 lucky money new user
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
 //        //第十五个 sdk log
 //        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.sdk_Log_Hoster,DirTable.sdk_Log,deviceEntity,true);
 //        response = okHttpClient.newCall(requestUpload).execute();
@@ -239,17 +242,9 @@ public class RegisterThread implements Runnable{
 
         realDevice = JsonTableGetter.contrustJsonForReal(deviceEntity);
         requestUpload = sendRealDeviceInfo(deviceEntity,realDevice,"cold_start");
-        try {
-            response = okHttpClient.newCall(requestUpload).execute();
-            jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-            resultJson = new JSONObject(jsonString);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("更新设备失败");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("更新设备失败");
-        }
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        resultJson = new JSONObject(jsonString);
         System.out.println(jsonString);
         deviceEntity.setDevice_upload_info_json(realDevice.toString());
 
@@ -275,31 +270,23 @@ public class RegisterThread implements Runnable{
 //        System.out.println(jsonString);
 
         //为了测试而添加的读取方法################################################
-        EmailGetter emailGetter = new EmailGetter();
-        emailGetter.loginIT();
+        EmailGetter emailGetter = EmailGetter.getInstrance();
+        //emailGetter.loginIT();
         PhonePo phonePo = null ;
         Request request = null;
         String code = null;
         int kao = 0;
         String test_time = null;
         while(kao<3){
-            phonePo = emailGetter.getPhoneNumber();
+            phonePo = emailGetter.getPhoneNumber(okHttpClient);
             test_time = String.valueOf(System.currentTimeMillis());
             request = tvRegisterMaker.sendMessageForRegister(deviceEntity,phonePo,"");
-            try {
-                response = okHttpClient.newCall(request).execute();
-                jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-                resultJson = new JSONObject(jsonString);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("发送验证码失败");
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("发送验证码失败");
-            }
+            response = okHttpClient.newCall(request).execute();
+            jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+            resultJson = new JSONObject(jsonString);
             System.out.println(jsonString);
             //获取验证码
-            code = emailGetter.getIdentCode(phonePo.getP_ID());
+            code = emailGetter.getIdentCode(phonePo.getP_ID(),okHttpClient);
             if(code.equals("请求超时")){
                 kao++;
                 continue;
@@ -351,7 +338,7 @@ public class RegisterThread implements Runnable{
         dyUserEntity.setBelong("ours");
         dyUserEntity.setName("呵呵哒哒");
         dyUserEntity.setPassword("asd123456");
-        dyUserEntity.setPhoneArea("66");
+        dyUserEntity.setPhoneArea(phonePo.getArea_Num());
         dyUserEntity.setPhoneNum(phonePo.getPhone_Num());
         //dyUserEntity.setSimulationID(deviceEntity.getId()+"");
         try {
@@ -411,18 +398,11 @@ public class RegisterThread implements Runnable{
         }
         //此处为获取权限测试的第二处请求，调取的方法为：/v1/abtest/param/
         request2 =DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.abtest_Param_Hoster,DirTable.abtest_Param,headWithCookie,deviceEntity,true);
-        try {
-            response = okHttpClient.newCall(request2).execute();
-            jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-            resultJson = new JSONObject(jsonString);
-            System.out.println(jsonString);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("运行参数测试失败");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("运行参数测试失败");
-        }
+        response = okHttpClient.newCall(request2).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        resultJson = new JSONObject(jsonString);
+        System.out.println(jsonString);
+
         //此处为获取权限的第五处请求，调取方法为：/aweme/v1/user/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();

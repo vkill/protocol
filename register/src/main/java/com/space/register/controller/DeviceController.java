@@ -12,6 +12,7 @@ import platform.threadManager.BussinessController;
 import po.HostIPPo;
 
 import javax.annotation.Resource;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -29,18 +30,17 @@ public class DeviceController {
     @Resource
     DYUserRepository dyUserRepository;
     public static int thread_num = RegisterThread.thread_num;
-    public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
 
     @RequestMapping("/maker")
     public String deviceMain(){
-        BussinessController bussinessController =new BussinessController();
-        bussinessController.doBusinessWork();
-//        getNeedIPFromWeb(hostIpQuene);
-////        Thread[] registerThreads =new Thread[thread_num];
-////        for(int i=0;i<thread_num;i++){
-////            registerThreads[i] = new Thread(new RegisterThread());
-////            registerThreads[i].start();
-////        }
+//        BussinessController bussinessController =new BussinessController();
+//        bussinessController.doBusinessWork();
+        getNeedIPFromWeb(RegisterThread.hostIpQuene);
+        Thread[] registerThreads =new Thread[thread_num];
+        for(int i=0;i<thread_num;i++){
+            registerThreads[i] = new Thread(new RegisterThread(new JTextArea()));
+            registerThreads[i].start();
+        }
         //切换
 //        RegisterThread registerThread = new RegisterThread();
 //        try {
@@ -57,7 +57,7 @@ public class DeviceController {
     }
 
     public static void getNeedIPFromWeb(LinkedBlockingQueue<HostIPPo> hostIpQuene){
-        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(RegisterThread.thread_num);
+        ArrayList<HostIPPo> hostIPPos = HostIPGetter.getIpByXdali(5);
         if(hostIpQuene.size()>RegisterThread.thread_num*2-1){
             return;
         }
@@ -73,6 +73,11 @@ public class DeviceController {
             }
         }
         if(hostIpQuene.size()<RegisterThread.thread_num*2-1){
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             getNeedIPFromWeb(hostIpQuene);
         }
     }

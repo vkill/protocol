@@ -20,7 +20,7 @@ public class OrderEntity {
 
     private String videoID; // 视频id
 
-    private Double thumbUpOrFollowNum; // 点赞数
+    private int thumbUpOrFollowNum; // 点赞数
 
     private String status; // 订单状态
 
@@ -60,11 +60,11 @@ public class OrderEntity {
         this.videoID = videoID;
     }
 
-    public Double getThumbUpOrFollowNum() {
+    public int getThumbUpOrFollowNum() {
         return thumbUpOrFollowNum;
     }
 
-    public void setThumbUpOrFollowNum(Double thumbUpOrFollowNum) {
+    public void setThumbUpOrFollowNum(int thumbUpOrFollowNum) {
         this.thumbUpOrFollowNum = thumbUpOrFollowNum;
     }
 

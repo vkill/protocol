@@ -54,7 +54,11 @@ public class OrderThreadDatabaseImpl {
     }
 
     public ArrayList<DYUserEntity> getNumsUser(long lessId,long number){
-        return orderThreadDatabase.DYUserRepository.getUserByIdAndNum(lessId,number);
+        ArrayList<DYUserEntity> dyUserEntities = orderThreadDatabase.DYUserRepository.getUserByIdAndNum(lessId,number);
+        if(dyUserEntities.size()<number-1){
+            dyUserEntities = orderThreadDatabase.DYUserRepository.getUserByIdAndNum(0,number);
+        }
+        return dyUserEntities;
     }
 
     public DeviceEntity getDeviceByID(int id){

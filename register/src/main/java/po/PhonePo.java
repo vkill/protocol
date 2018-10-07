@@ -1,5 +1,7 @@
 package po;
 
+import enums.PhoneArea;
+
 /**
  * @program: protocol
  * @description: 短信平台手机号码信息存储类
@@ -19,7 +21,7 @@ public class PhonePo {
         this.time = time;
         this.com_Num = com_Num;
         this.phone_Num = phone_Num;
-        this.Area_Num = Area_Num;
+        this.Area_Num = PhoneArea.phoneFromAddress.get(Area_Num);
     }
     public String getP_ID() {
         return P_ID;
