@@ -66,7 +66,7 @@ public class TimerConfig extends Thread{
             } else {
                 System.out.println("无订单，获取订单");
                 // 可以对数据库进行读取，但是害怕会对数据库造成压力
-                orderList = webOrderRepository.getAllByIsPay(OrderState.UN_PAY, OrderState.INCOMPLETE);
+//                orderList = webOrderRepository.getAllByIsPay(OrderState.UN_PAY, OrderState.INCOMPLETE);
 
             }
         }

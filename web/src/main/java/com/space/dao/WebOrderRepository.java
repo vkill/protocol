@@ -28,7 +28,7 @@ public interface WebOrderRepository extends JpaRepository<WebOrderEntity, Intege
      * @param status2
      * @return
      */
-    @Query(value = "select * from t_web_order where video_id=?1 and goods_type=?2 and order_status=?3 or order_status=?4", nativeQuery = true)
+    @Query(value = "select * from t_web_order where video_id=?1 and goods_type=?2 and (order_status=?3 or order_status=?4)", nativeQuery = true)
     List<WebOrderEntity> hasOrder(String videoId,  String goods_type,int status, int status2);
 
 

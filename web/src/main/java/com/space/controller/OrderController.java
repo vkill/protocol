@@ -1,9 +1,12 @@
 package com.space.controller;
 
+import com.space.dao.WebOrderRepository;
 import com.space.entity.Order;
 import com.space.entity.WebOrderEntity;
 import com.space.payModule.service.PayApiService;
 import com.space.service.OrderService;
+import com.space.stateConfig.OrderState;
+import com.space.stateConfig.ReturnState;
 import com.space.timerConfig.TimerConfig;
 import com.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +30,9 @@ public class OrderController {
 
     @Resource
     PayApiService payApiService;
+
+    @Resource
+    private WebOrderRepository webOrderRepository;
 
     @RequestMapping("/getOrderList")
     public Map getOrderListByUser(@RequestBody Map map) {
@@ -89,7 +95,7 @@ public class OrderController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(result);
+//        System.out.println(result);
         return result;
     }
 
@@ -119,7 +125,7 @@ public class OrderController {
         WebOrderEntity webOrderEntity = new WebOrderEntity();
         webOrderEntity.setOrderNumber(orderNumber);
         timerConfig.donePay(webOrderEntity);
-        System.out.println("完成支付");
+//        System.out.println("完成支付");
         //        return result;
     }
 
@@ -140,5 +146,56 @@ public class OrderController {
             result.put("msg","还没付款");
         }
         return result;
+    }
+
+    /**
+     * 请求订单传给另外的服务器
+     * @param key
+     * @return
+     */
+    @RequestMapping("/getOrderListByService")
+    public Map putOrderToDiggService(String key) {
+        Map map = new HashMap();
+        if (!key.equals("SsPpQqZz")){
+            map.put(ReturnState.STATUS_KEY, ReturnState.FAIL);
+            map.put(ReturnState.MSG_KEY,"请求错误，请重试");
+            return map;
+        }
+        Map orderMap= orderService.putOrderToDigg();
+        map.put(ReturnState.STATUS_KEY, ReturnState.SUCCESS);
+        map.put(ReturnState.MSG_KEY,orderMap);
+        return map;
+    }
+
+    /**
+     * 给点赞机提供完成订单的接口
+     * @param key
+     * @param orderNo
+     * @param status
+     */
+    @RequestMapping("/finishOrder")
+    public void finishOrder(String key, String orderNo, String status) {
+        if (key==null || !key.equals("SpaceIsKey")) {
+            return;
+        }
+
+        if (orderNo!=null && !orderNo.equals("") && status!=null && !status.equals("")) {
+            List<WebOrderEntity> order = webOrderRepository.getAllByOrderId(orderNo);
+            System.out.println(order.size());
+            if (order.size() > 0) {
+                int orderStatus = Integer.parseInt(status);
+                WebOrderEntity webOrderEntity = order.get(0);
+                if (orderStatus == OrderState.ABNORMAL) {
+                    // 订单异常
+                    webOrderEntity.setOrderStatus(OrderState.ABNORMAL);
+                } else if (orderStatus == OrderState.DONE_PAY) {
+                    // 订单完成
+                    webOrderEntity.setOrderStatus(OrderState.DONE_PAY);
+                } else {
+                    // do-nothing
+                }
+                webOrderRepository.save(webOrderEntity);
+            }
+        }
     }
 }

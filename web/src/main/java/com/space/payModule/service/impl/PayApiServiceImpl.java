@@ -66,7 +66,7 @@ public class PayApiServiceImpl implements PayApiService {
             result.put("msg",jsonResult.getString("msg"));
         }
 
-        System.out.println("json结果: " +jsonResult);
+//        System.out.println("json结果: " +jsonResult);
 
         // 正常
         if (jsonResult.getString("state")!=null && jsonResult.getString("state").equals("SUCCESS")) {

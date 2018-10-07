@@ -117,18 +117,19 @@ public class OrderServiceImpl implements OrderService {
         Map result = new HashMap();
         List<WebOrderEntity> allByIsPay = webOrderRepository.getAllByIsPay(OrderState.DONE_PAY, OrderState.INCOMPLETE);
         if (allByIsPay.size() > 0) {
-            result.put(ReturnState.STATUS_KEY,ReturnState.SUCCESS);
-            result.put("list", allByIsPay);
+
             for (int i = 0; i < allByIsPay.size(); i++) {
                 // 所有订单设置为正在进行
                 allByIsPay.get(i).setOrderStatus(OrderState.ON_GOING);
             }
             webOrderRepository.saveAll(allByIsPay);
+            result.put(ReturnState.STATUS_KEY,ReturnState.SUCCESS);
+            result.put(ReturnState.MSG_KEY, allByIsPay);
         } else {
             result.put(ReturnState.STATUS_KEY, ReturnState.FAIL);
             result.put(ReturnState.MSG_KEY, "无可插入订单");
         }
-        return null;
+        return result;
     }
 
 
