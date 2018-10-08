@@ -119,13 +119,13 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/payCallBack")
-    public void payCallBack(String orderNumber) {
+    public void payCallBack(String order_no) {
         Map result = new HashMap();
 //        System.out.println("支付成功");
         WebOrderEntity webOrderEntity = new WebOrderEntity();
-        webOrderEntity.setOrderNumber(orderNumber);
+        webOrderEntity.setOrderNumber(order_no);
         timerConfig.donePay(webOrderEntity);
-//        System.out.println("完成支付");
+        System.out.println("完成支付" + order_no);
         //        return result;
     }
 

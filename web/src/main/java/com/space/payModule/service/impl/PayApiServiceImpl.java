@@ -23,7 +23,7 @@ import java.util.Map;
 public class PayApiServiceImpl implements PayApiService {
 
     // 回调通知地址
-    private static final String NOTIFY_URL = "http://localhost:8888/pay/notify";
+    private static final String NOTIFY_URL = "http://120.24.189.68:8888/api/order/payCallBack";
 
     @Resource
     WebOrderRepository webOrderRepository;
