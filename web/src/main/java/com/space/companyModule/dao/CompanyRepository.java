@@ -1,4 +1,4 @@
-package com.space.dao;
+package com.space.companyModule.dao;
 
 import com.space.entity.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
