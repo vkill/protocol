@@ -1,0 +1,25 @@
+{
+  "status": "SUCCESS",
+  "data": {
+    "total": 10000,
+    "pageSize": 100,
+    "currentPage": 1,
+    "list": [
+      {
+        "id": 1,
+        "phoneArea": "+66",
+        "dyPhone": "1234556",
+        "pwd": "asd123456",
+        "date": "2018-10-06",
+        "diggCount": "100"
+      }, {
+        "id": 2,
+        "phoneArea": "+855",
+        "dyPhone": "1234556",
+        "pwd": "asd123456",
+        "date": "2018-10-06",
+        "diggCount": "100"
+      }
+    ]
+  }
+}
