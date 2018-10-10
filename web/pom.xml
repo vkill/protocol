@@ -92,9 +92,50 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>3.11.0</version>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>zxing</artifactId>
+            <version>3.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/core-3.0.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>core-3.0.0</groupId>
+            <artifactId>core-3.0.0</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/fastjson-1.2.49.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>jstl-1.2</groupId>
+            <artifactId>jstl-1.2</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/jstl-1.2.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>QRCode-1.0</groupId>
+            <artifactId>QRCode-1.0</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/QRCode-1.0.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>standard</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/standard.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>zxing3.0</groupId>
+            <artifactId>zxing3.0</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/zxing3.0.jar  </systemPath>
         </dependency>
 
     </dependencies>
@@ -104,6 +145,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>

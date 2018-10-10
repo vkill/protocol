@@ -1,7 +1,7 @@
-package com.space.controller;
+package com.space.companyModule.controller;
 
 import com.space.entity.Company;
-import com.space.service.CompanyService;
+import com.space.companyModule.service.CompanyService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

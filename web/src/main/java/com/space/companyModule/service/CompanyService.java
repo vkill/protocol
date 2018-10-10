@@ -1,6 +1,12 @@
-package com.space.service;
+package com.space.companyModule.service;
 
 import com.space.entity.Company;
+
+/*
+ * @Author Administrator 
+ * @Description 
+ * @Date 2018/10/8/008 23:16
+ **/
 
 public interface CompanyService {
 

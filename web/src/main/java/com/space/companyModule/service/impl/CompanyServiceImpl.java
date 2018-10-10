@@ -1,8 +1,8 @@
-package com.space.service.Impl;
+package com.space.companyModule.service.impl;
 
-import com.space.dao.CompanyRepository;
+import com.space.companyModule.dao.CompanyRepository;
 import com.space.entity.Company;
-import com.space.service.CompanyService;
+import com.space.companyModule.service.CompanyService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
