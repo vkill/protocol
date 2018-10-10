@@ -52,4 +52,14 @@ public class Company {
     public void setSign(String sign) {
         this.sign = sign;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", sign='" + sign + '\'' +
+                '}';
+    }
 }

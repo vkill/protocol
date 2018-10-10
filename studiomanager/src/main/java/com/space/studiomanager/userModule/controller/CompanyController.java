@@ -4,6 +4,7 @@ package com.space.studiomanager.userModule.controller;
 import com.space.studiomanager.entity.Company;
 import com.space.studiomanager.statusModule.WebStatus;
 import com.space.studiomanager.userModule.service.CompanyService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,10 +20,16 @@ public class CompanyController {
     CompanyService companyService;
 
     @RequestMapping("/login")
-    public Map companyLogin(String username, String password) {
+    public Map companyLogin(@RequestBody Map map) {
         Map result = new HashMap();
 
+        String username = (String) map.get("username");
+        String password = (String) map.get("password");
+
+        System.out.println(username + " " + password);
         Company login = companyService.login(username, password);
+
+        System.out.println(login);
 //        if (login != null) {
 //            result.put("success", true);
 //            result.put("account",login);
