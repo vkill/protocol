@@ -76,6 +76,7 @@ public class OrderController {
         String proType = (String) map.get("pro_type");
         String goodsType = (String) map.get("goods");
         String videoId = (String) map.get("video_id");
+        String userId = (String) map.get("user_id");
         int orderCount = (int) map.get("order_count");
 
 //        String proType = "dy";
@@ -83,12 +84,25 @@ public class OrderController {
 //        String videoId = "testPay2";
 //        int orderCount = 10;
 
+
+
         WebOrderEntity webOrderEntity = new WebOrderEntity();
         webOrderEntity.setGoodsType(goodsType);
         webOrderEntity.setOrderCount(orderCount);
-        webOrderEntity.setVideoId(videoId);
+
         webOrderEntity.setProType(proType);
-//        System.out.println(webOrderEntity);
+
+
+        // 10/11新增
+        if (goodsType.contains("dydz")) {
+            // 点赞
+            webOrderEntity.setVideoId(videoId);
+
+        } else if (goodsType.contains("dygz")) {
+            // 关注
+            webOrderEntity.setVideoId(userId);
+        }
+
         try {
             Map orderMap = orderService.makeWebOrder(webOrderEntity);
             result = orderMap;
@@ -125,7 +139,7 @@ public class OrderController {
         WebOrderEntity webOrderEntity = new WebOrderEntity();
         webOrderEntity.setOrderNumber(order_no);
         timerConfig.donePay(webOrderEntity);
-        System.out.println("完成支付" + order_no);
+        System.out.println("完成支付：" + order_no);
         //        return result;
     }
 

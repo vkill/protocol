@@ -140,6 +140,7 @@ public class SendOrder {
         try {
             Response response = call.execute();
             String resultLine = GzipGetteer.uncompressToString(response.body().bytes());
+//            System.out.println(resultLine);
             String []temp1 = resultLine.split(", ");
             for(int i = 0;i < temp1.length;i++){
                 if(temp1[i].split(":")[0].equals("\"author_user_id\"")){
@@ -160,19 +161,23 @@ public class SendOrder {
     }
 
     public static void main(String[] args) {
-        Date dNow = new Date( );
-        SimpleDateFormat ft =
-                new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
-        String a1 = ft.format(dNow);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Date d2 = new Date();
-        String a2 = ft.format(d2);
-        System.out.println("Current Date: " + a1);
-        System.out.println("Current Date: " + a2);
+//        Date dNow = new Date( );
+//        SimpleDateFormat ft =
+//                new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+//        String a1 = ft.format(dNow);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        Date d2 = new Date();
+//        String a2 = ft.format(d2);
+//        System.out.println("Current Date: " + a1);
+//        System.out.println("Current Date: " + a2);
+
+        //6608775036511718659
+        String share = share("6608775036511718659");
+        System.out.println(share);
     }
 
 }

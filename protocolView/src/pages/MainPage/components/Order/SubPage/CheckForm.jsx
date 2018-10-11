@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Row, Col, Table, message } from 'antd';
+import { Input, Row, Col, Table, message, Tag } from 'antd';
+import InfoDisplayTab from '../SubPage/InfoDisplayTab'
 import * as ORDER_API from '../../../../../utils/OrderApi/apis'
 
 const Search = Input.Search;
@@ -55,6 +56,7 @@ export default class Attention extends Component {
     ]
     return (
       <div style={styles.container}>
+        
         <Row style={styles.search}>
             <Col span={3}>
             
@@ -82,8 +84,21 @@ export default class Attention extends Component {
             <Col span={3}>
             </Col>
         </Row>
+        < InfoDisplayTab/>
       </div>
     );
+  }
+
+  handleFormat(status) {
+    if (status === 1) {
+        return <Tag color='blue'>未完成</Tag>;
+    } else if (status === 0) {
+        return <Tag color='green'>完成</Tag>;
+    } else if (status === -2){
+        return <Tag>未付款，订单失效</Tag>;
+    } else if(status === -1 ){
+        return <Tag color='red'>订单异常</Tag>;
+    }
   }
   /**
      * 搜索的方法
@@ -97,7 +112,8 @@ export default class Attention extends Component {
                         const list = data.data; 
                         list.forEach((element) => {
                             element.key = element.id;
-                          });
+                            element.orderStatus = this.handleFormat(element.orderStatus);
+                        });
                         this.setState({
                             datalist: list
                         })
@@ -115,14 +131,16 @@ export default class Attention extends Component {
 const styles = {
     container: {
       width: '100%',
-      height: '300px',
+      height: '100%',
       backgroundColor: '#fff',
     },
     search: {
       marginTop: '3%',
+      marginBottom: '1%',
     },
     form: {
       paddingLeft: '5%',
       width: '80%',
+      
     },
   };

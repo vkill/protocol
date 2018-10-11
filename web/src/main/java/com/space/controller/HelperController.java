@@ -22,10 +22,12 @@ public class HelperController {
         Map result = new HashMap();
         String videoUrl = (String) map.get("share_url");
         String videoId = SendOrder.getVideoId(videoUrl);
+        String userId = SendOrder.share(videoId);
         if (videoId!=null && !videoId.equals("")) {
             result.put("status", "0");
             result.put("message","转换成功");
             result.put("video_id",videoId);
+            result.put("user_id", userId);
         } else {
             result.put("status","1");
             result.put("message","转换失败， 请将分享链接复制到输入框");

@@ -7,12 +7,14 @@ export default class QRCode extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            payTime: 300
+        };
     }
     render() {
         const payData = this.props.payData;
         const baseImg = `data:image/png;base64,${payData.order_qrcode}`;
-        console.log(payData);
+        // console.log(payData);
 
         return (
             <div style = {styles.container}>
@@ -27,12 +29,29 @@ export default class QRCode extends Component {
                     </div>
                 </Row>
                 <Row>
+                    <div>
+                        <p style={styles.orderNo}> 付款倒计时: {this.state.payTime} 秒</p>
+                    </div>
+                </Row>
+                <Row>
                     <div style={styles.qrcode}>
                         <img src={baseImg}/>
                     </div>
                 </Row>
             </div>
         )
+    }
+
+
+    componentDidUpdate() {
+        if (this.state.payTime <= 0) {
+            // 停止
+            clearInterval(this.time);
+        }
+    }
+
+    componentDidMount() {
+        this.time = setInterval(() => this.setState({payTime: (this.state.payTime-1)}),1000);
     }
 }
 

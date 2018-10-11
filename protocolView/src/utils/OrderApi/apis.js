@@ -28,7 +28,8 @@ export const make_order = (postData) => axios.post(`${web_order_url}/make_web_or
     pro_type:postData.pro_type,
     goods: postData.goods,
     video_id: postData.videoid,
-    order_count: postData.order_count
+    order_count: postData.order_count,
+    user_id: postData.userid,
 });
 
 /**
