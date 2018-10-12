@@ -18,6 +18,7 @@ class OrderForm extends Component {
         orderCount: 1,
         shareUrl: '',
         videoId: '',
+        userId: '',
       };
     }
     render() {
@@ -139,8 +140,26 @@ class OrderForm extends Component {
             >
               
                 <Input 
-                    readOnly
+                    onChange={this.videoidInput}
                     value={this.state.videoId}
+                />
+            </FormItem>
+
+            <FormItem
+              {...formItemLayout}
+              label={(
+                <span>
+                  用户id &nbsp;
+                  <Tooltip title="自动提取的用户id">
+                    <Icon type="question-circle-o" />
+                  </Tooltip>
+                </span>
+                        )}
+            >
+              
+                <Input 
+                    onChange={this.useridInput}
+                    value={this.state.userId}
                 />
             </FormItem>
 
@@ -200,15 +219,17 @@ class OrderForm extends Component {
             const postData = values;
             postData.order_count = this.state.orderCount;
             postData.videoid = this.state.videoId;
-            if (this.state.videoId!=='') {
+            postData.userid = this.state.userId;
+            if (this.state.videoId!=='' || this.state.userId!=='') {
                 // 下订单
+
                 ORDER_API.make_order(postData).then((response) => {
                   const data = response.data;
                   if (data.status === '0') {
                     // 下单成功，跳转支付
 
-                    message.success(data.message);
                     this.props.toOtherPage('/paypage',data)
+                    message.success(data.message);
 
 
                   } else {
@@ -231,7 +252,8 @@ class OrderForm extends Component {
             const data = response.data;
             if (data.status === "0") {
                 this.setState({
-                    videoId: data.video_id
+                  videoId: data.video_id,
+                  userId: data.user_id,  
                 });
             } else {
                 message.error(data.message);
@@ -239,11 +261,25 @@ class OrderForm extends Component {
         });
     }
 
+    videoidInput = (value) => {
+      const videoid = value.target.value;
+      this.setState({
+        videoId: videoid,
+    })
+    }
+    useridInput = (value) => {
+      const userid = value.target.value;
+      this.setState({
+        userId: userid,
+    })
+    }
+
     /**
      * 获取
      */
     handleVideoidChange = (value) => {
         const url = value.target.value
+        
         // HELPER_API.toVideoId(url).then(response => {
         //     const data = response.data;
         //     if (data.status === "0") {
