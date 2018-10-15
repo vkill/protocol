@@ -29,7 +29,7 @@ import java.util.Base64;
  **/
 public class HandleEncrypt {
 
-    private static final String HOST = "http://crc.kitejoy.com";
+    private static final String HOST = "http://localhost";
 
     private static final String PORT = "11600";
 
@@ -46,7 +46,7 @@ public class HandleEncrypt {
 
 //        System.out.println(base64params);
 
-        // 发送请求
+        // 发送请求 type=1加密  type=2解密
         String post = HttpTools.post(url, "data=" + base64params + "&type=1");
 
         Base64.Decoder decoder = Base64.getDecoder();
@@ -54,10 +54,21 @@ public class HandleEncrypt {
         return decode;
     }
 
+
     public static void main(String[] args) {
         DeviceEntity deviceEntity = new DeviceEntity();
         String s = CesJson.jsonConstruct(deviceEntity);
-        byte[] posts = getCes("POST", s);
+        String test = "a";
+        // 得到base64解压后的字节流
+        byte[] posts = getCes("POST", test);
+        Base64.Encoder e = Base64.getEncoder();
+        String base64params = e.encodeToString(posts);
+        String url = HOST + ":" + PORT + "/DouYin/Ces";
+        String test1 = HttpTools.post(url, "data=" + base64params + "&type=2");
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] decode = decoder.decode(test1);
+        System.out.println(new String(decode));
+
         String print = new String(posts);
         System.out.println(print);
 
