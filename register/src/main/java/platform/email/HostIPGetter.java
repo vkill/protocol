@@ -24,7 +24,7 @@ public class HostIPGetter {
     //http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20181063548zKQbxm&returnType=2&count=10
     //http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=10
     //包含上面参数的URL                   http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=5
-    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId="+spiderId+"&orderno="+orderno+"&returnType="+returnType+"&count=";
+    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ201810158100zhovTm&returnType=2&count=5";
     public static String endStr ="10032";
     public static String errorStr ="10036";
     public static String successStr = "0";
@@ -36,7 +36,7 @@ public class HostIPGetter {
         JSONArray jsonArray  = null;
         ArrayList<HostIPPo> hostIPPos = new ArrayList<>();
         try {
-            document = Jsoup.connect(ipHostGetterAll).get();
+            document = Jsoup.connect(ipHostGetter).get();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -69,10 +69,6 @@ public class HandleEncrypt {
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decode = decoder.decode(test1);
         System.out.println(new String(decode));
-
-
-
-
     }
 
 

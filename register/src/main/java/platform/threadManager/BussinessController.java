@@ -31,36 +31,35 @@ public class BussinessController {
     OrderThreadDatabaseImpl orderThreadDatabase = new OrderThreadDatabaseImpl();
     public void doBusinessWork(){
         ArrayList<OrderEntity> orderEntities = orderThreadDatabase.getAllOrder(orderStatus);
-        long lessId =0;
-        double number = 0;
-       // BussinessThread.getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
-        for(OrderEntity orderEntity:orderEntities){
-            if(orderEntity.getLangestDYId()>lessId){
-                lessId = orderEntity.getLangestDYId();
-            }
-            if(orderEntity.getThumbUpOrFollowNum()>number){
-                number = orderEntity.getThumbUpOrFollowNum();
-            }
-        }
-        number = 2*number;
-        long numsInt = Math.round(number);
-        dyUserEntities = orderThreadDatabase.getNumsUser(lessId,numsInt);
+        int lessId =0;
+        int number = 0;
+        BussinessThread.getNeedIPFromWeb(BussinessController.hostIpQueneForBusiness);
         int threadNum = orderEntities.size()/orderNumber;
         if(orderEntities.size()%orderNumber!=0){
             threadNum++;
         }
         Thread[] threads = new Thread[threadNum];
-        beginTime = System.currentTimeMillis();
+        //beginTime = System.currentTimeMillis();
         for(int i =0;i<threadNum;i++){
             ArrayList<OrderEntity> orderEntities1 = new ArrayList<OrderEntity>();
             for(int k=0;k<orderNumber;k++){
                 if(!orderEntities.isEmpty()){
-                    orderEntities1.add(orderEntities.remove(0));
+                    OrderEntity orderEntity = orderEntities.remove(0);
+                    orderEntities1.add(orderEntity);
+                    if(orderEntity.getLangestDYId()>lessId){
+                        lessId = orderEntity.getLangestDYId();
+                    }
+                    if(orderEntity.getThumbUpOrFollowNum()>number){
+                        number = (int) (orderEntity.getThumbUpOrFollowNum()*1.5);
+                    }
                 }
                 else{
                     break;
                 }
             }
+            dyUserEntities = orderThreadDatabase.getNumsUser(lessId,number);
+            lessId =0;
+            number =0;
             threads[i] = new Thread(new BussinessThread(orderEntities1,dyUserEntities));
             threads[i].start();
         }

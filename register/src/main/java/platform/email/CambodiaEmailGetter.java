@@ -15,16 +15,16 @@ import java.io.IOException;
  * @author: Mr.gao
  * @create: 2018-10-07 11:55
  **/
-public class CambodiaEmailGetter {
+public class CambodiaEmailGetter implements EmailPlatform {
 
     /**
      * 变量依次为：账号、密码、项目类型
      */
     //api_qianbaiwan_rrgr,qianbaiwan
-    private String userName ="api_qianbaiwan_o1o";
-    private String password ="qianbaiwan";
-    private String projectID ="1003";
-    private String projectPasswordID = "1004";
+    private String userName ="api_mmg0088_jlll";
+    private String password ="aa977525";
+    private String projectID ="1066";
+    private String projectPasswordID = "1066";
     private String Login_url ;
     public String Usertoken ="5eb9541386e913d9d0bfccbd212e081b";
     private String errorStr = "ERR";
@@ -56,7 +56,6 @@ public class CambodiaEmailGetter {
         String tag = errorStr;
         int errTime =0;
         String[] buffers = null;
-        //http://api0.wmisms.com/yhapi.ashx?act=login&ApiName=api_yh001_0fk&PassWord=yh001
         Login_url = "http://maci.codesfrom.com/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+password;
         while (tag.equals(errorStr)&&errTime<3){
             Document document = null;
@@ -102,10 +101,9 @@ public class CambodiaEmailGetter {
         String phone_url;
         if(phoneNum.equals("随机")){
             //http://api0.wmisms.com/yhapi.ashx?act=getPhone&token=ad718214bdf8e7ad80344bf9743ec307&iid=1001&did=&operator=&city=&mobile=
-            phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectID+"&did=&operator=&city=泰国&mobile=";
-
+            phone_url="http://maci.codesfrom.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
         }else{
-            phone_url="http://api0.wmisms.com/yhapi.ashx?act=getPhone&token="+Usertoken+"&iid="+projectPasswordID+"&did=&operator=&city=&mobile="+phoneNum;
+            phone_url="http://maci.codesfrom.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile="+phoneNum;
         }
         Response response = null;
         String[] buffers = null;
@@ -134,12 +132,13 @@ public class CambodiaEmailGetter {
         if(worryTime==2){
             System.out.println("获取手机号码失败，将返回空值");
             try {
-                Thread.sleep(60000);
+                Thread.sleep(90000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             return null;
         }else{
+
             PhonePo phonePo = new PhonePo(buffers[1],buffers[2],buffers[3],buffers[4],buffers[6]);
             return phonePo;
         }
@@ -151,18 +150,18 @@ public class CambodiaEmailGetter {
      * @return 获取的验证码
      */
     public String getIdentCode(String P_ID,OkHttpClient okhttpclient) throws IOException {
-        //              http://api0.wmisms.com/yhapi.ashx?act=getPhoneCode&token=ad718214bdf8e7ad80344bf9743ec307&pid=100118456007026
-        String infoUrl ="http://api0.wmisms.com/yhapi.ashx?act=getPhoneCode&token="+Usertoken+"&pid="+P_ID;
+        //http://maci.codesfrom.com/yhapi.ashx?Action=getPhoneMessage&token=token&p_id=取号接口返回的P_ID
+        String infoUrl ="http://maci.codesfrom.com/yhapi.ashx?Action=getPhoneMessage&token="+Usertoken+"&p_id="+P_ID;
         Response response = null;
         String buff = null;
         String[] buffers;
         String tag =errorStr;
         String result = 0+"";
         int buffer_Num =0;
-        while(tag.equals(errorStr)&buffer_Num<15){
+        while(tag.equals(errorStr)&buffer_Num<14){
 
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -185,7 +184,7 @@ public class CambodiaEmailGetter {
             else if(result.equals("-4")){
                 System.out.println("号码已经强制释放");
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(100000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -222,12 +221,11 @@ public class CambodiaEmailGetter {
     }
 
     public static void main(String[] args) throws IOException {
-        EmailGetter emailGetter = EmailGetter.getInstrance();
+        CambodiaEmailGetter cambodiaEmailGetter = new CambodiaEmailGetter();
         OkHttpClient okHttpClient = new OkHttpClient();
-        PhonePo phonePo = emailGetter.getPhoneNumber(okHttpClient);
-        System.out.println(phonePo.getPhone_Num());
-        System.out.println(phonePo.getP_ID());
-        System.out.println(emailGetter.getIdentCode(phonePo.getP_ID(),okHttpClient));
+        PhonePo phonePo = cambodiaEmailGetter.getPhoneNumber(okHttpClient);
+        System.out.println(phonePo.getArea_Num());
+        System.out.println(cambodiaEmailGetter.getIdentCode(phonePo.getP_ID(),okHttpClient));
 
     }
 }

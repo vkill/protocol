@@ -9,5 +9,8 @@ public class PhoneArea {
     static{
         phoneFromAddress = new HashMap<>();
         phoneFromAddress.put("泰国","+66");
+        phoneFromAddress.put("柬埔寨","+855");
+        phoneFromAddress.put("855","+855");
+        phoneFromAddress.put("66","+66");
     }
 }

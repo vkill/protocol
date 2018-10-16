@@ -45,7 +45,7 @@ public class BussinessThread implements Runnable {
     OrderThreadDatabaseImpl orderThreadDatabase = new OrderThreadDatabaseImpl();
     public BussinessThread(ArrayList<OrderEntity> orderEntitiy,ArrayList<DYUserEntity> dyUserEntities1){
         orderEntities = new ArrayList<>(orderEntitiy);
-        dyUserEntities = dyUserEntities1;
+        dyUserEntities = new ArrayList<>(dyUserEntities1);
     }
 
     @Override
@@ -64,10 +64,15 @@ public class BussinessThread implements Runnable {
                     orderEntity1.setStatus("-1");
                     orderThreadDatabase.updataOrderInfo(orderEntity1);
                 }
+                for(DYUserEntity dyUserEntity1:dyUserEntities){
+                    orderThreadDatabase.saveDyUser(dyUserEntity1);
+                }
                 break;
             }else if(orderEntities.size()==0){
                 System.out.println("订单全部完成");
-                System.out.println("一共用时:  "+ (System.currentTimeMillis() - BussinessController.beginTime));
+                for(DYUserEntity dyUserEntity1:dyUserEntities){
+                    orderThreadDatabase.saveDyUser(dyUserEntity1);
+                }
                 break;
             }
             dyUserEntity =dyUserEntities.get(userNum);
@@ -155,6 +160,7 @@ public class BussinessThread implements Runnable {
                 int nums = orderEntity.getThumbUpOrFollowNum();
                 nums = nums - 1;
                 orderEntity.setThumbUpOrFollowNum(nums);
+                dyUserEntity.setUsed_turn(dyUserEntity.getUsed_turn()+1);
                 if(orderEntity.getThumbUpOrFollowNum()==0){
                     return finallyOrderAction(dyUserEntity,orderEntity);
                 }
@@ -168,6 +174,7 @@ public class BussinessThread implements Runnable {
                     int nums = orderEntity.getThumbUpOrFollowNum();
                     nums = nums - 1;
                     orderEntity.setThumbUpOrFollowNum(nums);
+                    //dyUserEntity.setUsed_turn(dyUserEntity.getUsed_turn()+1);
                     if(orderEntity.getThumbUpOrFollowNum()==0){
                         return finallyOrderAction(dyUserEntity,orderEntity);
                     }
@@ -189,6 +196,8 @@ public class BussinessThread implements Runnable {
                 int nums = orderEntity.getThumbUpOrFollowNum();
                 nums = nums - 1;
                 orderEntity.setThumbUpOrFollowNum(nums);
+
+                dyUserEntity.setUsed_turn(dyUserEntity.getUsed_turn()+1);
                 if(orderEntity.getThumbUpOrFollowNum()==0){
                     return finallyOrderAction(dyUserEntity,orderEntity);
                 }
@@ -204,6 +213,7 @@ public class BussinessThread implements Runnable {
                     int nums = orderEntity.getThumbUpOrFollowNum();
                     nums = nums - 1;
                     orderEntity.setThumbUpOrFollowNum(nums);
+
                     if(orderEntity.getThumbUpOrFollowNum()==0){
                         return finallyOrderAction(dyUserEntity,orderEntity);
                     }

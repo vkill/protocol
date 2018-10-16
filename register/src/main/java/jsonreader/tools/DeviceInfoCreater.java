@@ -57,10 +57,10 @@ public class DeviceInfoCreater {
     }
 
     public static String getUDIDCode(){
-        String line1 = "86516602";
-        String line2 = String.valueOf(new java.util.Random(System.currentTimeMillis()).nextInt(9999999));
+        String line1 = "8651660";
+        String line2 = String.valueOf(new java.util.Random(System.currentTimeMillis()).nextInt(99999999));
 
-        for(int i = 0;i < 7 - line2.length();i++){
+        for(int i = 0;i < 8 - line2.length();i++){
             line1 += "0";
         }
 
