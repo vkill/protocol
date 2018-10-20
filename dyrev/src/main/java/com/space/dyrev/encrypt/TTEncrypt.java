@@ -2,11 +2,15 @@ package com.space.dyrev.encrypt;
 
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.testpackage.OutPutUtil;
+import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.formatutil.ScaleTrans;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -257,8 +261,10 @@ public class TTEncrypt {
         byte[] revxor = reverseXOR(bytes);
         byte[] bytes1 = reverseMove(revxor);
         byte[] bytes2 = readTable(bytes1);
+
         int end = bytes.length - bytes[3] - 4;
         return Arrays.copyOfRange(bytes2, 0, end);
+
     }
 
     /**
@@ -300,14 +306,23 @@ public class TTEncrypt {
         for (int i=0; i < bytes.length/16; i++) {
             byte[] tmp = Arrays.copyOfRange(bytes, i*16, (i+1)*16); // 先异或
             for (int j = 0; j < 4; j++) {
-                byte [] split = Arrays.copyOfRange(tmp, j*4, (j+1)*4);
+                byte [] split = Arrays.copyOfRange(tmp, j*4, (j+1)*4);// 左移！
                 byte [] bytes1 = new byte[4];
                     // 不用移动
-                bytes1[0] = split[j];
-                bytes1[1] = split[(j+1)%4];
-                bytes1[2] = split[(j+2)%4];
-                bytes1[3] = split[(j+3)%4];
+                bytes1[j] = split[0];
+                bytes1[(j+1)%4] = split[1];
+                bytes1[(j+2)%4] = split[2];
+                bytes1[(j+3)%4] = split[3];
 
+//                bytes1[0] = split[j];
+//                bytes1[1] = split[(j+1)%4];
+//                bytes1[2] = split[(j+2)%4];
+//                bytes1[3] = split[(j+3)%4];
+
+                // 0 0123 <- 0123
+                // 1 0123 <- 1230
+                // 2 0123 <- 2301
+                // 3 0123 <- 3012
                 for (int z = 0; z < 4; z++) {
                     result[16*i +j*4 + z] = bytes1[z];
                 }
@@ -344,6 +359,16 @@ public class TTEncrypt {
 
 
     public static void main(String[] args) {
+        String str = "dGMCAj3Yv+yerCAu5l7+Mzq15Z43sX6knxjmTm0zTIt2KFslr4U1Qjc1Ubb/PiiZMD1AntgwKgnGE2Ybb0yU8l+4YREvmEkuFa8URbyYd+mT2Eb5sW7vTM7SV+UDrVxPzEIY2sUxFvnkhgUDZlmv/1yyNoebi2bKWcT9Ct2HoQzmt0JOkJfsqLgv4zdj8AP7iYWog3Cgy+IioZyjyuQq/EcTCwDl+7Hecexl2Hxu8zuZ1CNSA6NLkOg0eDxwxTJ0wakz/ccv3d1dznGgCDHQeaLyzydt5nZ3QVS+II1xqyoi4YBfa2KJH4U3fNY4O4uVHhdOaxjIfGT3ef+UIriNng5ervonAoKVjBD0+jgg1in4Uv4GxJMwqLKnSSlOXlg18Gx7OKd+fZB/Z6PZefbR1JLoFknBrUC3xcMeK011WHtivguiUkdoys9XiXKFDWKdXr+Cq+ej7XTjI72tgeF0FTH5ScIEyyCByKj17GPE3Qx3OLqAfPaowM9eLCrChgftFfM6FF4aXelk39dQNxT7HkUFgdr2a2USiyJNAC6rkLkKfIurjulClRq6HeVLajkOhv8L+UvwFqf/z28kdEzQZfxE/F/9VEdvV+q59xB4OC6CDtlLSmVXFrs223cYI8XDqzshOpvjBzJBMA5MTabzNvTyIGT8ciNGss9FYbXjIXGvMXNRGAjssweQQhXkKJ3J+kHrthQdd8+1vBuwuB+WlPy0UPceSmCtKJgv6S9Kss+WzdvA2KNvCUJYTjFVC4xu+2ICno0hh9e8dED9a5Xkj0kLmf4iN3woFnRXvQRKtIH6l86z1pu0d7R1KCCFKEJpfjB9iCsz3/36zNb/cjDfU8fh0QNBH+LuHvjuPcj3O3/q0cEUhqHnyopZ2EWRLsRxjy406Yzv0zERYZYpX17rdYh6oy08SnqaaV/4ZN+k1wAyzl7t7ih4sAwGA19Y3NUmASf7w8hU2h+F6he/Tn5Of8wu9oO2YklEZJPVGQl+CNfF71m/C2LvmWPSJsdAGslOMOtEymVtZ4fty/gtMk5JT+4L1WEt8gwKba1grggKl/Mb+xlAXhlaROXcCsvBoNIfnnLq2WijP6JKj/uECbA6dG3i8lGNxbj42QY3J0XrFNaYIn2y6ouYxy7x3s49Sarb12bcQzYHJCLAA92DLAx296RHpOGulm19qF2Dr9ORJywT0r7NGGKD4/MFVRP6lm2EheWcIS/OmferQAm3HUaFB4Ppd7Ey1XF/XM7Sbqi52qMrqMBI0SLVnIebe++oGWyCS+mA+T50cedUQznpxOuQA8URWy7t+TUMQMdFr2pxwpCRSnKSQpBdf9BzW0PyI2Txy12cfGiVsvBEzhIdftRgnLF64XGr/XwoVoTKxBc7T4OHvO7bbffC1J7KvFvM7gzuXPH1ew==";
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] decode1 = decoder.decode(str);
+        byte[] decode = TTEncrypt.decode(decode1);
+//        decode[decode.length-3] = 0;
+
+        String s = GzipGetteer.uncompressToString(decode);
+        System.out.println(s);
+
+
 //        String enc = "spacecoebeer";
 //        getTTEnttyResult(enc.getBytes());
 //        byte[] decode = decode(getTTEnttyResult(enc.getBytes()));
