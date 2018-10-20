@@ -23,7 +23,7 @@ import java.util.Map;
 public class PayApiServiceImpl implements PayApiService {
 
     // 回调通知地址
-    private static final String NOTIFY_URL = "http://120.24.188.220:8888/api/order/payCallBack";
+    private static final String NOTIFY_URL = "http://47.244.18.18:8888/api/order/payCallBack";
 
     @Resource
     WebOrderRepository webOrderRepository;
@@ -73,7 +73,7 @@ public class PayApiServiceImpl implements PayApiService {
             String orderNumber = jsonResult.getString("order_no");
             try {
                 // 转换出的base64图编码字符串,表示临时文件路径
-                String QRCode = client.getBaseimg(resultString, ".\\QRCodeImage\\");
+                String QRCode = client.getBaseimg(resultString, "./QRCodeImage/");
                 result.put("status","0");
                 result.put("order_no",orderNumber);
                 result.put("order_qrcode", QRCode);
