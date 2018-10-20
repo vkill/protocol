@@ -40,7 +40,7 @@ public class MainController {
     @Resource
     DYUserRepository dyUserRepository;
 
-    private static int id = 760;
+    private static int id = 1100;
     private static int event_id = 0;
     private static String session_id = "";
     private static long serverTime = 0;
@@ -86,12 +86,12 @@ public class MainController {
             e.printStackTrace();
         }
 
-//        ArrayList<String> body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));
-//
-//        event_id = Integer.valueOf(body_msg.get(0));
-//        System.out.println("点赞的applog：");
-//        String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
-//        System.out.println(appLogResult);
+        event_id = dyUserEntity.getEvent_id();
+        ArrayList<String> body_msg = AllAppLogConstruct.digg(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(time), dyUserEntity.getUid(), aweme_id, result.get(1));
+
+        event_id = Integer.valueOf(body_msg.get(0));
+        String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
+        System.out.println("点赞的applog：" + appLogResult);
         dyUserEntity.setEvent_id(event_id);
         dyUserRepository.save(dyUserEntity);
 
@@ -172,20 +172,16 @@ public class MainController {
 
         //通过id获取t_dy_user中的数据
         DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-        String user_cookie = dyUserEntity.getUserCookie();
         String simulationId = dyUserEntity.getSimulationID();
 
         //通过simulationid获取t_device中的数据
         DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-        String cookie = deviceEntity.getCookie();
-        cookie += (";"+ user_cookie);
-        deviceEntity.setCookie(cookie);
 
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        ArrayList<String> awemeList =  SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, urlRequestEntity);
+        ArrayList<String> awemeList =  SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
 
         try {
             Thread.sleep(2000);
@@ -198,7 +194,7 @@ public class MainController {
 
         try {
             for(int i = 0;i < awemeList.size();i++){
-                SupportAccountMaker.getVideoMaker(okHttpClient, awemeList.get(i),deviceEntity, urlRequestEntity1);
+                SupportAccountMaker.getVideoMaker(okHttpClient, awemeList.get(i),deviceEntity, dyUserEntity);
                 Thread.sleep(2000);
             }
 
@@ -242,13 +238,14 @@ public class MainController {
 
         System.out.println("开始");
 
-        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
-        int site = 0;
-        for(int i = 0;i < dyUserEntity_list.size();i++){
-            if(dyUserEntity_list.get(i).getId() == 753){
-                site = i;
-            }
-        }
+//        ArrayList<DYUserEntity> dyUserEntity_list = dyRegisterService.findAll();
+//        int site = 0;
+//        for(int i = 0;i < dyUserEntity_list.size();i++){
+//            if(dyUserEntity_list.get(i).getId() == 3000){
+//                site = i;
+//                break;
+//            }
+//        }
 
         //获取并构建url信息，包括host、msg、token
         UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(6);
@@ -263,40 +260,76 @@ public class MainController {
 //                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
 //                .build();
 
-        for(int i = site;i < site + 10;i++){
+        id = 19000;
+        for(int i = 0;i < 100;i++){
+
+
             int success = 0;
             int failure = 0;
-            id = dyUserEntity_list.get(i).getId();
-
+            id = id;
+            System.out.println("id:" + id);
             //下面是单个id循环测试
             //通过id获取t_dy_user中的数据
             DYUserEntity dyUserEntity = dyRegisterService.findById(id);
-            String user_cookie = dyUserEntity.getUserCookie();
             String simulationId = dyUserEntity.getSimulationID();
 
             //通过simulationid获取t_device中的数据
             DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
-            String cookie = deviceEntity.getCookie();
-            cookie += (";"+ user_cookie);
-            deviceEntity.setCookie(cookie);
 
-            for (int j = 0; j < 5; j++) {
+            //注册帐号前需要加载appLog
+            //随机生成的session_id
+            session_id = AllAppLogConstruct.constructRandomSessionId();
+            ArrayList<String> launch_body_msg = AllAppLogConstruct.launchApp(dyUserEntity.getAppLog(), session_id, dyUserEntity.getEvent_id());
+            //修改全部变量event_id
+            int event_id = Integer.valueOf(launch_body_msg.get(0));
+            //修改数据库中event_id的值
+            dyUserEntity.setEvent_id(event_id);
+            //修改全局变量serverTime
+            String launch_result = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, launch_body_msg.get(1));
+            System.out.println("加载app结果：" + launch_result);
 
-                ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, urlRequestEntity);
-                System.out.println("取到视频id");
+            ArrayList<String> temp = new ArrayList<>();
+            ArrayList<String> temp1 = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
+            ArrayList<String> temp2 = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
+
+            temp.add("6605149131734256900");
+            temp.add("6612851893771177223");
+            temp.add("6608910179855502595");
+            temp.add("6612816598644296974");
+            temp.add("6612824883917229319");
+            temp.add("6612861811463032077");
+//            temp.add("6610128541478554887");
+//            temp.add("6609527383840001294");
+//            temp.add("6608257682686086414");
+//            temp.add("6610152012623383815");
+//            temp.add("6608377342861511950");
+//            temp.add("6609950440593296644");
+
+//            for(int j = 0;j < temp1.size();j++){
+//                temp.add(temp1.get(j));
+//            }
+//            for(int j = 0;j < temp2.size();j++){
+//                temp.add(temp2.get(j));
+//            }
+            for (int j = 0; j < 1; j++) {
+
+               // ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
+
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (temp.size() == 0) {
-                    i--;
+                    System.out.println("错误：没有获取到任何视频");
+                    j--;
                 }
 
                 ArrayList<String> like_list = new ArrayList<>();
                 for (int k = 0; k < temp.size(); k++) {
-                    System.out.println(temp.get(k));
-                    ArrayList<String> digg_result = thumbsUpMaker(temp.get(j), okHttpClient);
+                    SupportAccountMaker.getVideoMaker(okHttpClient, temp.get(k), deviceEntity, dyUserEntity);
+                    Thread.sleep(1000);
+                    ArrayList<String> digg_result = thumbsUpMaker(temp.get(k), okHttpClient);
                     String[] digg_temp = digg_result.get(0).split(",");
                     for (int m = 0; m < digg_temp.length; m++) {
                         if (digg_temp[m].split(":")[0].equals(" \"is_digg\"")) {
@@ -318,24 +351,40 @@ public class MainController {
 
                     Thread.sleep(500);
                 }
-                if (like_list.size() != 0) {
-                    ArrayList<String> body_msg = AllAppLogConstruct.digg_temp(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(System.currentTimeMillis()), like_list);
-                    event_id = Integer.valueOf(body_msg.get(0));
-                    String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
-                    System.out.println(appLogResult);
-                }
+//                //下面这部分用于6个赞发一次appLog
+//                if (like_list.size() != 0) {
+//                    ArrayList<String> body_msg = AllAppLogConstruct.digg_temp(dyUserEntity.getAppLog(), session_id, event_id, String.valueOf(serverTime), String.valueOf(System.currentTimeMillis()), like_list);
+//                    event_id = Integer.valueOf(body_msg.get(0));
+//                    String appLogResult = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, body_msg.get(1));
+//                    System.out.println(appLogResult);
+//                }
+
             }
-            dyUserRepository.save(dyUserEntity);
+
             System.out.println("id:" + id);
             System.out.println("success:" + success);
             System.out.println("failure:" + failure);
             System.out.println("-----------------------------------------------------");
             System.out.println("----------------------烧楼上屁股----------------------");
             System.out.println("-----------------------------------------------------");
+            id++;
         }
 
     }
 
+    @RequestMapping("/test1")
+    public void test(){
+        DYUserEntity dyUserEntity = dyRegisterService.findById(id);
+        String simulationId = dyUserEntity.getSimulationID();
+
+        //通过simulationid获取t_device中的数据
+        DeviceEntity deviceEntity = deviceService.getDeviceMsg(Integer.parseInt(simulationId));
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        ArrayList<String> result = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
+
+        System.out.println(result);
+    }
 
     public static String MapToString(Map map){
         Map.Entry entry;

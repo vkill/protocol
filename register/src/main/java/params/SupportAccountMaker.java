@@ -2,11 +2,9 @@ package params;
 
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
-import com.space.register.entity.UrlRequestEntity;
 import httpmaker.ConstructRequest;
 import jsonreader.tools.GzipGetteer;
 import okhttp3.*;
-import params.tools.ConstructRequestUrl;
 import po.RequestTokenVo;
 
 import java.io.IOException;
@@ -23,54 +21,8 @@ import java.util.Map;
  **/
 public class SupportAccountMaker {
 
-    public static ArrayList<String> getAwemeListMaker(OkHttpClient okHttpClient, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
+    public static ArrayList<String> getAwemeListMaker(OkHttpClient okHttpClient, DeviceEntity deviceEntity, DYUserEntity dyUserEntity){
 
-        //获取设备信息
-        String deviceID = deviceEntity.getDeviceId();
-        String deviceBrand = deviceEntity.getDevice_brand();
-        String devicePlatform = deviceEntity.getDevice_platform();
-        String deviceType = deviceEntity.getDevice_type();
-        String iid = deviceEntity.getIid();
-        String openudid = deviceEntity.getOpenudid();
-        String uuid = deviceEntity.getUuid();
-        String cookie = deviceEntity.getCookie();
-
-
-        //获取并构建url信息，包括host、msg、token
-        String host = urlRequestEntity.getHost();
-        String msg = urlRequestEntity.getMessage();
-
-        //构造token
-        Map<String, String> token = new HashMap<String, String>();
-
-        token.put("type","0");
-        token.put("max_cursor","0");
-        token.put("min_cursor","0");
-        token.put("count","6");
-        token.put("volume","0.7333333333333333");
-        token.put("pull_type","0");
-        token.put("app_type","normal");
-        token.put("os_api","22");
-        token.put("device_type",deviceType);
-        token.put("device_platform",devicePlatform);
-        token.put("ssmix","a");
-        token.put("iid",iid);
-        token.put("manifest_version_code","176");
-        token.put("dpi","240");
-        token.put("uuid",uuid);
-        token.put("version_code","176");
-        token.put("app_name","aweme");
-        token.put("version_name","1.7.6");
-        token.put("openudid",openudid);
-        token.put("device_id",deviceID);
-        token.put("resolution","1280*720");
-        token.put("os_version","5.1.1");
-        token.put("language","zh");
-        token.put("device_brand",deviceBrand);
-        token.put("ac","wifi");
-        token.put("update_version_code","1762");
-        token.put("aid","1128");
-        token.put("channel","tengxun");
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
         String ts = "";
@@ -80,49 +32,15 @@ public class SupportAccountMaker {
         long temp_ts = Long.parseLong(ts);
         temp_ts ++;
         ts = String.valueOf(temp_ts);
-        token.put("_rticket",_rticket);
-        token.put("ts",ts);
-        token.put("as","a1iosdfgh");
-        token.put("cp","androide1");
-        String url = ConstructRequestUrl.constructUrl(host, msg, token);
 
+        String url = "https://aweme.snssdk.com/aweme/v1/feed/?type=0&max_cursor=0&min_cursor=0&count=6&volume=0.0&pull_type=0&ts="+ts+"&app_type=normal&os_api=25&device_type="+deviceEntity.getDevice_type()+"&device_platform=android&ssmix=a&iid="+deviceEntity.getIid()+"&manifest_version_code=176&dpi=320&uuid="+deviceEntity.getUuid()+"&version_code=176&app_name=aweme&version_name=1.7.6&openudid="+deviceEntity.getOpenudid()+"&device_id="+deviceEntity.getDeviceId()+"&resolution=1280*720&os_version=7.1.2&language=zh&device_brand="+deviceEntity.getDevice_brand()+"&ac=wifi&update_version_code=1762&aid=1128&channel=tengxun&_rticket="+_rticket+"&as=a1iosdfgh&cp=androide1";
 
-        //下面开始构造header中的cookie
-        String []line_split = cookie.split(";");
-        Map <String, String> stack = new HashMap<String, String>();
-        for(int i = 0;i < line_split.length;i++){
-            String []stack_split =line_split[i].split("=");
-            stack.put(stack_split[0],stack_split[1]);
-        }
-
-        Map<String, String> headerMap = urlRequestEntity.getHeaderMap();
-        Map<String, String> header_cookie = new HashMap<String, String>();
-        Map<String, String> data = new HashMap<String, String>();
-        String []cookie_data = cookie.split(";");
-
-        for(int i = 0;i < cookie_data.length;i++){
-            String []data_temp = cookie_data[i].split("=");
-            data.put(data_temp[0],data_temp[1]);
-        }
-
-        String cookie_map = headerMap.get("Cookie");
-        cookie_map = cookie_map.split("[{]")[1].split("[}]")[0];
-        String []cookie_map_list = cookie_map.split(";");
-        for(int i = 0;i < cookie_map_list.length;i++){
-            String []cookie_list_temp = cookie_map_list[i].split("=");
-            header_cookie.put(cookie_list_temp[0], data.get(cookie_list_temp[0]));
-        }
-        header_cookie.put("qh[360]","1");
         Map<String, String> header = new HashMap<String, String>();
-
-
-        String header_str = MapToString(header_cookie);
-
 
         header.put("Host","aweme.snssdk.com");
         header.put("Connection","Keep-Alive");
         header.put("Accept-Encoding","gzip");
-        header.put("Cookie",header_str);
+        header.put("Cookie", dyUserEntity.getUserCookie());
         header.put("User-Agent","okhttp/3.8.1");
 
 
@@ -136,76 +54,22 @@ public class SupportAccountMaker {
 //        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         ArrayList<String> resultToReturn = new ArrayList<String>();
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-                System.out.println("响应成功");
-                String result = GzipGetteer.uncompressToString(response.body().bytes());
 
-                String []temp = result.split("\"aweme_id\": ");
-                ArrayList<String> id_list = new ArrayList<String>();
-                for(int i = 1;i < temp.length;i ++){
-                    String []temp1 = temp[i].split(",");
-                    char []array = temp1[0].toCharArray();
-                    String str = "";
-                    for(int j = 1;j < array.length - 1;j++){
-                        str += array[j];
-                    }
-                    id_list.add(str);
-                }
 
-                for(int i = 0;i < id_list.size();i +=3){
-                    resultToReturn.add(id_list.get(i));
-
-                }
-
-            }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
-
-            }
-        });
+        try {
+            Response response = call.execute();
+            String result = GzipGetteer.uncompressToString(response.body().bytes());
+            resultToReturn = getAwemeIdList(result);
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return resultToReturn;
     }
 
-    public static void getVideoMaker(OkHttpClient okHttpClient, String awemeId, DeviceEntity deviceEntity, UrlRequestEntity urlRequestEntity){
+    public static void getVideoMaker(OkHttpClient okHttpClient, String awemeId, DeviceEntity deviceEntity, DYUserEntity dyUserEntity){
 
-
-        String cookie = deviceEntity.getCookie();
-
-        //获取并构建url信息，包括host、msg、token
-        //UrlRequestEntity urlRequestEntity = urlRequestService.getUrlRequest(3);
-        String host = urlRequestEntity.getHost();
-        String msg = urlRequestEntity.getMessage();
-
-        //构造token
-        Map<String, String> token = new HashMap<String, String>();
-        token.put("aweme_id",awemeId);
-
-        //type为1则代表点赞，0为取消赞
-        token.put("os_api","22");
-        token.put("device_type",deviceEntity.getDevice_type());
-        token.put("device_platform",deviceEntity.getDevice_platform());
-        token.put("ssmix","a");
-        token.put("iid",deviceEntity.getIid());
-        token.put("manifest_version_code","176");
-        token.put("dpi","240");
-        token.put("uuid",deviceEntity.getUuid());
-        token.put("version_code","176");
-        token.put("openudid",deviceEntity.getOpenudid());
-        token.put("device_id",deviceEntity.getDeviceId());
-        token.put("resolution","720*1280");
-        token.put("os_version","5.1.1");
-        token.put("language","zh");
-        token.put("device_brand",deviceEntity.getDevice_brand());
-        token.put("ac","wifi");
-        token.put("update_version_code","1762");
-        token.put("aid","1128");
-        token.put("channel","tengxun");
-        token.put("version_name","1.7.6");
-        token.put("app_name","aweme");
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
         String ts = "";
@@ -215,42 +79,10 @@ public class SupportAccountMaker {
         long temp_ts = Long.parseLong(ts);
         temp_ts ++;
         ts = String.valueOf(temp_ts);
-        token.put("_rticket",_rticket);
-        token.put("ts",ts);
-        token.put("as","a1iosdfgh");
-        token.put("cp","androide1");
 
-        //url构建完成,其中cookie需要从前面的cookie参数中提取
-        String url = ConstructRequestUrl.constructUrl(host, msg, token);
-
-        String []line_split = cookie.split(";");
-        Map <String, String> stack = new HashMap<String, String>();
-        for(int i = 0;i < line_split.length;i++){
-            String []stack_split =line_split[i].split("=");
-            stack.put(stack_split[0],stack_split[1]);
-        }
-
-        Map<String, String> headerMap = urlRequestEntity.getHeaderMap();
-        Map<String, String> header_cookie = new HashMap<String, String>();
-        Map<String, String> data = new HashMap<String, String>();
-        String []cookie_data = cookie.split(";");
-
-        for(int i = 0;i < cookie_data.length;i++){
-            String []data_temp = cookie_data[i].split("=");
-            data.put(data_temp[0],data_temp[1]);
-        }
-
-        String cookie_map = headerMap.get("Cookie");
-        cookie_map = cookie_map.split("[{]")[1].split("[}]")[0];
-        String []cookie_map_list = cookie_map.split(";");
-        for(int i = 0;i < cookie_map_list.length;i++){
-            String []cookie_list_temp = cookie_map_list[i].split("=");
-            header_cookie.put(cookie_list_temp[0], data.get(cookie_list_temp[0]));
-        }
-        header_cookie.put("qh[360]","1");
+        String url = "https://aweme.snssdk.com/aweme/v1/aweme/stats/?os_api=25&device_type="+deviceEntity.getDevice_type()+"&device_platform=android&ssmix=a&iid="+deviceEntity.getIid()+"&manifest_version_code=176&dpi=320&uuid="+deviceEntity.getUuid()+"&version_code=176&app_name=aweme&version_name=1.7.6&openudid="+deviceEntity.getOpenudid()+"&device_id="+deviceEntity.getDeviceId()+"&resolution=1280*720&os_version=7.1.2&language=zh&device_brand="+deviceEntity.getDevice_brand()+"&ac=wifi&update_version_code=1762&aid=1128&channel=tengxun&_rticket="+_rticket+"&ts="+ts+"&as=a1iosdfgh&cp=androide1";
         Map<String, String> header = new HashMap<String, String>();
 
-        String header_str = MapToString(header_cookie);
 
         header.put("Accept-Encoding","gzip");
         header.put("Cache-Control","max-stale=0");
@@ -258,7 +90,7 @@ public class SupportAccountMaker {
         header.put("Content-Length","500");
         header.put("Host","aweme.snssdk.com");
         header.put("Connection","Keep-Alive");
-        header.put("Cookie",header_str);
+        header.put("Cookie",dyUserEntity.getUserCookie());
         header.put("User-Agent","okhttp/3.8.1");
 
 
@@ -303,17 +135,15 @@ public class SupportAccountMaker {
 
 //        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call arg0, Response response) throws IOException {
-                System.out.println("响应成功");
-                System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
-            }
-            @Override
-            public void onFailure(Call arg0, IOException arg1) {
-                System.out.println("响应失败");
-            }
-        });
+        ArrayList<String> resultToReturn = new ArrayList<String>();
+
+        try {
+            Response response = call.execute();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -376,6 +206,33 @@ public class SupportAccountMaker {
         }
         return result_awemeId;
     }
+
+    public static ArrayList<String> getAwemeIdList(String temp){
+
+
+        ArrayList<String> result = new ArrayList<>();
+        String []temp1 = temp.split(",");
+        for(int i = 0;i < temp1.length;i++){
+            String []temp2 = temp1[i].split(":");
+            if(temp2[0].equals(" \"aweme_id\"")){
+                result.add(temp2[1]);
+            }
+        }
+
+        ArrayList<String> resultToReturn = new ArrayList<>();
+        for(int i = 0;i < result.size();i+=3){
+            char []array = result.get(i).toCharArray();
+            String str_temp ="";
+            for(int j = 0;j < array.length;j++){
+                if (Character.isDigit(array[j])){
+                    str_temp += array[j];
+                }
+            }
+            resultToReturn.add(str_temp);
+        }
+        return resultToReturn;
+    }
+
     public static String MapToString(Map map){
         java.util.Map.Entry entry;
         StringBuffer sb = new StringBuffer();
