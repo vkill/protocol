@@ -6,7 +6,6 @@ import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
-import com.space.dyrev.request.deviceregistermodule.params.XlogV2Params;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
 import com.space.dyrev.request.deviceregistermodule.service.impl.DevRegisterServiceImpl;
 import com.space.dyrev.request.deviceregistermodule.utils.RequestParams;
@@ -41,20 +40,35 @@ public class MainTest {
 
     private static final String DEVICE_STRING = "{\"deviceType\":\"Redmi Note 5\",\"buildSerial\":\"63ff712b46831\",\"romVersion\":\"miui_V10_8.9.13\",\"devicePlatform\":\"android\",\"imsi\":\"460088412671371\",\"deviceId\":\"58296768425\",\"installId\":\"46758415128\",\"resolution\":\"1280x720\",\"uuid\":\"865166821081011\",\"openudid\":\"c58791b8d2d5d372\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"46758415128\\\",\\\"ttreq\\\":\\\"1$b47fe540de6eac63e8c6dab10d23cccdc00ccd0a\\\"}\",\"cpuAbi\":\"armeabi-v7a\",\"xttlogid\":\"201810192024150100150792323444A7\",\"clientudid\":\"ce1630c2-86e1-404a-8887-54e37b75d7ad\",\"rom\":\"MIUI-8.9.13\",\"adid\":\"c58791b8d2d5d372\",\"simICCid\":\"\",\"mc\":\"F4:F5:DB:D3:01:5D\",\"imei\":\"865166821081011\",\"dpi\":\"320\",\"deviceBrand\":\"Xiaomi\",\"deviceCookiesJSON\":{\"install_id\":\"46758415128\",\"ttreq\":\"1$b47fe540de6eac63e8c6dab10d23cccdc00ccd0a\"}}";
 
+
+
     public static void main(String[] args) {
 //        testResponse();
 //        testRegisterDevice();
+
+
+
+
         DeviceEntity deviceEntity = saveDevice();
-        JSONObject jsonObject = XlogV2Params.constructV2Json(deviceEntity, XlogEnum.COLD_START);
-        JSONObject jsonObject1 = XlogV2Params.constructV2Json(deviceEntity, XlogEnum.LOGIN);
-        System.out.println(jsonObject1);
-//        handleHeader();
-//        testCes();
+
+        testSendXlog(deviceEntity, XlogEnum.COLD_START);
+
+
     }
 
-//    private static void test() {
-//        CreateDevInfoUtil.getRandomUuid();
-//    }
+
+    // 测试发送xlog
+    private static void testSendXlog(DeviceEntity deviceEntity, XlogEnum xlogEnum) {
+        DeviceRegisterService drs = new DevRegisterServiceImpl();
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+//        String url = XlogV2Params.constructV2Url(deviceEntity, XlogEnum.LOGIN);
+//        JSONObject body = XlogV2Params.constructV2Json(deviceEntity, XlogEnum.LOGIN);
+
+        String s = drs.xlogV2(deviceEntity, xlogEnum, okHttpClient);
+        System.out.println(s);
+    }
+
 
     private static void testGetDevRgs() {
         DeviceEntity deviceEntity = RequestParams.newDevice();
@@ -157,6 +171,8 @@ public class MainTest {
             e.printStackTrace();
         }
     }
+
+
 
 
 

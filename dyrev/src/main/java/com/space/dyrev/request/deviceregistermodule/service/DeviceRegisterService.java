@@ -1,6 +1,7 @@
 package com.space.dyrev.request.deviceregistermodule.service;
 
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.enumeration.XlogEnum;
 import okhttp3.OkHttpClient;
 
 /**
@@ -36,7 +37,7 @@ public interface DeviceRegisterService {
      * @param deviceEntity
      * @return
      */
-    String xlogV2(DeviceEntity deviceEntity);
+    String xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient);
 
 
 }

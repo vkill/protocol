@@ -63,7 +63,7 @@ public class OkHttpTool {
         Request.Builder builder = new Request.Builder();
         builder.url(url);
 
-        MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
+        MediaType type = MediaType.parse("application/octet-stream");
         RequestBody requestBody = RequestBody.create(type, bytes);
 
         for(String key : header.keySet()){

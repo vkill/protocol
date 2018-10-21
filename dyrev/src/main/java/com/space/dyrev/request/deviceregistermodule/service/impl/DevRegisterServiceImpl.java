@@ -3,10 +3,14 @@ package com.space.dyrev.request.deviceregistermodule.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.encrypt.TTEncrypt;
+import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.CommonParams;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
+import com.space.dyrev.request.deviceregistermodule.params.XlogV2Params;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
+import com.space.dyrev.testpackage.OutPutUtil;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.formatutil.ScaleTrans;
 import com.space.dyrev.util.httputil.OkHttpTool;
@@ -129,7 +133,28 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
     }
 
     @Override
-    public String xlogV2(DeviceEntity deviceEntity) {
-        return null;
+    public String xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient) {
+        Map header = XlogV2Params.constructHeader(deviceEntity);
+        String url = XlogV2Params.constructV2Url(deviceEntity, xlogEnum);
+        JSONObject body = XlogV2Params.constructV2Json(deviceEntity, xlogEnum);
+
+        System.out.println(body);
+
+        try {
+
+            byte[] encodeBody = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.ENCODE, body.toString().getBytes());
+
+
+            Response response = OkHttpTool.post(okHttpClient, url, header, encodeBody);
+
+            System.out.println(response.body());
+
+
+
+            return "123";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
