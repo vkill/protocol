@@ -26,18 +26,21 @@ import java.util.Base64;
  **/
 public class ss {
     public static void main(String[] args) throws IOException {
-        String str = "{\"p1\":\"\",\"p2\":\"\",\"pkg\":\"com.ss.android.ugc.aweme\",\"fp\":\"Xiaomi\\/bxr0q\\/bxr0q:7.1\\/XWJZXZ\\/:user\\/release-keys;\",\"hw\":{\"brand\":\"Xiaomi\",\"model\":\"HM Note3\",\"board\":\"bxr0q\",\"device\":\"bxr0q\",\"product\":\"bxr0q\",\"bt\":\"XWJZXZ\",\"display\":\"1080*1920\",\"dpi\":400,\"bat\":3600,\"cpu\":{\"hw\":\"\",\"max\":\"1586000\",\"min\":\"442000\",\"ft\":\"half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt lpae evtstrm aes pmull sha1 sha2 crc32\"},\"mem\":{\"ram\":\"3.47 GB\",\"rom\":\"24.76 GB\",\"sd\":\"24.74 GB\"}},\"id\":{\"imei\":\"\",\"imsi\":\"\",\"adid\":\"356a706243746b75\",\"mac\":\"6b:d9:27:43:d5:a3\",\"serial\":\"796f77704e764a70\"},\"emulator\":{\"sig\":0,\"cb\":10,\"file\":[],\"prop\":[]},\"env\":{\"ver\":\"0.5.5.29\",\"pkg\":\"com.ss.android.ugc.aweme\",\"uid\":10243,\"rebuild\":1,\"jd\":0,\"dbg\":0,\"tid\":0,\"xpd\":0,\"hk\":[],\"su\":0,\"sp\":\"\",\"ro.secure_s\":\"\",\"ro.debuggable_s\":\"\",\"click\":\"\",\"hph\":\"\",\"hpp\":\"\",\"mc\":0,\"fc\":19067,\"jexp\":0,\"xposed\":0,\"cydia\":0,\"frida\":0,\"vapp\":\"\",\"api\":[]},\"extra\":\"cold_start\"}";
+        String str = "a";
         BASE64Encoder encoder = new BASE64Encoder();
         byte[] bytes = str.getBytes();
         String base64 = encoder.encode(bytes);
         System.out.println(base64);
 
-        String data = "AJl9KTK4XcbQFVCOAbMBJ35S2h5XP9yT1awx/XwgXoIu3GMXA43gSPXlk+bYLEz46S9PhjhYlE38JVdMDt9L+iWZ01KCq6CSl9ScJ1jrDldlWOQWWJu5DtQVYukOD+BhwkeHM6UYa8LtA18Dm/wOZamCHV5AbrN0MAA45v5VLDETed+OgTlcZDH/TE/vcaBlrEXFjSLIFZ/dciDx/vigV7pGIQ9SFjqeEBh6PxIG4oz38UAug+oIvXbzGe+Hxk/zYa+nB4Bn90BSJVhGvT8W0NQ0Dm6CZnJzvwxumugYebrMONzsinzfIMLaexjm/EyqJgcwGwgl+EybbKUQkHn/ShfWPy/KtSe3Ql79zE4Day6Iucuwir23magKmJ2ILMJaUbC+M1xb4z6OxvRfHs4IqmV5psmwjdOm2J3L3HYtRb6uHARFxMoAl0j77Bwyayy1uIVDws0hW6oT2oLIauHxztqhDe64Fyt50x7TKLmsWEvqK0LuxGQeTQkFN9jNn4QHy3oCnoxo6NdIF18TM8mRtEJz2g1aPIIyJ5CvoKwSOxHmb5pm7icz6UH31NdIv4im3xj2udjd7TJRformNEr/9tDhaOgO5j8nkiV9g/ahRYZmpXO3F51zNZI4XNc+T3ZxmJznpY45rPL3zV+BhenMDmdPjrKb+qenkGzILBYsMZdNMRgF1gIneVC6RnTvqQpxmhoRWcgtfxvIdKynNRkUVBuDgJNiUIsbUDoE7KtJTg/gNK+vsXbhC7GSCWOoE4CAclfZg5/T4q5X+U759eYghBWwTBrk7tT7mxOHvJRl4atwEpVaWs3q1ffdNpzorWtZsH1rIFFwhIk5ts3vNlJq/SB0FWP8j/deQjIkR6fVNgTirwn6n9cuGUjkuCi4eE3/SUmF8EZUrOJGYGMCxBGn4Hw3e8VaJHAqaA6XAq6JWCTHAM/tytWRKJJLNfyPHatmUL3ltYYMsC1IFw5Yzrp1E4CQZJdaL1vlSEUY4QYtTxYW5Gj8otgoLUKQK441Tj2x7ZkU01MIfN7Tfwnc1RCFU1gU2PYPHwK8V33jAii9Hfp+nCI3KU/Yp5CcQ8EEg96IkUwc9xDcJIwI+tiiWjDnVFQDTxF20PDwUJOl0xDCgSIU3pBz0B6b91Djac3CyKO3Ij3eThEuZ0GeMcuw/QaYtwrvuEAKOqe+k9gyZazGh9tp1lEoGy05E1R7m5pWFugWmM+cHBPlYhsTd9KpNVrHSB++RC5Ohi7O+g==";
+        String data = "3uc/1HwY12qKQ3beMgxLHWUw7fA55Ag+FYC5uALzjQvOphAqO5IvOyEqvNGp6a62TqbdDYkKIkRI4VYNVYjhwLBuYCdv+UHXeuzGLh0MitoZiQpDTTUSeHjpowiYArrnlMzX7+Dyio+lg7I9j8hi0z5IPRdQvOzS3NhgpaiC5RtSblxU5q7HSM/B9ZvzvDiXhxi7akB5Iqk+eUTADw2S12ahUAJi1vsU9V43IjywwVPr+GTLWA6I9b19mUzWAK28VEJTX7pexXH0q5XV8HhV9hZExFlBmhI4qf9LUbe0ofTUwmuNXlLJi5P/ECnVFGWnkq5tPa5ZSBnk3Lm+OMQ/y/aCadoQwuFwaCBzkKGCtu7ajH2NcygCaoFOQg5vdvne+U+cvdX+NK5j02CszR9Fot+hsie0kz/BkQy8b9hOaxj9/47651LNt2wdwwFXzwbvYUyj/e7uGwP2vrg5Jgk4urYuDZdtaZqsdqp7bkNItt8HgIuFCoIrweBYm7u1Ou+dvBwKMT6mAtL1cNZIJFqUcj89rVgo3mGCdJ4jGngou+H/SKjg1wjUcpjF2yjbaMuwP4D2XORqndwuvxIBDhTnVnuc4AtFnJKB/zbkMChm/Xpm7r/QM0GpRTIOjT0uXhOXediaud3ZIEWV8rzKGR6dvZRYTwcwQcWI6FTqpkkWdmTuKEJ60wCSbGE3utgmSscnIQrsUnKQmIqBOdIMoiTGVww8c+HdWyXH0qZO/HUyEiVTAnT90oJXCursIQuZK7/MJIq0wIxbTupmBE+08x5tShPcjUg0BvBzZhLQNsPt1m8aDo1rxoiLUTHOCC40t9mV7IACfVngO4DYSLrf0R1uIEpp/FmGj8d5atD7f/kEl18lm6xk0SaQ+jPMhe8wI/XYNrdaxavkwKDSAH5TQGC54TPP3qpjlM+nToVbr2ZOdHeHNmybkzPVIEsgtE+AhwS3kEPp/mQVGXgSJjNd6W3KeBRMz1A+mH9ar2ETo+TyLBeAZ5IgkxS9jvXFJRR3niy0+c+ri84DDBEjzivXQuuuWPSPA3FPohHc+79HFd4E7OTAyaSaS7aR7wY/xOKk7Dj++FInUfsDdQ0kY4WD+zA8r8bT8IBtBU1wx9ZuV4UTLSBT1K7b3kmHdjCdu3P/IJek7PpH2nkav5lLSryIA90+O7R4iK+tceQGEbxfutD5V3lFjmbi/KAmpSTnDCzt/KHMl/ZgRI2JoIZO5qZ635AVsIR5aASJ+tI8TTzy0L5NvjsGQpcwGZck+V7WSf6N3W8Q6jyFEdmaW8YszwGTYXgNBRrjv+hXxekzlxFsif1Js2zNBrHEikgQGardLSX4z0sAUxgOSSY2B0BjXf5JiApGPxBmOzkpRZ5mSFL4xm98V2T8og2vsgNDN2QnqATIRBkex4WbWxtg7TpPrfdpjyRrrK3wHeTFOYynkMaEC63tBEvWUTavHlyM9XQWFW9P6q0j697XUfVGWM/VuS4JKdJcGI0Ja+t/2n+hin57+xTGkkKTNmJP4/BLZI9M0y3ykc35S7CLCwZ4WA/J6kUdDqJoDkWqE+H+t7ydo1Ilqoo6M0h56+eNoaTxBVDplE3R+A/psgyHwymuhdOEnoXpt/pcoZpoXZ1oEFOOVSg+WV53CMzK89VR/m4eQPhC0ZNvD75E";
+
         BASE64Decoder decoder = new BASE64Decoder();
         byte[] bytes1 = decoder.decodeBuffer(data);
-        String s = new String(bytes1);
-
-        System.out.println(s);
+//        String s = new String(bytes1);
+//        System.out.println(s);
+        for (int i=0; i < bytes1.length; i++) {
+            System.out.print(bytes1[i]+" ");
+        }
 
     }
 }
