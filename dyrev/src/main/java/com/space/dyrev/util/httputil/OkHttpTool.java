@@ -41,7 +41,7 @@ public class OkHttpTool {
         Response response = null;
         switch (requestEnum) {
             case GET:
-                System.out.println("get");
+                response = get(res.getOkHttpClient(), res.getUrl(), res.getHeaders());
                 break;
             case POST_OCT:
                 response = post(res.getOkHttpClient(), res.getUrl(), res.getHeaders(),res.getBytesBody());
@@ -104,8 +104,29 @@ public class OkHttpTool {
         Call call = okHttpClient.newCall(request);
         return call.execute();
 
-
     }
 
+
+    /**
+     * 发送表格的get请求
+     * @param okHttpClient
+     * @param url
+     * @param header
+     * @return
+     * @throws IOException
+     */
+    public static Response get(OkHttpClient okHttpClient, String url, Map<String, String> header) throws IOException {
+        // 构建GET请求，并设置请求消息头
+        //requestEntity中包含两部分，Url、Header
+        Request.Builder builder = new Request.Builder();
+        builder.url(url);
+        for(String key : header.keySet()){        //添加header信息
+            builder.addHeader(key, header.get(key).trim());
+        }
+        Request request = builder.get().build();
+        Call call = okHttpClient.newCall(request);
+        return call.execute();
+
+    }
 
 }
