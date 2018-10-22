@@ -47,6 +47,7 @@ public class XlogV2Params {
         result.put("Host", HOST);
         result.put("Connection", "Keep-Alive");
         result.put("Accept-Encoding", "gzip");
+        result.put("User-Agent", "okhttp/3.10.0.1");
         result.put("Content-length", "1155");
 //        result.put("Content-Type", "application/octet-stream");
         result.put("Cookie","session=");
@@ -117,12 +118,12 @@ public class XlogV2Params {
         hw.put("dpi", Integer.parseInt(deviceEntity.getDpi()));
         hw.put("bat", 4100);
         hw.put("cpu", cpu);
-        hw.put("men", mem);
+        hw.put("mem", mem);
 
         id.put("imei", deviceEntity.getImei());
         id.put("imsi", deviceEntity.getImsi());
         id.put("adid", deviceEntity.getAdid());
-        id.put("mac", "02:00:00:00:00:00");
+        id.put("mac", deviceEntity.getMc().toLowerCase());
         id.put("serial", deviceEntity.getBuildSerial());
 
         emulator.put("sig", 0);
@@ -139,10 +140,11 @@ public class XlogV2Params {
         env.put("tid", 0);
         env.put("xpd", 0);
         env.put("hk", new JSONArray());
-        env.put("su", 1); // 是否超级权限？
+        env.put("su", 0); // 是否超级权限？
 
 
         env.put("sp", "\\/system\\/xbin\\/su");
+//        env.put("sp", "/system/xbin/su");
         env.put("ro.secure_s", "");
         env.put("ro.debuggable_s", "");
         env.put("click", "");
@@ -154,7 +156,7 @@ public class XlogV2Params {
         env.put("xposed", 0);
         env.put("cydia", 0);
         env.put("frida", 0);
-        env.put("vapp", 0);
+        env.put("vapp", "");
         env.put("api", new JSONArray());
 
         // notify不确定是否有关系，先写死
@@ -165,9 +167,10 @@ public class XlogV2Params {
 
         result.put("pkg", CommonParams.PACKAGE);
         result.put("fp", "Xiaomi\\/santoni\\/santoni:7.1.2\\/N2G47H\\/8.9.13:user\\/release-keys");
+//        result.put("fp", "Xiaomi/santoni/santoni:7.1.2/N2G47H/8.9.13:user/release-keys");
         result.put("vc", Integer.parseInt(CommonParams.VERSION_CODE));
         result.put("VPN", 0);
-        result.put("wifimac", deviceEntity.getMc());
+        result.put("wifimac", deviceEntity.getMc().toLowerCase());
         result.put("location", "");
         result.put("apps", new JSONArray());
         result.put("hw", hw);

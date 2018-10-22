@@ -73,6 +73,12 @@ public class CommonParams {
     // sig_hash , 暂时不清楚是什么
     public static final String SIG_HASH = "aea615ab910015038f73c47e45d21466";
 
+    public static final String QH360 = "qh[360]=1";
+
+    public static final String AS = "a1iosdfgh";
+
+    public static final String CP = "androide1";
+
 
 
 

@@ -32,7 +32,7 @@ public interface DeviceInfoSave {
     };
 
     public static String [] RESOLUTION = {
-            "1280x720",
+            "1280*720",
     };
 
     public static String [] DPI = {

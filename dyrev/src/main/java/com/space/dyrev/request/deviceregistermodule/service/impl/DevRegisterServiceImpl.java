@@ -133,28 +133,41 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
     }
 
     @Override
-    public String xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient) {
+    public boolean xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient) {
         Map header = XlogV2Params.constructHeader(deviceEntity);
         String url = XlogV2Params.constructV2Url(deviceEntity, xlogEnum);
         JSONObject body = XlogV2Params.constructV2Json(deviceEntity, xlogEnum);
 
-        System.out.println(body);
 
         try {
 
             byte[] encodeBody = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.ENCODE, body.toString().getBytes());
 
-
             Response response = OkHttpTool.post(okHttpClient, url, header, encodeBody);
 
-            System.out.println(response.body());
+            byte[] uncompress = GzipGetteer.uncompress(response.body().bytes());
+
+            byte[] temp = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.DECODE, uncompress);
+
+            String result = new String(temp);
+
+            JSONObject jsonObject = JSONObject.parseObject(result);
+
+            if (jsonObject.get("result").equals("success")) {
+                return true;
+            }
 
 
 
-            return "123";
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
+        return false;
+    }
+
+    @Override
+    public boolean sendCode(DeviceEntity deviceEntity) {
+
+        return false;
     }
 }

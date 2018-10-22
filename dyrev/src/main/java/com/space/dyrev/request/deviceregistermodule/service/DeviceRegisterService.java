@@ -37,7 +37,12 @@ public interface DeviceRegisterService {
      * @param deviceEntity
      * @return
      */
-    String xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient);
+    boolean xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient);
 
-
+    /**
+     * 发送验证码
+     * @param deviceEntity 设备信息
+     * @return 返回是否成功
+     */
+    boolean sendCode(DeviceEntity deviceEntity);
 }
