@@ -1,20 +1,25 @@
 package com.space.dyrev.testpackage;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.encrypt.CesEncrypt;
+import com.space.dyrev.enumeration.PhoneArea;
 import com.space.dyrev.enumeration.XlogEnum;
+import com.space.dyrev.request.accountregistermodule.service.AccountRegisterService;
+import com.space.dyrev.request.accountregistermodule.service.impl.AccountRegisterServiceImpl;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
-import com.space.dyrev.request.deviceregistermodule.params.SendCodeParams;
+import com.space.dyrev.request.accountregistermodule.params.SendCodeParams;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
 import com.space.dyrev.request.deviceregistermodule.service.impl.DevRegisterServiceImpl;
 import com.space.dyrev.request.deviceregistermodule.utils.RequestParams;
 import com.space.dyrev.util.formatutil.GzipGetteer;
+import com.space.dyrev.util.httputil.CookieTool;
+import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
-import java.util.Random;
+import java.util.Map;
 
 
 /**
@@ -39,31 +44,40 @@ import java.util.Random;
 public class MainTest {
 
 
-    private static final String DEVICE_STRING = "{\"deviceType\":\"Redmi Note 5\",\"buildSerial\":\"6d16cfb7d440\",\"romVersion\":\"miui_V10_8.9.13\",\"devicePlatform\":\"android\",\"imsi\":\"460088412671371\",\"deviceId\":\"58296768425\",\"installId\":\"46758415128\",\"resolution\":\"1280*720\",\"uuid\":\"865166821081011\",\"openudid\":\"c58791b8d2d5d372\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"46758415128\\\",\\\"ttreq\\\":\\\"1$b47fe540de6eac63e8c6dab10d23cccdc00ccd0a\\\"}\",\"cpuAbi\":\"armeabi-v7a\",\"xttlogid\":\"201810192024150100150792323444A7\",\"clientudid\":\"ce1630c2-86e1-404a-8887-54e37b75d7ad\",\"rom\":\"MIUI-8.9.13\",\"adid\":\"c58791b8d2d5d372\",\"simICCid\":\"\",\"mc\":\"F4:F5:DB:D3:01:5D\",\"imei\":\"865166821081011\",\"dpi\":\"320\",\"deviceBrand\":\"Xiaomi\",\"deviceCookiesJSON\":{\"install_id\":\"46758415128\",\"ttreq\":\"1$b47fe540de6eac63e8c6dab10d23cccdc00ccd0a\"}}";
-
+    private static final String DEVICE_STRING = "{\"adid\":\"cd086472d10b2679\",\"buildSerial\":\"7c3ac597a0472\",\"clientudid\":\"026060ad-cdd0-4ae9-b764-e98bdc471c22\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47020092818\\\",\\\"ttreq\\\":\\\"1$300f590a693e664da723380af95ab2224615ca35\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47020092818\",\"ttreq\":\"1$300f590a693e664da723380af95ab2224615ca35\"},\"deviceId\":\"58403325443\",\"devicePlatform\":\"android\",\"deviceType\":\"Redmi Note 5\",\"dpi\":\"320\",\"imei\":\"865167712605257\",\"imsi\":\"460079922753138\",\"installId\":\"47020092818\",\"mc\":\"F4:F5:DB:60:FC:C7\",\"openudid\":\"cd086472d10b2679\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865167712605257\",\"xttlogid\":\"201810222203400100080170217020CA\"}";
 
 
     public static void main(String[] args) {
-//        testResponse();
-//        testRegisterDevice();
-
-
 
 
         DeviceEntity deviceEntity = saveDevice();
-        System.out.println(deviceEntity.getDeviceCookies());
 
-        testSendCode(deviceEntity);
+        deviceEntity.setUuid("867246022383583");
+        deviceEntity.setInstallId("46825309754");
+        deviceEntity.setOpenudid("ef8ad7929c2e0994");
+        deviceEntity.setDeviceId("41336725255");
+        deviceEntity.setDeviceBrand("Meizu");
+        deviceEntity.setDeviceType("MX5");
+
+//        System.out.println(deviceEntity);
+
+//        testSendXlog(deviceEntity, XlogEnum.COLD_START);
 //
 //        testSendXlog(deviceEntity, XlogEnum.LOGIN);
+//
+        testSendCode(deviceEntity);
 
 
     }
 
 
     private static void testSendCode(DeviceEntity deviceEntity) {
-        String s = SendCodeParams.constructUrl(deviceEntity);
-        System.out.println(s);
+        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.TG, "660914663");
+        AccountRegisterService acc = new AccountRegisterServiceImpl();
+        OkHttpClient okHttp = new OkHttpClient();
+        boolean b = acc.sendCodeV270(okHttp, phoneEntity, deviceEntity);
+
+
     }
 
         // 测试发送xlog

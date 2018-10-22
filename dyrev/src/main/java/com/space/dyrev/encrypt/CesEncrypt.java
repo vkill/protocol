@@ -68,7 +68,7 @@ public class CesEncrypt {
         body.put("type", String.valueOf(cesType.getIndex()));
         body.put("data", base64Str);
 
-        RequestEntity requestEntity = new RequestEntity();
+        RequestEntity requestEntity = new RequestEntity(RequestEnum.POST_FORM);
         requestEntity.setUrl(url);
         requestEntity.setRequestEnum(RequestEnum.POST_FORM);
         requestEntity.setOkHttpClient(okHttpClient);
