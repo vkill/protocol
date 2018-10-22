@@ -15,7 +15,7 @@ public class PhonePo {
     private String com_Num;
     private String phone_Num;
     private String Area_Num;
-
+    //OK|P_ID|获取时间|串口号|手机号|发送短信项目的接收号码|国家名称或区号
     public PhonePo(String P_ID,String time,String com_Num,String phone_Num,String Area_Num){
         this.P_ID = P_ID;
         this.time = time;
@@ -60,7 +60,7 @@ public class PhonePo {
     }
 
     public void setArea_Num(String area_Num) {
-        this.Area_Num = area_Num;
+        this.Area_Num = PhoneArea.phoneFromAddress.get(area_Num);
     }
 
     /**

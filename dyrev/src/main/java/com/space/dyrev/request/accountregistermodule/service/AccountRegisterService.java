@@ -1,7 +1,7 @@
-package com.space.dyrev.request.deviceregistermodule.service;
+package com.space.dyrev.request.accountregistermodule.service;
 
 import com.space.dyrev.commonentity.DeviceEntity;
-import com.space.dyrev.enumeration.XlogEnum;
+import com.space.dyrev.commonentity.PhoneEntity;
 import okhttp3.OkHttpClient;
 
 /**
@@ -19,30 +19,21 @@ import okhttp3.OkHttpClient;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                                                                             @Author: space
- *                                                                                             @Date: 2018/10/15 23:13
- *                                                                                             @Description: 设备注册操作接口
+ *
+ *        @Author: space
+ *        @Date: 2018/10/22 14:01
+ *        @Description: 注册帐号的zservice
+ *
  **/
-public interface DeviceRegisterService {
+public interface AccountRegisterService {
 
     /**
-     * 设备注册
-     * @param deviceEntity 随机生成的设备信息
-     * @return 随机生成设备的信息的实体类
-     */
-    DeviceEntity deviceRegister(OkHttpClient okHttpClient,DeviceEntity deviceEntity);
-
-    /**
-     * 请求v2
+     * https://is.snssdk.com/passport/mobile/send_code/v1
+     * 请求验证码
+     * @param okHttpClient
+     * @param phoneEntity
      * @param deviceEntity
      * @return
      */
-    boolean xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient);
-
-    /**
-     * 发送验证码
-     * @param deviceEntity 设备信息
-     * @return 返回是否成功
-     */
-    boolean sendCode(DeviceEntity deviceEntity);
+    public boolean sendCodeV270(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity);
 }

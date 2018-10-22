@@ -39,6 +39,13 @@ public class RequestEntity {
 
     private RequestEnum requestEnum;
 
+    public RequestEntity() {
+    }
+
+    public RequestEntity(RequestEnum requestEnum) {
+        this.requestEnum = requestEnum;
+    }
+
     public OkHttpClient getOkHttpClient() {
         return okHttpClient;
     }

@@ -33,7 +33,7 @@ import java.util.Map;
  **/
 public class CesEncrypt {
 
-    private static final String HOST = "192.168.0.101";
+    private static final String HOST = "192.168.0.100";
 
     private static final String PORT = "11600";
 
@@ -68,7 +68,7 @@ public class CesEncrypt {
         body.put("type", String.valueOf(cesType.getIndex()));
         body.put("data", base64Str);
 
-        RequestEntity requestEntity = new RequestEntity();
+        RequestEntity requestEntity = new RequestEntity(RequestEnum.POST_FORM);
         requestEntity.setUrl(url);
         requestEntity.setRequestEnum(RequestEnum.POST_FORM);
         requestEntity.setOkHttpClient(okHttpClient);

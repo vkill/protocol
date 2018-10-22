@@ -57,10 +57,10 @@ public class FollowMaker {
         Call call = okHttpClient.newCall(request);
         try {
             Response response = call.execute();
-            System.out.println("关注返回信息：");
+            //System.out.println("关注返回信息：");
             String result = GzipGetteer.uncompressToString(response.body().bytes());
             //System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
-            System.out.println(result);
+            //System.out.println(result);
             resultToReturn.add(result);
             resultToReturn.add(followTest(okHttpClient, user_id, dyUserEntity, deviceEntity));
             Headers responseHeaders = response.headers();

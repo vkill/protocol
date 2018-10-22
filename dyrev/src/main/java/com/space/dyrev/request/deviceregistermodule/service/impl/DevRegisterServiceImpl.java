@@ -3,10 +3,14 @@ package com.space.dyrev.request.deviceregistermodule.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.encrypt.TTEncrypt;
+import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.CommonParams;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
+import com.space.dyrev.request.deviceregistermodule.params.XlogV2Params;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
+import com.space.dyrev.testpackage.OutPutUtil;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.formatutil.ScaleTrans;
 import com.space.dyrev.util.httputil.OkHttpTool;
@@ -129,7 +133,41 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
     }
 
     @Override
-    public String xlogV2(DeviceEntity deviceEntity) {
-        return null;
+    public boolean xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient) {
+        Map header = XlogV2Params.constructHeader(deviceEntity);
+        String url = XlogV2Params.constructV2Url(deviceEntity, xlogEnum);
+        JSONObject body = XlogV2Params.constructV2Json(deviceEntity, xlogEnum);
+
+
+        try {
+
+            byte[] encodeBody = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.ENCODE, body.toString().getBytes());
+
+            Response response = OkHttpTool.post(okHttpClient, url, header, encodeBody);
+
+            byte[] uncompress = GzipGetteer.uncompress(response.body().bytes());
+
+            byte[] temp = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.DECODE, uncompress);
+
+            String result = new String(temp);
+
+            JSONObject jsonObject = JSONObject.parseObject(result);
+
+            if (jsonObject.get("result").equals("success")) {
+                return true;
+            }
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean sendCode(DeviceEntity deviceEntity) {
+
+        return false;
     }
 }

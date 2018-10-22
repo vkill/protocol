@@ -239,7 +239,7 @@ public class EmailGetter implements EmailPlatform{
     public static EmailGetter getInstrance(){
         return emailGetter;
     }
-    private EmailGetter(){
+    public EmailGetter(){
         loginIT();
     }
 
@@ -368,10 +368,10 @@ public class EmailGetter implements EmailPlatform{
         String tag =errorStr;
         String result = 0+"";
         int buffer_Num =0;
-        while(tag.equals(errorStr)&buffer_Num<15){
+        while(tag.equals(errorStr)&buffer_Num<10){
 
             try {
-                Thread.sleep(10000);
+                Thread.sleep(6000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -394,7 +394,7 @@ public class EmailGetter implements EmailPlatform{
             else if(result.equals("-4")){
                 System.out.println("号码已经强制释放");
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(100000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

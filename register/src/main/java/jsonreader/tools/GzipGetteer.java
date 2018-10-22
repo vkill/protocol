@@ -119,19 +119,19 @@ public class GzipGetteer {
             e.printStackTrace();
             System.out.println("读取文件错误，文件路径为："+fis.toString());
         }
-        System.out.println(fis.toString());
+        //System.out.println(fis.toString());
 
         BufferedInputStream bis=new BufferedInputStream(fis);
 
         ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        System.out.println();
+        //System.out.println();
         int c= 0;//读取bis流中的下一个字节
         try {
             c = bis.read();
             while(c!=-1){
 
                 baos.write(c);
-                System.out.print(c+" ");
+                //System.out.print(c+" ");
                 c=bis.read();
 
             }
@@ -145,8 +145,8 @@ public class GzipGetteer {
         for(int i=0;i<retArr.length;i++){
             System.out.print(retArr[i]+" ");
         }
-        System.out.println();
-        System.out.println(uncompressToString(retArr,"utf-8"));
+        //System.out.println();
+        //System.out.println(uncompressToString(retArr,"utf-8"));
     }
     public static byte[] getContent(String filePath) throws IOException {
         File file = new File(filePath);

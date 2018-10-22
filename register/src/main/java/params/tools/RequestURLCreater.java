@@ -19,13 +19,10 @@ import java.util.Map;
  * @Version: $version$
  */
 public class RequestURLCreater {
-    private static final String REQUEST_DEVICES_HOST = "https://ib.snssdk.com";
-
-    private static final String DEVICE_REGISTER_API = "/service/2/device_register/?";
 
     public static String getUrlFromJsonAndMap(JSONObject jsonObject){
         Map <String,String> jsonMap = JsonTableGetter.JsonToMap(jsonObject);
-        StringBuilder stringBuilder = new StringBuilder(REQUEST_DEVICES_HOST+DEVICE_REGISTER_API);
+        StringBuilder stringBuilder = new StringBuilder(DirTable.servenDeviceRegister);
         for(DeviceRegisterInfo deviceRegisterInfo:DeviceRegisterInfo.values()){
 
             String key_Str = "\""+deviceRegisterInfo.getVaule()+"\"";
@@ -128,7 +125,7 @@ public class RequestURLCreater {
         Map<String,String> stringBuilder = new HashMap<String, String>();
         for (UserRegisterBodyInfo sendMessageInfo : UserRegisterBodyInfo.values()) {
             String key_Str = sendMessageInfo.getVaule();
-            System.out.println(key_Str);
+            //System.out.println(key_Str);
             if (sendMessageInfo.equals(UserRegisterBodyInfo.mix_mode)) {
                 if (messages.containsKey(key_Str)) {
                     stringBuilder.put(key_Str , messages.get(key_Str));
@@ -178,7 +175,7 @@ public class RequestURLCreater {
                 cookie.add(headerValue);
             }
         }
-        System.out.println(cookie.toString());
+        //System.out.println(cookie.toString());
         return cookie;
     }
 }

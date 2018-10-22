@@ -359,15 +359,17 @@ public class TTEncrypt {
 
 
     public static void main(String[] args) {
-        String str = "dGMCAj3Yv+yerCAu5l7+Mzq15Z43sX6knxjmTm0zTIt2KFslr4U1Qjc1Ubb/PiiZMD1AntgwKgnGE2Ybb0yU8l+4YREvmEkuFa8URbyYd+mT2Eb5sW7vTM7SV+UDrVxPzEIY2sUxFvnkhgUDZlmv/1yyNoebi2bKWcT9Ct2HoQzmt0JOkJfsqLgv4zdj8AP7iYWog3Cgy+IioZyjyuQq/EcTCwDl+7Hecexl2Hxu8zuZ1CNSA6NLkOg0eDxwxTJ0wakz/ccv3d1dznGgCDHQeaLyzydt5nZ3QVS+II1xqyoi4YBfa2KJH4U3fNY4O4uVHhdOaxjIfGT3ef+UIriNng5ervonAoKVjBD0+jgg1in4Uv4GxJMwqLKnSSlOXlg18Gx7OKd+fZB/Z6PZefbR1JLoFknBrUC3xcMeK011WHtivguiUkdoys9XiXKFDWKdXr+Cq+ej7XTjI72tgeF0FTH5ScIEyyCByKj17GPE3Qx3OLqAfPaowM9eLCrChgftFfM6FF4aXelk39dQNxT7HkUFgdr2a2USiyJNAC6rkLkKfIurjulClRq6HeVLajkOhv8L+UvwFqf/z28kdEzQZfxE/F/9VEdvV+q59xB4OC6CDtlLSmVXFrs223cYI8XDqzshOpvjBzJBMA5MTabzNvTyIGT8ciNGss9FYbXjIXGvMXNRGAjssweQQhXkKJ3J+kHrthQdd8+1vBuwuB+WlPy0UPceSmCtKJgv6S9Kss+WzdvA2KNvCUJYTjFVC4xu+2ICno0hh9e8dED9a5Xkj0kLmf4iN3woFnRXvQRKtIH6l86z1pu0d7R1KCCFKEJpfjB9iCsz3/36zNb/cjDfU8fh0QNBH+LuHvjuPcj3O3/q0cEUhqHnyopZ2EWRLsRxjy406Yzv0zERYZYpX17rdYh6oy08SnqaaV/4ZN+k1wAyzl7t7ih4sAwGA19Y3NUmASf7w8hU2h+F6he/Tn5Of8wu9oO2YklEZJPVGQl+CNfF71m/C2LvmWPSJsdAGslOMOtEymVtZ4fty/gtMk5JT+4L1WEt8gwKba1grggKl/Mb+xlAXhlaROXcCsvBoNIfnnLq2WijP6JKj/uECbA6dG3i8lGNxbj42QY3J0XrFNaYIn2y6ouYxy7x3s49Sarb12bcQzYHJCLAA92DLAx296RHpOGulm19qF2Dr9ORJywT0r7NGGKD4/MFVRP6lm2EheWcIS/OmferQAm3HUaFB4Ppd7Ey1XF/XM7Sbqi52qMrqMBI0SLVnIebe++oGWyCS+mA+T50cedUQznpxOuQA8URWy7t+TUMQMdFr2pxwpCRSnKSQpBdf9BzW0PyI2Txy12cfGiVsvBEzhIdftRgnLF64XGr/XwoVoTKxBc7T4OHvO7bbffC1J7KvFvM7gzuXPH1ew==";
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] decode1 = decoder.decode(str);
-        byte[] decode = TTEncrypt.decode(decode1);
-//        decode[decode.length-3] = 0;
+        String str ="AZszOmCLNDH4YjCKK6oi58o/NTckPtvFoGyOmcWxddRsc1OLbD2J22umGUGtkonodQ2jOOATuJVosx37j3lpE+AIu4rqZNFLGpgp8NXNTYj1wH+AdvKZt5GoL1mLolJDI3DQvpSd66f53l4bWm3rhKqJMSMsvLbSLp3fAI228D06BiNrbWhNhGrVBlRVDU3gsndAB/XUi5002Gnsl8KoxHjqMmddux0cxDytPWatKwa5FgEAc3KQxXwcG4NzIBhrfiwHFCqMVpuLjhiMfxPQjRNry+xkoBbUpoeYzRU98Cf0STSif92JW4YDx8KftFdTUh+9vuxfEKnu993o3nky66t4jGf5qv+gOR5PprOKHWrArWxW2zALyv4Qqrw/c9w4/GQjetctPP4+AFXt+fDGO8jA+oxnB+ZuK8rSson9FAK8jMij3WNhmuNOEzWHJnyZMH7oLmwheP0ig5gm+rQx7TiTAlpkX63TzT8y6O707D2jvfkL66i7APcgx/VHeqCrFw8Fr/Pz+aR9HYlBzEl+emCJZbNfz9wBcykW4ie1EzKdR/jtNCCtVlwRiG5KSUm/YUB7kEfBBP0ebt//zWcf8Z/csUP5uZJzMMeeO89MquuUzPfg/qWNjlFzFKUAoYtZZpcdETgP9WuQbtlTIVGEdV+6iDSktr7UVaoUW3KMDfQVungvI1aguRGd8RnJHX6PwvoeMJD0gUKRTHoxAVTqMftGW9DBYXjawO4VKmsPQTyzU5uZsH9s7WAlpDfE2h3GWzyg6IzKkzGy/1GY9175BkptQHsYU6WmHt/qgcEW6ePFuBEINlkLFOKWO1uo3qE4nwmmDcZgnVI/9vG7EwPsM21NBHS0j7n6Qp0jo5nGlFeTna9L/fq1Czy0pAoDMYlB5utor3QvIPlnZE/rWN6tQAe/nlH6zjRrb3u0QodPVfmO4SA/3ZXXYzS2vcWIEFM5QAZKEGUvAjhxlX8404aU34LF+eTb35GaIOf3t1yF4Wjj8c6OjlKVbpsuFrE4CB984yk+8aedRWG/ycSY59kcIPJBvH4hQi72sb8+Y7lAbKY3XB77g3lL3LSxfkAJO2URKNypYZB//e1ItVbEd01c+Zm0fz/37Xuvi1I6QQ3FCkctuzKf4WbIMxBJQpjy6GRbIIOEpRoMniMGYT7Pot8bHi6mxycvxJb0u8gbzaaE3HFzH5/xmYi5TTn0mH4+HvBAsB0Y4t3GtJe9ESHu7sBx7+69nZyKw2HiBjseEWwyR3g/FQE1gSZPLWtc4HcmE9oTDtHhwEGDEqcaoO1LRUsm1qOS6wa+I590RcgW+XAWR9NV3vLk6fntug8dfcp2YJNX87+U63dkafkzacNjGSb/nZ/ieRbe5jQWOQiQFD67EprjbNKh0sVLrKosDNl24RFyVcVKIG2BlrKxvCSv6IoWMSWrc5UQ4Gsfil8UTSQgeooBWYnWIhJwDD2lv2X6nM4OL0lgaID8PPOH7CypCgUEv99BjOHwv5O4j3ov84EIsG0SHsabQo9Nnk3ZNMyn/eja/b6+";
 
-        String s = GzipGetteer.uncompressToString(decode);
-        System.out.println(s);
 
+
+
+        //        decode[decode.length-3] = 0;
+
+        byte[] decode = decode(str);
+        String s1 = GzipGetteer.uncompressToString(decode);
+//        String s = new String(s1);
+        System.out.println(s1);
 
 //        String enc = "spacecoebeer";
 //        getTTEnttyResult(enc.getBytes());

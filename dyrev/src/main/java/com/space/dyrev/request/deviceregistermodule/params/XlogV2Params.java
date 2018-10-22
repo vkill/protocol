@@ -6,6 +6,9 @@ import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.CommonParams;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
  *         ,@@@@@@@@@@^    @@@@./@@@@@@@@@^    =@@@@@@@@@@@@.      ]@@@@@@@@@@@^   ,@@@@@@@@@@`
@@ -29,6 +32,52 @@ public class XlogV2Params {
 
 
     private static final String VER = "0.5.8.28";
+
+    private static final String HOST = "xlog.snssdk.com";
+
+    private static final String FUNC = "v2/r";
+
+    /**
+     * 构造该请求的header
+     * @param deviceEntity
+     * @return
+     */
+    public static Map constructHeader(DeviceEntity deviceEntity) {
+        Map result = new HashMap();
+        result.put("Host", HOST);
+        result.put("Connection", "Keep-Alive");
+        result.put("Accept-Encoding", "gzip");
+        result.put("User-Agent", "okhttp/3.10.0.1");
+        result.put("Content-length", "1155");
+//        result.put("Content-Type", "application/octet-stream");
+        result.put("Cookie","session=");
+        return result;
+    }
+
+    /**
+     * 构造url
+     * @param deviceEntity
+     * @param xlogEnum
+     * @return
+     */
+    public static String constructV2Url(DeviceEntity deviceEntity, XlogEnum xlogEnum) {
+        // https://xlog.snssdk.com/v2/r?os=0&ver=0.5.8.28&m=1&app_ver=2.7.0&region=CN&aid=1128&did=
+        // https://xlog.snssdk.com/v2/r?os=0&ver=0.5.8.28&m=1&app_ver=2.7.0&region=CN&aid=1128&did=57616910195
+        StringBuffer sb = new StringBuffer();
+        sb.append("https://"+ HOST + "/" + FUNC + "?");
+        sb.append("os=0");
+        sb.append("&ver=" + VER);
+        sb.append("&app_ver=" + CommonParams.VERSION_NAME);
+        sb.append("&m=1");
+        sb.append("&region=CN");
+        sb.append("&aid=" + CommonParams.AID);
+        sb.append("&did=");
+        if (XlogEnum.LOGIN == xlogEnum) {
+            sb.append(deviceEntity.getDeviceId());
+        }
+        return sb.toString();
+    }
+
 
     /**
      * 生成xlog.snssdk.com/v2/r请求的json
@@ -69,12 +118,12 @@ public class XlogV2Params {
         hw.put("dpi", Integer.parseInt(deviceEntity.getDpi()));
         hw.put("bat", 4100);
         hw.put("cpu", cpu);
-        hw.put("men", mem);
+        hw.put("mem", mem);
 
         id.put("imei", deviceEntity.getImei());
         id.put("imsi", deviceEntity.getImsi());
         id.put("adid", deviceEntity.getAdid());
-        id.put("mac", "02:00:00:00:00:00");
+        id.put("mac", deviceEntity.getMc().toLowerCase());
         id.put("serial", deviceEntity.getBuildSerial());
 
         emulator.put("sig", 0);
@@ -91,8 +140,11 @@ public class XlogV2Params {
         env.put("tid", 0);
         env.put("xpd", 0);
         env.put("hk", new JSONArray());
-        env.put("su", 1); // 是否超级权限？
+        env.put("su", 0); // 是否超级权限？
+
+
         env.put("sp", "\\/system\\/xbin\\/su");
+//        env.put("sp", "/system/xbin/su");
         env.put("ro.secure_s", "");
         env.put("ro.debuggable_s", "");
         env.put("click", "");
@@ -104,7 +156,7 @@ public class XlogV2Params {
         env.put("xposed", 0);
         env.put("cydia", 0);
         env.put("frida", 0);
-        env.put("vapp", 0);
+        env.put("vapp", "");
         env.put("api", new JSONArray());
 
         // notify不确定是否有关系，先写死
@@ -115,9 +167,10 @@ public class XlogV2Params {
 
         result.put("pkg", CommonParams.PACKAGE);
         result.put("fp", "Xiaomi\\/santoni\\/santoni:7.1.2\\/N2G47H\\/8.9.13:user\\/release-keys");
+//        result.put("fp", "Xiaomi/santoni/santoni:7.1.2/N2G47H/8.9.13:user/release-keys");
         result.put("vc", Integer.parseInt(CommonParams.VERSION_CODE));
         result.put("VPN", 0);
-        result.put("wifimac", deviceEntity.getMc());
+        result.put("wifimac", deviceEntity.getMc().toLowerCase());
         result.put("location", "");
         result.put("apps", new JSONArray());
         result.put("hw", hw);

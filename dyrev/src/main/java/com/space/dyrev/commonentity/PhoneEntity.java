@@ -1,8 +1,6 @@
-package com.space.dyrev.request.deviceregistermodule.service;
+package com.space.dyrev.commonentity;
 
-import com.space.dyrev.commonentity.DeviceEntity;
-import com.space.dyrev.enumeration.XlogEnum;
-import okhttp3.OkHttpClient;
+import com.space.dyrev.enumeration.PhoneArea;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -19,30 +17,38 @@ import okhttp3.OkHttpClient;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                                                                             @Author: space
- *                                                                                             @Date: 2018/10/15 23:13
- *                                                                                             @Description: 设备注册操作接口
+ *                                
+ *        @Author: space
+ *        @Date: 2018/10/22 20:45
+ *        @Description: 
  **/
-public interface DeviceRegisterService {
+public class PhoneEntity {
 
-    /**
-     * 设备注册
-     * @param deviceEntity 随机生成的设备信息
-     * @return 随机生成设备的信息的实体类
-     */
-    DeviceEntity deviceRegister(OkHttpClient okHttpClient,DeviceEntity deviceEntity);
+    private PhoneArea area;
 
-    /**
-     * 请求v2
-     * @param deviceEntity
-     * @return
-     */
-    boolean xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient);
+    private String phoneNum;
 
-    /**
-     * 发送验证码
-     * @param deviceEntity 设备信息
-     * @return 返回是否成功
-     */
-    boolean sendCode(DeviceEntity deviceEntity);
+    public PhoneEntity() {
+    }
+
+    public PhoneEntity(PhoneArea area, String phoneNum) {
+        this.area = area;
+        this.phoneNum = phoneNum;
+    }
+
+    public PhoneArea getArea() {
+        return area;
+    }
+
+    public void setArea(PhoneArea area) {
+        this.area = area;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
 }
