@@ -65,7 +65,58 @@ public class TvRegisterMaker {
                     .build();
         }
     }
+    public DeviceEntity registerUserToTv(String hehe){
+        //DeviceTvRegister deviceRegisterTV = new DeviceTvRegister();
+        JSONObject jsonObject = JsonTableGetter.construtJson();
+        Request request = deviceTvRegister.getDeviceCreaterRequest(jsonObject);
+        Response response = null;
+        String jsonString = null;
+        Headers header = null;
+        JSONObject resultJson =null;
+        try {
+            response = okHttpClient.newCall(request).execute();
+            jsonString =GzipGetteer.uncompressToString(response.body().bytes());
+            header = response.headers();
+            resultJson = new JSONObject(jsonString);
+            //System.out.println(jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("注册设备结果获取失败");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("注册设备结果获取失败");
+        }
+        //处理注册设备返回的信息
+        DeviceEntity deviceEntity = new DeviceEntity();
+        try {
+            JSONObject headerJson = jsonObject.getJSONObject("header");
+            deviceEntity.setDeviceId(resultJson.getString("device_id"));
+            deviceEntity.setDevice_brand(headerJson.getString("device_brand"));
+            deviceEntity.setDevice_platform("android");
+            deviceEntity.setDevice_type(headerJson.getString("device_model"));
+            deviceEntity.setIid(resultJson.getString("install_id"));
+            deviceEntity.setOpenudid(headerJson.getString("openudid"));
+            deviceEntity.setUuid(headerJson.getString("udid"));
+            deviceEntity.setDevice_register_json(jsonObject.toString());
+            ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(header));
+            StringBuilder cookies = new StringBuilder();
+            for(int i=0;i<strings.size();i++){
+                if(i==strings.size()-1){
+                    cookies.append(strings.get(i));
+                    break;
+                }
+                cookies.append(strings.get(i)+";");
+            }
+            deviceEntity.setCookie(cookies.toString());
+            JSONArray jsonArray = headerJson.getJSONArray("sim_serial_number");
+            JSONObject map = jsonArray.getJSONObject(0);
+            deviceEntity.setSim_ICCid((String) map.get("sim_serial_number"));
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return deviceEntity;
+    }
     public DeviceEntity registerUserToTv(){
         //DeviceTvRegister deviceRegisterTV = new DeviceTvRegister();
         JSONObject jsonObject = JsonTableGetter.construtJson();
@@ -94,7 +145,7 @@ public class TvRegisterMaker {
             resultJson = new JSONObject(jsonString);
             deviceEntity.setDeviceId(resultJson.getString("device_id"));
             deviceEntity.setIid(resultJson.getString("install_id"));
-            System.out.println(jsonString);
+            //System.out.println(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("注册设备结果获取失败");

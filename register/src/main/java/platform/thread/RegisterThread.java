@@ -50,7 +50,7 @@ import java.util.logging.Logger;
  **/
 public class RegisterThread implements Runnable{
 
-    public static int thread_num = 7;
+    public static int thread_num = 1;
     public static JTextArea loggs;
     public EmailPlatform emailPlatform;
 
@@ -118,7 +118,7 @@ public class RegisterThread implements Runnable{
 
         TvRegisterMaker tvRegisterMaker = new TvRegisterMaker(host,port);
 //
-        DeviceEntity deviceEntity = tvRegisterMaker.registerUserToTv();
+        DeviceEntity deviceEntity = tvRegisterMaker.registerUserToTv("hehe");
 //                deviceRepository.getOne(11);
 
         //注册设备之后调用的get方法
@@ -129,11 +129,11 @@ public class RegisterThread implements Runnable{
         Response response = null;
         String jsonString = null;
         JSONObject resultJson =null;
-//        //第一个v1 setting方法
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.v1_Settings_Hoster,DirTable.v1_Settings,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
+        //第一个v1 setting方法
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.v1_Settings_Hoster,DirTable.v1_Settings,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        //System.out.println(jsonString);
 //        //第二个abtest param
 //        requestUpload = DevicerAbleGetter.getRealDeviceRequsetsOnlyHost(DirTable.abtest_Param_Hoster,DirTable.abtest_Param,deviceEntity,true);
 //        response = okHttpClient.newCall(requestUpload).execute();
@@ -159,115 +159,115 @@ public class RegisterThread implements Runnable{
 //        response = okHttpClient.newCall(requestUpload).execute();
 //        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
 //        //System.out.println(jsonString);
-////        //第七个 rec new
-////        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.rec_New_Hoster,DirTable.rec_New,deviceEntity,true);
-////        response = okHttpClient.newCall(requestUpload).execute();
-////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-////        System.out.println(jsonString);
-////        //第八个 app_alert
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.service_2_app_Alert_Hoster,DirTable.service_2_app_Alert,deviceEntity,true);
+//        //第七个 rec new
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.rec_New_Hoster,DirTable.rec_New,deviceEntity,true);
 //        response = okHttpClient.newCall(requestUpload).execute();
 //        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第九个 aweme v14
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.aweme_V14_Hoster,DirTable.aweme_V14,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        //获取odin_tt
-//        jsonString =GzipGetteer.uncompressToString(response.body().bytes());
-//        Headers headerhe = response.headers();
-//        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headerhe));
-//        StringBuilder cookies = new StringBuilder();
-//        for(int i=0;i<strings.size();i++){
-//            if(i==strings.size()-1){
-//                cookies.append(strings.get(i));
-//                break;
-//            }
-//            cookies.append(strings.get(i)+";");
-//        }
-//        deviceEntity.setCookie(deviceEntity.getCookie()+";"+cookies.toString());
-//        //获取添加oddin_tt的cookie
-//        //System.out.println(jsonString);
-////        //第十个 screen ad
-////        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.screen_Ad_Hoster,DirTable.screen_Ad,deviceEntity,true);
-////        response = okHttpClient.newCall(requestUpload).execute();
-////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-////        System.out.println(jsonString);
-//        //第十一个 setting v2
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.setting_V2_Hoster,DirTable.setting_V2,deviceEntity,true);
+//        System.out.println(jsonString);
+//        //第八个 app_alert
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.service_2_app_Alert_Hoster,DirTable.service_2_app_Alert,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        //System.out.println(jsonString);
+        //第九个 aweme v14
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.aweme_V14_Hoster,DirTable.aweme_V14,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        //获取odin_tt
+        jsonString =GzipGetteer.uncompressToString(response.body().bytes());
+        Headers headerhe = response.headers();
+        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headerhe));
+        StringBuilder cookies = new StringBuilder();
+        for(int i=0;i<strings.size();i++){
+            if(i==strings.size()-1){
+                cookies.append(strings.get(i));
+                break;
+            }
+            cookies.append(strings.get(i)+";");
+        }
+        deviceEntity.setCookie(deviceEntity.getCookie()+";"+cookies.toString());
+        //获取添加oddin_tt的cookie
+        //System.out.println(jsonString);
+//        //第十个 screen ad
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.screen_Ad_Hoster,DirTable.screen_Ad,deviceEntity,true);
 //        response = okHttpClient.newCall(requestUpload).execute();
 //        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-////        //第十二个 license
-////        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.v1_License_Hoster,DirTable.v1_License,deviceEntity,true);
-////        response = okHttpClient.newCall(requestUpload).execute();
-////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-////        System.out.println(jsonString);
-//
-//        //第一个post body方法
+//        System.out.println(jsonString);
+        //第十一个 setting v2
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.setting_V2_Hoster,DirTable.setting_V2,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        //System.out.println(jsonString);
+//        //第十二个 license
+//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.v1_License_Hoster,DirTable.v1_License,deviceEntity,true);
+//        response = okHttpClient.newCall(requestUpload).execute();
+//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+
+        //第一个post body方法
+        kaoHeader.clear();
+        kaoHeader.put("Cookie",deviceEntity.getCookie()+";"+"qh[360]=1");
+        kaoHeader.put("Content-Type","application/x-www-form-urlencoded");
+        deviceMapBuff = deviceEntity.getDeviceMap();
+        requestUpload = DevicerAblePostter.getRealDeviceRequsets(DirTable.cloudpush_Updata_Sender_Hoster,DirTable.cloudpush_Updata_Sender,DirTable.cloudpush_Updata_Sender_Body,kaoHeader,deviceMapBuff,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+
+        //第十三个 lucky money sittings
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings1_Hoster,DirTable.money_Settings,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        //System.out.println(jsonString);
+        //第十四个 lucky money new user
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+        //第十五个 sdk log
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.sdk_Log_Hoster,DirTable.sdk_Log,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+        //第十六个 v1 feed
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.v1_feed_Hoster,DirTable.v1_feed,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+        //第十七个 private_message
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.message_Account_Hoster,DirTable.message_Account,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+        //第十八个 feedback 暂未写
+
+        realDevice = JsonTableGetter.contrustJsonForReal(deviceEntity);
+        requestUpload = sendRealDeviceInfo(deviceEntity,realDevice,"cold_start");
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        resultJson = new JSONObject(jsonString);
+//        System.out.println(jsonString);
+        deviceEntity.setDevice_upload_info_json(realDevice.toString());
+
+//        //第二个 post body 方法
 //        kaoHeader.clear();
 //        kaoHeader.put("Cookie",deviceEntity.getCookie()+";"+"qh[360]=1");
 //        kaoHeader.put("Content-Type","application/x-www-form-urlencoded");
 //        deviceMapBuff = deviceEntity.getDeviceMap();
-//        requestUpload = DevicerAblePostter.getRealDeviceRequsets(DirTable.cloudpush_Updata_Sender_Hoster,DirTable.cloudpush_Updata_Sender,DirTable.cloudpush_Updata_Sender_Body,kaoHeader,deviceMapBuff,true);
+//        requestUpload = DevicerAblePostter.getRealDeviceRequsets(DirTable.v1_Aweme_Stats_Hoster,DirTable.v1_Aweme_Stats,DirTable.v1_Aweme_Stats_Body,kaoHeader,deviceMapBuff,true);
 //        response = okHttpClient.newCall(requestUpload).execute();
 //        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//
-//        //第十三个 lucky money sittings
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_Settings1_Hoster,DirTable.money_Settings,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第十四个 lucky money new user
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第十五个 sdk log
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.sdk_Log_Hoster,DirTable.sdk_Log,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第十六个 v1 feed
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.v1_feed_Hoster,DirTable.v1_feed,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第十七个 private_message
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.message_Account_Hoster,DirTable.message_Account,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第十八个 feedback 暂未写
-//
-          realDevice = JsonTableGetter.contrustJsonForReal(deviceEntity);
-//        requestUpload = sendRealDeviceInfo(deviceEntity,realDevice,"cold_start");
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        resultJson = new JSONObject(jsonString);
-//        //System.out.println(jsonString);
-//        deviceEntity.setDevice_upload_info_json(realDevice.toString());
-//
-////        //第二个 post body 方法
-////        kaoHeader.clear();
-////        kaoHeader.put("Cookie",deviceEntity.getCookie()+";"+"qh[360]=1");
-////        kaoHeader.put("Content-Type","application/x-www-form-urlencoded");
-////        deviceMapBuff = deviceEntity.getDeviceMap();
-////        requestUpload = DevicerAblePostter.getRealDeviceRequsets(DirTable.v1_Aweme_Stats_Hoster,DirTable.v1_Aweme_Stats,DirTable.v1_Aweme_Stats_Body,kaoHeader,deviceMapBuff,true);
-////        response = okHttpClient.newCall(requestUpload).execute();
-////        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-////        System.out.println(jsonString);
-//
-//        //第十九个 appmonitor settings
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.appmonitor_Settings_noSrckey_Hoster,DirTable.appmonitor_Settings_noSrckey,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
-//        //第二十个 app_notice_status
-//        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.app_notice_status_Hoster,DirTable.app_notice_status,deviceEntity,true);
-//        response = okHttpClient.newCall(requestUpload).execute();
-//        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-//        //System.out.println(jsonString);
+//        System.out.println(jsonString);
+
+        //第十九个 appmonitor settings
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.appmonitor_Settings_noSrckey_Hoster,DirTable.appmonitor_Settings_noSrckey,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+//        System.out.println(jsonString);
+        //第二十个 app_notice_status
+        requestUpload = DevicerAbleGetter.getRealDeviceRequsets(DirTable.app_notice_status_Hoster,DirTable.app_notice_status,deviceEntity,true);
+        response = okHttpClient.newCall(requestUpload).execute();
+        jsonString = GzipGetteer.uncompressToString(response.body().bytes());
+        //System.out.println(jsonString);
 
         //为了测试而添加的读取方法################################################
         //emailGetter.loginIT();
@@ -283,14 +283,11 @@ public class RegisterThread implements Runnable{
         String time =ParamCreater.get_Rticket();
         deviceMapInfo.put("_rticket",time);
         deviceMapInfo.put("ts",ParamCreater.get_Ts(time));
-//        request = DeviceTvRegister.getSendMessagePower(deviceEntity,"login");
-//        response = okHttpClient.newCall(request).execute();
-        //System.out.println(response.body().string());
-        //发送2.7版本xlog
-
-        TvRegisterMaker.xlog_v2("login",deviceEntity);
+        request = DeviceTvRegister.getSendMessagePower(deviceEntity,"login");
+        response = okHttpClient.newCall(request).execute();
+        System.out.println(response.body().string());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1900);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -298,7 +295,7 @@ public class RegisterThread implements Runnable{
             phonePo = emailPlatform.getPhoneNumber(okHttpClient);
             test_time = String.valueOf(System.currentTimeMillis());
             deviceMapInfo.put("mobile",ParamCreater.change_Mobile_to_Src(phonePo.getArea_Num()+phonePo.getPhone_Num()));
-            request = TvRegisterMaker.send_code(deviceEntity,phonePo);
+            request = DevicerAblePostter.getRealDeviceRequsets(DirTable.sendMessageUrlHost,DirTable.sendMessageUrl,DirTable.sendMessageBody,headWithCookies,deviceMapInfo,true);
             response = okHttpClient.newCall(request).execute();
             jsonString = GzipGetteer.uncompressToString(response.body().bytes());
             resultJson = new JSONObject(jsonString);
@@ -332,7 +329,7 @@ public class RegisterThread implements Runnable{
             e.printStackTrace();
             System.out.println("发送验证码后更新设备失败");
         }
-        System.out.println(jsonString);
+//        System.out.println(jsonString);
         Request request1 = tvRegisterMaker.sendMessageForRegister(deviceEntity,phonePo,code);
         Headers headers = null;
         try {
@@ -365,8 +362,8 @@ public class RegisterThread implements Runnable{
             e.printStackTrace();
             System.out.println("读取data json 报错");
         }
-        ArrayList<String> strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headers));
-        StringBuilder cookies = new StringBuilder();
+        strings = RequestURLCreater.getCookieFromResponseHeaders(RequestURLCreater.getStrCookie(headers));
+        cookies = new StringBuilder();
         int z =0;
         for(int i=0;i<strings.size();i++){
             if(i==strings.size()-1){
@@ -425,7 +422,7 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取权限的第三处请求，调取方法为：/v1/settings/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_Settings_User_Hoster,DirTable.v1_Settings_User,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
@@ -435,7 +432,7 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取权限的第六处请求，调取方法为：/aweme/v1/lucky/money/newuser/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_New_User1_Hoster,DirTable.money_New_User1,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
@@ -445,12 +442,12 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.money_Settings1_Hoster,DirTable.money_Settings1,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取权限的第六处请求，调取方法为：/v1/spotlight/relation/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.spotlight_relation_Hoster,DirTable.spotlight_relation,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取权限的第四处请求，调取方法为：v1/check/in/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
@@ -462,18 +459,18 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.cheak_In_Hoster,DirTable.check_In_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
+//        System.out.println(jsonString);
 
         //此处为获取权限的第五处请求，调取方法为：/aweme/v1/user/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-       // System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取权限的额外请求，调取方法为：aweme/v1/license
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_License_Hoster,DirTable.v1_License,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-       // System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取权限的第十四处请求，调取方法为：/v1/story/list/
         requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.v1_Story_List_Hoster,DirTable.v1_Story_List,headWithCookie,needRealInfo,true);
         response = okHttpClient.newCall(requestUpload).execute();
@@ -483,8 +480,8 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.setting_V2_Hoster,DirTable.setting_V2,headWithCookie,needRealInfo,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
-        ///此处为获取权限的第十五处请求，调取方法为：/aweme/v1/story/
+//        System.out.println(jsonString);
+        //此处为获取权限的第十五处请求，调取方法为：/aweme/v1/story/
         requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.v1_Story_Str_Hoster,DirTable.v1_Story_Str,headWithCookie,needRealInfo,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
@@ -494,7 +491,7 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getALLUsageRequest(DirTable.private_message_account_logout_notify_Hoster,DirTable.private_message_account_logout_notify,headWithCookie,needRealInfo,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        //System.out.println(jsonString);
+//        System.out.println(jsonString);
         //此处为获取点赞权限的第十三次请求，调取的方法为：im/chatlist/
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.im_Chatlist_Hoster,DirTable.im_Chatlist,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
@@ -504,7 +501,7 @@ public class RegisterThread implements Runnable{
         requestUpload = DevicerAbleGetter.getRealDeviceRequsetsWithHeads(DirTable.v1_User_Str_Hoster,DirTable.v1_User_Str,headWithCookie,deviceEntity,true);
         response = okHttpClient.newCall(requestUpload).execute();
         jsonString = GzipGetteer.uncompressToString(response.body().bytes());
-        System.out.println(jsonString);
+//        System.out.println(jsonString);
         deviceEntity.setSession_id(UUID.randomUUID().toString());
 
 
@@ -519,7 +516,7 @@ public class RegisterThread implements Runnable{
         dyUserEntity.setEvent_id(event_id);
         //修改全局变量serverTime
         String launch_result = AppLogMaker.app_log(okHttpClient, deviceEntity, dyUserEntity, launch_body_msg.get(1));
-        //System.out.println("加载app结果：" + launch_result);
+        System.out.println("加载app结果：" + launch_result);
 
         //下面的是注册账号完成时发送的appLog
         //sendCodeTime是sendcode请求的ticket，纯数字格式

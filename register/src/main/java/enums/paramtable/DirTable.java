@@ -22,13 +22,16 @@ public class DirTable {
     public static Map<UserRegisterBodyInfo,String> userRegisterBodyInfoStringMap = new HashMap<UserRegisterBodyInfo,String>();
     public static Map<SendMessageBodyInfo,String> sendMessageBodyInfoStringMap = new HashMap<SendMessageBodyInfo,String>();
 
+    //注册设备新请求
+    public static String servenDeviceRegister = "https://ib.snssdk.com/service/2/device_register/?";
+
     //xlog 服务器获取发送短信权限
     public static String sendMessagePower = "https://xlog.snssdk.com/do/y?ver=0.4&ts=";
     public static String getSendMessagePowerHost = "https://xlog.snssdk.com/do/y?";
 
-    public static String sendMessageUrl = "https://iu.snssdk.com/passport/mobile/send_code/?os_api=22&device_type=vivo+y23l&device_platform=android&ssmix=a&iid=46369918033&manifest_version_code=176&dpi=240&uuid=865166021600922&version_code=176&app_name=aweme&version_name=1.7.6&openudid=6d407d80cac38c66&device_id=37227579583&resolution=720*1280&os_version=5.1.1&language=zh&device_brand=vivo&ac=wifi&update_version_code=1762&aid=1128&channel=tengxun&_rticket=1539602726657&ts=1539602726";
-    public static String sendMessageUrlHost = "https://iu.snssdk.com/passport/mobile/send_code/?";
-    public static String sendMessageBody = "mix_mode=1&type=34&mobile=2e3d3030313d31333034303332&retry_type=no_retry&os_api=22&device_type=vivo%20y23l&device_platform=android&ssmix=a&iid=46369918033&manifest_version_code=176&dpi=240&uuid=865166021600922&version_code=176&app_name=aweme&version_name=1.7.6&openudid=6d407d80cac38c66&device_id=37227579583&resolution=720*1280&os_version=5.1.1&language=zh&device_brand=vivo&ac=wifi&update_version_code=1762&aid=1128&channel=tengxun&_rticket=1539602726657";
+    public static String sendMessageUrl = "https://is.snssdk.com/passport/mobile/send_code/v1/?manifest_version_code=290&_rticket=1540008335578&ac=wifi&device_id=56588880295&iid=46822237622&os_version=8.1.0&channel=xiaomi&version_code=290&device_type=Redmi+6&language=zh&uuid=99001152148151&resolution=720*1344&openudid=f001059818406bc9&update_version_code=2902&app_name=aweme&version_name=2.9.0&os_api=27&device_brand=xiaomi&ssmix=a&device_platform=android&dpi=320&aid=1128&ts=1540008335";
+    public static String sendMessageUrlHost = "https://is.snssdk.com/passport/mobile/send_code/v1/?";
+    public static String sendMessageBody ="manifest_version_code=290&_rticket=1540008335578&iid=46822237622&channel=xiaomi&device_type=Redmi+6&language=zh&type=3731&uuid=99001152148151&resolution=720*1344&openudid=f001059818406bc9&update_version_code=2902&os_api=27&dpi=320&retry_type=no_retry&ac=wifi&device_id=56588880295&mix_mode=1&os_version=8.1.0&mobile=2e3d3325343d3d25353034302533303235&version_code=290&app_name=aweme&version_name=2.9.0&device_brand=xiaomi&ssmix=a&device_platform=android&aid=1128";
 
     public static String getOdinTT= UrlBodyCreaterTool.URLDecoderString("https://is.snssdk.com/api/ad/splash/aweme/v14/?_unused=0&carrier=中国移动&mcc_mnc=46000&ad_area=1080x1854&os_api=22&device_platform=android&os_version=5.1&display_density=1080x1920&resolution=1920x1080&dpi=480&language=zh&device_brand=Meizu&device_type=MX5&display_dpi=480&density=3.0&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&update_version_code=1762&version_code=176&version_name=1.7.6&manifest_version_code=1.7.6&iid=43717888625&device_id=41336725255&openudid=ef8ad7929c2e0994&retry_type=no_retry&iid=43717888625&device_id=41336725255&ac=wifi&channel=tengxun&aid=1128&app_name=aweme&version_code=176&version_name=1.7.6&device_platform=android&ssmix=a&device_type=MX5&device_brand=Meizu&language=zh&os_api=22&os_version=5.1&uuid=867246022383583&openudid=ef8ad7929c2e0994&manifest_version_code=176&resolution=1080*1920&dpi=480&update_version_code=1762&_rticket=1536551097562&ts=1536551097");
     public static String OdinTTUrlHost = "https://is.snssdk.com/api/ad/splash/aweme/v14/?";
@@ -298,7 +301,7 @@ public class DirTable {
          **/
 
         DirTable dirTable = new DirTable();
-        System.out.println(dirTable);
+        //System.out.println(dirTable);
     }
 
 }

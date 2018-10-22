@@ -24,12 +24,12 @@ public class HostIPGetter {
     //http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20181063548zKQbxm&returnType=2&count=10
     //http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=10
     //包含上面参数的URL                   http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ20189222135SFVprZ&returnType=2&count=5
-    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//greatRecharge/getGreatIp?spiderId=8d58e76da82e431cb6021e32d1b875c3&orderno=YZ201810158100zhovTm&returnType=2&count=5";
+    public static String ipHostGetter = "http://api.xdaili.cn/xdaili-api//privateProxy/applyStaticProxy?spiderId=8d58e76da82e431cb6021e32d1b875c3&returnType=2&count=1";
     public static String endStr ="10032";
     public static String errorStr ="10036";
     public static String successStr = "0";
     public static ArrayList<HostIPPo> getIpByXdali(int count){
-        String ipHostGetterAll = "http://api.xdaili.cn/xdaili-api//privateProxy/applyStaticProxy?spiderId="+spiderId+"&returnType=2&count=1";
+        String ipHostGetterAll = "http://api.xdaili.cn/xdaili-api//privateProxy/applyStaticProxy?spiderId=8d58e76da82e431cb6021e32d1b875c3&returnType=2&count=1";
         String tag =errorStr;
         Document document = null;
         HostIPPo hostIPPo = null;
