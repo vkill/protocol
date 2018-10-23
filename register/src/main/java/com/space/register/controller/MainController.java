@@ -2,27 +2,36 @@ package com.space.register.controller;
 
 import com.mysql.cj.x.protobuf.Mysqlx;
 import com.space.register.dao.DYUserRepository;
+import com.space.register.dao.OrderRepository;
 import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
+import com.space.register.entity.OrderEntity;
 import com.space.register.entity.UrlRequestEntity;
 import com.space.register.service.DYRegisterService;
 import com.space.register.service.DeviceService;
 import com.space.register.service.UrlRequestService;
+import httpmaker.ConstructRequest;
+import jsonreader.tools.GzipGetteer;
+import okhttp3.Call;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import params.*;
 import platform.email.HostIPGetter;
 import po.HostIPPo;
+import po.RequestTokenVo;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static params.SupportAccountMaker.getAwemeIdList;
 
 @RestController
 @RequestMapping("/main")
@@ -39,6 +48,9 @@ public class MainController {
 
     @Resource
     DYUserRepository dyUserRepository;
+
+    @Resource
+    OrderRepository orderRepository;
 
     private static int id = 1100;
     private static int event_id = 0;
@@ -260,7 +272,7 @@ public class MainController {
 //                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
 //                .build();
 
-        id = 19000;
+        id = 21000;
         for(int i = 0;i < 100;i++){
 
 
@@ -292,12 +304,14 @@ public class MainController {
             ArrayList<String> temp1 = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
             ArrayList<String> temp2 = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
 
-            temp.add("6605149131734256900");
-            temp.add("6612851893771177223");
-            temp.add("6608910179855502595");
-            temp.add("6612816598644296974");
-            temp.add("6612824883917229319");
-            temp.add("6612861811463032077");
+            Thread.sleep(1000);
+            temp.add("6613654703920123143");
+            temp.add("6599125191379389704");
+            temp.add("6612536904682310926");
+            temp.add("6588840155174407427");
+            temp.add("6588841875958926600");
+            temp.add("6588882148793519363");
+
 //            temp.add("6610128541478554887");
 //            temp.add("6609527383840001294");
 //            temp.add("6608257682686086414");
@@ -313,7 +327,7 @@ public class MainController {
 //            }
             for (int j = 0; j < 1; j++) {
 
-               // ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
+                //ArrayList<String> temp = SupportAccountMaker.getAwemeListMaker(okHttpClient, deviceEntity, dyUserEntity);
 
                 try {
                     Thread.sleep(1000);
@@ -397,4 +411,96 @@ public class MainController {
         }
         return sb.toString();
     }
+
+    @RequestMapping("/insert")
+    public void insertInto(){
+
+        ArrayList<String> order_id_list = new ArrayList<>();
+        for(int i = 0;i < 20;i++){
+            ArrayList<String> result = feed();
+            order_id_list.addAll(result);
+        }
+
+        ArrayList<String> resultList = new ArrayList<>();
+        resultList.add("6606580437374471428");
+//        resultList.add("6599125191379389704");
+//        resultList.add("6612536904682310926");
+//        resultList.add("6588840155174407427");
+//        resultList.add("6588841875958926600");
+//        resultList.add("6588882148793519363");
+//        resultList.add("6614109363697093891");
+//        resultList.add("6612613762224491790");
+//        resultList.add("6595096011784326407");
+        for(int i = 0;i < order_id_list.size();i++){
+            for(int j = i;j < order_id_list.size();j++){
+                if(j + 1 <order_id_list.size() && order_id_list.get(i).equals(order_id_list.get(j + 1)) ){
+                    break;
+                }else if(j == order_id_list.size() - 1){
+                    resultList.add(order_id_list.get(i));
+                }
+            }
+        }
+        System.out.println(resultList);
+
+        //这里设置插入多少订单
+        for(int i = 0;i < 100 && i < resultList.size();i++){
+            OrderEntity order_temp = new OrderEntity();
+            order_temp.setStatus("1");
+            Random aa = new Random();
+            int rand = aa.nextInt(50);
+//            order_temp.setThumbUpOrFollowNum((rand + 50)* 100);
+            order_temp.setThumbUpOrFollowNum(100);
+            order_temp.setTypes("dydz100");
+            order_temp.setOrderNumber(String.valueOf(System.currentTimeMillis()) + "testOrder");
+            order_temp.setVideoID(resultList.get(i));
+            order_temp.setLangestDYId(0);
+            orderRepository.save(order_temp);
+        }
+//        ArrayList<OrderEntity> orderList = new ArrayList<>();
+//        dyUserRepository.save();
+
+    }
+
+    public static ArrayList<String> feed(){
+
+        String _rticket = String.valueOf(System.currentTimeMillis());
+        char []temp = _rticket.toCharArray();
+        String ts = "";
+        for(int i = 0;i < temp.length - 3;i++){
+            ts += temp[i];
+        }
+        long temp_ts = Long.parseLong(ts);
+        temp_ts ++;
+        ts = String.valueOf(temp_ts);
+
+        String url = "https://aweme.snssdk.com/aweme/v1/feed/?type=0&max_cursor=0&min_cursor=0&count=6&volume=0.0&pull_type=0&ts="+ts+"&app_type=normal&os_api=25&device_type=Redmi 4x&device_platform=android&ssmix=a&iid=46822775990&manifest_version_code=176&dpi=320&uuid=862515122360587&version_code=176&app_name=aweme&version_name=1.7.6&openudid=8d4b2d266cdb7b72&device_id=58322850656&resolution=1280*720&os_version=7.1.2&language=zh&device_brand=xiaomi&ac=wifi&update_version_code=1762&aid=1128&channel=tengxun&_rticket="+_rticket+"&as=a1iosdfgh&cp=androide1";
+
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("Accept-Encoding","gzip");
+        header.put("Host","aweme.snssdk.com");
+        header.put("Connection","Keep-Alive");
+        //header.put("Cookie","install_id="+iid+";qh[360]=1;odin_tt="+odin_tt+";sid_guard="+sid_guard+";uid_tt="+uid_tt+";sid_tt="+sid_tt+";sessionid="+sessionid);
+        header.put("User-Agent","okhttp/3.8.1");
+
+        RequestTokenVo requestToSend = new RequestTokenVo();
+        requestToSend.setUrl(url);
+        requestToSend.setHeader(header);
+        requestToSend.setBody(null);
+        Request request = null;
+        request = ConstructRequest.constructGet(requestToSend);
+
+        OkHttpClient okHttpClient=new OkHttpClient();
+        Call call = okHttpClient.newCall(request);
+        String result = "";
+
+        try {
+            Response response = call.execute();
+            result = GzipGetteer.uncompressToString(response.body().bytes());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return getAwemeIdList(result);
+    }
+
 }
