@@ -9,17 +9,13 @@ import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.accountregistermodule.service.AccountRegisterService;
 import com.space.dyrev.request.accountregistermodule.service.impl.AccountRegisterServiceImpl;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
-import com.space.dyrev.request.accountregistermodule.params.SendCodeParams;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
 import com.space.dyrev.request.deviceregistermodule.service.impl.DevRegisterServiceImpl;
 import com.space.dyrev.request.deviceregistermodule.utils.RequestParams;
 import com.space.dyrev.util.formatutil.GzipGetteer;
-import com.space.dyrev.util.httputil.CookieTool;
-import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
-import java.util.Map;
 
 
 /**
@@ -44,35 +40,47 @@ import java.util.Map;
 public class MainTest {
 
 
-    private static final String DEVICE_STRING = "{\"adid\":\"cd086472d10b2679\",\"buildSerial\":\"7c3ac597a0472\",\"clientudid\":\"026060ad-cdd0-4ae9-b764-e98bdc471c22\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47020092818\\\",\\\"ttreq\\\":\\\"1$300f590a693e664da723380af95ab2224615ca35\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47020092818\",\"ttreq\":\"1$300f590a693e664da723380af95ab2224615ca35\"},\"deviceId\":\"58403325443\",\"devicePlatform\":\"android\",\"deviceType\":\"Redmi Note 5\",\"dpi\":\"320\",\"imei\":\"865167712605257\",\"imsi\":\"460079922753138\",\"installId\":\"47020092818\",\"mc\":\"F4:F5:DB:60:FC:C7\",\"openudid\":\"cd086472d10b2679\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865167712605257\",\"xttlogid\":\"201810222203400100080170217020CA\"}";
-
+    private static final String DEVICE_STRING = "{\"adid\":\"c8e44eb6da87741a\",\"buildSerial\":\"50b64d280d3b1\",\"clientudid\":\"2a227b42-2236-4efb-b848-c384b1c00084\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47025737377\\\",\\\"ttreq\\\":\\\"1$748cffe686b969ac60cdce04d3c2be4877dbc66a\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47025737377\",\"ttreq\":\"1$748cffe686b969ac60cdce04d3c2be4877dbc66a\"},\"deviceId\":\"58405318167\",\"devicePlatform\":\"android\",\"deviceType\":\"小米Mix 2s\",\"dpi\":\"320\",\"imei\":\"865163574387535\",\"imsi\":\"460082222778964\",\"installId\":\"47025737377\",\"mc\":\"F4:F5:DB:2C:3C:5B\",\"openudid\":\"c8e44eb6da87741a\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865163574387535\",\"xttlogid\":\"201810222300510100150800132010DB\"}";
 
     public static void main(String[] args) {
 
 
-        DeviceEntity deviceEntity = saveDevice();
+        DeviceEntity deviceEntity =
+//                saveDevice();
+                testRegisterDevice();
 
-        deviceEntity.setUuid("867246022383583");
-        deviceEntity.setInstallId("46825309754");
-        deviceEntity.setOpenudid("ef8ad7929c2e0994");
-        deviceEntity.setDeviceId("41336725255");
-        deviceEntity.setDeviceBrand("Meizu");
-        deviceEntity.setDeviceType("MX5");
+//        // ddjt设备
+//        deviceEntity.setUuid("867246022383583");
+//        deviceEntity.setInstallId("47106823699");
+//        deviceEntity.setOpenudid("cd5deef67704a09e");
+//        deviceEntity.setDeviceId("57616910195");
+//        deviceEntity.setDeviceBrand("Xiaomi");
+//        deviceEntity.setDeviceType("Redmi 4X");
 
-//        System.out.println(deviceEntity);
 
-//        testSendXlog(deviceEntity, XlogEnum.COLD_START);
-//
-//        testSendXlog(deviceEntity, XlogEnum.LOGIN);
-//
-        testSendCode(deviceEntity);
+        testSendXlog(deviceEntity, XlogEnum.COLD_START);
+        try {
+            Thread.sleep(2000);
+
+            testSendXlog(deviceEntity, XlogEnum.LOGIN);
+
+
+            testSendCode(deviceEntity);
+
+
+
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
 
     }
 
 
     private static void testSendCode(DeviceEntity deviceEntity) {
-        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.TG, "660914663");
+        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.TG, "660214653");
         AccountRegisterService acc = new AccountRegisterServiceImpl();
         OkHttpClient okHttp = new OkHttpClient();
         boolean b = acc.sendCodeV270(okHttp, phoneEntity, deviceEntity);
@@ -102,7 +110,7 @@ public class MainTest {
         System.out.println(jsonObject);
     }
 
-    private static void testRegisterDevice()  {
+    private static DeviceEntity testRegisterDevice()  {
         DeviceRegisterService drs = new DevRegisterServiceImpl();
         OkHttpClient okHttpClient = new OkHttpClient();
         DeviceEntity deviceEntity = RequestParams.newDevice();
@@ -110,6 +118,7 @@ public class MainTest {
         JSONObject object = new JSONObject();
         object.put("device", deviceEntity1);
         System.out.println(object);
+        return deviceEntity1;
 
         //        drs.deviceRegister(okHttpClient ,deviceEntity);
     }

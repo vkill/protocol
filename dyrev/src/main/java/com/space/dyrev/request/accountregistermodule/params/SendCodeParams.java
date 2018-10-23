@@ -51,6 +51,7 @@ public class SendCodeParams {
         url.append("&device_platform=" + CommonParams.DEVICE_PLATFORM);
         url.append("&device_type=" + deviceEntity.getDeviceType());
         url.append("&iid=" + deviceEntity.getInstallId());
+        url.append("&uuid="+deviceEntity.getUuid());
         url.append("&ssmix=" + CommonParams.SSMIX);
         url.append("&manifest_version_code=" + CommonParams.MANIFEST_VERSION_CODE);
         url.append("&dpi=" + deviceEntity.getDpi());
@@ -69,6 +70,7 @@ public class SendCodeParams {
         url.append("&channel=" + CommonParams.CHANNEL);
         url.append("&_rticket=" + CommonParams.getRticket());
         url.append("&ts=" + System.currentTimeMillis()/1000);
+
         url.append("&as=" + CommonParams.AS);
         url.append("&cp=" + CommonParams.CP);
         return url.toString().replaceAll(" ", "%20");
@@ -84,7 +86,7 @@ public class SendCodeParams {
         result.put("Connection", "keep-alive");
         result.put("Content-Length", "800");
         result.put("Accept-Encoding", "gzip");
-        result.put("User-Agent", "com.ss.android.ugc.aweme/270 (Linux; U; Android 7.1.2; zh_CN; Redmi 4X; Build/N2G47H; Cronet/58.0.2991.0)");
+        result.put("User-Agent", "com.ss.android.ugc.aweme/270 (Linux; U; Android 7.1.2; zh_CN; "+deviceEntity.getDeviceType()+"; Build/N2G47H; Cronet/58.0.2991.0)");
         result.put("Cookies", CookieTool.getCookieFromDevAndAcc(deviceEntity, null ));
         result.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         result.put("sdk-version", "1");
@@ -110,10 +112,12 @@ public class SendCodeParams {
         result.put("dpi", deviceEntity.getDpi());
         result.put("app_name", CommonParams.APP_NAME);
         result.put("version_name", CommonParams.VERSION_NAME);
+        result.put("uuid", deviceEntity.getUuid());
         result.put("openudid", deviceEntity.getOpenudid());
         result.put("device_id", deviceEntity.getDeviceId());
         result.put("os_version", CommonParams.OS_VERSION);
         result.put("version_name", CommonParams.VERSION_NAME);
+        result.put("version_code", CommonParams.VERSION_CODE);
         result.put("resolution", deviceEntity.getResolution());
         result.put("language", CommonParams.LANGUAGE);
         result.put("device_brand", deviceEntity.getDeviceBrand());

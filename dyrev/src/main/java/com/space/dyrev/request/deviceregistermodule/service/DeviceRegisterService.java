@@ -40,9 +40,10 @@ public interface DeviceRegisterService {
     boolean xlogV2(DeviceEntity deviceEntity, XlogEnum xlogEnum, OkHttpClient okHttpClient);
 
     /**
-     * 发送验证码
-     * @param deviceEntity 设备信息
-     * @return 返回是否成功
+     * https://i.snssdk.com/ies/antispam/upload_device_info
+     * @param deviceEntity
+     * @param okHttpClient
+     * @return
      */
-    boolean sendCode(DeviceEntity deviceEntity);
+    boolean uploadDeviceInfo(DeviceEntity deviceEntity, OkHttpClient okHttpClient);
 }

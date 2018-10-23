@@ -117,10 +117,16 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
             // {"server_time":1539945681,"new_user":1,"install_id":46745692722,"device_id":58291941557,"ssid":""}
             JSONObject resultJson = JSONObject.parseObject(GzipGetteer.uncompressToString(resultGzip));
 
-            System.out.println("-----------注册设备结果------------" + resultJson);
+
+            // TODO Sysout.out.print
+            System.out.println("-----------注册设备结果-------------");
+            System.out.println(resultJson);
+            System.out.println("-----------注册设备结果-------------");
+
 
             deviceEntity.setInstallId(String.valueOf((long)resultJson.get("install_id")));
             deviceEntity.setDeviceId(String.valueOf((long)resultJson.get("device_id")));
+
 
 
 
@@ -166,8 +172,10 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
     }
 
     @Override
-    public boolean sendCode(DeviceEntity deviceEntity) {
+    public boolean uploadDeviceInfo(DeviceEntity deviceEntity, OkHttpClient okHttpClient) {
+
 
         return false;
     }
+
 }

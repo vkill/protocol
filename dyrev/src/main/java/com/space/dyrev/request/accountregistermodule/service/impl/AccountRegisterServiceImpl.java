@@ -41,13 +41,10 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
     public boolean sendCodeV270(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity) {
 
         String url = SendCodeParams.constructUrl(deviceEntity);
-        System.out.println(url);
         Map header = SendCodeParams.constructHeader(deviceEntity);
 
-        System.out.println(header);
         Map body = SendCodeParams.constructBody(phoneEntity, deviceEntity);
 
-        System.out.println(body);
         RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
         req.setUrl(url);
         req.setHeaders(header);
