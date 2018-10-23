@@ -21,7 +21,8 @@ package com.space.dyrev.enumeration;
  **/
 public enum  PhoneArea {
     TG("+66"),
-    JPZ("+855");
+    JPZ("+855"),
+    CHINA("+86");
 
     private String areaNum;
 

@@ -1,5 +1,6 @@
 package com.space.dyrev.request.accountregistermodule.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.commonentity.RequestEntity;
@@ -52,20 +53,22 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
         req.setOkHttpClient(okHttpClient);
 
         try {
-            Response response = OkHttpTool.handleHttpReq(req);
+
+             Response response = OkHttpTool.handleHttpReq(req);
 
             byte[] bytes = response.body().bytes();
 
             String result = GzipGetteer.uncompressToString(bytes);
+            
+            JSONObject msg = JSONObject.parseObject(result);
 
-            System.out.println(result);
-
-
+            String message = (String) msg.get("message");
+            if (message!=null && message.equals("success")) {
+                return true;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return false;
     }
 }
