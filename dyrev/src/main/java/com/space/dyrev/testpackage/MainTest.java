@@ -40,36 +40,30 @@ import java.io.IOException;
 public class MainTest {
 
 
-    private static final String DEVICE_STRING = "{\"adid\":\"c8e44eb6da87741a\",\"buildSerial\":\"50b64d280d3b1\",\"clientudid\":\"2a227b42-2236-4efb-b848-c384b1c00084\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47025737377\\\",\\\"ttreq\\\":\\\"1$748cffe686b969ac60cdce04d3c2be4877dbc66a\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47025737377\",\"ttreq\":\"1$748cffe686b969ac60cdce04d3c2be4877dbc66a\"},\"deviceId\":\"58405318167\",\"devicePlatform\":\"android\",\"deviceType\":\"小米Mix 2s\",\"dpi\":\"320\",\"imei\":\"865163574387535\",\"imsi\":\"460082222778964\",\"installId\":\"47025737377\",\"mc\":\"F4:F5:DB:2C:3C:5B\",\"openudid\":\"c8e44eb6da87741a\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865163574387535\",\"xttlogid\":\"201810222300510100150800132010DB\"}";
-
+    private static final String DEVICE_STRING = "{\"adid\":\"ccf177c621b748a8\",\"buildSerial\":\"f4016bb2fce03\",\"clientudid\":\"3b83827b-93cf-442b-ab1e-337206a3732f\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47123546416\\\",\\\"ttreq\\\":\\\"1$8ebf012edb3a666a93131e61a945fb0ff71ea9ba\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47123546416\",\"ttreq\":\"1$8ebf012edb3a666a93131e61a945fb0ff71ea9ba\"},\"deviceId\":\"58426038331\",\"devicePlatform\":\"android\",\"deviceType\":\"Xiaomi Mix 2s\",\"dpi\":\"320\",\"imei\":\"865168822866212\",\"imsi\":\"460036805000604\",\"installId\":\"47123546416\",\"mc\":\"F4:F5:DB:A3:0A:06\",\"openudid\":\"ccf177c621b748a8\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865168822866212\",\"xttlogid\":\"20181023180414010015082031134220\"}";
     public static void main(String[] args) {
 
 
-        DeviceEntity deviceEntity =
-//                saveDevice();
-                testRegisterDevice();
+        DeviceEntity deviceEntity = saveDevice();
+//        DeviceEntity deviceEntity = testRegisterDevice();
 
-//        // ddjt设备
-//        deviceEntity.setUuid("867246022383583");
-//        deviceEntity.setInstallId("47106823699");
-//        deviceEntity.setOpenudid("cd5deef67704a09e");
-//        deviceEntity.setDeviceId("57616910195");
-//        deviceEntity.setDeviceBrand("Xiaomi");
-//        deviceEntity.setDeviceType("Redmi 4X");
+//         // ddjt设备
+        deviceEntity.setUuid("867246022383583");
+        deviceEntity.setInstallId("47106823699");
+        deviceEntity.setOpenudid("cd5deef67704a09e");
+        deviceEntity.setDeviceId("57616910195");
+        deviceEntity.setDeviceBrand("Xiaomi");
+        deviceEntity.setDeviceType("Redmi 4X");
 
 
-        testSendXlog(deviceEntity, XlogEnum.COLD_START);
+//        testSendXlog(deviceEntity, XlogEnum.COLD_START);
         try {
-            Thread.sleep(2000);
 
             testSendXlog(deviceEntity, XlogEnum.LOGIN);
 
+            Thread.sleep(1000);
 
             testSendCode(deviceEntity);
-
-
-
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -80,7 +74,7 @@ public class MainTest {
 
 
     private static void testSendCode(DeviceEntity deviceEntity) {
-        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.TG, "660214653");
+        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.TG, "874374638");
         AccountRegisterService acc = new AccountRegisterServiceImpl();
         OkHttpClient okHttp = new OkHttpClient();
         boolean b = acc.sendCodeV270(okHttp, phoneEntity, deviceEntity);
@@ -97,7 +91,7 @@ public class MainTest {
 //        JSONObject body = XlogV2Params.constructV2Json(deviceEntity, XlogEnum.LOGIN);
 
         boolean b = drs.xlogV2(deviceEntity, xlogEnum, okHttpClient);
-        System.out.println(b);
+        System.out.println("xlog发送成功" + b);
     }
 
 
@@ -117,7 +111,7 @@ public class MainTest {
         DeviceEntity deviceEntity1 = drs.deviceRegister(okHttpClient, deviceEntity);
         JSONObject object = new JSONObject();
         object.put("device", deviceEntity1);
-        System.out.println(object);
+//        System.out.println(object);
         return deviceEntity1;
 
         //        drs.deviceRegister(okHttpClient ,deviceEntity);

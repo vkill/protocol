@@ -23,7 +23,7 @@ public interface DeviceInfoSave {
 
     public static String[] DEVICE_TYPE = {
             "Redmi 4X",
-            "小米Mix 2s",
+            "Xiaomi Mix 2s",
             "Redmi Note 5"
     };
 

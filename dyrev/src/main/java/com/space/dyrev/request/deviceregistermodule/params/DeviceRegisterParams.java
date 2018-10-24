@@ -3,7 +3,7 @@ package com.space.dyrev.request.deviceregistermodule.params;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
-import com.space.dyrev.request.CommonParams;
+import com.space.dyrev.request.commomparams.CommonParams;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`

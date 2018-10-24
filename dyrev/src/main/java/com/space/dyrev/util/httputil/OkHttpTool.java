@@ -93,7 +93,7 @@ public class OkHttpTool {
         Request.Builder builder = new Request.Builder();
         builder.url(url);
         for(String key : header.keySet()){        //添加header信息
-            builder.addHeader(key, header.get(key).trim());
+            builder.addHeader(key, header.get(key));
         }
 
         for(String key : body.keySet()){      //添加body信息

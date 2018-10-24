@@ -36,10 +36,10 @@ public class PhoneNumberEncrypt {
         KEY_MAP.put('1',"34");
         KEY_MAP.put('2',"37");
         KEY_MAP.put('3',"36");
-        KEY_MAP.put('4',"32");
+        KEY_MAP.put('4',"31");
         KEY_MAP.put('5',"30");
         KEY_MAP.put('6',"33");
-        KEY_MAP.put('7',"31");
+        KEY_MAP.put('7',"32");
         KEY_MAP.put('8',"3d");
         KEY_MAP.put('9',"3c");
         KEY_MAP.put('+',"2e");
@@ -49,10 +49,10 @@ public class PhoneNumberEncrypt {
         REV_KEY.put("34", "1");
         REV_KEY.put("37", "2");
         REV_KEY.put("36", "3");
-        REV_KEY.put("32", "4");
+        REV_KEY.put("31", "4");
         REV_KEY.put("30", "5");
         REV_KEY.put("33", "6");
-        REV_KEY.put("31", "7");
+        REV_KEY.put("32", "7");
         REV_KEY.put("3d", "8");
         REV_KEY.put("3c", "9");
         REV_KEY.put("2e", "+");
@@ -67,12 +67,16 @@ public class PhoneNumberEncrypt {
      * @return
      */
     public static String encode(PhoneEntity phone) {
-        String phoneNum = phone.getArea().getAreaNum() + " ";
-        if (phone.getArea() == PhoneArea.TG) {
-            phoneNum += phone.getPhoneNum().substring(0, 2) + " " +
-                        phone.getPhoneNum().substring(2, 5) + " " +
-                        phone.getPhoneNum().substring(5, 9);
-        }
+        String phoneNum = phone.getArea().getAreaNum() + " " + phone.getPhoneNum();
+        // TODO 电话号码，格式还没做
+//        if (phone.getArea() == PhoneArea.TG) {
+//            phoneNum += phone.getPhoneNum().substring(0, 2) + " " +
+//                        phone.getPhoneNum().substring(2, 5) + " " +
+//                        phone.getPhoneNum().substring(5, phone.getPhoneNum().length());
+//        }
+
+
+
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < phoneNum.length(); i++) {
             char tmp = phoneNum.charAt(i);
@@ -99,12 +103,14 @@ public class PhoneNumberEncrypt {
     }
 
     public static void main(String[] args) {
-        PhoneEntity phoneEntity = new PhoneEntity();
-        phoneEntity.setArea(PhoneArea.TG);
-        phoneEntity.setPhoneNum("660914663");
+//        PhoneEntity phoneEntity = new PhoneEntity();
+//        phoneEntity.setArea(PhoneArea.TG);
+//        phoneEntity.setPhoneNum("660914663");
+//
+//        String encode = encode(phoneEntity);
+//        System.out.println(encode);
 
-        String encode = encode(phoneEntity);
-        System.out.println(encode);
+        System.out.println(decode("2e3d332534303735353d3036303333"));
     }
 
 }
