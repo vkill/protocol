@@ -8,6 +8,7 @@ import com.space.register.entity.DYUserEntity;
 import com.space.register.entity.DeviceEntity;
 import com.space.register.entity.OrderEntity;
 import com.space.register.service.DeviceService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -26,7 +27,7 @@ public class OrderThreadDatabaseImpl {
     @Resource
     protected DeviceService deviceService;
     @Resource
-    protected com.space.register.dao.DYUserRepository DYUserRepository;
+    protected DYUserRepository DYUserRepository;
     @Resource
     protected DeviceRepository deviceRepository;
     @Resource
@@ -38,11 +39,18 @@ public class OrderThreadDatabaseImpl {
     public void init() {
         if(orderThreadDatabase == null){
             orderThreadDatabase = this;
+            orderThreadDatabase.orderRepository = this.orderRepository;
+            orderThreadDatabase.DYUserRepository = this.DYUserRepository;
         }
     }
 
     public ArrayList<OrderEntity> getAllOrder(String status){
-        return orderThreadDatabase.orderRepository.findAllByStatus(status);
+        ArrayList<OrderEntity> orderEntities = orderThreadDatabase.orderRepository.findAllByStatus(status);
+        for(OrderEntity orderEntity:orderEntities){
+            orderEntity.setStatus("3");
+            updataOrderInfo(orderEntity);
+        }
+        return orderEntities;
     }
 
     public DYUserEntity saveDyUser(DYUserEntity dyUserEntity){
@@ -55,9 +63,6 @@ public class OrderThreadDatabaseImpl {
 
     public ArrayList<DYUserEntity> getNumsUser(long lessId,long number){
         ArrayList<DYUserEntity> dyUserEntities = orderThreadDatabase.DYUserRepository.getUserByIdAndNum(lessId,number);
-        if(dyUserEntities.size()<number-1){
-            dyUserEntities = orderThreadDatabase.DYUserRepository.getUserByIdAndNum(0,number);
-        }
         return dyUserEntities;
     }
 
@@ -65,4 +70,17 @@ public class OrderThreadDatabaseImpl {
         return orderThreadDatabase.deviceRepository.getDeviceMsgById(id);
     }
 
+    public int getUserNum(){
+        return orderThreadDatabase.DYUserRepository.getDyUserNum();
+    }
+
+    public DYUserEntity getOneUser(int id){
+        return  orderThreadDatabase.DYUserRepository.findById(id);
+    }
+    public OrderEntity getOneOrder(int id){
+        return orderThreadDatabase.orderRepository.findById(id);
+    }
+    public void getOrderListNew(){
+        //orderThreadDatabase.orderRepository.setAllOrderNowType();
+    }
 }

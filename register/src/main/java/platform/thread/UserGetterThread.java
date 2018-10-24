@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @create: 2018-10-21 20:58
  **/
 public class UserGetterThread implements Runnable{
-    public static int lessId = 5020;
+    public static int lessId = 41000;
     public static int dyUserNum = 3000;
     public static int AlldyUserNum = 0;
     public static LinkedBlockingQueue linkedBlockingQueue;
@@ -41,7 +41,7 @@ public class UserGetterThread implements Runnable{
                 nowID+= dyUserEntities.size();
             }
             try {
-                Thread.sleep(3000);
+                Thread.sleep(10000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

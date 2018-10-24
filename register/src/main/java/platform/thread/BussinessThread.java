@@ -20,10 +20,11 @@ import java.util.concurrent.TimeUnit;
  **/
 public class BussinessThread implements Runnable {
 
-    public static int oneIpThumbUp = 40;
-    public static int orderNums = 10;
+    public static int oneIpThumbUp = 17;
+    public static int orderNums = 4;
+    public static int onceUserNum = 35;
     public ArrayList<OrderEntity> orderEntitiess = new ArrayList<>();
-
+    public ArrayList<DYUserEntity> dyUserEntitiess = new ArrayList<>();
     @Override
     public void run() {
         OkHttpClient okHttpClient = changeOkHttpHost();
@@ -32,10 +33,7 @@ public class BussinessThread implements Runnable {
         OrderEntity orderEntity;
         int ipInfo = 0;
         do{
-            if(ipInfo>=oneIpThumbUp){
-                okHttpClient = changeOkHttpHost();
-                ipInfo =0;
-            }
+
             while(orderEntitiess.size()<orderNums){
                 if(BussinessControllerThread.orderEntities.size()!=0){
                     try {
@@ -49,36 +47,61 @@ public class BussinessThread implements Runnable {
                     break;
                 }
             }
-
-            if(orderEntitiess.size()>0){
-                System.out.println("该线程抢到订单数量为"+orderEntitiess.size());
+            while(dyUserEntitiess.size()<onceUserNum){
                 try {
-                    dyUserEntity = BussinessControllerThread.dyUserEntities.take();
-
-                    deviceEntity = BussinessControllerThread.orderThreadDatabase.getDeviceByID(Integer.parseInt(dyUserEntity.getSimulationID()));
+                    dyUserEntitiess.add(BussinessControllerThread.dyUserEntities.take());
 
                 } catch (InterruptedException e) {
-                    System.out.println("线程获取用户失败了");
                     e.printStackTrace();
                 }
-                for(int i = 0; i< orderEntitiess.size(); i++){
-                    //System.out.println("靠跑啊");
-                    orderEntity = orderEntitiess.get(i);
+
+            }
+            if(orderEntitiess.size()>0){
+                System.out.println("该线程抢到订单数量为"+orderEntitiess.size());
+                for(int k=0;k<onceUserNum;k++){
                     try {
-                        if(MoneyGetter.makeThumbUpAndFollow(okHttpClient,deviceEntity,dyUserEntity,orderEntity)){
-                            System.out.println("订单点赞完成");
-                            orderEntitiess.remove(i);
-                            ipInfo++;
+                        if(dyUserEntitiess.size()>0){
+                            dyUserEntity = dyUserEntitiess.remove(0);
+                        }else{
                             break;
                         }
-                        System.out.println("用户电话为:"+dyUserEntity.getPhoneNum());
-                        System.out.println("订单号为:"+orderEntity.getVideoID());
-                    }catch (Exception e){
-                        System.out.println("点赞过程中出错");
+
+
+                        deviceEntity = BussinessControllerThread.orderThreadDatabase.getDeviceByID(Integer.parseInt(dyUserEntity.getSimulationID()));
+
+                    } catch (Exception e) {
+                        System.out.println("线程获取用户失败了");
                         e.printStackTrace();
                     }
+                    for(int i = 0; i< orderEntitiess.size(); i++){
+                        //System.out.println("靠跑啊");
+                        orderEntity = orderEntitiess.get(i);
+                        try {
+                            if(MoneyGetter.makeThumbUpAndFollow(okHttpClient,deviceEntity,dyUserEntity,orderEntity)){
+                                System.out.println("订单点赞完成");
+                                orderEntitiess.remove(i);
+
+                                break;
+                            }
+                            ipInfo++;
+                            if(ipInfo>=oneIpThumbUp){
+                                System.out.println("###########################进行ip更换操作");
+                                okHttpClient = changeOkHttpHost();
+                                ipInfo =0;
+                            }
+                            System.out.println("用户电话为:"+dyUserEntity.getId());
+                            System.out.println("订单号为:"+orderEntity.getVideoID());
+                            Thread.sleep(2000);
+                        }catch (Exception e){
+                            System.out.println("点赞过程中出错");
+                            okHttpClient = changeOkHttpHost();
+                            ipInfo =0;
+                            e.printStackTrace();
+                        }
+                    }
+                    BussinessControllerThread.orderThreadDatabase.saveDyUser(dyUserEntity);
                 }
-                BussinessControllerThread.orderThreadDatabase.saveDyUser(dyUserEntity);
+
             }else{
                 continue;
             }
@@ -119,5 +142,8 @@ public class BussinessThread implements Runnable {
         return okHttpClient;
     }
 
+    public static void main(String[]args){
+
+    }
 
 }

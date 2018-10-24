@@ -124,7 +124,7 @@ public class MoneyGetter {
         return false;
     }
 
-    public static ArrayList<String> digg(OkHttpClient okHttpClient,  int event_id, String session_id, long serverTime, DYUserEntity dyUserEntity, DeviceEntity deviceEntity, OrderEntity orderEntity){
+    public static ArrayList<String> digg(OkHttpClient okHttpClient,  int event_id, String session_id, long serverTime, DYUserEntity dyUserEntity, DeviceEntity deviceEntity, OrderEntity orderEntity) throws IOException {
         //点赞操作  包括点赞和验证结果
         //这个aweme_id是视频id
         String aweme_id = orderEntity.getVideoID();

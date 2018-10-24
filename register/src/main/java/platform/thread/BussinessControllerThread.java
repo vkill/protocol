@@ -23,6 +23,7 @@ public class BussinessControllerThread implements Runnable {
     public static int ThreadNum =5;
     @Override
     public void run() {
+        orderThreadDatabase.getOrderListNew();
         Thread ipthread = new Thread(new IPThread(hostIpQuene));
         Thread orderThread = new Thread(new OrderGetterThread(orderEntities));
         Thread dyUserThread = new Thread(new UserGetterThread(dyUserEntities));
@@ -33,8 +34,10 @@ public class BussinessControllerThread implements Runnable {
 
         for (int i=0;i<ThreadNum;i++){
             businessThread[i] = new Thread(new BussinessThread());
+
+        }
+        for(int i=0;i<ThreadNum;i++){
             businessThread[i].start();
         }
-
     }
 }

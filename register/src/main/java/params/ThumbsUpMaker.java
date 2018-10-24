@@ -22,7 +22,7 @@ import java.util.Map;
 public class ThumbsUpMaker {
 
 
-    public static ArrayList<String> thumbsUpMaker(OkHttpClient okHttpClient, String aweme_id, DeviceEntity deviceEntity, DYUserEntity dyUserEntity) {
+    public static ArrayList<String> thumbsUpMaker(OkHttpClient okHttpClient, String aweme_id, DeviceEntity deviceEntity, DYUserEntity dyUserEntity) throws IOException {
 
 
         String _rticket = String.valueOf(System.currentTimeMillis());
@@ -55,7 +55,7 @@ public class ThumbsUpMaker {
 //        OkHttpClient okHttpClient=new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         ArrayList<String> result = new ArrayList<>();
-        try {
+
             Response response = call.execute();
             result.add(GzipGetteer.uncompressToString(response.body().bytes()));
             System.out.println("点赞返回信息：" + result.get(0));
@@ -69,9 +69,7 @@ public class ThumbsUpMaker {
                 }
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         return result;
     }

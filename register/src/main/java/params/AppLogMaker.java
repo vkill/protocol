@@ -20,7 +20,7 @@ import java.util.Random;
  **/
 public class AppLogMaker {
 
-    public static String app_log(OkHttpClient okHttpClient, DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String body_msg) {
+    public static String app_log(OkHttpClient okHttpClient, DeviceEntity deviceEntity, DYUserEntity dyUserEntity, String body_msg) throws IOException {
 
         String _rticket = String.valueOf(System.currentTimeMillis());
         char[] temp = _rticket.toCharArray();
@@ -62,12 +62,10 @@ public class AppLogMaker {
 //        OkHttpClient okHttpClient = new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         String result = "";
-        try {
+
             Response response = call.execute();
             result = GzipGetteer.uncompressToString(response.body().bytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
         return result;
     }
 

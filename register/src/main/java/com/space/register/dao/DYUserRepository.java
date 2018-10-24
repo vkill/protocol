@@ -28,4 +28,6 @@ public interface DYUserRepository extends JpaRepository<DYUserEntity, Integer>, 
     @Query(value = "select * from t_dy_user where id >?1 order by id asc limit ?2",nativeQuery = true)
     ArrayList<DYUserEntity> getUserByIdAndNum(long id,long number);
 
+    @Query(value = "select count(*) from t_dy_user",nativeQuery = true)
+    int getDyUserNum();
 }

@@ -1,6 +1,7 @@
 package com.space.register.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @program: protool
@@ -43,6 +44,16 @@ public class DYUserEntity{
     private int event_id;
     // 0或空表示还未被使用，1表示该用户已在当前轮次内使用
     private int used_turn;
+
+    private String registerDate;
+
+    public String getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(String registerDate) {
+        this.registerDate = registerDate;
+    }
 
     public int getUsed_turn() {
         return used_turn;
