@@ -62,13 +62,28 @@ public class PhoneNumberEncrypt {
     }
 
     /**
+     * 验证码加密
+     * @param code
+     * @return
+     */
+    public static String codeEncode(String code) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < code.length(); i++) {
+            char tmp = code.charAt(i);
+            sb.append(KEY_MAP.get(tmp));
+        }
+
+        return sb.toString();
+    }
+
+    /**
      * 号码转码
      * @param phone
      * @return
      */
     public static String encode(PhoneEntity phone) {
         String phoneNum = phone.getArea().getAreaNum() + " " + phone.getPhoneNum();
-        // TODO 电话号码，格式还没做
+        // 应该不用
 //        if (phone.getArea() == PhoneArea.TG) {
 //            phoneNum += phone.getPhoneNum().substring(0, 2) + " " +
 //                        phone.getPhoneNum().substring(2, 5) + " " +
