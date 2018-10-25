@@ -3,8 +3,8 @@ package com.space.dyrev.request.accountregistermodule.params;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.encrypt.PhoneNumberEncrypt;
-import com.space.dyrev.request.commomparams.CommonParams;
-import com.space.dyrev.request.commomparams.CommonUrlPart;
+import com.space.dyrev.request.util.CommonParams;
+import com.space.dyrev.request.util.CommonUrlPart;
 import com.space.dyrev.util.httputil.CookieTool;
 
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import java.util.Map;
  *                         @@@@.
  *                                                                                             @ClassName SendCodeParams
  *                                                                                             @Author: space
- *                                                                                             @Description TODO 
+ *                                                                                             @Description 发送验证码
  *                                                                                             @Date: 2018/10/11 23:29
  **/
 public class SendCodeParams {
@@ -49,8 +49,8 @@ public class SendCodeParams {
         url.append(SEND_CODE_FUNC);
         String commonUrl = CommonUrlPart.deviceUrl(deviceEntity);
         url.append(commonUrl);
-        url.append("&as=" + CommonParams.AS);
-        url.append("&cp=" + CommonParams.CP);
+
+
         return url.toString().replaceAll(" ", "%20");
     }
 

@@ -54,8 +54,13 @@ public class CookieTool {
             result.put("ttreq", deviceCookiesJSON.get("ttreq"));
         }
         if (dyUserEntity != null) {
-            // 写入user的cookie
-            // TO-DO
+            JSONObject json = dyUserEntity.getUserCookiesJSON();
+            result.put("odin_tt", json.get("odin_tt"));
+            result.put("sid_guard", json.get("sid_guard"));
+            result.put("uid_tt", json.get("uid_tt"));
+            result.put("sid_tt", json.get("sid_tt"));
+            result.put("sessionid", json.get("sessionid"));
+
         }
 
         return result;

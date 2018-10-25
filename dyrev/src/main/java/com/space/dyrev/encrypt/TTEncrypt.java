@@ -1,16 +1,9 @@
 package com.space.dyrev.encrypt;
 
-
-
-import com.alibaba.fastjson.JSONObject;
-import com.space.dyrev.testpackage.OutPutUtil;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.formatutil.ScaleTrans;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -359,8 +352,8 @@ public class TTEncrypt {
 
 
     public static void main(String[] args) {
-        String str =
-                "dGMCBj3Yv+yerCAuDwL+M/h4CUE3sdbm4GlMYE8VbsKIN/3irtOGedolTdzGJOm0sk0Yywd3l5d8im+3XO5BLl8zDEf1NZ8Vlk9iWN0BFvHJUYc+0XCJIs6kLn+t0ixZLLb0LWgvdST6ZZXcP5Qk/pV9dnapXgORlHblxOiJQGWN+h7XNHgI1sn34Cnww3qkvKropIkJ5FKx/efiwxGLO+AfPI840JxSUCOUFPGZTvkTXiNRxWlC+EN+ie4IKNRziRmS5EdT71z66Kstfww5kkCl6T/a4Y0UdOv9wCTPR7e/uiiD72f0mvqhVavPDXBJMDuK1dYTRFU6sGCFFc1oKnRIOOh+fhmoDea7iQdRecDUJwSNXeYISvglwHPW2elcMdGvAnpciNkBeIVVKnFkAc23ocPfrARffOBcCAe3XKoavWLJZQX3sN8Uq5vPFTF5b8SLdzeUwgBpeOk8saecc0p/IpexcRk+OOMVPv4bKH5mmuSR0W/N1GCPDeaQcOJ0V4ayvptfiXa1qRP3TceLqAwH337dtTspXViYkYIdbamWGazJQYRbHLRMlfg9yBDbWd6EhaBPNXpETX6Rc8+uKk+LyfeCJnxwH9nzOIwpkMjWC4FhjOUCO4MGyEsLN5MFRVOdh3tbvNdkN99lUV53k7YWKH2rifcaW6iNqQ6P6UJp01E6d7NPgp96EElpJ8f1BPUmLHuBrpe9djeRakXULky4370wcRD39/EnDnlbxuztNeKyxsrtwr43YG+PJBcyIQIsAvCG9BsWT6xbeXW5Ho4kPgtUff1WxFXkq6hOR8/HURPxG5YJaOAkU+/xtx6C256dKlGUlgI2e9rFPqUM7O8wrn3Hv6kJZrL3Hed2H+bHfdkDXCqpleeWsWFcjP4zXKL1dw==";
+        String str ="dGMCBD3Yv+yerCAuZl7+Mye15XFQXn67y0rXq4ZLs39cckr8yy8UxtcWIhMG8xY0HjledZCHsyr3/XGpvaqa9xN2rJtNSpaelraf9g3ec5H+wMRJuoe0kg66mItrgQntPN23ajG+Drce43cGkZYJajqopAyqAl4WO5Ad7jF9+SOp0a700pkl6pddAypc3khJ6xnXQuCHEq/bIEw0bECBBuOAKMAEw0Z8J+XRfyGasBq6d4vb89uNK5/xuhMZF+IPVHfMLOz9t+Jop6+W2gn/XuqYGhY2K/Xvvzl8urWZcV15k8l/wUsk+lCHbF0MFwoMgR7Ju7l7H+Ys8EOahjHE+CzyhTgtLm7L7tvR3j85sgxItpqbVsaI2Yo8nJZuvTjW0o8+BM3QkCWVxzdla781sZ+neQPZCQe6RIElDr42ahvrzHvIpK7YT8xdaJkLT0GP7LYcQklySgOoWF26eDDs2F7Wd73muYN6CygxbLTNMQ0jcg6qJiBLtdDX/fLypPMOEA1b0KBxMbvExTm7tdY5LOHxLxWLyMtm6ivHMVdmoOKGYq7z8pHUDtqc+0OJgfUrEYuhiwFmXsgJ3T4okOxFKFkbOhqMerI+SznO+Q6ePrzCGYRSyqCQnJsx12XpCfDgA3Ir3U+ggpkKcni7vgF7zsNOf35wGROi/pTBzxq61hErKBKbbbmvRYPPkuGEAVZWMZKlSVaRps8KjL5UMum3UrCi4TgqbOvahvPAbA7tHtdPvDfKDK/ytplIotKMNs4p/mDRy41EK6Q4woNP4YeI/iobArEy8xYICLqw9IThWJWHK8TJjReDaXUv/ElLQk106Cpj4VAz4ybRDITTy3axd48z2X4njKV4xj9lSlQK1jf/JVHNnzuC2yCXkQcOcP0lWPKlR4FTq9kbWjkYMbkJY4ce8LUCznoJ2clZHY8qFWm2yPeHToo4iyPr2PIzO192is5pXvBwEx+QWNQugAA00N4T1G8xU9vGiHSkj9DwKawPEkEyT/xVlvLaOlu/VgPgkSvNEEtEYnXNOVfS/9/MiAEFKjOL72vMDRH3kbroTrWl60BqNsuewfDrnqgJnzLRdrWq1bFM70hQTmARzy4gAliqeUIr4VyLInyiXtQ3+U1TZ697ZRd/6gM3NDGALNAdzxN7Mt5DaGp7I1Ro/lF67O9OLzthdNzqpowtm5+Yxon6yOVWeD5k2wSFtMReuWFDswfIgB4ceE7v+yjwN1jiFqNrMf2+IlgDtGUrRbMqj6p6g/DAcU1u/xJlJtxsJ6Ni5Mka4hBOzZ2GFjzvH9nvMf1lrCS2agLfGgyAv9gze+0KeHEwo8ND3DW9tRPevSnKQCYz2w1Y4U9UwZ+c3POun/SLNP8dlj1YkSQR9VX/dJhsxg0zHNaQaYWX3jrZFvr+4VmzAYCz2b6o108G5hT9/r4JkxCN1wyuODaVW5wZnnlfd/yAIgNpQEG2AVRQjGl7XPH1ew==";
+
 //        decode[decode.length-3] = 0;
 
         byte[] decode = decode(str);

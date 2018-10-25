@@ -28,12 +28,22 @@ public class PhoneEntity {
 
     private String phoneNum;
 
+    private String code;
+
     public PhoneEntity() {
     }
 
     public PhoneEntity(PhoneArea area, String phoneNum) {
         this.area = area;
         this.phoneNum = phoneNum;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public PhoneArea getArea() {

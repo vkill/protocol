@@ -1,6 +1,7 @@
 package com.space.dyrev.request.accountregistermodule.service;
 
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import okhttp3.OkHttpClient;
 
@@ -35,5 +36,16 @@ public interface AccountRegisterService {
      * @param deviceEntity
      * @return
      */
-    public boolean sendCodeV270(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity);
+    boolean sendCodeV270(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity);
+
+    /**
+     * https://is.snssdk.com/passport/mobile/sms_login
+     * 短信登陆
+     * @param okHttpClient
+     * @param phoneEntity
+     * @param deviceEntity
+     * @return
+     */
+    DyUserEntity smsLogin(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity);
+
 }

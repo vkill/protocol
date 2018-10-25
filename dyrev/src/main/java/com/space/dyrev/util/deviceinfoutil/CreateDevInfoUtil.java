@@ -32,9 +32,9 @@ public class CreateDevInfoUtil {
      * @return 15 位的uuid
      */
     public static String createUUID() {
-        StringBuffer s1 = new StringBuffer("86516");
+        StringBuffer s1 = new StringBuffer("816");
         Random r1 = new Random();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             s1.append(r1.nextInt(10));
         }
         return s1.toString();

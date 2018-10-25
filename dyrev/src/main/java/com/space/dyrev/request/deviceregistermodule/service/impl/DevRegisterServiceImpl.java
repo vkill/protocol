@@ -6,7 +6,7 @@ import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.encrypt.TTEncrypt;
 import com.space.dyrev.enumeration.XlogEnum;
-import com.space.dyrev.request.commomparams.CommonParams;
+import com.space.dyrev.request.util.CommonParams;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
 import com.space.dyrev.request.deviceregistermodule.params.XlogV2Params;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
@@ -16,6 +16,8 @@ import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -45,6 +47,8 @@ import java.util.Map;
  **/
 @Service("deviceRegisterService")
 public class DevRegisterServiceImpl implements DeviceRegisterService {
+
+    private static Logger logger = LoggerFactory.getLogger(DevRegisterServiceImpl.class);
 
     @Override
     public DeviceEntity deviceRegister(OkHttpClient okHttpClient, DeviceEntity device) {
@@ -117,10 +121,10 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
             JSONObject resultJson = JSONObject.parseObject(GzipGetteer.uncompressToString(resultGzip));
 
 
-            // TODO Sysout.out.print
-            System.out.println("-----------注册设备结果-------------");
-            System.out.println(resultJson);
-            System.out.println("-----------注册设备结果-------------");
+            // TODO logger remove
+            logger.info("-----------注册设备结果-------------");
+            logger.info(resultJson.toJSONString());
+            logger.info("-----------注册设备结果-------------");
 
 
             deviceEntity.setInstallId(String.valueOf((long)resultJson.get("install_id")));
@@ -130,7 +134,7 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
 
         } catch (IOException e) {
-            System.out.println("设备请求失败");
+            logger.error("设备注册失败");
 //            e.printStackTrace();
         }
 

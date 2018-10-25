@@ -1,5 +1,7 @@
 package com.space.dyrev.commonentity;
 
+import com.alibaba.fastjson.JSONObject;
+
 import javax.persistence.*;
 
 /**
@@ -46,6 +48,49 @@ public class DyUserEntity {
     // 帐号部分相关的cookie
     @Column(columnDefinition = "text")
     private String userCookies;
+
+    @Column(columnDefinition = "text")
+    private String xTtTokenSign;
+
+
+    private String sessionKey;
+
+    private String userId;
+
+    // 登陆的时候header返回的
+    private String xTtToken;
+
+    public String getxTtTokenSign() {
+        return xTtTokenSign;
+    }
+
+    public void setxTtTokenSign(String xTtTokenSign) {
+        this.xTtTokenSign = xTtTokenSign;
+    }
+
+    public String getxTtToken() {
+        return xTtToken;
+    }
+
+    public void setxTtToken(String xTtToken) {
+        this.xTtToken = xTtToken;
+    }
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     // appLog的eventId
     private int eventId;
@@ -95,6 +140,10 @@ public class DyUserEntity {
         return userCookies;
     }
 
+    public JSONObject getUserCookiesJSON() {
+        return JSONObject.parseObject(userCookies);
+    }
+
     public void setUserCookies(String userCookies) {
         this.userCookies = userCookies;
     }
@@ -105,5 +154,20 @@ public class DyUserEntity {
 
     public void setEventId(int eventId) {
         this.eventId = eventId;
+    }
+
+    @Override
+    public String toString() {
+        return "DyUserEntity{" +
+                "id=" + id +
+                ", area='" + area + '\'' +
+                ", account='" + account + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", device=" + device +
+                ", userCookies='" + userCookies + '\'' +
+                ", sessionKey='" + sessionKey + '\'' +
+                ", userId='" + userId + '\'' +
+                ", eventId=" + eventId +
+                '}';
     }
 }
