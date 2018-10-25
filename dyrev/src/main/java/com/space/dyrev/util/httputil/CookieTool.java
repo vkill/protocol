@@ -51,7 +51,7 @@ public class CookieTool {
             // 设备不为空
             JSONObject deviceCookiesJSON = deviceEntity.getDeviceCookiesJSON();
             result.put("install_id", deviceCookiesJSON.get("install_id"));
-            result.put("ttreq", deviceCookiesJSON.get("ttreq"));
+//            result.put("ttreq", deviceCookiesJSON.get("ttreq"));
         }
         if (dyUserEntity != null) {
             JSONObject json = dyUserEntity.getUserCookiesJSON();

@@ -1,6 +1,8 @@
-package com.space.dyrev.util.formatutil;
+package com.space.dyrev.request.jurisdictionmodule.params;
 
-import com.alibaba.fastjson.JSONObject;
+import com.space.dyrev.commonentity.DyUserEntity;
+import com.space.dyrev.request.commonparams.CommonParams;
+import com.space.dyrev.request.commonparams.CommonUrlPart;
 
 import java.util.Map;
 
@@ -19,25 +21,39 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                                                                             @Author: space
- *                                                                                             @Date: 2018/10/19 20:13
- *                                                                                             @Description: 字符串的工具类
+ *                                
+ *        @Author: space
+ *        @Date: 2018/10/25 18:49
+ *        @Description: aweme.snssdk.com/aweme/v1/check/in/?
  **/
-public class StringUtil {
+public class AwemeV1CheckInParams {
+
+    private static final String HOST = "aweme.snssdk.com";
+
+    private static final String FUNC = "/aweme/v1/check/in/?";
+
 
     /**
-     * 判断是否为空
-     * @param str
+     * 构造url
+     * @param dyUserEntity
      * @return
      */
-    public static boolean isEmpty(String str) {
-        if (str!=null  && !str.equals("")) {
-            return false;
-        }
-        return true;
+    public static String constructUrl(DyUserEntity dyUserEntity) {
+        StringBuffer url = new StringBuffer("https://" + HOST + FUNC);
+        url.append(CommonUrlPart.deviceUrl(dyUserEntity.getDevice()));
+        url.append("&retry_type=no_retry");
+        url.append("&as=" + CommonParams.AS);
+        url.append("&cp=" + CommonParams.CP);
+
+        return url.toString();
     }
 
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
+    /**
+     * 构造header
+     * @param dyUserEntity
+     * @return
+     */
+    public static Map constructHeader(DyUserEntity dyUserEntity) {
+        return AwemeV2platformShareSettingsParams.constructHeader(dyUserEntity);
     }
 }

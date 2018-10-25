@@ -1,4 +1,4 @@
-package com.space.dyrev.request.util;
+package com.space.dyrev.request.commonparams;
 
 import com.space.dyrev.commonentity.DeviceEntity;
 
@@ -57,7 +57,8 @@ public class CommonUrlPart {
         url.append("&channel=" + CommonParams.CHANNEL);
         url.append("&_rticket=" + CommonParams.getRticket());
         url.append("&ts=" + System.currentTimeMillis()/1000);
-        return url.toString().replaceAll(" ", "%20");
+//        return url.toString().replaceAll(" ", "%20");
+        return url.toString();
     }
 
     /**
@@ -65,7 +66,9 @@ public class CommonUrlPart {
      * @param deviceEntity
      * @return
      */
-    public static Map deviceMap(DeviceEntity deviceEntity) {
+
+    //os_api=22&device_type=MX5&ssmix=a&manifest_version_code=270&dpi=480&uuid=867246022383583&app_name=aweme&version_name=2.7.0&retry_type=no_retry&ac=wifi&channel=meizu&update_version_code=2702&type=3731&_rticket=1540477084413&device_platform=android&iid=47594271446&mix_mode=1&mobile=2e3d3325343034253530343c253c343033&version_code=270&openudid=ef8ad7929c2e0994&device_id=41336725255&resolution=1080*1920&device_brand=Meizu&language=zh&os_version=5.1&aid=1128
+    public static Map deviceMapBody(DeviceEntity deviceEntity) {
         Map result = new HashMap();
         result.put("os_api",CommonParams.OS_API);
         result.put("device_platform", CommonParams.DEVICE_PLATFORM);
@@ -75,7 +78,6 @@ public class CommonUrlPart {
         result.put("manifest_version_code", CommonParams.MANIFEST_VERSION_CODE);
         result.put("dpi", deviceEntity.getDpi());
         result.put("app_name", CommonParams.APP_NAME);
-        result.put("version_name", CommonParams.VERSION_NAME);
         result.put("uuid", deviceEntity.getUuid());
         result.put("openudid", deviceEntity.getOpenudid());
         result.put("device_id", deviceEntity.getDeviceId());

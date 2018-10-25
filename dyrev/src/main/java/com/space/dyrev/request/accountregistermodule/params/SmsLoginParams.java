@@ -3,8 +3,8 @@ package com.space.dyrev.request.accountregistermodule.params;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.encrypt.PhoneNumberEncrypt;
-import com.space.dyrev.request.util.CommonParams;
-import com.space.dyrev.request.util.CommonUrlPart;
+import com.space.dyrev.request.commonparams.CommonParams;
+import com.space.dyrev.request.commonparams.CommonUrlPart;
 import com.space.dyrev.util.httputil.CookieTool;
 
 import java.util.HashMap;
@@ -91,7 +91,7 @@ public class SmsLoginParams {
      * @return
      */
     public static Map constructBody(DeviceEntity deviceEntity, PhoneEntity phoneEntity) {
-        Map result = CommonUrlPart.deviceMap(deviceEntity);
+        Map result = CommonUrlPart.deviceMapBody(deviceEntity);
         result.put("retry_type", "no_retry");
         result.put("code", PhoneNumberEncrypt.codeEncode(phoneEntity.getCode()));
         result.put("mobile", PhoneNumberEncrypt.encode(phoneEntity));

@@ -1,4 +1,4 @@
-package com.space.dyrev.request.operationmodule.params;
+package com.space.dyrev.request.jurisdictionmodule.params;
 
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.request.commonparams.CommonParams;
@@ -25,33 +25,29 @@ import java.util.Map;
  *                         @@@@.
  *                                
  *        @Author: space
- *        @Date: 2018/10/24 19:24
- *        @Description: 点赞的参数构造
+ *        @Date: 2018/10/25 18:11
+ *        @Description: https://aweme.snssdk.com/aweme/v1/spotlight/relation/?count=1000&with_fstatus=1&max_time=1540353336502&min_time=0&ts=1540353337&app_type=normal&os_api=25&device_platform=android&device_type=Redmi%204X&iid=47106823699&ssmix=a&manifest_version_code=270&dpi=320&version_code=270&app_name=aweme&version_name=2.7.0&openudid=cd5deef67704a09e&device_id=57616910195&resolution=720*1280&os_version=7.1.2&language=zh&device_brand=Xiaomi&ac=wifi&update_version_code=2702&aid=1128&channel=meizu&_rticket=1540353336551&as=a195ae1c29a3fb6dff4355&cp=ed36b15896fbcad4e1_cMg&mas=018253de99ac92b3bd792bcb5175a1e376acaccc2c6666266c4666 HTTP/1.1
  **/
-public class DiggParams {
+public class AwemeV1SpotlightRelationParams {
 
-    // https://aweme.snssdk.com/aweme/v1/commit/item/digg
-    // HOST
     private static final String HOST = "aweme.snssdk.com";
 
-    // 请求头方法
-    private static final String FUNC = "/aweme/v1/commit/item/digg/?";
+    private static final String FUNC = "/aweme/v1/spotlight/relation/?";
+
 
     /**
-     * 构造url请求头
-     * @param dyUserEntity 帐号实体类
-     * @param awemeId 视频id
-     * @return url
+     * 构造url
+     * @param dyUserEntity
+     * @return
      */
-    public static String constructUrl(DyUserEntity dyUserEntity, String awemeId) {
-        StringBuffer url = new StringBuffer("https://");
-        url.append(HOST);
-        url.append(FUNC);
-        // 公共部分
+    public static String constructUrl(DyUserEntity dyUserEntity) {
+        StringBuffer url = new StringBuffer("https://" + HOST + FUNC);
+        url.append("count=1000");
+        url.append("&with_fstatus=1");
+        url.append("&max_time=" + CommonParams.getRticket());
+        url.append("&min_time=0&");
         url.append(CommonUrlPart.deviceUrl(dyUserEntity.getDevice()));
-        url.append("&aweme_id=" + awemeId);
-        url.append("&type=1");
-        url.append("&retry_type=no_retry");
+        url.append("&app_type=normal");
         url.append("&as=" + CommonParams.AS);
         url.append("&cp=" + CommonParams.CP);
 
@@ -67,24 +63,12 @@ public class DiggParams {
         Map result = new HashMap();
         result.put("Host", HOST);
         result.put("Connection", "keep-alive");
+        result.put("Accept-Encoding", "gzip");
+        result.put("User-Agent", "User-Agent: okhttp/3.10.0.1");
+        result.put("Content-Type", "application/json; charset=utf-8");
         result.put("Cookie", CookieTool.getCookieFromDevAndAcc(dyUserEntity.getDevice(), dyUserEntity));
         result.put("sdk-version", "1");
-        result.put("X-SS-REQ-TICKET", "1540353346198");
-        result.put("X-SS-TC", "0");
         result.put("X-Tt-Token", dyUserEntity.getxTtToken());
         return result;
     }
-
-//    // TODO remove
-//    public static void main(String[] args) {
-//        DyUserEntity dyUserEntity = JSONObject.parseObject(SaveAcc.USER_STRING).toJavaObject(DyUserEntity.class);
-//
-//
-////        String s = constructUrl(dyUserEntity, "6615732004694527246");
-////        System.out.println(s);
-//    }
-
-
-
-
 }

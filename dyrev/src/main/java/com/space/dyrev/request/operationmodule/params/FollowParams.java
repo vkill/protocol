@@ -1,8 +1,8 @@
 package com.space.dyrev.request.operationmodule.params;
 
 import com.space.dyrev.commonentity.DyUserEntity;
-import com.space.dyrev.request.util.CommonParams;
-import com.space.dyrev.request.util.CommonUrlPart;
+import com.space.dyrev.request.commonparams.CommonParams;
+import com.space.dyrev.request.commonparams.CommonUrlPart;
 import com.space.dyrev.util.httputil.CookieTool;
 
 import java.util.HashMap;

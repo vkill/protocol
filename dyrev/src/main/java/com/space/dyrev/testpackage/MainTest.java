@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
+import com.space.dyrev.dao.SaveAcc;
 import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.enumeration.PhoneArea;
 import com.space.dyrev.enumeration.XlogEnum;
@@ -17,6 +18,8 @@ import com.space.dyrev.util.formatutil.GzipGetteer;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 
 /**
@@ -41,20 +44,29 @@ import java.io.IOException;
 public class MainTest {
 
 
-    private static final String DEVICE_STRING = "{\"adid\":\"ccf177c621b748a8\",\"buildSerial\":\"f4016bb2fce03\",\"clientudid\":\"3b83827b-93cf-442b-ab1e-337206a3732f\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47123546416\\\",\\\"ttreq\\\":\\\"1$8ebf012edb3a666a93131e61a945fb0ff71ea9ba\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47123546416\",\"ttreq\":\"1$8ebf012edb3a666a93131e61a945fb0ff71ea9ba\"},\"deviceId\":\"58426038331\",\"devicePlatform\":\"android\",\"deviceType\":\"Xiaomi Mix 2s\",\"dpi\":\"320\",\"imei\":\"865168822866212\",\"imsi\":\"460036805000604\",\"installId\":\"47123546416\",\"mc\":\"F4:F5:DB:A3:0A:06\",\"openudid\":\"ccf177c621b748a8\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865168822866212\",\"xttlogid\":\"20181023180414010015082031134220\"}";
-    private static final String USER_STRING = "{\"account\":\"16675880209\",\"area\":\"+86\",\"device\":{\"adid\":\"ccf177c621b748a8\",\"buildSerial\":\"f4016bb2fce03\",\"clientudid\":\"3b83827b-93cf-442b-ab1e-337206a3732f\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"47123546416\\\",\\\"ttreq\\\":\\\"1$8ebf012edb3a666a93131e61a945fb0ff71ea9ba\\\"}\",\"deviceCookiesJSON\":{\"install_id\":\"47123546416\",\"ttreq\":\"1$8ebf012edb3a666a93131e61a945fb0ff71ea9ba\"},\"deviceId\":\"58426038331\",\"devicePlatform\":\"android\",\"deviceType\":\"Xiaomi Mix 2s\",\"dpi\":\"320\",\"imei\":\"865168822866212\",\"imsi\":\"460036805000604\",\"installId\":\"47123546416\",\"mc\":\"F4:F5:DB:A3:0A:06\",\"openudid\":\"ccf177c621b748a8\",\"resolution\":\"1280*720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865168822866212\",\"xttlogid\":\"20181023180414010015082031134220\"},\"eventId\":0,\"sessionKey\":\"d90024f1486861e1d3b5c1cdd61679fe\",\"userCookies\":\"{\\\"sid_guard\\\":\\\"d90024f1486861e1d3b5c1cdd61679fe%7C1540379442%7C5184000%7CSun%2C+23-Dec-2018+11%3A10%3A42+GMT\\\",\\\"uid_tt\\\":\\\"de23e392eb93d26cd2557e3236fcab6c\\\",\\\"sid_tt\\\":\\\"d90024f1486861e1d3b5c1cdd61679fe\\\",\\\"odin_tt\\\":\\\"8947498814ba237e85703bbe75aabda4a3b076f4bc8fe583de6596504f73d98229d1839aaf2537a30a56bcf0f31992da\\\",\\\"sessionid\\\":\\\"d90024f1486861e1d3b5c1cdd61679fe\\\"}\",\"userId\":\"101947485841\"}";
 
+    private static String hostName = "125.117.147.8";
+    private static int port = 21361;
 
 
     public static void main(String[] args) {
 
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostName, port));
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder().proxy(proxy).build();
+
         OkHttpClient okHttpClient = new OkHttpClient();
-        DeviceEntity deviceEntity = saveDevice();
-        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.CHINA, "16675880209");
-        DyUserEntity user = getUser();
 
 
-//        DeviceEntity deviceEntity = testRegisterDevice();
+        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.CHINA, "16675821209");
+
+        DyUserEntity user = SaveAcc.getUser();
+        DeviceEntity deviceEntity = user.getDevice();
+
+//                testRegisterDevice();
+//        user.setDevice(deviceEntity);
+//        JSONObject a = new JSONObject();
+//        a.put("a", user);
+//        System.out.println(a);
 
 //         // ddjt设备
 //        deviceEntity.setUuid("867246022383583");
@@ -65,17 +77,17 @@ public class MainTest {
 //        deviceEntity.setDeviceType("Redmi 4X");
 
 
-//        testSendXlog(deviceEntity, XlogEnum.COLD_START);
-//        try {
-//
-//            testSendXlog(deviceEntity, XlogEnum.LOGIN);
-//
-//            Thread.sleep(1000);
-//
-//            testSendCode(deviceEntity, phoneEntity);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        testSendXlog(deviceEntity, XlogEnum.COLD_START);
+        try {
+
+            testSendXlog(deviceEntity, XlogEnum.LOGIN);
+
+            Thread.sleep(1000);
+
+            testSendCode(okHttpClient,deviceEntity, phoneEntity);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 //        phoneEntity.setCode("5748");
 //        testSmsLogin(deviceEntity, phoneEntity,okHttpClient);
@@ -84,10 +96,6 @@ public class MainTest {
     }
 
 
-    private static DyUserEntity getUser() {
-        DyUserEntity dyUserEntity = JSONObject.parseObject(USER_STRING).toJavaObject(DyUserEntity.class);
-        return dyUserEntity;
-    }
 
     private static void testSmsLogin(DeviceEntity deviceEntity, PhoneEntity phoneEntity, OkHttpClient okHttpClient) {
         AccountRegisterService ars = new AccountRegisterServiceImpl();
@@ -99,10 +107,10 @@ public class MainTest {
     }
 
 
-    private static void testSendCode(DeviceEntity deviceEntity, PhoneEntity phoneEntity) {
+    private static void testSendCode(OkHttpClient okHttp, DeviceEntity deviceEntity, PhoneEntity phoneEntity) {
 
         AccountRegisterService acc = new AccountRegisterServiceImpl();
-        OkHttpClient okHttp = new OkHttpClient();
+//        OkHttpClient okHttp = new OkHttpClient();
         boolean b = acc.sendCodeV270(okHttp, phoneEntity, deviceEntity);
         if (b) {
             System.out.println("发送验证码成功");
@@ -200,23 +208,6 @@ public class MainTest {
     }
 
 
-
-    private static DeviceEntity saveDevice() {
-
-        JSONObject device = JSONObject.parseObject(DEVICE_STRING);
-        DeviceEntity deviceEntity = device.toJavaObject(DeviceEntity.class);
-        return deviceEntity;
-//        System.out.println(deviceEntity);
-        //        deviceEntity.setImsi("460088412671371");
-//        JSONObject newDevice = (JSONObject) JSON.toJSON(deviceEntity);
-//        System.out.println(newDevice);
-
-//        String json = "{\"device\":{\"buildSerial\":\"63ff712b46831\",\"clientudid\":\"ce1630c2-86e1-404a-8887-54e37b75d7ad\",\"cpuAbi\":\"armeabi-v7a\",\"deviceBrand\":\"Xiaomi\",\"deviceCookies\":\"{\\\"install_id\\\":\\\"46758415128\\\",\\\"ttreq\\\":\\\"1$b47fe540de6eac63e8c6dab10d23cccdc00ccd0a\\\"}\",\"deviceId\":\"58296768425\",\"devicePlatform\":\"android\",\"deviceType\":\"Redmi Note 5\",\"dpi\":\"320\",\"installId\":\"46758415128\",\"mc\":\"F4:F5:DB:D3:01:5D\",\"openudid\":\"c58791b8d2d5d372\",\"resolution\":\"1280x720\",\"rom\":\"MIUI-8.9.13\",\"romVersion\":\"miui_V10_8.9.13\",\"simICCid\":\"\",\"uuid\":\"865166821081011\",\"xttlogid\":\"201810192024150100150792323444A7\"}}";
-//        JSONObject jsonObject = (JSONObject) JSONObject.parseObject(json).get("device");
-//        System.out.println(jsonObject);
-//        DeviceEntity device = jsonObject.toJavaObject(DeviceEntity.class);
-////        System.out.println(device.getDeviceCookies());
-    }
 
     private static void testCes() {
         String abc = "abcdef";

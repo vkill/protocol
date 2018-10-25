@@ -1,4 +1,4 @@
-package com.space.dyrev.request.operationmodule.params;
+package com.space.dyrev.request.jurisdictionmodule.params;
 
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.request.commonparams.CommonParams;
@@ -25,33 +25,27 @@ import java.util.Map;
  *                         @@@@.
  *                                
  *        @Author: space
- *        @Date: 2018/10/24 19:24
- *        @Description: 点赞的参数构造
+ *        @Date: 2018/10/25 17:47
+ *        @Description: https://aweme.snssdk.com/aweme/v1/im/unreaditems/
  **/
-public class DiggParams {
+public class AwemeV1ImUnreaditemsParams {
 
-    // https://aweme.snssdk.com/aweme/v1/commit/item/digg
-    // HOST
     private static final String HOST = "aweme.snssdk.com";
 
-    // 请求头方法
-    private static final String FUNC = "/aweme/v1/commit/item/digg/?";
+    private static final String FUNC = "/aweme/v1/im/unreaditems/?";
+
 
     /**
-     * 构造url请求头
-     * @param dyUserEntity 帐号实体类
-     * @param awemeId 视频id
-     * @return url
+     * 构造url
+     * @param dyUserEntity
+     * @return
      */
-    public static String constructUrl(DyUserEntity dyUserEntity, String awemeId) {
-        StringBuffer url = new StringBuffer("https://");
-        url.append(HOST);
-        url.append(FUNC);
-        // 公共部分
+    public static String constructUrl(DyUserEntity dyUserEntity) {
+        StringBuffer url = new StringBuffer("https://" + HOST + FUNC);
+        url.append("cursor=0");
+        url.append("&app_type=normal&");
         url.append(CommonUrlPart.deviceUrl(dyUserEntity.getDevice()));
-        url.append("&aweme_id=" + awemeId);
-        url.append("&type=1");
-        url.append("&retry_type=no_retry");
+
         url.append("&as=" + CommonParams.AS);
         url.append("&cp=" + CommonParams.CP);
 
@@ -67,24 +61,15 @@ public class DiggParams {
         Map result = new HashMap();
         result.put("Host", HOST);
         result.put("Connection", "keep-alive");
+        result.put("Accept-Encoding", "gzip");
+        result.put("User-Agent", "User-Agent: okhttp/3.10.0.1");
+        result.put("Content-Type", "application/json; charset=utf-8");
         result.put("Cookie", CookieTool.getCookieFromDevAndAcc(dyUserEntity.getDevice(), dyUserEntity));
         result.put("sdk-version", "1");
-        result.put("X-SS-REQ-TICKET", "1540353346198");
         result.put("X-SS-TC", "0");
+        result.put("X-SS-REQ-TICKET", CommonParams.getRticket());
         result.put("X-Tt-Token", dyUserEntity.getxTtToken());
         return result;
     }
-
-//    // TODO remove
-//    public static void main(String[] args) {
-//        DyUserEntity dyUserEntity = JSONObject.parseObject(SaveAcc.USER_STRING).toJavaObject(DyUserEntity.class);
-//
-//
-////        String s = constructUrl(dyUserEntity, "6615732004694527246");
-////        System.out.println(s);
-//    }
-
-
-
 
 }

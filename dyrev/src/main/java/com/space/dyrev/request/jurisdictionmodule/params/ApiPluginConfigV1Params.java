@@ -1,10 +1,13 @@
 package com.space.dyrev.request.jurisdictionmodule.params;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DyUserEntity;
-import com.space.dyrev.dao.SaveAcc;
-import com.space.dyrev.request.util.CommonParams;
-import com.space.dyrev.request.util.CommonUrlPart;
+import com.space.dyrev.request.commonparams.CommonParams;
+import com.space.dyrev.request.commonparams.CommonUrlPart;
+import com.space.dyrev.util.httputil.CookieTool;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -52,8 +55,18 @@ public class ApiPluginConfigV1Params {
      * @return
      */
     public static Map constructHeader(DyUserEntity dyUserEntity) {
-
-        return null;
+        Map result = new HashMap();
+        result.put("Host", HOST);
+        result.put("Connection", "keep-alive");
+        result.put("Accept-Encoding", "gzip");
+        result.put("User-Agent", CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
+        result.put("Content-Type", "application/json; charset=utf-8");
+        result.put("Cookie", CookieTool.getCookieFromDevAndAcc(dyUserEntity.getDevice(), dyUserEntity));
+        result.put("sdk-version", "1");
+        result.put("X-SS-REQ-TICKET", CommonParams.getRticket());
+        result.put("X-SS-TC", "0");
+        result.put("X-Tt-Token", dyUserEntity.getxTtToken());
+        return result;
     }
 
     /**
@@ -61,16 +74,16 @@ public class ApiPluginConfigV1Params {
      * @param dyUserEntity
      * @return
      */
-    public static Map constructBody(DyUserEntity dyUserEntity) {
-
-        return null;
-    }
-
-
-    // TODO main函数
-    public static void main(String[] args) {
-        DyUserEntity user = SaveAcc.getUser();
-        String s = constructUrl(user);
-        System.out.println(s);
+    public static JSONObject constructBody(DyUserEntity dyUserEntity) {
+        JSONObject result = new JSONObject();
+        JSONArray plugin = new JSONArray();
+        JSONObject obj1 = new JSONObject();
+        JSONArray patch = new JSONArray();
+        obj1.put("packagename", "com.ss.android.ugc.aweme.livestream_so");
+        obj1.put("versioncode", 0);
+        plugin.add(obj1);
+        result.put("plugin", plugin);
+        result.put("patch", patch);
+        return result;
     }
 }

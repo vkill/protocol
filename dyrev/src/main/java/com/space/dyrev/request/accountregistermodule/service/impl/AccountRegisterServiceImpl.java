@@ -52,8 +52,11 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
 
         String url = SendCodeParams.constructUrl(deviceEntity);
         Map header = SendCodeParams.constructHeader(deviceEntity);
-
         Map body = SendCodeParams.constructBody(phoneEntity, deviceEntity);
+
+//        logger.info("----- 发送验证码的url ----- 结果 -> url = {}", url);
+//        logger.info("----- 发送验证码的header ----- 结果 -> header = {}", header);
+//        logger.info("----- 发送验证码的body ----- 结果 -> body = {}", body);
 
         RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
         req.setUrl(url);
@@ -63,13 +66,17 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
 
         try {
 
-             Response response = OkHttpTool.handleHttpReq(req);
+            Response response = OkHttpTool.handleHttpReq(req);
+
+//            logger.info("----- 发送验证码的请求 ----- 结果 -> msg = {}", response);
 
             byte[] bytes = response.body().bytes();
 
             String result = GzipGetteer.uncompressToString(bytes);
 
             JSONObject msg = JSONObject.parseObject(result);
+
+            logger.info("----- 发送验证码成功 ----- 结果 -> msg = {}", msg);
 
             String message = (String) msg.get("message");
             if (message!=null && message.equals("success")) {
@@ -148,7 +155,7 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
                 user.setUserCookies(cookies.toJSONString());
                 user.setDevice(deviceEntity);
 
-                logger.info("-----------短信登陆帐号成功----------帐号：" + user.toString());
+                logger.info("----- 短信登陆帐号成功 ----- 帐号 -> {}" + user.toString());
             }
         } catch (IOException e) {
             e.printStackTrace();

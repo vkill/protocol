@@ -76,7 +76,7 @@ public class AsyncServiceImpl implements AsyncService {
             e.printStackTrace();
         }
         TestSave one = testSaveRepository.findById(i).get();
-        one.setCount(i * 2);
+        one.setCount(0);
         testSaveRepository.save(one);
         logger.info("存储订单 uuid -> {} ----- count -> {}", one.getOpenudid() ,one.getCount());
 

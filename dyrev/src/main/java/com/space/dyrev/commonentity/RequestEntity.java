@@ -35,11 +35,21 @@ public class RequestEntity {
 
     private byte[] bytesBody;
 
+    private String bytesType;
+
     private Map body;
 
     private RequestEnum requestEnum;
 
     public RequestEntity() {
+    }
+
+    public String getBytesType() {
+        return bytesType;
+    }
+
+    public void setBytesType(String bytesType) {
+        this.bytesType = bytesType;
     }
 
     public RequestEntity(RequestEnum requestEnum) {

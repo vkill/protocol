@@ -3,10 +3,14 @@ package com.space.dyrev.util.httputil;
 
 
 import com.space.dyrev.commonentity.RequestEntity;
+import com.space.dyrev.enumeration.OkhttpType;
 import com.space.dyrev.enumeration.RequestEnum;
+import com.space.dyrev.util.httpiputil.XDaiLiApiUtil;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.Map;
 
 /**
@@ -30,6 +34,28 @@ import java.util.Map;
  **/
 public class OkHttpTool {
 
+    /**
+     * 获取某个okhttp代理
+     * @return
+     */
+    public static OkHttpClient getOkhttpClient(OkhttpType okhttpType) {
+        if (okhttpType == OkhttpType.PROXY) {
+            return new OkHttpClient.Builder().proxy(XDaiLiApiUtil.getOneIpAndPort()).build();
+        } else {
+            return new OkHttpClient();
+        }
+    }
+
+    /**
+     * 根据ip和端口获得一个
+     * @param host
+     * @param port
+     * @return
+     */
+    public static OkHttpClient getOkhttpClient(String host, int port) {
+        Proxy proxy = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(host, port));
+        return new OkHttpClient.Builder().proxy(proxy).build();
+    }
 
     /**
      * 处理OkHttp请求
@@ -44,7 +70,7 @@ public class OkHttpTool {
                 response = get(res.getOkHttpClient(), res.getUrl(), res.getHeaders());
                 break;
             case POST_OCT:
-                response = post(res.getOkHttpClient(), res.getUrl(), res.getHeaders(),res.getBytesBody());
+                response = post(res.getOkHttpClient(), res.getUrl(), res.getHeaders(),res.getBytesBody(), res.getBytesType());
                 break;
             case POST_FORM:
                 response = post(res.getOkHttpClient(), res.getUrl(), res.getHeaders(), res.getBody());
@@ -53,17 +79,23 @@ public class OkHttpTool {
         return response;
     }
 
+
+
     /**
      * 发送二进制流的okhttp请求
      * @param url
      * @param header
      * @param bytes
      */
-    public static Response post(OkHttpClient okHttpClient, String url, Map<String, String> header, byte[] bytes) throws IOException {
+    public static Response post(OkHttpClient okHttpClient, String url, Map<String, String> header, byte[] bytes, String byteType) throws IOException {
         Request.Builder builder = new Request.Builder();
         builder.url(url);
-
-        MediaType type = MediaType.parse("application/octet-stream");
+        MediaType type = null;
+        if (byteType.equals("json")) {
+            type = MediaType.parse("application/json");
+        } else {
+            type = MediaType.parse("application/octet-stream");
+        }
         RequestBody requestBody = RequestBody.create(type, bytes);
 
         for(String key : header.keySet()){
@@ -121,8 +153,10 @@ public class OkHttpTool {
         //requestEntity中包含两部分，Url、Header
         Request.Builder builder = new Request.Builder();
         builder.url(url);
-        for(String key : header.keySet()){        //添加header信息
-            builder.addHeader(key, header.get(key).trim());
+        if (header != null) {
+            for(String key : header.keySet()){        //添加header信息
+                builder.addHeader(key, header.get(key).trim());
+            }
         }
         Request request = builder.get().build();
         Call call = okHttpClient.newCall(request);

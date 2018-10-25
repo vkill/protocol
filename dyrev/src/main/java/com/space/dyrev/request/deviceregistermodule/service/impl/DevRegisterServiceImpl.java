@@ -6,7 +6,7 @@ import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.encrypt.TTEncrypt;
 import com.space.dyrev.enumeration.XlogEnum;
-import com.space.dyrev.request.util.CommonParams;
+import com.space.dyrev.request.commonparams.CommonParams;
 import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
 import com.space.dyrev.request.deviceregistermodule.params.XlogV2Params;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
@@ -94,7 +94,7 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
         // TO-DO : 发送请求，并获取返回，返回一个DeviceEntity实体类
         try {
-            Response response = OkHttpTool.post(okHttpClient, url, header, ttEnttyResult);
+            Response response = OkHttpTool.post(okHttpClient, url, header, ttEnttyResult, "octet-stream");
 
             byte[] resultGzip = response.body().bytes();
 
@@ -122,10 +122,7 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
 
             // TODO logger remove
-            logger.info("-----------注册设备结果-------------");
-            logger.info(resultJson.toJSONString());
-            logger.info("-----------注册设备结果-------------");
-
+            logger.info("----- 设备注册成功 ----- 结果 -> device = {}",resultJson.toJSONString());
 
             deviceEntity.setInstallId(String.valueOf((long)resultJson.get("install_id")));
             deviceEntity.setDeviceId(String.valueOf((long)resultJson.get("device_id")));
@@ -152,7 +149,7 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
             byte[] encodeBody = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.ENCODE, body.toString().getBytes());
 
-            Response response = OkHttpTool.post(okHttpClient, url, header, encodeBody);
+            Response response = OkHttpTool.post(okHttpClient, url, header, encodeBody, "octet-stream");
 
             byte[] uncompress = GzipGetteer.uncompress(response.body().bytes());
 
@@ -161,6 +158,8 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
             String result = new String(temp);
 
             JSONObject jsonObject = JSONObject.parseObject(result);
+
+            logger.info("----- 发送xlogV2 ----- 结果 -> json = {}", result);
 
             if (jsonObject.get("result").equals("success")) {
                 return true;

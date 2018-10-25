@@ -3,8 +3,8 @@ package com.space.dyrev.request.accountregistermodule.params;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.encrypt.PhoneNumberEncrypt;
-import com.space.dyrev.request.util.CommonParams;
-import com.space.dyrev.request.util.CommonUrlPart;
+import com.space.dyrev.request.commonparams.CommonParams;
+import com.space.dyrev.request.commonparams.CommonUrlPart;
 import com.space.dyrev.util.httputil.CookieTool;
 
 import java.util.HashMap;
@@ -48,8 +48,11 @@ public class SendCodeParams {
         url.append(HOST);
         url.append(SEND_CODE_FUNC);
         String commonUrl = CommonUrlPart.deviceUrl(deviceEntity);
-        url.append(commonUrl);
 
+
+        url.append(commonUrl);
+        url.append("&as=" + CommonParams.AS);
+        url.append("&cp=" + CommonParams.CP);
 
         return url.toString().replaceAll(" ", "%20");
     }
@@ -62,7 +65,7 @@ public class SendCodeParams {
         Map result = new HashMap();
         result.put("Host", HOST);
         result.put("Connection", "keep-alive");
-        result.put("Content-Length", "800");
+//        result.put("Content-Length", "800");
         result.put("Accept-Encoding", "gzip");
         result.put("User-Agent", "com.ss.android.ugc.aweme/270 (Linux; U; Android 7.1.2; zh_CN; "+deviceEntity.getDeviceType()+"; Build/N2G47H; Cronet/58.0.2991.0)");
         result.put("Cookies", CookieTool.getCookieFromDevAndAcc(deviceEntity, null ));
@@ -94,7 +97,6 @@ public class SendCodeParams {
         result.put("openudid", deviceEntity.getOpenudid());
         result.put("device_id", deviceEntity.getDeviceId());
         result.put("os_version", CommonParams.OS_VERSION);
-        result.put("version_name", CommonParams.VERSION_NAME);
         result.put("version_code", CommonParams.VERSION_CODE);
         result.put("resolution", deviceEntity.getResolution());
         result.put("language", CommonParams.LANGUAGE);

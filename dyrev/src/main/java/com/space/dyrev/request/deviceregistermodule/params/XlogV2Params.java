@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.enumeration.XlogEnum;
-import com.space.dyrev.request.util.CommonParams;
+import com.space.dyrev.request.commonparams.CommonParams;
 
 import java.util.HashMap;
 import java.util.Map;
