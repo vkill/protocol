@@ -11,38 +11,39 @@ import java.io.IOException;
 
 /**
  * @program: hehedada
- * @description: 柬埔寨短信平台实现
+ * @description: 本国号码短信平台
  * @author: Mr.gao
- * @create: 2018-10-07 11:55
+ * @create: 2018-10-25 20:09
  **/
-public class CambodiaEmailGetter implements EmailPlatform {
+public class ChinaEmailGetter implements EmailPlatform {
+
 
     /**
      * 变量依次为：账号、密码、项目类型
      */
     //api_qianbaiwan_rrgr,qianbaiwan
-    private String userName ="api_mmg0088_jlll";
+    private String userName ="api_mmg0088_crdl";
     private String password ="aa977525";
-    private String projectID ="1066";
-    private String projectPasswordID = "1066";
+    private String projectID ="1055";
+    private String projectPasswordID = "1055";
     private String Login_url ;
     public String Usertoken ="5eb9541386e913d9d0bfccbd212e081b";
     private String errorStr = "ERR";
     private String successStr = "OK";
 
     //单例模式
-    public static CambodiaEmailGetter cambodiaEmailGetter = new CambodiaEmailGetter();
+    public static ChinaEmailGetter chinaEmailGetter = new ChinaEmailGetter();
     /**
      * 登陆平台初始化方法
      */
-    public static CambodiaEmailGetter getInstrance(){
-        return cambodiaEmailGetter;
+    public static ChinaEmailGetter getInstrance(){
+        return chinaEmailGetter;
     }
-    private CambodiaEmailGetter(){
+    private ChinaEmailGetter(){
         loginIT();
     }
 
-    public CambodiaEmailGetter(String userName,String password){
+    public ChinaEmailGetter(String userName,String password){
         loginIT(userName,password);
     }
 
@@ -56,7 +57,7 @@ public class CambodiaEmailGetter implements EmailPlatform {
         String tag = errorStr;
         int errTime =0;
         String[] buffers = null;
-        Login_url = "http://maci.codesfrom.com/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+password;
+        Login_url = "http://118.178.232.250:18003/yhapi.ashx?Action=userLogin&userName="+userName+"&userPassword="+password;
         while (tag.equals(errorStr)&&errTime<3){
             Document document = null;
             try {
@@ -64,12 +65,11 @@ public class CambodiaEmailGetter implements EmailPlatform {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // System.out.println(document.body().text());
             String buff=document.body().text();
             buffers = buff.split("\\|");
             tag = buffers[0];
             if(tag.equals(successStr)){
-                System.out.println("登录成功");
+                //System.out.println("登录成功");
                 break;
             }
             System.out.println("尝试登陆错误"+errTime+"次");
@@ -100,8 +100,8 @@ public class CambodiaEmailGetter implements EmailPlatform {
         String tag =errorStr;
         String phone_url;
         if(phoneNum.equals("随机")){
-            //http://api0.wmisms.com/yhapi.ashx?act=getPhone&token=ad718214bdf8e7ad80344bf9743ec307&iid=1001&did=&operator=&city=&mobile=
-            phone_url="http://maci.codesfrom.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
+            //http://118.178.232.250:18003/yhapi.ashx?Action=getPhone&token=token&i_id=项目ID&d_id=&p_operator=&p_qcellcore=&mobile=
+            phone_url="http://118.178.232.250:18003/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
         }else{
             phone_url="http://maci.codesfrom.com/yhapi.ashx?Action=getPhone&token="+Usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile="+phoneNum;
         }
@@ -109,7 +109,6 @@ public class CambodiaEmailGetter implements EmailPlatform {
         String[] buffers = null;
         int worryTime =0;
         while(tag.equals(errorStr)&&worryTime<2){
-
             Request.Builder builder = new Request.Builder();
             builder.url(phone_url);
             Request request = builder.get().build();
@@ -150,8 +149,8 @@ public class CambodiaEmailGetter implements EmailPlatform {
      * @return 获取的验证码
      */
     public String getIdentCode(String P_ID,OkHttpClient okhttpclient) throws IOException {
-        //http://maci.codesfrom.com/yhapi.ashx?Action=getPhoneMessage&token=token&p_id=取号接口返回的P_ID
-        String infoUrl ="http://maci.codesfrom.com/yhapi.ashx?Action=getPhoneMessage&token="+Usertoken+"&p_id="+P_ID;
+        //http://118.178.232.250:18003/yhapi.ashx?Action=getPhoneMessage&token=token&p_id=取号接口返回的P_ID
+        String infoUrl ="http://118.178.232.250:18003/yhapi.ashx?Action=getPhoneMessage&token="+Usertoken+"&p_id="+P_ID;
         Response response = null;
         String buff = null;
         String[] buffers;
@@ -159,9 +158,8 @@ public class CambodiaEmailGetter implements EmailPlatform {
         String result = 0+"";
         int buffer_Num =0;
         while(tag.equals(errorStr)&buffer_Num<14){
-
             try {
-                Thread.sleep(5000);
+                Thread.sleep(5001);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -184,7 +182,7 @@ public class CambodiaEmailGetter implements EmailPlatform {
             else if(result.equals("-4")){
                 System.out.println("号码已经强制释放");
                 try {
-                    Thread.sleep(100000);
+                    Thread.sleep(100001);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -203,7 +201,7 @@ public class CambodiaEmailGetter implements EmailPlatform {
     public void makePhoneBlank(String phone_PID) throws IOException {
         String tag =errorStr;
         //http://api0.wmisms.com/yhapi.ashx?act=addBlack&token=ad718214bdf8e7ad80344bf9743ec307&pid=100118456007026&reason=cannotgetCode
-        String blankList = "http://api0.wmisms.com/yhapi.ashx?act=addBlack&token="+Usertoken+"&pid="+phone_PID+"&reason=cannotgetCode";
+        String blankList = "http://118.178.232.250:18003/yhapi.ashx?Action=phoneToBlack&token="+Usertoken+"&pid="+phone_PID+"&reason=cannotgetCode";
         Document document = null;
         String[] buffers = null;
 
@@ -218,14 +216,5 @@ public class CambodiaEmailGetter implements EmailPlatform {
             System.out.print("发生错误，错误信息为: "+buff);
         }
         System.out.println("成功加黑手机号: "+tag);
-    }
-
-    public static void main(String[] args) throws IOException {
-        CambodiaEmailGetter cambodiaEmailGetter = new CambodiaEmailGetter();
-        OkHttpClient okHttpClient = new OkHttpClient();
-        PhonePo phonePo = cambodiaEmailGetter.getPhoneNumber(okHttpClient);
-        System.out.println(phonePo.getArea_Num());
-        System.out.println(cambodiaEmailGetter.getIdentCode(phonePo.getP_ID(),okHttpClient));
-
     }
 }

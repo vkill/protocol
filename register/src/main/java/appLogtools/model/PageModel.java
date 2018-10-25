@@ -1,8 +1,8 @@
-package appLogtools;
+package appLogtools.model;
 
 /**
  * @program: hehedada
- * @description: app_log模拟page 数据存储类
+ * @description: app_log模拟page 数据存储类,从逻辑上看page与session有对应关系，每次更新session后，都会有插入page的操作
  * @author: Mr.gao
  * @create: 2018-10-24 18:57
  **/

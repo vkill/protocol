@@ -239,11 +239,11 @@ public class EmailGetter implements EmailPlatform{
     public static EmailGetter getInstrance(){
         return emailGetter;
     }
-    public EmailGetter(){
+    private EmailGetter(){
         loginIT();
     }
 
-    private EmailGetter(String userName,String password){
+    public EmailGetter(String userName,String password){
         loginIT(userName,password);
     }
 

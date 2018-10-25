@@ -1,4 +1,4 @@
-package appLogtools;
+package appLogtools.model;
 
 /**
  * @program: hehedada

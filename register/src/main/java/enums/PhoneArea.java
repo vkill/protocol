@@ -12,5 +12,7 @@ public class PhoneArea {
         phoneFromAddress.put("柬埔寨","+855");
         phoneFromAddress.put("855","+855");
         phoneFromAddress.put("66","+66");
+        phoneFromAddress.put("86","+86");
+        phoneFromAddress.put("中国","+86");
     }
 }

@@ -10,6 +10,7 @@ import po.HostIPPo;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,8 +26,12 @@ public class BussinessThread implements Runnable {
     public static int onceUserNum = 35;
     public ArrayList<OrderEntity> orderEntitiess = new ArrayList<>();
     public ArrayList<DYUserEntity> dyUserEntitiess = new ArrayList<>();
+    public LinkedBlockingQueue<DYUserEntity> dyUserEntities = new LinkedBlockingQueue<>();
+
     @Override
     public void run() {
+        Thread dyUserThread = new Thread(new UserGetterThread(dyUserEntities));
+        dyUserThread.start();
         OkHttpClient okHttpClient = changeOkHttpHost();
         DYUserEntity dyUserEntity = null;
         DeviceEntity deviceEntity = null;
@@ -49,7 +54,7 @@ public class BussinessThread implements Runnable {
             }
             while(dyUserEntitiess.size()<onceUserNum){
                 try {
-                    dyUserEntitiess.add(BussinessControllerThread.dyUserEntities.take());
+                    dyUserEntitiess.add(dyUserEntities.take());
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
