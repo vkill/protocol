@@ -1,8 +1,12 @@
-package com.space.dyrev.util.formatutil;
+package com.space.dyrev.request.applogmodule;
 
-import com.alibaba.fastjson.JSONObject;
-
-import java.util.Map;
+import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.dao.SaveAcc;
+import com.space.dyrev.enumeration.OkhttpType;
+import com.space.dyrev.request.applogmodule.service.AppLogService;
+import com.space.dyrev.request.applogmodule.service.impl.AppLogServiceImpl;
+import com.space.dyrev.util.httputil.OkHttpTool;
+import okhttp3.OkHttpClient;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -19,35 +23,27 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                                                                             @Author: space
- *                                                                                             @Date: 2018/10/19 20:13
- *                                                                                             @Description: 字符串的工具类
+ *                                
+ *        @Author: space
+ *        @Date: 2018/10/26 19:05
+ *        @Description: 
  **/
-public class StringUtil {
+public class TestAppLpg {
 
-    /**
-     * 判断是否为空
-     * @param str
-     * @return
-     */
-    public static boolean isEmpty(String str) {
-        if (str!=null  && !str.equals("")) {
-            return false;
-        }
-        return true;
+    public static AppLogService as = new AppLogServiceImpl();
+
+    private static void service2LogSettingS(OkHttpClient okHttpClient, DeviceEntity deviceEntity) {
+        as.Service2LogSettingS(okHttpClient, deviceEntity);
     }
 
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
+    public static void main(String[] args) {
+        OkHttpClient okhttpClient = OkHttpTool.getOkhttpClient(OkhttpType.PROXY);
+        DeviceEntity device = SaveAcc.getDevice();
+
+        service2LogSettingS(okhttpClient, device);
 
 
-    /**
-     * 字节流到字符串
-     * @param bytes
-     * @return
-     */
-    public static String bytesToString(byte [] bytes) {
-        return new String(bytes);
+
+
     }
 }

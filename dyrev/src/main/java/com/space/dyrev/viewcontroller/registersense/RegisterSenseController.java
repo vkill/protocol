@@ -1,8 +1,8 @@
-package com.space.dyrev.util.formatutil;
+package com.space.dyrev.viewcontroller.registersense;
 
-import com.alibaba.fastjson.JSONObject;
-
-import java.util.Map;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -19,35 +19,20 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                                                                             @Author: space
- *                                                                                             @Date: 2018/10/19 20:13
- *                                                                                             @Description: 字符串的工具类
+ *                                
+ *        @Author: space
+ *        @Date: 2018/10/26 02:09
+ *        @Description: 
  **/
-public class StringUtil {
+public class RegisterSenseController {
 
-    /**
-     * 判断是否为空
-     * @param str
-     * @return
-     */
-    public static boolean isEmpty(String str) {
-        if (str!=null  && !str.equals("")) {
-            return false;
-        }
-        return true;
+    public Button btn_1;
+    public TextField input;
+
+
+    public void sayHello(ActionEvent actionEvent) {
+        String str = input.getText();
+        System.out.println(str);
     }
 
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
-
-
-    /**
-     * 字节流到字符串
-     * @param bytes
-     * @return
-     */
-    public static String bytesToString(byte [] bytes) {
-        return new String(bytes);
-    }
 }

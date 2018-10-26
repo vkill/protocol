@@ -24,6 +24,10 @@ import com.space.dyrev.util.deviceinfoutil.CreateDevInfoUtil;
  **/
 public class RequestParams {
 
+    /**
+     * 新建设备
+     * @return
+     */
     public static DeviceEntity newDevice() {
         DeviceEntity deviceEntity = new DeviceEntity();
         // TO-DO 随机生成设备信息塞入实体类并且返回
@@ -37,6 +41,12 @@ public class RequestParams {
         deviceEntity.setBuildSerial(CreateDevInfoUtil.createBuildSerial());
         deviceEntity.setMc(CreateDevInfoUtil.createMac());
         deviceEntity.setImsi(CreateDevInfoUtil.createIMSI());
+
+        // TODO 有几个新信息还没写生成的 2018-10-26
+        // deviceEntity.setCarries("中国移动");
+        // deviceEntity.setChannel("tengxun");
+        // deviceEntity.setAccess("4g");
+        // deviceEntity.setSimIccId("89860116425560756729");
         return deviceEntity;
 
     }

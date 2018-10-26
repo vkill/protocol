@@ -1,5 +1,6 @@
 package com.space.dyrev.util.deviceinfoutil;
 
+import com.space.dyrev.request.commonparams.CommonParams;
 import com.space.dyrev.util.formatutil.ScaleTrans;
 
 import java.util.Random;
@@ -102,19 +103,21 @@ public class CreateDevInfoUtil {
      * @return 格式：6d16cfb7d440
      */
     public static String createBuildSerial() {
-        StringBuffer sb = new StringBuffer();
-        Random random = new Random();
-        for (int i = 0; i< 12; i++) {
-            if (i == 0) {
-                int j = random.nextInt(16);
-                while (j==0) {
-                    j = random.nextInt(16);
-                }
-                sb.append(ScaleTrans.byteToChar((byte) j));
-            }
-            sb.append(ScaleTrans.byteToChar((byte) random.nextInt(16)));
-        }
-        return sb.toString();
+//        StringBuffer sb = new StringBuffer();
+//        Random random = new Random();
+//        for (int i = 0; i< 12; i++) {
+//            if (i == 0) {
+//                int j = random.nextInt(16);
+//                while (j==0) {
+//                    j = random.nextInt(16);
+//                }
+//                sb.append(ScaleTrans.byteToChar((byte) j));
+//            }
+//            sb.append(ScaleTrans.byteToChar((byte) random.nextInt(16)));
+//        }
+//        return sb.toString();
+
+        return CommonParams.BUILD_SERIAL;
     }
 
 

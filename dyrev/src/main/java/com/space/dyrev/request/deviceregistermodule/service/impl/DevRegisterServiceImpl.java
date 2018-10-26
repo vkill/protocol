@@ -3,15 +3,18 @@ package com.space.dyrev.request.deviceregistermodule.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.commonentity.DyUserEntity;
+import com.space.dyrev.commonentity.RequestEntity;
 import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.encrypt.TTEncrypt;
+import com.space.dyrev.enumeration.RequestEnum;
 import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.commonparams.CommonParams;
-import com.space.dyrev.request.deviceregistermodule.params.DeviceRegisterParams;
-import com.space.dyrev.request.deviceregistermodule.params.XlogV2Params;
+import com.space.dyrev.request.deviceregistermodule.params.*;
 import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterService;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.formatutil.ScaleTrans;
+import com.space.dyrev.util.httputil.HttpGet;
 import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -179,5 +182,95 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
         return false;
     }
+
+    @Override
+    public boolean service1ZAppStats(DeviceEntity deviceEntity, OkHttpClient okHttpClient) {
+        // ib.snssdk.com/service/1/z_app_stats
+
+        String url = Service1ZAppStatsParams.constructUrl(deviceEntity);
+
+        Map header = Service1ZAppStatsParams.constructHeader(deviceEntity);
+
+        JSONObject body = Service1ZAppStatsParams.constructBody(deviceEntity);
+
+        RequestEntity req = new RequestEntity(RequestEnum.POST_OCT);
+        req.setUrl(url);
+        req.setHeaders(header);
+        req.setBytesBody(body.toJSONString().getBytes());
+        req.setOkHttpClient(okHttpClient);
+        req.setBytesType("json");
+
+        try {
+            Response response = OkHttpTool.handleHttpReq(req);
+
+            byte[] bytes = response.body().bytes();
+
+            JSONObject jsonResult = JSONObject.parseObject(GzipGetteer.uncompressToString(bytes));
+
+            logger.info("请求权限 ----- ib.snssdk.com/service/1/z_app_stats -----> json = {}", jsonResult);
+
+            if (jsonResult.getString("message").equals("success")) {
+                return true;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean apiAdSplashAwemeV14(DeviceEntity deviceEntity, OkHttpClient okHttpClient) {
+        // lf.snssdk.com/api/ad/splash/aweme/v14/?
+        String s = ApiAdSplashAwemeV14Params.constructUrl(deviceEntity);
+        Map map = ApiAdSplashAwemeV14Params.constructHeader(deviceEntity);
+
+        logger.info("请求权限 ----- lf.snssdk.com/api/ad/splash/aweme/v14 -----> url = {}", s);
+        logger.info("请求权限 ----- lf.snssdk.com/api/ad/splash/aweme/v14 -----> header = {}", map);
+
+        try {
+            Response response = HttpGet.commonGet(s, map, okHttpClient);
+            byte[] bytes = response.body().bytes();
+
+
+
+            JSONObject jsonResult = JSONObject.parseObject(GzipGetteer.uncompressToString(bytes));
+
+            logger.info("请求权限 ----- lf.snssdk.com/api/ad/splash/aweme/v14 -----> json = {}", jsonResult);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean service2AppAlert(DeviceEntity deviceEntity, OkHttpClient okHttpClient) {
+        // lf.snssdk.com/service/2/app_alert/?
+        String url = Service2AppAlert.constructUrl(deviceEntity);
+        Map map = Service2AppAlert.constructHeader(deviceEntity);
+
+        try {
+            Response response = HttpGet.commonGet(url, map, okHttpClient);
+
+            byte[] bytes = response.body().bytes();
+
+            JSONObject jsonResult = JSONObject.parseObject(GzipGetteer.uncompressToString(bytes));
+
+            // TODO 无必要的logger 后期可以删除
+            logger.info("请求权限 ----- lf.snssdk.com/service/2/app_alert/? -----> json = {}", jsonResult);
+
+            if (jsonResult.getString("message")!=null&&jsonResult.getString("message").equals("success")) {
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }

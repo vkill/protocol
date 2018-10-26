@@ -7,6 +7,7 @@ import com.space.dyrev.enumeration.RequestEnum;
 import com.space.dyrev.request.jurisdictionmodule.params.*;
 import com.space.dyrev.request.jurisdictionmodule.service.JurisdictionService;
 import com.space.dyrev.util.formatutil.GzipGetteer;
+import com.space.dyrev.util.httputil.HttpGet;
 import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -384,20 +385,21 @@ public class JurisdictionServiceImpl implements JurisdictionService {
 //        String url = AwemeV1ImUnreaditemsParams.constructUrl(dyUserEntity);
 //
 //        Map header = AwemeV1ImUnreaditemsParams.constructHeader(dyUserEntity);
+//
+//        RequestEntity req = new RequestEntity(RequestEnum.GET);
+//
+//        req.setUrl(url);
+//
+//        req.setOkHttpClient(okHttpClient);
+//
+//        req.setHeaders(header);
+//
+//
+//        Response response = OkHttpTool.handleHttpReq(req);
+//
+//        return response;
 
-        RequestEntity req = new RequestEntity(RequestEnum.GET);
-
-        req.setUrl(url);
-
-        req.setOkHttpClient(okHttpClient);
-
-        req.setHeaders(header);
-
-
-        Response response = OkHttpTool.handleHttpReq(req);
-
-        return response;
-
+        return HttpGet.commonGet(url, header, okHttpClient);
 
 
     }

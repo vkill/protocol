@@ -5,6 +5,8 @@ import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.formatutil.ScaleTrans;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -356,84 +358,21 @@ public class TTEncrypt {
 
 
     public static void main(String[] args) {
-        String str ="sGfdd28aT2wZMvt/rIBjvmYKxJ1ufxJMysu3yYMLiRbnSJGHHVJ+N1MQyShM\n" +
-                "ttFH3qUnY6yL/cPX3yOYW29S3yqnGCXk3Hff9yDSRbS6arII8qbNqQFFzQtE\n" +
-                "LDIvJE5AjhdUilB0mau0h+mj6htGCihrHt8eBWl4SCiDZIB78QbgFFLUAQAA\n" +
-                "AAEAAABJgqBOMAsJVVFbvnbBhxpRTHEw5zVhOnmN3YqzPNoh6ps4CZPnu0NH\n" +
-                "CIIRuRPvavVh/HeZZnsRj9FBKzvxxnFSHrlWsj4ZFqxilDmTJSn6jHnaYgG+\n" +
-                "yazRHPgb2FmugPblmVVoDtjgIZP9i4mZjJoSMHIJl1dficYmpBxlrMboGqIG\n" +
-                "EiP8mrCf8fqrGHOUBAbMnwjkBjY1C9ruzhDRvyVk6n380UfUdyABzb7GPZtt\n" +
-                "IlmuvaiAKLKNfaTdpGAtj1TFdoXLdF39F4Kua09YT1iRUjm1qUiJJsKH317A\n" +
-                "Q5F/eUuCvt3AASTpYPb1GfwgeGv2dhE6kmHzHl/6VQvd6W65AQABAAAAAAAD\n" +
-                "AAAAAAAAAAAAAABYMlM2TbplQ+Fy6KZ8tsvvljf3xPq5kUk+BDg8DIFPOLUB\n" +
-                "14uhEBES/OXX76c2wx1jU8BvxGZhQSTbj6JeXeEVsVgfQrpKoqWQPRngT+3t\n" +
-                "zKnvxCJScSr6UkSkeAjHodTy9TnUX11Ev5Nsk4oBqR7vAGJQHkHCzsfRJyCe\n" +
-                "YibUu4S1QqPozlQjIf99oEFOFafXencc1is/QW8aQVgKIS8YbGCiIi7LPAeg\n" +
-                "PkicJyG6lXDhlx3TQZmbFfDyDP5pWICTv/XG2J16rLDPhaXdcS8iNNlt0yUI\n" +
-                "/m2RtP7Mq0HWDeY6qgctwm2J3CrfP5JROPg+5dIaEHSXqW4s+K68y9dvwsaN\n" +
-                "Ft4UrIwNvUuSu2DNKb2hIn/22LkWvnCDio97n+fDC3LWVK9VuLUfLIin/ID1\n" +
-                "pKaKs8nI3gRmIYJHqx3hfnkwzf+74rp0KHCRj7rYEakG/J27SxouS9qmnmMv\n" +
-                "aXdpC1YUJsA=";
-        String str2 = "sGfdd0AJ1sLHe/1puZ3YxK0Y6m6yLFinECXYg4+bncAq3z6dp50fHr/3SZMy\n" +
-                "WEL3ITwBhCcZq7LrZ6WNDEOfn6MEfYeD9+vAiNJB/AfqCZL3M2FAFjvOHYhJ\n" +
-                "nSfxPyQd2C5T+V+kl3f3ZNedR05KltsKiTvaseWc5HreOgTy0399Tul7AQAA\n" +
-                "AAIAAAA1XJogIVMkL9LcbNIqWucU1fbe3nExWvGbM4L1ipZnsfch0KPCduec\n" +
-                "godfbv6gqKxlAsNorch5GihHepfGhiQLkkMU3p+OidsZBo63G37HA/d8wJcc\n" +
-                "JQfGO+PMtmuoLKbtv4JhqRIQ418VKaWzusaVhRIhLfDrm0fQnj9RtoC8i59l\n" +
-                "UHzvHLm0yKYkMaZu010mvjiuEbr/U8JzHsBpYJueNEBtr7KWvHX16w4vcN5v\n" +
-                "HQFIO8QhVc9rm3oGpFCnAml4ZA9hvnh2wU0/9OTHpc0JuJyvO5WprhAYUHd8\n" +
-                "JEeKGXMmF7rnAy14pAq0ezNLgV6RC87tlWJNvdXIQ+JFMzonAAAAAAAAAAAA\n" +
-                "AAAAAAAAAAAAAADaa77X+3LY33m5gIxDlu6/aCNKdeCBjIMmUzcxYmm9yH4G\n" +
-                "Td6PlRYaV5fqRUYoVEGnDuEViQjIufSLvsgIqIzN3Ln42fKEHYZS2J3tepU0\n" +
-                "yDTnyF0kT3ZhwMWlYmSxU8fZJemClbogOk/eHYMuVw+7L1/K9SNAxa5wv6kW\n" +
-                "soQshdGm/KAd4dZyAgEkqTDhQnGuyl2oT5p/Roodgc23izoF88sP1LqHpZZv\n" +
-                "rMkCVA7LyYp4G9Sr2WVqHA3Sdl+TO5NecxMHZusLRSF4fkWbUFFUxZIigrim\n" +
-                "Yl3WpBhJD8rLNCcdy4DTGjg1JdhzUHaketGZVU2CG5cILFh8Uqzp8ikrNCxe\n" +
-                "WYAxm2fa1L2fTEWkK7aTnMzjW/PWumlP5T5fHXvIhVWmOeI2UiOLfj9ZyFc6\n" +
-                "e9LCg7YYNRpbRYdR5+T9K5cA/tMQ3A1+cLyx45WpZ2nF88juUHZ12FmnN2ad\n" +
-                "rU7Prh52uarpwW53F8M7JsYpJJzZdJuRTYhP2yerKaBiSs8rkxyXWFebGyQV\n" +
-                "Rm9rNlI8SFUcv+fWXpcGFrKdM+pVBvPT0k4yqJWNUV2K/DITF9KJRgYiIij8\n" +
-                "F+uDKIgPFFiTi1Z/dZX+dHEv5CH/zwFR8uDCgWEyDC0UL3mOMoQ8kvVo9wrp\n" +
-                "8arFI2EEfbUcnWtQ8U+GKr6ajK/yZYbQLrfkoVyWQ78dArNLl6EdpsC1+NBC\n" +
-                "SlDJuNI8micDfGl+t/mh7CgZrGsA0QzsVV8xqdq0WXOn58GheQhdZIOZf+Un\n" +
-                "51JNgU3LZiRkROnoYxB81S6IV5qdjJMvRb0dsggepehdS2+zcgv+l9BvP6DZ\n" +
-                "VNacJID8RW4KIXk11+wyx1wIupZVibpG1M2jX5HyKJdfLAOXxoA7jDMxns4n\n" +
-                "Bbnz8qW6JcRq/5XvGUKjmY/2emMpF7vuOjM24plLVYWtPXJPdRJRWZhsqAP8\n" +
-                "tNMQRjmueNBEbOAs74P4+ATYsaah0Q655WvtAS6bwRuAetWxZ4E7hcsuZxsR\n" +
-                "3JSNHR5k24AxAiYW0lj4mk4zsfJbAQWvGojVXWHSiqoedP6wtd2p1M9rBzQg\n" +
-                "YZe/44SyAqM9EIJuPMFAomr5ZMz0V1eUfWJbyzMRy/OURNQ2P28MFK4Pcoit\n" +
-                "KJ+ptXLg+08nLCJXAryf+fr+PyT9lzy3U+5Xy/ZiMtchcuH7MhzJPVLAcPVW\n" +
-                "+auwci3NzTy/u8gaEV4/MwC9cMBIMVyKaC0q/qSfsVkrjLULJS/jEs3ns/Yk\n" +
-                "Wxn2rZidSA3Eu8pwzoXJ5b1PKAtV8h7ov1sHuCk2hIZf2MnOxlam9mn93N7i\n" +
-                "rG3tjPeYTxG4ICNR7Kgwqq3rVCFOBgCDy0Xfh91+agkgpBJ1NEw21Q==";
-        str = str.replaceAll("\n", "");
-        str2 = str2.replaceAll("\n", "");
-        System.out.println(str);
+//        try {
+//            String decode = URLDecoder.decode("dGMCA76ot3awALq2pejedxxRkh06fxWdCowObsiipaluXQSusMKPwsE29A7ErIU6xN%2Bu4bAqJc9ijGSi3Ef3qaKub%2B9gHMyo%2BMrZSjcsmUKllwAc3uGdeKyC3OXKrAATO7VVVWv3TEiwNIQANwByQlyh9Xs%3D", "UTF-8");
+//
+//            byte[] decode1 = decode(decode);
+//            String result = new String(decode1);
+//            System.out.println(result);
+//
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+        String decode = "dGMCAj3Yv+yerCAuDwL+Mydx5QU3Xn67mLeL2e564Onedx5qnpJzakXBraUn6PTGam+5Vhmn+4P9adTiw8CHOw61ay45kOkFw2x0n41wU7SLmSArjj45nwO/UaOooOIXhRKXYOULfEHl3b4C/wmFV/zfuk7tMzNcJZ4OVDPlm3WSkHOT87hvCF4Yv5hqjdj1H9Rcj0Mc+DupWXdMGQf9emYQqrMRdf//E0Cdk8zvcf/iHQZED6dxD70t6ATnrlZg46HkVGi7Mm5WnX+KLhTfoj4W+GuP61Ars2ysHuBOGqgxloqjiLEGpyZnSNQ8KZXsKeFJ6xOCF55ifP/Sadq5c8R78tDn2cVHNkmOVW+8bVqSfx7N0YxPwuzRXpkYMBapILu0zHTCjlM23BFHXqplBqb9NGoOQjJuWL20/5DLB7hPXlyRheLjNp48f/3ac+VhVzvHMxwPEtRl1OLW/eH5v7DfE3hA7rsEP/GjZZQG688bs9YaqfZXdN3kbOdjrEL05ECeiP7MedmTTb/hC1bZ5sxLgw5cYoFdFsCqUDuBRFi3cmODFHC1Rt07Ue2++K2j8r7pu6dilfBqVzPPmGANc1cg52jODHJ6dG+/eTwO+vPvRTPNsnFZc6rh3qbL9BOiWvEh8KIepUx15tjdCtssUavj4lxqxyz10eCK7sW+/W12sdX8DsfTZC4Z3meT7SOvMM/tz02dgfkYPi7mySH4B5UQ4SRgsTvzzX7h7AATFFpjdqxikqKXT2oTe4YOAHwcDQs7LtnmNbHQwo4j7Y0P0MgJ3k2AtLdFABckrim2Fk40/BCeZxYrltAPZlnzzQJUN3liqK3fflf20FCGcEMVVuKw6EOkNm5Jto5t6/ZQP6krK+Od+hAJZP4h6yE5AhAGNzuwcB2g2c73DmiSZ1A2/v5ju8T8YyTSUp6+cQC/Sd2gBoZ+AqWleOdn22ltxT1awvlnik7aGHuL8CqXER2DUeTx9Yw=";
 
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] decode1 = decoder.decode(str);
-        OutPutUtil.printBytes(decode1);
-
-        try {
-            byte[] bytes = CesEncrypt.cesEncrypt(CesEncrypt.CesEnum.DECODE, decode1);
-            OutPutUtil.printBytes(bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        decode[decode.length-3] = 0;
-
-        byte[] decode = decode(str);
-//        String s1 = GzipGetteer.uncompressToString(decode);
-
-
-
-//        String enc = "spacecoebeer";
-//        getTTEnttyResult(enc.getBytes());
-//        byte[] decode = decode(getTTEnttyResult(enc.getBytes()));
-//        OutPutUtil.printBytes(decode);
-//        String strTest = new String(decode);
-//        System.out.println(strTest);
+        byte[] decode1 = decode(decode);
+        String result = GzipGetteer.uncompressToString(decode1);
+        System.out.println(result);
 
     }
 }

@@ -17,6 +17,7 @@ public interface JurisdictionService {
 
 
     /**
+     * 返回有个token，很奇怪的，暂时不知道作用
      * aweme.snssdk.com/aweme/v1/im/cloud/token
      * result json -> {"status_code": 0, "status_msg": "", "data": {"token": "98TVfIcyZPOPiYJWskteds9ivBlvWA9S3yK1vWhrpNM0DjZUqTNOMQ"}, "log_pb": {"impr_id": "2018102517034701001803407696252D"}, "extra": {"logid": "2018102517034701001803407696252D", "now": 1540458227992, "fatal_item_ids": []}}
      * @param okHttpClient

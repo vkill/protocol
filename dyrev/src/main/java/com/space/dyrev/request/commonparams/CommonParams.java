@@ -83,6 +83,7 @@ public class CommonParams {
 
     public static final String USER_AGENT = "com.ss.android.ugc.aweme/270 (Linux; U; Android 7.1.2; zh_CN; Redmi 4X; Build/N2G47H; Cronet/58.0.2991.0)";
 
+    public static final String BUILD_SERIAL = "6ce322e7d440";
 
 
     public static String getUserAgent (String deviceType) {
@@ -96,9 +97,9 @@ public class CommonParams {
         return Long.toString(System.currentTimeMillis());
     }
 
-    public static void main(String[] args) {
-        System.out.println(getRticket());
-    }
+//    public static void main(String[] args) {
+//        System.out.println(getRticket());
+//    }
 
 
 

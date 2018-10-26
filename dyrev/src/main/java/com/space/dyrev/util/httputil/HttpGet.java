@@ -1,7 +1,12 @@
-package com.space.dyrev.util.formatutil;
+package com.space.dyrev.util.httputil;
 
-import com.alibaba.fastjson.JSONObject;
+import com.space.dyrev.commonentity.DyUserEntity;
+import com.space.dyrev.commonentity.RequestEntity;
+import com.space.dyrev.enumeration.RequestEnum;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -19,35 +24,23 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                                                                             @Author: space
- *                                                                                             @Date: 2018/10/19 20:13
- *                                                                                             @Description: 字符串的工具类
+ *                                
+ *        @Author: space
+ *        @Date: 2018/10/26 15:29
+ *        @Description: 
  **/
-public class StringUtil {
+public class HttpGet {
 
-    /**
-     * 判断是否为空
-     * @param str
-     * @return
-     */
-    public static boolean isEmpty(String str) {
-        if (str!=null  && !str.equals("")) {
-            return false;
-        }
-        return true;
-    }
+    public static Response commonGet(String url, Map header, OkHttpClient okHttpClient) throws IOException {
 
-    public static boolean isNotEmpty(String str) {
-        return !isEmpty(str);
-    }
+        RequestEntity req = new RequestEntity(RequestEnum.GET);
+        req.setUrl(url);
+        req.setOkHttpClient(okHttpClient);
+        req.setHeaders(header);
+        Response response = OkHttpTool.handleHttpReq(req);
+        return response;
 
 
-    /**
-     * 字节流到字符串
-     * @param bytes
-     * @return
-     */
-    public static String bytesToString(byte [] bytes) {
-        return new String(bytes);
+
     }
 }

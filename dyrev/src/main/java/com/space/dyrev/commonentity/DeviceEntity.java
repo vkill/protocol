@@ -53,8 +53,9 @@ public class DeviceEntity {
     // 设备品牌
     private String deviceBrand;
 
-    // sim卡号码(暂时不弄)
+    // sim卡号码(暂时不弄) simSerialNumber
     private String simICCid = "";
+
 
     // sim卡随机生成 460078015808988
     private String imsi;
@@ -80,6 +81,15 @@ public class DeviceEntity {
     // miui_V10_8.9.13
     private String romVersion = "miui_V10_8.9.13";
 
+    private String timeFirstSendInstallApp;
+
+    // 运营商
+    private String carries;
+
+    // 网络信号 3g 4g
+    private String access;
+
+    private String channel;
 
 
     /*************************注册后数据*********************/
@@ -104,7 +114,24 @@ public class DeviceEntity {
 
     }
 
-//    /**
+    public String getAccess() {
+        return access;
+    }
+
+    public void setAccess(String access) {
+        this.access = access;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+
+    //    /**
 //     * 构造函数，注册设备前
 //     * @param uuid
 //     * @param openudid
@@ -114,6 +141,28 @@ public class DeviceEntity {
 //        this.openudid = openudid;
 //    }
 
+
+
+
+    public String getCarries() {
+        return carries;
+    }
+
+    public void setCarries(String carries) {
+        this.carries = carries;
+    }
+
+    public void setAdid(String adid) {
+        this.adid = adid;
+    }
+
+    public String getTimeFirstSendInstallApp() {
+        return timeFirstSendInstallApp;
+    }
+
+    public void setTimeFirstSendInstallApp(String timeFirstSendInstallApp) {
+        this.timeFirstSendInstallApp = timeFirstSendInstallApp;
+    }
 
     public Integer getId() {
         return id;
