@@ -23,7 +23,7 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/24 19:24
  *        @Description: 点赞的参数构造
@@ -72,6 +72,7 @@ public class DiggParams {
         result.put("X-SS-REQ-TICKET", "1540353346198");
         result.put("X-SS-TC", "0");
         result.put("X-Tt-Token", dyUserEntity.getxTtToken());
+        result.put("User-Agent",CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
         return result;
     }
 

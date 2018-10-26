@@ -23,10 +23,10 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/24 21:39
- *        @Description: 
+ *        @Description:
  **/
 public class FollowParams {
     // https://aweme.snssdk.com/aweme/v1/commit/follow/user/?
@@ -71,6 +71,7 @@ public class FollowParams {
         result.put("sdk-version", "1");
         result.put("X-SS-TC", "0");
         result.put("X-Tt-Token", dyUserEntity.getxTtToken());
+        result.put("User-Agent",CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
         return result;
     }
 }

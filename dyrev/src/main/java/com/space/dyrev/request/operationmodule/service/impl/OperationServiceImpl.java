@@ -6,8 +6,11 @@ import com.space.dyrev.commonentity.RequestEntity;
 import com.space.dyrev.enumeration.RequestEnum;
 import com.space.dyrev.request.operationmodule.params.DiggParams;
 import com.space.dyrev.request.operationmodule.params.FollowParams;
+import com.space.dyrev.request.operationmodule.params.ModifyParams;
 import com.space.dyrev.request.operationmodule.service.OperationService;
+import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.httputil.OkHttpTool;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.slf4j.Logger;
@@ -32,7 +35,7 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/24 19:27
  *        @Description: 操作类，点赞关注等实现方法
@@ -117,5 +120,31 @@ public class OperationServiceImpl implements OperationService {
             e.printStackTrace();
         }
         return "1";
+    }
+
+    @Override
+    public String modify(OkHttpClient okHttpClient, DyUserEntity dyUserEntity) {
+
+        String url = ModifyParams.constructUrl(dyUserEntity);
+
+        Map header = ModifyParams.constructHeader(dyUserEntity);
+
+        Map body = ModifyParams.constructBody(dyUserEntity);
+
+        RequestEntity requestEntity = new RequestEntity(RequestEnum.POST_FORM);
+
+        requestEntity.setUrl(url);
+        requestEntity.setHeaders(header);
+        requestEntity.setBody(body);
+        requestEntity.setOkHttpClient(okHttpClient);
+
+        try {
+            Response response = OkHttpTool.handleHttpReq(requestEntity);
+            response.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -18,10 +18,10 @@ import okhttp3.OkHttpClient;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/24 19:26
- *        @Description: 
+ *        @Description:
  **/
 public interface OperationService {
 
@@ -46,4 +46,12 @@ public interface OperationService {
     String follow(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String userId);
 
 
+    /**
+     * 修改个人信息
+     * https://api.amemv.com/aweme/v1/commit/user/?
+     * @param okHttpClient http对象
+     * @param dyUserEntity 帐号实体类
+     * @return
+     */
+    String modify(OkHttpClient okHttpClient, DyUserEntity dyUserEntity);
 }
