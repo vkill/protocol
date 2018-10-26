@@ -7,6 +7,7 @@ import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.commonentity.RequestEntity;
 import com.space.dyrev.enumeration.RequestEnum;
+import com.space.dyrev.request.accountregistermodule.params.RegisterV176Params;
 import com.space.dyrev.request.accountregistermodule.params.SendCodeParams;
 import com.space.dyrev.request.accountregistermodule.params.SmsLoginParams;
 import com.space.dyrev.request.accountregistermodule.service.AccountRegisterService;
@@ -37,10 +38,10 @@ import java.util.logging.Logger;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/22 14:01
- *        @Description: 
+ *        @Description:
  **/
 @Service("accountRegisterService")
 public class AccountRegisterServiceImpl implements AccountRegisterService {
@@ -161,6 +162,54 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public DyUserEntity registerV176(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity) {
+
+        String url = RegisterV176Params.constructUrl(deviceEntity);
+
+        Map header = RegisterV176Params.constructHeader(deviceEntity);
+
+        Map body = RegisterV176Params.constructBody(deviceEntity, phoneEntity);
+
+        DyUserEntity dyUserEntity = new DyUserEntity();
+
+        RequestEntity requestEntity = new RequestEntity(RequestEnum.POST_FORM);
+
+        requestEntity.setUrl(url);
+        requestEntity.setHeaders(header);
+        requestEntity.setBody(body);
+        requestEntity.setOkHttpClient(okHttpClient);
+
+        try {
+            Response response = OkHttpTool.handleHttpReq(requestEntity);
+
+            String s = GzipGetteer.uncompressToString(response.body().bytes(), "utf-8");
+
+            Headers responseHeaders = response.headers();
+            logger.info("----- 生成注册请求帐号成功 ----- 请求 -> {}" , s);
+            String s1 = responseHeaders.toString();
+            logger.info("----- 生成注册请求帐号成功 ----- headerToString -> \n{}" ,s1);
+
+//            int responseHeadersLength = responseHeaders.size();
+//            for (int i = 0; i < responseHeadersLength; i++){
+//                String headerName = responseHeaders.name(i);
+//                String headerValue = responseHeaders.value(i);
+////                System.out.print("TAG----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
+//                logger.info("----- 生成注册请求帐号成功 ----- headername -> {} ----- value -> {}" , headerName, headerValue);
+//            }
+//            dyUserEntity.setArea(phoneEntity.getArea().getAreaNum());
+//            dyUserEntity.setAccount(phoneEntity.getPhoneNum());
+//            dyUserEntity.setDevice(deviceEntity);
+//            dyUserEntity.se
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 

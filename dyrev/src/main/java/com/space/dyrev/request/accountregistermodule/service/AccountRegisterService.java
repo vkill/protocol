@@ -48,4 +48,6 @@ public interface AccountRegisterService {
      */
     DyUserEntity smsLogin(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity);
 
+    DyUserEntity registerV176(OkHttpClient okHttpClient, PhoneEntity phoneEntity, DeviceEntity deviceEntity);
+
 }

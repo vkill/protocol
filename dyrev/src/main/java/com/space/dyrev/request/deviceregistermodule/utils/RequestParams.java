@@ -42,11 +42,15 @@ public class RequestParams {
         deviceEntity.setMc(CreateDevInfoUtil.createMac());
         deviceEntity.setImsi(CreateDevInfoUtil.createIMSI());
 
-        // TODO 有几个新信息还没写生成的 2018-10-26
-        // deviceEntity.setCarries("中国移动");
-        // deviceEntity.setChannel("tengxun");
-        // deviceEntity.setAccess("4g");
-        // deviceEntity.setSimIccId("89860116425560756729");
+        //随机获取carries
+        deviceEntity.setCarries(CreateDevInfoUtil.createCarries());
+        //随机获取channel
+        deviceEntity.setChannel(CreateDevInfoUtil.createChannel());
+        //随机获取ac
+        deviceEntity.setAccess(CreateDevInfoUtil.createAc());
+        //随机获取simIccid
+        deviceEntity.setAccess(CreateDevInfoUtil.createSimICCid());
+
         return deviceEntity;
 
     }

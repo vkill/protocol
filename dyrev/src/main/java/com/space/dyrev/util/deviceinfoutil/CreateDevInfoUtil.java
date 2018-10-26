@@ -3,6 +3,7 @@ package com.space.dyrev.util.deviceinfoutil;
 import com.space.dyrev.request.commonparams.CommonParams;
 import com.space.dyrev.util.formatutil.ScaleTrans;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
@@ -152,15 +153,58 @@ public class CreateDevInfoUtil {
         return sb.toString();
     }
 
+    /**
+     * 生成随机carries
+     * @return
+     */
+    public static String createCarries(){
+        String []carries = {"中国联通","中国电信","中国移动"};
+        Random random = new Random();
+        return carries[random.nextInt(3)];
+    }
 
+    /**
+     * 生成随机channel
+     * @return
+     */
+    public static String createChannel(){
+        String []carries = {"tengxun","meizu","wandoujia"};
+        Random random = new Random();
+        return carries[random.nextInt(3)];
+    }
 
+    /**
+     * 生成随机ac
+     * @return
+     */
+    public static String createAc(){
+        String []carries = {"3g","4g","wifi"};
+        Random random = new Random();
+        return carries[random.nextInt(3)];
+    }
 
+    /**
+     * 生成随机 SimICCid 8986 0116425560756729
+     * @return
+     */
+    public static String createSimICCid(){
+        StringBuffer sb = new StringBuffer("8986");
+        Random random = new Random();
+        for (int i=0;i<16;i++) {
+            sb.append(random.nextInt(10));
+        }
+        return sb.toString();
+    }
 
     public static void main(String[] args) {
-        for (int i = 0; i < 10000; i++) {
-            System.out.println(createIMSI());
-
+//        for (int i = 0; i < 10000; i++) {
+//            System.out.println(createIMSI());
+//
+//        }
+        for(int i = 0;i < 100;i++){
+            System.out.println(createSimICCid());
         }
+
     }
 
 
