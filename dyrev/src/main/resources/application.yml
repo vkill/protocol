@@ -1,0 +1,38 @@
+server:
+  port: 7777
+  context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dy270?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    username: root
+    password: rootroot
+    hikari:
+      maximum-pool-size: 50
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: false
+  devtools:
+    restart:
+      enable: true
+      additional-paths: src/main/java
+
+logging:
+  level:
+    xatu.zsl: debug #不同目录下的日志可配置不同级别
+    org.springfromework.web: info
+    org.hibernate: error
+  file: log\myspringboot.log
+
+
+# 异步线程配置
+async:
+  executor:
+    thread:
+      core_pool_size: 20 # 配置核心线程数
+      max_pool_size: 50 # 配置最大线程数
+      queue_capacity: 99999
+      name:
+        prefix: current-thread-
+
