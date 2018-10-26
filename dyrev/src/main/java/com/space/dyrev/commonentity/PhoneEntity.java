@@ -24,13 +24,33 @@ import com.space.dyrev.enumeration.PhoneArea;
  **/
 public class PhoneEntity {
 
+    private String pid;
+
+    private String time;
+
+    private String comNum;
+
     private PhoneArea area;
 
     private String phoneNum;
 
     private String code;
 
+
     public PhoneEntity() {
+    }
+
+    //OK                    |P_ID       |获取时间       |串口号        |手机号    |发送短信项目的接收号码    |国家名称或区号
+    public PhoneEntity(String pid, String time, String comNum, String phoneNum, String areaNum) {
+        this.pid = pid;
+        this.time = time;
+        this.comNum = comNum;
+        this.phoneNum = phoneNum;
+        if (areaNum.equals("+86")) {
+            this.area = PhoneArea.CHINA;
+        }
+
+
     }
 
     public PhoneEntity(PhoneArea area, String phoneNum) {
@@ -60,5 +80,17 @@ public class PhoneEntity {
 
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
+    }
+
+    @Override
+    public String toString() {
+        return "PhoneEntity{" +
+                "pid='" + pid + '\'' +
+                ", time='" + time + '\'' +
+                ", comNum='" + comNum + '\'' +
+                ", area=" + area +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", code='" + code + '\'' +
+                '}';
     }
 }
