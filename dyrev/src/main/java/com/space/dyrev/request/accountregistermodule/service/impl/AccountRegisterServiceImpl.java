@@ -192,13 +192,13 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
             String s1 = responseHeaders.toString();
             logger.info("----- 生成注册请求帐号成功 ----- headerToString -> \n{}" ,s1);
 
-//            int responseHeadersLength = responseHeaders.size();
-//            for (int i = 0; i < responseHeadersLength; i++){
-//                String headerName = responseHeaders.name(i);
-//                String headerValue = responseHeaders.value(i);
-////                System.out.print("TAG----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
-//                logger.info("----- 生成注册请求帐号成功 ----- headername -> {} ----- value -> {}" , headerName, headerValue);
-//            }
+            int responseHeadersLength = responseHeaders.size();
+            for (int i = 0; i < responseHeadersLength; i++){
+                String headerName = responseHeaders.name(i);
+                String headerValue = responseHeaders.value(i);
+//                System.out.print("TAG----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
+                logger.info("----- 生成注册请求帐号成功 ----- headername -> {} ----- value -> {}" , headerName, headerValue);
+            }
 //            dyUserEntity.setArea(phoneEntity.getArea().getAreaNum());
 //            dyUserEntity.setAccount(phoneEntity.getPhoneNum());
 //            dyUserEntity.setDevice(deviceEntity);

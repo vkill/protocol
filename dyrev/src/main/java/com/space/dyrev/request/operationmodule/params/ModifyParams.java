@@ -71,12 +71,12 @@ public class ModifyParams {
         Map result = CommonUrlPart.deviceMapBody(dyUserEntity.getDevice());
         result.put("uid",dyUserEntity.getUserId());
         result.put("retry_type", "no_retry");
-        result.put("nickname","卖报的大D");
+        result.put("nickname","卖报的大牛");
         result.put("city","南京市");
         result.put("show_gender_strategy","0");
         result.put("province","江苏省");
         result.put("is_binded_weibo","0");
-        result.put("birthday","1993-12-13");
+        result.put("birthday","1993-11-13");
         result.put("school_type","0");
         result.put("enroll_year","");
         result.put("iso_country_code","CN");

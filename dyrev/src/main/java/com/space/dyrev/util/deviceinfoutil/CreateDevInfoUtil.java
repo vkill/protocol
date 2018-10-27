@@ -71,7 +71,7 @@ public class CreateDevInfoUtil {
      */
     public static  String createDeviceType() {
         Random random = new Random();
-        return DeviceInfoSave.DEVICE_TYPE[random.nextInt(3)];
+        return DeviceInfoSave.DEVICE_TYPE[random.nextInt(DeviceInfoSave.DEVICE_TYPE.length)];
     }
 
     /**

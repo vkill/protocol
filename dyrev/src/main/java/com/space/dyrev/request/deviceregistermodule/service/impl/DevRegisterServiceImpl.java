@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.RequestEntity;
+import com.space.dyrev.dao.DeviceRepository;
 import com.space.dyrev.encrypt.CesEncrypt;
 import com.space.dyrev.encrypt.TTEncrypt;
 import com.space.dyrev.enumeration.RequestEnum;
@@ -23,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -52,6 +54,9 @@ import java.util.Map;
 public class DevRegisterServiceImpl implements DeviceRegisterService {
 
     private static Logger logger = LoggerFactory.getLogger(DevRegisterServiceImpl.class);
+
+    @Resource
+    DeviceRepository deviceRepository;
 
     @Override
     public DeviceEntity deviceRegister(OkHttpClient okHttpClient, DeviceEntity device) {
@@ -129,7 +134,7 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
             deviceEntity.setInstallId(String.valueOf((long)resultJson.get("install_id")));
             deviceEntity.setDeviceId(String.valueOf((long)resultJson.get("device_id")));
-
+            device.setTimeFirstSendInstallApp(String.valueOf(System.currentTimeMillis()));
 
 
 
@@ -272,5 +277,8 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
         return false;
     }
 
-
+    @Override
+    public void testSaveDevice(DeviceEntity deviceEntity) {
+        DeviceEntity save = deviceRepository.save(deviceEntity);
+    }
 }

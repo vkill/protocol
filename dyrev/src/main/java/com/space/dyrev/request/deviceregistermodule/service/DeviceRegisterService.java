@@ -47,8 +47,6 @@ public interface DeviceRegisterService {
      */
     boolean uploadDeviceInfo(DeviceEntity deviceEntity, OkHttpClient okHttpClient);
 
-
-
     /**
      * 设备注册部分
      * http://ib.snssdk.com/service/1/z_app_stats/?iid=46777879533&device_id=58306217792&ac=mobile&channel=wandoujia&aid=1128&app_name=aweme&version_code=270&version_name=2.7.0&device_platform=android&device_type=Redmi+4X&device_brand=Xiaomi&language=zh&os_api=23&os_version=6.0.1&uuid=866709036507209&openudid=3e05931eec1a90af&manifest_version_code=270&resolution=720*1280&dpi=320&update_version_code=2702&_rticket=1540484693034&_apps=1&_recent=1&rom=MIUI-7.5.19&time_first_send_install_app=1540484693038
@@ -57,8 +55,6 @@ public interface DeviceRegisterService {
      * @return
      */
     boolean service1ZAppStats(DeviceEntity deviceEntity, OkHttpClient okHttpClient);
-
-
 
     /**
      * TODO 发出去timeout 暂时不清楚什么情况
@@ -77,4 +73,11 @@ public interface DeviceRegisterService {
      * @return
      */
     boolean service2AppAlert(DeviceEntity deviceEntity, OkHttpClient okHttpClient);
+
+    /**
+     * 测试设备存储部分
+     * @param deviceEntity
+     * @return
+     */
+    void testSaveDevice(DeviceEntity deviceEntity);
 }
