@@ -1,4 +1,4 @@
-package com.space.dyrev.systemconfig;
+package com.space.dyrev.systemprocess;
 
 
 import org.slf4j.Logger;
@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 
-
+/**
+ * 线程
+ */
 @Component
 public class Timer extends Thread{
 

@@ -41,7 +41,6 @@ public class DaShiZiCodeApi {
     private String userName ="api_mmg0088_crdl";
     private String password ="aa977525";
     private String projectID ="1055";
-    private String projectPasswordID = "1055";
     private String loginUrl ;
     public String  usertoken ="4E4F35F081EA4724939AC04D5D7201E4";
     private String errorStr = "ERR";
@@ -214,10 +213,8 @@ public class DaShiZiCodeApi {
                 }
                 return "请求超时";
             }else{
-                // System.out.println("nimei: "+buffers[0]+" "+buffers[1]);
             }
             buffer_Num++;
-            //System.out.println("tag : "+tag);
         }
         logger.error(" ----- 验证码获取出现故障 ----- -> 原因 = {}", "验证码获取失败");
         //smakePhoneBlank(P_ID);

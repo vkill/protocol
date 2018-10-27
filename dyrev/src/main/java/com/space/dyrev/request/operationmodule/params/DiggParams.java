@@ -75,17 +75,4 @@ public class DiggParams {
         result.put("User-Agent",CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
         return result;
     }
-
-//    // TODO remove
-//    public static void main(String[] args) {
-//        DyUserEntity dyUserEntity = JSONObject.parseObject(SaveAcc.USER_STRING).toJavaObject(DyUserEntity.class);
-//
-//
-////        String s = constructUrl(dyUserEntity, "6615732004694527246");
-////        System.out.println(s);
-//    }
-
-
-
-
 }

@@ -28,7 +28,7 @@ import okhttp3.OkHttpClient;
  *                                
  *        @Author: space
  *        @Date: 2018/10/26 15:07
- *        @Description: TODO 测试方法 准备删除
+ *        @Description:
  **/
 public class TestDeviceRegiste {
 

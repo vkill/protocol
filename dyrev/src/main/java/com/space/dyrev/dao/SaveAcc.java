@@ -16,7 +16,6 @@ public class SaveAcc {
     public static DeviceEntity getDevice() {
 
         DeviceEntity deviceEntity = JSONObject.parseObject(DEVICE_STRING).toJavaObject(DeviceEntity.class);
-        // TODO 注册设备构造此3样
         deviceEntity.setTimeFirstSendInstallApp("1540484693038");
         deviceEntity.setCarries("中国移动");
         deviceEntity.setChannel("tengxun");
