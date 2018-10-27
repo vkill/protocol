@@ -38,13 +38,7 @@ public class DaShiZiCodeApi {
 
     private static Logger logger = LoggerFactory.getLogger(DaShiZiCodeApi.class);
 
-    private String userName ="api_mmg0088_crdl";
-    private String password ="aa977525";
-    private String projectID ="1055";
-    private String loginUrl ;
-    public String  usertoken ="4E4F35F081EA4724939AC04D5D7201E4";
-    private String errorStr = "ERR";
-    private String successStr = "OK";
+    
 
     public static DaShiZiCodeApi daShiZiCodeApi = new DaShiZiCodeApi();
 
@@ -88,7 +82,7 @@ public class DaShiZiCodeApi {
 
 
                 if (split[0]!= null && split[0].equals("OK")) {
-                    logger.info(" ----- 登陆结果 ----- -> token = {}", split[1]);
+                    logger.info(" ----- 大狮子短信平台登陆结果 ----- -> token = {}", split[1]);
                     usertoken = split[1];
                     break;
                 } else {
@@ -124,7 +118,7 @@ public class DaShiZiCodeApi {
             //http://118.178.232.250:18003/yhapi.ashx?Action=getPhone&token=token&i_id=项目ID&d_id=&p_operator=&p_qcellcore=&mobile=
             phone_url="http://118.178.232.250:18003/yhapi.ashx?Action=getPhone&token="+usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile=";
         }else{
-            phone_url="http://maci.codesfrom.com/yhapi.ashx?Action=getPhone&token="+usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile="+phoneNum;
+            phone_url="http://118.178.232.250:18003/yhapi.ashx?Action=getPhone&token="+usertoken+"&i_id="+projectID+"&d_id=&p_operator=&p_qcellcore=&mobile="+phoneNum;
         }
         Response response = null;
         String[] buffers = null;
@@ -142,7 +136,7 @@ public class DaShiZiCodeApi {
             buffers = buff.split("\\|");
             tag =buffers[0];
             if(tag.equals(successStr)){
-                logger.error(" ----- 成功获取手机号 ----- -> area = {}  number = {}  pid = {}", buffers[4],buffers[1],buffers[6]  );
+                logger.error(" ----- 成功获取手机号 ----- -> number = {} ", buffers[4]);
 //                System.out.println("成功获取手机号: "+buffers[4]+" "+buffers[1]+" "+buffers[6]);
                 break;
             }else{
@@ -167,14 +161,14 @@ public class DaShiZiCodeApi {
             return null;
         }else{
 
-            PhoneEntity phoneEntity = new PhoneEntity(buffers[1],buffers[2],buffers[3],buffers[4],buffers[6]);
-            System.out.println(phoneEntity);
+            PhoneEntity phoneEntity = new PhoneEntity(buffers[1],buffers[2],buffers[3],buffers[4],"+86");
             return phoneEntity;
         }
     }
 
-    public String getIdentCode(String P_ID,OkHttpClient okhttpclient) throws IOException {
+    public String getIdentCode(PhoneEntity phoneEntity, OkHttpClient okhttpclient) throws IOException {
         //http://118.178.232.250:18003/yhapi.ashx?Action=getPhoneMessage&token=token&p_id=取号接口返回的P_ID
+        String P_ID = phoneEntity.getPid();
         String infoUrl ="http://118.178.232.250:18003/yhapi.ashx?Action=getPhoneMessage&token="+usertoken+"&p_id="+P_ID;
         Response response = null;
         String buff = null;
@@ -196,12 +190,13 @@ public class DaShiZiCodeApi {
 
 
             buff = response.body().string();
-            System.out.println(buff);
+//            System.out.println(buff);
 
             buffers = buff.split("\\|");
             tag = buffers[0];
             result = buffers[1];
             if(tag.equals(successStr)){
+                logger.info(" ----- 成功获取验证码 ----- -> 号码 = {}  验证码 = {}", phoneEntity.getPhoneNum(), buffers[1]);
                 return buffers[1];
             }
             else if(result.equals("-4")){
@@ -213,10 +208,12 @@ public class DaShiZiCodeApi {
                 }
                 return "请求超时";
             }else{
+
             }
             buffer_Num++;
+            logger.info(" ----- 获取验证码失败 ----- -> 号码 = {}  尝试次数 = {}", phoneEntity.getPhoneNum(), buffer_Num);
         }
-        logger.error(" ----- 验证码获取出现故障 ----- -> 原因 = {}", "验证码获取失败");
+        logger.error(" ----- 验证码获取出现故障 ----- -> 号码 = {}, 原因 = {}", phoneEntity.getPhoneNum(),"验证码获取失败");
         //smakePhoneBlank(P_ID);
         return "请求超时";
     }
@@ -224,8 +221,11 @@ public class DaShiZiCodeApi {
     public static void test() {
         OkHttpClient okhttpClient = OkHttpTool.getOkhttpClient(OkhttpType.NO_PROXY);
         try {
-            DaShiZiCodeApi instrance = DaShiZiCodeApi.getInstrance();
-            instrance.getPhoneNumber(okhttpClient);
+//            PhoneEntity phoneNumber = DaShiZiCodeApi.getInstrance().getPhoneNumber(okhttpClient);
+//            System.out.println(phoneNumber);
+            PhoneEntity phoneNumber = DaShiZiCodeApi.getInstrance().getPhoneNumber( "18778606794",okhttpClient);
+            DaShiZiCodeApi.getInstrance().getIdentCode(phoneNumber, okhttpClient);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

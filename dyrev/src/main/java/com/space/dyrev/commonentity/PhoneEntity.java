@@ -53,9 +53,35 @@ public class PhoneEntity {
 
     }
 
+
+
     public PhoneEntity(PhoneArea area, String phoneNum) {
         this.area = area;
         this.phoneNum = phoneNum;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getComNum() {
+        return comNum;
+    }
+
+    public void setComNum(String comNum) {
+        this.comNum = comNum;
     }
 
     public String getCode() {
