@@ -38,7 +38,13 @@ public class DaShiZiCodeApi {
 
     private static Logger logger = LoggerFactory.getLogger(DaShiZiCodeApi.class);
 
-    
+    private String userName ="api_mmg0088_crdl";
+    private String password ="aa977525";
+    private String projectID ="1055";
+    private String loginUrl ;
+    public String  usertoken ="4E4F35F081EA4724939AC04D5D7201E4";
+    private String errorStr = "ERR";
+    private String successStr = "OK";
 
     public static DaShiZiCodeApi daShiZiCodeApi = new DaShiZiCodeApi();
 
@@ -206,7 +212,7 @@ public class DaShiZiCodeApi {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                return "请求超时";
+                return "1";
             }else{
 
             }
@@ -215,7 +221,7 @@ public class DaShiZiCodeApi {
         }
         logger.error(" ----- 验证码获取出现故障 ----- -> 号码 = {}, 原因 = {}", phoneEntity.getPhoneNum(),"验证码获取失败");
         //smakePhoneBlank(P_ID);
-        return "请求超时";
+        return "1";
     }
 
     public static void test() {

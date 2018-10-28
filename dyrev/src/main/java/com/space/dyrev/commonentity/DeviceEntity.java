@@ -360,6 +360,10 @@ public class DeviceEntity {
                 ", mc='" + mc + '\'' +
                 ", rom='" + rom + '\'' +
                 ", romVersion='" + romVersion + '\'' +
+                ", timeFirstSendInstallApp='" + timeFirstSendInstallApp + '\'' +
+                ", carries='" + carries + '\'' +
+                ", access='" + access + '\'' +
+                ", channel='" + channel + '\'' +
                 ", deviceId='" + deviceId + '\'' +
                 ", installId='" + installId + '\'' +
                 ", deviceCookies='" + deviceCookies + '\'' +

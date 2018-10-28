@@ -6,6 +6,7 @@ import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.dao.SaveAcc;
 import com.space.dyrev.encrypt.CesEncrypt;
+import com.space.dyrev.enumeration.OkhttpType;
 import com.space.dyrev.enumeration.PhoneArea;
 import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.accountregistermodule.service.AccountRegisterService;
@@ -15,6 +16,7 @@ import com.space.dyrev.request.deviceregistermodule.service.DeviceRegisterServic
 import com.space.dyrev.request.deviceregistermodule.service.impl.DevRegisterServiceImpl;
 import com.space.dyrev.request.deviceregistermodule.utils.RequestParams;
 import com.space.dyrev.util.formatutil.GzipGetteer;
+import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
 
 import java.io.IOException;
@@ -51,30 +53,18 @@ public class MainTest {
 
     public static void main(String[] args) {
 
-        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostName, port));
+//        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostName, port));
 //        OkHttpClient okHttpClient = new OkHttpClient.Builder().proxy(proxy).build();
 
-        OkHttpClient okHttpClient = new OkHttpClient();
+//        OkHttpClient okHttpClient = new OkHttpClient();
 
 
-        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.CHINA, "16675821209");
+        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.CHINA, "15453678763");
+        OkHttpClient okhttpClient = OkHttpTool.getOkhttpClient(OkhttpType.PROXY);
+        DeviceEntity deviceEntity = SaveAcc.getDevice();
 
-        DyUserEntity user = SaveAcc.getUser();
-        DeviceEntity deviceEntity = user.getDevice();
 
-//                testRegisterDevice();
-//        user.setDevice(deviceEntity);
-//        JSONObject a = new JSONObject();
-//        a.put("a", user);
-//        System.out.println(a);
 
-//         // ddjt设备
-//        deviceEntity.setUuid("867246022383583");
-//        deviceEntity.setInstallId("47106823699");
-//        deviceEntity.setOpenudid("cd5deef67704a09e");
-//        deviceEntity.setDeviceId("57616910195");
-//        deviceEntity.setDeviceBrand("Xiaomi");
-//        deviceEntity.setDeviceType("Redmi 4X");
 
 
         testSendXlog(deviceEntity, XlogEnum.COLD_START);
@@ -84,7 +74,7 @@ public class MainTest {
 
             Thread.sleep(1000);
 
-            testSendCode(okHttpClient,deviceEntity, phoneEntity);
+            testSendCode(okhttpClient,deviceEntity, phoneEntity);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -143,9 +133,9 @@ public class MainTest {
         System.out.println(jsonObject);
     }
 
-    private static DeviceEntity testRegisterDevice()  {
+    private static DeviceEntity testRegisterDevice(OkHttpClient okHttpClient)  {
         DeviceRegisterService drs = new DevRegisterServiceImpl();
-        OkHttpClient okHttpClient = new OkHttpClient();
+//        OkHttpClient okHttpClient = new OkHttpClient();
         DeviceEntity deviceEntity = RequestParams.newDevice();
         DeviceEntity deviceEntity1 = drs.deviceRegister(okHttpClient, deviceEntity);
         JSONObject object = new JSONObject();

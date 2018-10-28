@@ -49,9 +49,13 @@ public class RequestParams {
         //随机获取ac
         deviceEntity.setAccess(CreateDevInfoUtil.createAc());
         //随机获取simIccid
-        deviceEntity.setAccess(CreateDevInfoUtil.createSimICCid());
+        deviceEntity.setSimICCid(CreateDevInfoUtil.createSimICCid());
 
         return deviceEntity;
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(newDevice());
     }
 }
