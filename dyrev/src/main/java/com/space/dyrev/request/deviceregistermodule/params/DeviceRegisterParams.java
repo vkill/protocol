@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.request.commonparams.CommonParams;
+import com.space.dyrev.request.deviceregistermodule.utils.RequestParams;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -51,6 +52,7 @@ public class DeviceRegisterParams {
         sb.append("&manifest_version_code=" + CommonParams.MANIFEST_VERSION_CODE);
         sb.append("&resolution=" + deviceEntity.getResolution());
         sb.append("&dpi=" + deviceEntity.getDpi());
+        sb.append("&uuid=" + deviceEntity.getUuid());
         sb.append("&update_version_code=" + CommonParams.UPDATE_VERSION_CODE);
         sb.append("&_rticket=" + CommonParams.getRticket());
         sb.append("&tt_data=" + CommonParams.TT_DATA);
@@ -73,6 +75,7 @@ public class DeviceRegisterParams {
         header.put("version_code", Integer.parseInt(CommonParams.VERSION_CODE));
         header.put("sdk_version", Integer.parseInt(CommonParams.SDK_VERSION));
         header.put("os", CommonParams.DEVICE_PLATFORM);
+        header.put("uuid", deviceEntity.getUuid());
         header.put("os_version", CommonParams.OS_VERSION);
         header.put("os_api", Integer.parseInt(CommonParams.OS_API));
         header.put("device_model", deviceEntity.getDeviceType());
@@ -120,4 +123,11 @@ public class DeviceRegisterParams {
         sb.append("&openudid=" + deviceEntity.getOpenudid());
         return sb.toString();
     }
+
+    public static void main(String[] args) {
+        JSONObject jsonObject = constructDeviceRegisterJson(RequestParams.newDevice());
+        System.out.println(jsonObject);
+    }
+
+
 }

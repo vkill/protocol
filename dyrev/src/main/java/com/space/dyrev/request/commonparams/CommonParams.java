@@ -55,7 +55,7 @@ public class CommonParams {
     public static final String SDK_VERSION = "201";
 
     // 写死的数据, 有待考察
-    public static final String RELEASE_BUILD = "5eebac6_20180918";
+    public static final String RELEASE_BUILD = "5eebac6_20180917";
 
     public static final String DISPLAY_DENSITY = "xhdpi";
 
@@ -67,7 +67,7 @@ public class CommonParams {
     public static final String CARRIER = "中国移动";
 
     // mcc_mnc 可能是运营商标志，不清楚
-    public static final String MCC_MNC = "46000";
+    public static final String MCC_MNC = "46001";
 
 
     // sig_hash , 暂时不清楚是什么
