@@ -33,7 +33,7 @@ public class TestAppLpg {
     public static AppLogService as = new AppLogServiceImpl();
 
     private static void service2LogSettingS(OkHttpClient okHttpClient, DeviceEntity deviceEntity) {
-        as.Service2LogSettingS(okHttpClient, deviceEntity);
+        as.service2LogSettingS(okHttpClient, deviceEntity);
     }
 
     public static void main(String[] args) {

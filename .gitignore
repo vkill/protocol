@@ -50,3 +50,4 @@ web/target/classes/application.yml
 web/target/test-classes/com/space/protocol/ProtocolApplicationTests.class
 dyrev/src/main/java/com/space/dyrev/testpackage/MainTest.java
 dyrev/src/main/java/com/space/dyrev/util/deviceinfoutil/CreateDevInfoUtil.java
+dyrev/src/main/java/com/space/dyrev/dao/SaveAcc.java

@@ -59,9 +59,10 @@ public class MainTest {
 //        OkHttpClient okHttpClient = new OkHttpClient();
 
 
-        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.CHINA, "15453678763");
+        PhoneEntity phoneEntity = new PhoneEntity(PhoneArea.CHINA, "16675880209");
         OkHttpClient okhttpClient = OkHttpTool.getOkhttpClient(OkhttpType.PROXY);
-        DeviceEntity deviceEntity = SaveAcc.getDevice();
+        DeviceEntity deviceEntity = testRegisterDevice(okhttpClient);
+
 
 
 
@@ -78,6 +79,7 @@ public class MainTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
 
 //        phoneEntity.setCode("5748");
 //        testSmsLogin(deviceEntity, phoneEntity,okHttpClient);
@@ -140,7 +142,7 @@ public class MainTest {
         DeviceEntity deviceEntity1 = drs.deviceRegister(okHttpClient, deviceEntity);
         JSONObject object = new JSONObject();
         object.put("device", deviceEntity1);
-//        System.out.println(object);
+        System.out.println(object);
         return deviceEntity1;
 
         //        drs.deviceRegister(okHttpClient ,deviceEntity);
