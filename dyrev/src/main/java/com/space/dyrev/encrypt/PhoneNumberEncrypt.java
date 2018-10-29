@@ -44,6 +44,10 @@ public class PhoneNumberEncrypt {
         KEY_MAP.put('9',"3c");
         KEY_MAP.put('+',"2e");
         KEY_MAP.put(' ',"25");
+        KEY_MAP.put('J',"4f");
+        KEY_MAP.put('j',"6f");
+        KEY_MAP.put('c',"66");
+
 
         REV_KEY.put("35", "0");
         REV_KEY.put("34", "1");
@@ -57,6 +61,9 @@ public class PhoneNumberEncrypt {
         REV_KEY.put("3c", "9");
         REV_KEY.put("2e", "+");
         REV_KEY.put("25", " ");
+        REV_KEY.put("4f", "J");
+        REV_KEY.put("6f", "j");
+        REV_KEY.put("66", "c");
 
 
     }

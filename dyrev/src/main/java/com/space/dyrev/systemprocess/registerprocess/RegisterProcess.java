@@ -1,4 +1,4 @@
-package com.space.dyrev.systemprocess;
+package com.space.dyrev.systemprocess.registerprocess;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -7,6 +7,7 @@ import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.enumeration.OkhttpType;
+import com.space.dyrev.enumeration.PhoneArea;
 import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.accountregistermodule.service.AccountRegisterService;
 import com.space.dyrev.request.accountregistermodule.service.impl.AccountRegisterServiceImpl;
@@ -83,58 +84,60 @@ public class RegisterProcess {
     }
 
     // 注册的过程
-    private static void registeAccProcess() {
+    private static void registeAccProcess() throws Exception{
         OkHttpClient okhttpClient = OkHttpTool.getOkhttpClient(OkhttpType.PROXY);
 
         DeviceEntity deviceEntity = drs.deviceRegister(okhttpClient, RequestParams.newDevice());
 
-        try {
-            drs.xlogV2(deviceEntity, XlogEnum.COLD_START, okhttpClient);
+        drs.xlogV2(deviceEntity, XlogEnum.COLD_START, okhttpClient);
 
 
-            drs.xlogV2(deviceEntity, XlogEnum.LOGIN, okhttpClient);
+        drs.xlogV2(deviceEntity, XlogEnum.LOGIN, okhttpClient);
 
-            Thread.sleep(5000);
+        Thread.sleep(5000);
 
 //            PhoneEntity phoneNumber = DaShiZiCodeApi.getInstrance().getPhoneNumber(okhttpClient);
 
-            PhoneEntity phoneNumber = DaShiZiCodeApi.getInstrance().getPhoneNumber(okhttpClient);
-            // 验证码发送成功
-            if (arc.sendCodeV270(okhttpClient, phoneNumber, deviceEntity)) {
+        PhoneEntity phoneNumber = new PhoneEntity(PhoneArea.CHINA, "13532021111");
+        // 验证码发送成功
+        if (arc.sendCodeV270(okhttpClient, phoneNumber, deviceEntity)) {
 
-                String identCode = DaShiZiCodeApi.getInstrance().getIdentCode(phoneNumber, okhttpClient);
+            String identCode = DaShiZiCodeApi.getInstrance().getIdentCode(phoneNumber, okhttpClient);
 
-                if (identCode.equals("1")) {
-                    throw new Exception();
-                }
-
-                phoneNumber.setCode(identCode);
-
-                DyUserEntity dyUserEntity = arc.smsLogin(okhttpClient, phoneNumber, deviceEntity);
-
-                JSONObject result = (JSONObject) JSON.toJSON(dyUserEntity);
-
-                logger.info(" ----- 注册帐号结果 ----- -> user = {}", result);
-
-                getJurisdiction(okhttpClient, dyUserEntity);
-
+            if (identCode.equals("1")) {
+                throw new Exception();
             }
 
+            phoneNumber.setCode(identCode);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-        } catch (Exception e) {
-            // 验证码
-            e.printStackTrace();
+            DyUserEntity dyUserEntity = arc.smsLogin(okhttpClient, phoneNumber, deviceEntity);
+
+            JSONObject result = (JSONObject) JSON.toJSON(dyUserEntity);
+
+            logger.info(" ----- 注册帐号结果 ----- -> user = {}", result);
+
+            getJurisdiction(okhttpClient, dyUserEntity);
+
         }
+
+
+    }
+
+    private static void login() {
+        OkHttpClient okhttpClient = OkHttpTool.getOkhttpClient(OkhttpType.PROXY);
+
+
+
     }
 
 //    private static
 
     public static void main(String[] args) {
 
-        registeAccProcess();
+        try {
+            registeAccProcess();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

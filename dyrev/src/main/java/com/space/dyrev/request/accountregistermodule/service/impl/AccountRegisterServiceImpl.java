@@ -129,7 +129,7 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
                 String[] split = headersStr.split("\n");
                 JSONObject cookies = new JSONObject();
                 for (String s : split) {
-                    logger.info(" ----- 注册帐号头 ----- -> s = {}", s);
+//                    logger.info(" ----- 注册帐号头 ----- -> s = {}", s);
                     if (s.contains("Set-Cookie")) {
                         String[] tmp = s.split(":")[1].split(";")[0].split("=");
                         cookies.put(tmp[0].trim(), tmp[1].trim());

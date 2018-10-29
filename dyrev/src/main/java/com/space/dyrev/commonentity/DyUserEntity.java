@@ -28,7 +28,7 @@ import javax.persistence.*;
 public class DyUserEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     // 帐号区域

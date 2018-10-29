@@ -134,7 +134,7 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
             deviceEntity.setDeviceId(String.valueOf((long)resultJson.get("device_id")));
             device.setTimeFirstSendInstallApp(String.valueOf(System.currentTimeMillis()));
 
-            System.out.println(deviceEntity.toString());
+//            System.out.println(deviceEntity.toString());
 
 
         } catch (IOException e) {

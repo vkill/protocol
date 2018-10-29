@@ -112,12 +112,12 @@ public class DaShiZiCodeApi {
 
 
 
-    public PhoneEntity getPhoneNumber(OkHttpClient okhttpclient) throws IOException {
+    public PhoneEntity getPhoneNumber(OkHttpClient okhttpclient) throws Exception {
         return getPhoneNumber("随机", okhttpclient);
 
     }
 
-    public PhoneEntity getPhoneNumber(String phoneNum, OkHttpClient okhttpclient) throws IOException {
+    public PhoneEntity getPhoneNumber(String phoneNum, OkHttpClient okhttpclient) throws Exception {
         String tag =errorStr;
         String phone_url;
         if(phoneNum.equals("随机")){
@@ -164,7 +164,8 @@ public class DaShiZiCodeApi {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return null;
+            throw new Exception();
+//            return null;
         }else{
 
             PhoneEntity phoneEntity = new PhoneEntity(buffers[1],buffers[2],buffers[3],buffers[4],"+86");
@@ -233,6 +234,8 @@ public class DaShiZiCodeApi {
             DaShiZiCodeApi.getInstrance().getIdentCode(phoneNumber, okhttpClient);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.RequestEntity;
 import com.space.dyrev.enumeration.RequestEnum;
-import com.space.dyrev.request.operationmodule.params.DiggParams;
-import com.space.dyrev.request.operationmodule.params.FollowParams;
-import com.space.dyrev.request.operationmodule.params.ModifyParams;
-import com.space.dyrev.request.operationmodule.params.SearchUserParams;
+import com.space.dyrev.request.operationmodule.params.*;
 import com.space.dyrev.request.operationmodule.service.OperationService;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.httputil.HttpGet;
@@ -173,6 +170,44 @@ public class OperationServiceImpl implements OperationService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public DyUserEntity passportMobileLogin(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception{
+        // is.snssdk.com/passport/mobile/login/
+
+        DyUserEntity resultUser = dyUserEntity;
+
+        String url = PassportMobileLoginParams.constructUrl(dyUserEntity);
+
+        Map header = PassportMobileLoginParams.constructHeader(dyUserEntity);
+
+        Map body = PassportMobileLoginParams.constructBody(dyUserEntity, captcha);
+
+        RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
+
+        req.setOkHttpClient(okHttpClient);
+
+        req.setUrl(url);
+
+        req.setHeaders(header);
+
+        req.setBody(body);
+
+        Response response = OkHttpTool.handleHttpReq(req);
+
+        String headers = response.headers().toString();
+
+        logger.info(" ----- is.snssdk.com/passport/mobile/login/ headers情况 ----- -> headers = {}", headers);
+
+        String result = GzipGetteer.uncompressToString(response.body().bytes());
+
+        logger.info(" ----- is.snssdk.com/passport/mobile/login/ 登陆情况 ----- -> result = {}", result);
+
+
+
+        return resultUser;
 
     }
 }

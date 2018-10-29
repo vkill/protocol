@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 
-public interface DYUserRepository extends JpaRepository<DyUserEntity, Integer>, JpaSpecificationExecutor<DyUserEntity> {
+public interface DyUserRepository extends JpaRepository<DyUserEntity, Integer>, JpaSpecificationExecutor<DyUserEntity> {
 
 
 }

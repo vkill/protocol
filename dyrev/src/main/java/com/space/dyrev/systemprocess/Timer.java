@@ -26,7 +26,7 @@ public class Timer extends Thread{
     public void run() {
 
 
-        final long timeInterval = 2000;
+        final long timeInterval = 2000000;
 
         while (true) {
             logger.info("----------------查询并且插入订单----------------");
