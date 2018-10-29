@@ -80,4 +80,13 @@ public interface DeviceRegisterService {
      * @return
      */
     void testSaveDevice(DeviceEntity deviceEntity);
+
+
+    /**
+     * 设备注册——JT
+     * @param okHttpClient
+     * @param device
+     * @return
+     */
+    DeviceEntity deviceRegisterTemp(OkHttpClient okHttpClient, DeviceEntity device);
 }

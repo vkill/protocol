@@ -94,7 +94,7 @@ public class OkHttpTool {
         if (byteType.equals("json")) {
             type = MediaType.parse("application/json");
         } else {
-            type = MediaType.parse("application/octet-stream");
+//            type = MediaType.parse("application/octet-stream");
         }
         RequestBody requestBody = RequestBody.create(type, bytes);
 

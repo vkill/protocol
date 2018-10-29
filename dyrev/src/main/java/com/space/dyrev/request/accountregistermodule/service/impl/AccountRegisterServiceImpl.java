@@ -129,12 +129,13 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
                 String[] split = headersStr.split("\n");
                 JSONObject cookies = new JSONObject();
                 for (String s : split) {
+                    logger.info(" ----- 注册帐号头 ----- -> s = {}", s);
                     if (s.contains("Set-Cookie")) {
                         String[] tmp = s.split(":")[1].split(";")[0].split("=");
                         cookies.put(tmp[0].trim(), tmp[1].trim());
                     }
 
-                    if (s.contains("X-Tt-Token")) {
+                    if (s.contains("X-Tt-Token:")) {
                         String tmp = s.split(":")[1];
                         user.setxTtToken(tmp);
                     }
@@ -148,6 +149,8 @@ public class AccountRegisterServiceImpl implements AccountRegisterService {
 
                 // json
                 JSONObject data = (JSONObject) msg.get("data");
+
+                logger.info(" ----- 注册帐号返回的 ----- -> s = {}", data);
 
                 user.setArea(phoneEntity.getArea().getAreaNum());
                 user.setAccount(phoneEntity.getPhoneNum());

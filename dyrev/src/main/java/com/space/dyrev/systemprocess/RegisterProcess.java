@@ -7,7 +7,6 @@ import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.enumeration.OkhttpType;
-import com.space.dyrev.enumeration.PhoneArea;
 import com.space.dyrev.enumeration.XlogEnum;
 import com.space.dyrev.request.accountregistermodule.service.AccountRegisterService;
 import com.space.dyrev.request.accountregistermodule.service.impl.AccountRegisterServiceImpl;
@@ -22,9 +21,6 @@ import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.Map;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -71,7 +67,7 @@ public class RegisterProcess {
 
     private static void getJurisdiction (OkHttpClient okHttpClient, DyUserEntity dyUserEntity) {
 
-        appLogService.Service2LogSettingS(okHttpClient, dyUserEntity.getDevice());
+        appLogService.service2LogSettingS(okHttpClient, dyUserEntity.getDevice());
         js.awemeV2platformShareSettings(okHttpClient, dyUserEntity);
         js.awemeV1SpotlightRelation(okHttpClient, dyUserEntity);
         js.awemeV1AwemeStats(okHttpClient, dyUserEntity);

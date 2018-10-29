@@ -7,8 +7,10 @@ import com.space.dyrev.enumeration.RequestEnum;
 import com.space.dyrev.request.operationmodule.params.DiggParams;
 import com.space.dyrev.request.operationmodule.params.FollowParams;
 import com.space.dyrev.request.operationmodule.params.ModifyParams;
+import com.space.dyrev.request.operationmodule.params.SearchUserParams;
 import com.space.dyrev.request.operationmodule.service.OperationService;
 import com.space.dyrev.util.formatutil.GzipGetteer;
+import com.space.dyrev.util.httputil.HttpGet;
 import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -146,5 +148,31 @@ public class OperationServiceImpl implements OperationService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void searchUser(OkHttpClient okHttpClient, DyUserEntity dyUserEntity,String userId) {
+        // aweme.snssdk.com/aweme/v1/user/?
+
+        String url = SearchUserParams.constructUrl(dyUserEntity, userId);
+
+        Map map = SearchUserParams.constructHeader(dyUserEntity);
+
+
+        try {
+            Response response = HttpGet.commonGet(url, map, okHttpClient);
+
+            byte[] bodyBytes = response.body().bytes();
+
+            String result = GzipGetteer.uncompressToString(bodyBytes);
+
+            response.body().close();
+
+//            logger.info(" ----- aweme.snssdk.com/aweme/v1/user/? 搜索用户结果 ----- -> user = {}", result);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
