@@ -28,7 +28,31 @@ public class RegisterV176Params {
         StringBuffer url = new StringBuffer();
         url.append("https://");
         url.append(HOST + REGISTER_FUNC);
-        url.append(CommonUrlPart.deviceUrl(deviceEntity));
+
+        url.append("os_api=25");
+        url.append("&device_platform=" + CommonParams.DEVICE_PLATFORM);
+        url.append("&device_type=" + deviceEntity.getDeviceType());
+        url.append("&iid=" + deviceEntity.getInstallId());
+        url.append("&uuid=" + deviceEntity.getUuid());
+        url.append("&ssmix=" + CommonParams.SSMIX);
+        url.append("&manifest_version_code=176");
+        url.append("&dpi=" + deviceEntity.getDpi());
+        url.append("&app_name=" + CommonParams.APP_NAME);
+        url.append("&version_code=176");
+        url.append("&openudid=" + deviceEntity.getOpenudid());
+        url.append("&device_id=" + deviceEntity.getDeviceId());
+        url.append("&resolution=" + deviceEntity.getResolution());
+        url.append("&os_version=" + CommonParams.OS_VERSION);
+        url.append("&version_name=1.7.6");
+        url.append("&language=" + CommonParams.LANGUAGE);
+        url.append("&device_brand=" + deviceEntity.getDeviceBrand());
+        url.append("&ac=" + deviceEntity.getAccess());
+        url.append("&update_version_code=1762");
+        url.append("&aid=" + CommonParams.AID);
+        url.append("&channel=tengxun");
+        url.append("&_rticket=" + CommonParams.getRticket());
+        url.append("&ts=" + System.currentTimeMillis()/1000);
+
         url.append("&as=" + CommonParams.AS);
         url.append("&cp=" + CommonParams.CP);
 
@@ -76,7 +100,7 @@ public class RegisterV176Params {
         body.put("os_version","7.1.2");
         body.put("language","zh");
         body.put("device_brand",deviceEntity.getDeviceBrand());
-        body.put("ac","wifi");
+        body.put("ac",deviceEntity.getAccess());
         body.put("update_version_code","1762");
         body.put("aid","1128");
 
