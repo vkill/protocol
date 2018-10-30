@@ -1,6 +1,7 @@
 package com.space.dyrev.request.operationmodule.service;
 
 import com.space.dyrev.commonentity.DyUserEntity;
+import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
 
@@ -73,4 +74,14 @@ public interface OperationService {
      * @param captcha 如果为""或者 null则为空
      */
     DyUserEntity passportMobileLogin(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception;
+
+    /**
+     * 来自贾莛的密码登录
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @param captcha
+     * @return
+     * @throws Exception
+     */
+    DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception;
 }

@@ -2,6 +2,7 @@ package com.space.dyrev.request.operationmodule.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DyUserEntity;
+import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.commonentity.RequestEntity;
 import com.space.dyrev.enumeration.RequestEnum;
 import com.space.dyrev.request.operationmodule.params.*;
@@ -210,6 +211,46 @@ public class OperationServiceImpl implements OperationService {
 
 
         return resultUser;
+
+    }
+
+    @Override
+    public DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception{
+
+        DyUserEntity user = dyUserEntity;
+
+        long time = System.currentTimeMillis();
+
+        String url = LoginParams.constructUrl(dyUserEntity);
+
+        Map header = LoginParams.constructHeader(dyUserEntity);
+
+        Map body = LoginParams.constructBody(dyUserEntity, captcha);
+
+        RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
+
+        req.setOkHttpClient(okHttpClient);
+
+        req.setUrl(url);
+
+        req.setHeaders(header);
+
+        req.setBody(body);
+
+        Response response = OkHttpTool.handleHttpReq(req);
+
+        String headers = response.headers().toString();
+
+        logger.info(" ----- is.snssdk.com/passport/mobile/login/ headers情况 ----- -> headers = {}", headers);
+
+        String result = GzipGetteer.uncompressToString(response.body().bytes());
+
+        logger.info(" ----- is.snssdk.com/passport/mobile/login/ 登陆情况 ----- -> result = {}", result);
+
+
+
+        return user;
+
 
     }
 }
