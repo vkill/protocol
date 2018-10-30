@@ -179,11 +179,13 @@ public class OperationServiceImpl implements OperationService {
 
         DyUserEntity resultUser = dyUserEntity;
 
-        String url = PassportMobileLoginParams.constructUrl(dyUserEntity);
+        long time = System.currentTimeMillis();
 
-        Map header = PassportMobileLoginParams.constructHeader(dyUserEntity);
+        String url = PassportMobileLoginParams.constructUrl(dyUserEntity, time);
 
-        Map body = PassportMobileLoginParams.constructBody(dyUserEntity, captcha);
+        Map header = PassportMobileLoginParams.constructHeader(dyUserEntity, time);
+
+        Map body = PassportMobileLoginParams.constructBody(dyUserEntity, captcha, time);
 
         RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
 

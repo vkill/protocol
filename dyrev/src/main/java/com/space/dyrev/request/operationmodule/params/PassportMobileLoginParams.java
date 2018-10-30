@@ -36,7 +36,7 @@ public class PassportMobileLoginParams {
 
     private static String FUNC = "/passport/mobile/login/?";
 
-    public static String constructUrl(DyUserEntity dyUserEntity) {
+    public static String constructUrl(DyUserEntity dyUserEntity, long time) {
 
         StringBuffer sb = new StringBuffer("https://");
 
@@ -44,23 +44,26 @@ public class PassportMobileLoginParams {
 
         sb.append(FUNC);
 
-        String common = CommonUrlPart.deviceUrl(dyUserEntity.getDevice());
+        String common = CommonUrlPart.deviceUrlWithNoTime(dyUserEntity.getDevice());
 
         sb.append(common);
+
+        sb.append("&_rticket=" + time);
+        sb.append("&ts=" + time/1000);
 
         sb.append("&as="+ CommonParams.AS);
         sb.append("&cp="+ CommonParams.CP);
         return sb.toString();
     }
 
-    public static Map constructHeader(DyUserEntity dyUserEntity) {
+    public static Map constructHeader(DyUserEntity dyUserEntity, long time) {
         Map result = new HashMap();
         result.put("Host", HOST);
         result.put("Accept-Encoding", "gzip");
         result.put("Connection", "keep-alive");
         result.put("Cookie", CookieTool.getCookieFromDevAndAcc(dyUserEntity.getDevice(), dyUserEntity));
         result.put("sdk-version", "1");
-        result.put("X-SS-REQ-TICKET", Long.toString(System.currentTimeMillis()));
+        result.put("X-SS-REQ-TICKET", Long.toString(time));
         result.put("X-SS-TC", "0");
         result.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
         result.put("User-Agent",CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
@@ -68,13 +71,14 @@ public class PassportMobileLoginParams {
         return result;
     }
 
-    public static Map constructBody(DyUserEntity dyUserEntity, String captcha) {
-        Map result = CommonUrlPart.deviceMapBody(dyUserEntity.getDevice());
+    public static Map constructBody(DyUserEntity dyUserEntity, String captcha, long time) {
+        Map result = CommonUrlPart.deviceMapBodyWithNoTime(dyUserEntity.getDevice());
         result.put("mobile", PhoneNumberEncrypt.codeEncode(dyUserEntity.getArea()+dyUserEntity.getAccount()));
         result.put("password", PhoneNumberEncrypt.codeEncode(dyUserEntity.getPwd()));
         if (StringUtil.isNotEmpty(captcha)) {
             result.put("captcha", captcha);
         }
+        result.put("_rticket", Long.toString(time));
         return result;
 
     }
