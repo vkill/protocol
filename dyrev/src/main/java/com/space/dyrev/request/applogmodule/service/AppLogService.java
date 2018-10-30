@@ -1,6 +1,7 @@
 package com.space.dyrev.request.applogmodule.service;
 
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.commonentity.DyUserEntity;
 import okhttp3.OkHttpClient;
 
 /**
@@ -18,10 +19,10 @@ import okhttp3.OkHttpClient;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/26 16:09
- *        @Description: 
+ *        @Description:
  **/
 public interface AppLogService {
 
@@ -42,4 +43,6 @@ public interface AppLogService {
      */
     void service2AppLog(OkHttpClient okHttpClient, DeviceEntity deviceEntity);
 
+
+    void Applog270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
 }

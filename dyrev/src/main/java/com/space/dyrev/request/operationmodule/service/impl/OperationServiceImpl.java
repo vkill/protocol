@@ -227,7 +227,7 @@ public class OperationServiceImpl implements OperationService {
 
         Map body = LoginParams.constructBody(dyUserEntity, captcha);
 
-        RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
+        RequestEntity req = new RequestEntity(RequestEnum.GET);
 
         req.setOkHttpClient(okHttpClient);
 
@@ -252,5 +252,34 @@ public class OperationServiceImpl implements OperationService {
         return user;
 
 
+    }
+
+    @Override
+    public String getUidByVideoId(OkHttpClient okHttpClient, String aweme_id) throws Exception{
+
+        String url = GetUidByVideoIdParams.constructUrl(aweme_id);
+
+        Map header = GetUidByVideoIdParams.constructHeader();
+
+        RequestEntity req = new RequestEntity(RequestEnum.GET);
+
+        req.setOkHttpClient(okHttpClient);
+
+        req.setUrl(url);
+
+        req.setHeaders(header);
+
+        Response response = OkHttpTool.handleHttpReq(req);
+
+        //下面对返回的response进行处理以获取用户id
+        String result = "";
+        String resultLine = GzipGetteer.uncompressToString(response.body().bytes());
+        String []temp1 = resultLine.split(", ");
+        for(int i = 0;i < temp1.length;i++){
+            if(temp1[i].split(":")[0].equals("\"author_user_id\"")){
+                result = temp1[i].split(":")[1];
+            }
+        }
+        return result;
     }
 }

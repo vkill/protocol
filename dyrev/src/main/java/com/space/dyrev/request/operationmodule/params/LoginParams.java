@@ -56,7 +56,7 @@ public class LoginParams {
         header.put("Host",HOST);
         header.put("Connection","Keep-Alive");
         header.put("Content-Length","500");
-        header.put("Cookie", CookieTool.getCookieFromDevAndAcc(dyUserEntity.getDevice(), null));
+        header.put("Cookie", "install_id=" + dyUserEntity.getDevice().getInstallId() +"; qh[360]=1");
 
         header.put("X-SS-REQ-TICKET", String.valueOf(System.currentTimeMillis()));
         header.put("sdk-version","1");

@@ -84,4 +84,12 @@ public interface OperationService {
      * @throws Exception
      */
     DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception;
+
+    /**
+     * 根据视频id获取用户id的方法
+     * @param okHttpClient
+     * @param aweme_id
+     * @return
+     */
+    String getUidByVideoId(OkHttpClient okHttpClient,String aweme_id) throws Exception;
 }

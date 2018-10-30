@@ -1,15 +1,16 @@
 package com.space.dyrev.request.applogmodule.service.impl;
 
 import com.space.dyrev.commonentity.DeviceEntity;
+import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.RequestEntity;
 import com.space.dyrev.enumeration.RequestEnum;
+import com.space.dyrev.request.applogmodule.params.Applog270Params;
 import com.space.dyrev.request.applogmodule.params.Service2AppLogParams;
 import com.space.dyrev.request.applogmodule.params.Service2LogSettingsParams;
 import com.space.dyrev.request.applogmodule.service.AppLogService;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.httputil.OkHttpTool;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,10 @@ import java.util.Map;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/26 16:09
- *        @Description: 
+ *        @Description:
  **/
 @Service("appLogService")
 public class AppLogServiceImpl implements AppLogService {
@@ -100,5 +101,40 @@ public class AppLogServiceImpl implements AppLogService {
         }
 
 
+    }
+
+    @Override
+    public void Applog270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id){
+
+        String url = Applog270Params.constructUrl(dyUserEntity);
+
+        Map <String, String> header = Applog270Params.constructHeader(dyUserEntity);
+
+        String json = null;
+        try {
+            json = Applog270Params.constructBody(okHttpClient,"digg", dyUserEntity, aweme_id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        MediaType type = MediaType.parse("application/octet-stream;tt-data=a");
+        RequestBody body = RequestBody.create(type, json);
+
+        Request.Builder builder = new Request.Builder();
+        builder.url(url);
+        for(String key : header.keySet()){
+            builder.addHeader(key, header.get(key));
+        }
+
+        Request request = builder.post(body).build();
+
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            System.out.println("app_log" + System.currentTimeMillis());
+            System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
