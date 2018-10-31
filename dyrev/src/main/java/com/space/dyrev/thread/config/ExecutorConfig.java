@@ -1,4 +1,4 @@
-package com.space.dyrev.request.testthreadmodule.config;
+package com.space.dyrev.thread.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

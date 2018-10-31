@@ -1,4 +1,4 @@
-package com.space.dyrev.request.testthreadmodule.service;
+package com.space.dyrev.thread.service;
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
  *         ,@@@@@@@@@@^    @@@@./@@@@@@@@@^    =@@@@@@@@@@@@.      ]@@@@@@@@@@@^   ,@@@@@@@@@@`
@@ -19,14 +19,14 @@ package com.space.dyrev.request.testthreadmodule.service;
  *        @Date: 2018/10/24 00:37
  *        @Description: 
  **/
-public interface AsyncService {
+public interface UserThreadService {
 
     /**
      * demo
      */
-    void executeAsync();
+    void registerNewUser();
 
-    void readDataBase(Integer i);
+    void diggAndThumbUp();
 
-    void managerData();
+    //void managerData();
 }
