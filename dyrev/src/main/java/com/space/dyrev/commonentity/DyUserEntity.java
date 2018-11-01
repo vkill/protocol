@@ -60,6 +60,29 @@ public class DyUserEntity {
     // 登陆的时候header返回的
     private String xTtToken;
 
+
+    @Transient
+    private boolean isCaptcha = false;
+
+    @Transient
+    private String captcha;
+
+    public boolean isCaptcha() {
+        return isCaptcha;
+    }
+
+    public void setCaptcha(boolean captcha) {
+        isCaptcha = captcha;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
+    }
+
     public String getxTtTokenSign() {
         return xTtTokenSign;
     }
