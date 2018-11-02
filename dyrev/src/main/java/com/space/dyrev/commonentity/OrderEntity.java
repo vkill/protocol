@@ -36,11 +36,15 @@ public class OrderEntity {
 
     private String time;
 
+    private String videoId;
+
     private OrderTypeEnum orderTypeEnum; // 点赞还是关注还是浏览量
 
     private int orderCount; // 下单的数量
 
     private int operationCount; // 应该操作数目
+
+    private String status;//订单的状态，0表示带执行订单、1标识已完成订单、-1标识异常订单、2标识正在执行的订单
 
     public Integer getId() {
         return id;
@@ -48,6 +52,14 @@ public class OrderEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getOrderNumber() {
@@ -89,4 +101,13 @@ public class OrderEntity {
     public void setOperationCount(int operationCount) {
         this.operationCount = operationCount;
     }
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
+    }
+
 }

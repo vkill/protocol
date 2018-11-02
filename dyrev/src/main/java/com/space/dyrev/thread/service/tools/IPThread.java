@@ -1,7 +1,9 @@
-package com.space.dyrev.thread.service.impl;
+package com.space.dyrev.thread.service.tools;
 
 import com.space.dyrev.apisupport.HostIPGetter;
 import com.space.dyrev.commonentity.HostIPPo;
+import com.space.dyrev.dao.DeviceRepository;
+import com.space.dyrev.util.springutils.SpringUtil;
 
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;

@@ -1,9 +1,17 @@
 package com.space.dyrev.thread.service.impl;
 
 import com.alibaba.fastjson.JSONException;
+import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.HostIPPo;
+import com.space.dyrev.commonentity.OrderEntity;
+import com.space.dyrev.dao.DeviceRepository;
+import com.space.dyrev.dao.DyUserRepository;
 import com.space.dyrev.dao.TestSaveRepository;
+import com.space.dyrev.ordermodule.dao.OrderEntityRepository;
 import com.space.dyrev.thread.service.UserThreadService;
+import com.space.dyrev.thread.service.tools.IPThread;
+import com.space.dyrev.thread.service.tools.OrderGetterThread;
+import com.space.dyrev.thread.service.tools.UserGetterThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -11,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -38,9 +47,28 @@ public class UserThreadServiceImpl implements UserThreadService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserThreadServiceImpl.class);
 
+    //与逻辑相关的静态对象
+    @Resource
+    protected DyUserRepository dyUserRepository;
+    @Resource
+    protected DeviceRepository deviceRepository;
+    @Resource
+    protected OrderEntityRepository orderEntityRepository;
+
+    //存储订单、用户、IP的对象
     public static LinkedBlockingQueue<HostIPPo> hostIpQuene = new LinkedBlockingQueue<HostIPPo>();
 
+    public static LinkedBlockingQueue<DyUserEntity> dyUserEntitiesQueue =new LinkedBlockingQueue<>();
+
+    //注意加锁以及判断是否为空
+    public static ArrayList<OrderEntity> orderEntitiesQueue = new ArrayList<>();
+
+    //分别管理信息存储对象的线程
     public static Thread ipThread = new Thread(new IPThread(hostIpQuene));
+
+    public static Thread dyUserThread = new Thread(new UserGetterThread(dyUserEntitiesQueue));
+
+    public static Thread orderThread = new Thread(new OrderGetterThread(orderEntitiesQueue));
 
     //private static Lin
     @Resource
@@ -52,7 +80,7 @@ public class UserThreadServiceImpl implements UserThreadService {
             if(ipThread.isAlive()){
 
             }else{
-                ipThread.start();
+               ipThread.start();
             }
             do{
                 HostIPPo hostIPPo = null;
@@ -66,7 +94,7 @@ public class UserThreadServiceImpl implements UserThreadService {
                 logger.info("获取ip成功");
             for(int i =0;i<2;i++){
                 try {
-                    //注册线程实现方法
+                    //注册用户实现方法~~~~~~~~~~~~~~~~~~~
                     logger.info("成功注册新账号");
                     if(false){
                         throw new IOException();
@@ -97,16 +125,35 @@ public class UserThreadServiceImpl implements UserThreadService {
     @Override
     @Async("asyncServiceExecutor")
     public void diggAndThumbUp() {
-//        double random = Math.random() * 1000;
-//        try {
-//            Thread.sleep((long) random);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        TestSave one = testSaveRepository.findById(i).get();
-//        one.setCount(0);
-//        testSaveRepository.save(one);
-//        logger.info("存储订单 uuid -> {} ----- count -> {}", one.getOpenudid() ,one.getCount());
+        if(dyUserThread.isAlive()&&orderThread.isAlive()&&ipThread.isAlive()){
+
+        }else{
+            ipThread.start();
+            dyUserThread.start();
+            orderThread.start();
+        }
+
+        try {
+            DyUserEntity dyUserEntity = dyUserEntitiesQueue.take();
+            logger.info(dyUserEntity.getUserCookies());
+            logger.info(dyUserEntity.getDevice().getDeviceCookies());
+            for(int i=0;i<orderEntitiesQueue.size();i++){
+                if(orderEntitiesQueue.size()>i){
+                    logger.info("全部完成了");
+                    break;
+                }
+                orderEntitiesQueue.get(i).setOrderCount(orderEntitiesQueue.get(i).getOrderCount()-1);
+                logger.info(""+(orderEntitiesQueue.get(i).getOrderCount()));
+                if(orderEntitiesQueue.get(i).getOrderCount()==0){
+                    orderEntitiesQueue.remove(i);
+                }
+            }
+            dyUserRepository.save(dyUserEntity);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
