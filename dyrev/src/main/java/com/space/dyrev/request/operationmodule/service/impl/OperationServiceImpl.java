@@ -261,6 +261,7 @@ public class OperationServiceImpl implements OperationService {
                     jsonObject.put(temp[0], temp[1]);
                 }
             }
+            user.setCaptcha(false);
             user.setUserCookies(jsonObject.toJSONString());
         }
 
