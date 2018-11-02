@@ -21,7 +21,7 @@ import java.util.Map;
 public class LoginParams {
 
     // HOST
-    private static final String HOST = "lf.snssdk.com";
+    private static final String HOST = "is.snssdk.com";
 
     // 请求头方法
     private static final String FUNC = "/passport/mobile/login/?";
@@ -33,15 +33,17 @@ public class LoginParams {
      */
     public static String constructUrl(DyUserEntity dyUserEntity) {
 
-        StringBuffer url = new StringBuffer("https://");
-        url.append(HOST);
-        url.append(FUNC);
-        // 公共部分
-        url.append(CommonUrlPart.deviceUrl(dyUserEntity.getDevice()));
-        url.append("&as=" + CommonParams.AS);
-        url.append("&cp=" + CommonParams.CP);
+//        StringBuffer url = new StringBuffer("https://");
+//        url.append(HOST);
+//        url.append(FUNC);
+//        // 公共部分
+//        url.append(CommonUrlPart.deviceUrl(dyUserEntity.getDevice()));
+//        url.append("&as=" + CommonParams.AS);
+//        url.append("&cp=" + CommonParams.CP);
+        DeviceEntity deviceEntity = dyUserEntity.getDevice();
+        String url = "https://"+HOST + FUNC+"os_api="+CommonParams.OS_API+"&device_type="+deviceEntity.getDeviceType()+"&device_platform=android&ssmix=a&iid="+deviceEntity.getInstallId()+"&manifest_version_code="+CommonParams.MANIFEST_VERSION_CODE+"&dpi="+deviceEntity.getDpi()+"&uuid="+deviceEntity.getUuid()+"&version_code="+CommonParams.VERSION_CODE+"&app_name=aweme&version_name="+CommonParams.VERSION_NAME+"&openudid="+deviceEntity.getOpenudid()+"&device_id="+deviceEntity.getDeviceId()+"&resolution="+deviceEntity.getResolution()+"&os_version="+CommonParams.OS_VERSION+"&language="+CommonParams.LANGUAGE+"&device_brand="+deviceEntity.getDeviceBrand()+"&ac="+deviceEntity.getAccess()+"&update_version_code="+CommonParams.UPDATE_VERSION_CODE+"&aid=1128&channel="+deviceEntity.getChannel()+"&_rticket="+System.currentTimeMillis()+"&ts="+System.currentTimeMillis()/1000+"&as=a1iosdfgh&cp=androide1";
 
-        return url.toString();
+        return url;
     }
 
     /**
@@ -51,15 +53,16 @@ public class LoginParams {
      */
     public static Map constructHeader(DyUserEntity dyUserEntity) {
 
-        Map<String, String> header = new HashMap<String, String>();
+        Map<String, String> header = new HashMap<>();
         header.put("Accept-Encoding","gzip");
         header.put("Host",HOST);
-        header.put("Connection","Keep-Alive");
+        header.put("Connection","keep-alive");
         header.put("Content-Length","500");
         header.put("Cookie", "install_id=" + dyUserEntity.getDevice().getInstallId() +"; qh[360]=1");
 
         header.put("X-SS-REQ-TICKET", String.valueOf(System.currentTimeMillis()));
         header.put("sdk-version","1");
+        header.put("X-Tt-Token","");
         header.put("Content-Type","application/x-www-form-urlencoded; charset=UTF-8");
         header.put("X-SS-TC","0");
         header.put("User-Agent",CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
@@ -88,7 +91,7 @@ public class LoginParams {
         body.put("version_name",CommonParams.VERSION_NAME);
         body.put("retry_type","no_retry");
         body.put("ac",deviceEntity.getAccess());
-        body.put("channel",deviceEntity.getChannel());
+        body.put("channel","meizu");
         body.put("update_version_code", CommonParams.UPDATE_VERSION_CODE);
         body.put("_rticket", String.valueOf(System.currentTimeMillis()));
         body.put("device_platform",CommonParams.DEVICE_PLATFORM);
@@ -111,4 +114,5 @@ public class LoginParams {
 
         return body;
     }
+
 }

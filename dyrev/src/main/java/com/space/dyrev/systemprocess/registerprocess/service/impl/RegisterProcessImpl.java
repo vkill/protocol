@@ -27,6 +27,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Optional;
 
+import static com.space.dyrev.enumeration.XlogEnum.COLD_START;
+import static com.space.dyrev.enumeration.XlogEnum.LOGIN;
+
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
  *         ,@@@@@@@@@@^    @@@@./@@@@@@@@@^    =@@@@@@@@@@@@.      ]@@@@@@@@@@@^   ,@@@@@@@@@@`
@@ -42,10 +45,10 @@ import java.util.Optional;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/29 14:15
- *        @Description: 
+ *        @Description:
  **/
 @Service("registerProcess")
 public class RegisterProcessImpl implements RegisterProcess {
@@ -197,6 +200,35 @@ public class RegisterProcessImpl implements RegisterProcess {
         }
 
 
+    }
+
+    @Override
+    public DyUserEntity passwordLogin(OkHttpClient okHttpClient, DyUserEntity dyUserEntity) throws Exception{
+
+        DeviceEntity deviceEntity = dyUserEntity.getDevice();
+
+        deviceEntity = deviceRegisterService.deviceRegisterTemp(okHttpClient, deviceEntity);
+
+        //下面在登录前运行两个xlog
+        deviceRegisterService.xlogV2(deviceEntity, COLD_START, okHttpClient);
+        Thread.sleep(500);
+        deviceRegisterService.xlogV2(deviceEntity, LOGIN, okHttpClient);
+        Thread.sleep(500);
+        deviceRepository.save(deviceEntity);
+        dyUserEntity.setDevice(deviceEntity);
+
+        //调用密码登录
+        dyUserEntity = operationService.login(okHttpClient, dyUserEntity);
+        if(dyUserEntity.isCaptcha()){
+            //如果需要验证码，会返回验证的base64字段
+//            System.out.println(dyUserEntity.getCaptcha());
+        }else {
+//            System.out.println(dyUserEntity.toString());
+            //如果不需要验证码，表明登陆成功，存储数据库
+            dyUserRepository.save(dyUserEntity);
+        }
+
+        return dyUserEntity;
     }
 
 

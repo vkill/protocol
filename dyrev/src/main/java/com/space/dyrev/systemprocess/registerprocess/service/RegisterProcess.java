@@ -19,10 +19,10 @@ import okhttp3.OkHttpClient;
  *                         @@@@.
  *                         @@@@.
  *                         @@@@.
- *                                
+ *
  *        @Author: space
  *        @Date: 2018/10/29 14:15
- *        @Description: 
+ *        @Description:
  **/
 public interface RegisterProcess {
 
@@ -39,5 +39,13 @@ public interface RegisterProcess {
 
     void testPassportMobileLogin(OkHttpClient okHttpClient, Integer id, String captcha);
 
+    /**
+     * 密码登录，如果密码失败返回的entity中的isCaptcha为true，否则登录成功
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @return
+     * @throws Exception
+     */
+    DyUserEntity passwordLogin(OkHttpClient okHttpClient, DyUserEntity dyUserEntity) throws Exception;
 
 }
