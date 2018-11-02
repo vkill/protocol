@@ -242,12 +242,12 @@ public class OperationServiceImpl implements OperationService {
         Headers responseHeaders = response.headers();
 
         JSONObject msg = JSONObject.parseObject(GzipGetteer.uncompressToString(response.body().bytes()));
-        System.out.println(msg);
+//        System.out.println(msg);
         if (msg.get("message").equals("error")){
-            user.setCaptcha(String.valueOf(msg.get("captcha")));
             JSONObject msg1 = (JSONObject) msg.get("data");
 
-            System.out.println(String.valueOf(msg1.get("captcha")));
+//            System.out.println(String.valueOf(msg1.get("captcha")));
+            user.setCaptcha(String.valueOf(msg1.get("captcha")));
             user.setCaptcha(true);
         }else {
             int responseHeadersLength = responseHeaders.size();
