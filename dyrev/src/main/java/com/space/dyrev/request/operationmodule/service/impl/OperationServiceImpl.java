@@ -10,9 +10,7 @@ import com.space.dyrev.request.operationmodule.service.OperationService;
 import com.space.dyrev.util.formatutil.GzipGetteer;
 import com.space.dyrev.util.httputil.HttpGet;
 import com.space.dyrev.util.httputil.OkHttpTool;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -215,7 +213,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception{
+    public DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity) throws Exception{
 
         DyUserEntity user = dyUserEntity;
 
@@ -225,9 +223,9 @@ public class OperationServiceImpl implements OperationService {
 
         Map header = LoginParams.constructHeader(dyUserEntity);
 
-        Map body = LoginParams.constructBody(dyUserEntity, captcha);
+        Map body = LoginParams.constructBody(dyUserEntity, dyUserEntity.getCaptcha());
 
-        RequestEntity req = new RequestEntity(RequestEnum.GET);
+        RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
 
         req.setOkHttpClient(okHttpClient);
 
@@ -237,17 +235,35 @@ public class OperationServiceImpl implements OperationService {
 
         req.setBody(body);
 
-        Response response = OkHttpTool.handleHttpReq(req);
 
-        String headers = response.headers().toString();
+        Call call = okHttpClient.newCall(constructPost(req));
+        Response response = call.execute();
 
-        logger.info(" ----- is.snssdk.com/passport/mobile/login/ headers情况 ----- -> headers = {}", headers);
+        Headers responseHeaders = response.headers();
 
-        String result = GzipGetteer.uncompressToString(response.body().bytes());
+        JSONObject msg = JSONObject.parseObject(GzipGetteer.uncompressToString(response.body().bytes()));
+//        System.out.println(msg);
+        if (msg.get("message").equals("error")){
+            JSONObject msg1 = (JSONObject) msg.get("data");
 
-        logger.info(" ----- is.snssdk.com/passport/mobile/login/ 登陆情况 ----- -> result = {}", result);
-
-
+//            System.out.println(String.valueOf(msg1.get("captcha")));
+            user.setCaptcha(String.valueOf(msg1.get("captcha")));
+            user.setCaptcha(true);
+        }else {
+            int responseHeadersLength = responseHeaders.size();
+            JSONObject jsonObject = new JSONObject();
+            for (int i = 0; i < responseHeadersLength; i++){
+                String headerName = responseHeaders.name(i);
+                String headerValue = responseHeaders.value(i);
+//            System.out.print("TAG----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
+                if(headerName.equals("Set-Cookie")){
+                    String []temp = headerValue.split(";")[0].split("=");
+                    jsonObject.put(temp[0], temp[1]);
+                }
+            }
+            user.setCaptcha(false);
+            user.setUserCookies(jsonObject.toJSONString());
+        }
 
         return user;
 
@@ -281,5 +297,27 @@ public class OperationServiceImpl implements OperationService {
             }
         }
         return result;
+    }
+
+    public static Request constructPost(RequestEntity requestEntity){
+        // 构建POST请求，并设置请求消息头
+        //requestEntity中包含三部分，Url、Header和Body
+        FormBody.Builder formBody = new FormBody.Builder();     //创建表单请求体
+
+        Request.Builder builder = new Request.Builder();
+        builder.url(requestEntity.getUrl());
+        Map<String, String> headerParams = requestEntity.getHeaders();
+        Map<String, String> bodyParams = requestEntity.getBody();
+        for(String key : headerParams.keySet()){        //添加header信息
+            builder.addHeader(key, headerParams.get(key).trim());
+        }
+        for(String key : bodyParams.keySet()){      //添加body信息
+//            builder.post(formBody.build()).build();
+            formBody.add(key, bodyParams.get(key));
+        }
+        Request request = builder.post(formBody.build()).build();
+
+
+        return request;
     }
 }

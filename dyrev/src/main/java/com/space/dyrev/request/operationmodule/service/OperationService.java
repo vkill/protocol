@@ -79,11 +79,10 @@ public interface OperationService {
      * 来自贾莛的密码登录
      * @param okHttpClient
      * @param dyUserEntity
-     * @param captcha
      * @return
      * @throws Exception
      */
-    DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String captcha) throws Exception;
+    DyUserEntity login(OkHttpClient okHttpClient, DyUserEntity dyUserEntity) throws Exception;
 
     /**
      * 根据视频id获取用户id的方法
