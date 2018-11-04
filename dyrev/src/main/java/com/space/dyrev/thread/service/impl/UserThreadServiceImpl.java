@@ -8,6 +8,7 @@ import com.space.dyrev.dao.DeviceRepository;
 import com.space.dyrev.dao.DyUserRepository;
 import com.space.dyrev.dao.TestSaveRepository;
 import com.space.dyrev.ordermodule.dao.OrderEntityRepository;
+import com.space.dyrev.systemprocess.registerprocess.service.RegisterProcess;
 import com.space.dyrev.systemprocess.registerprocess.service.impl.RegisterProcessImpl;
 import com.space.dyrev.thread.service.UserThreadService;
 import com.space.dyrev.thread.service.tools.IPThread;
@@ -74,7 +75,8 @@ public class UserThreadServiceImpl implements UserThreadService {
 
     public static Thread orderThread = new Thread(new OrderGetterThread(orderEntitiesQueue));
 
-    public static RegisterProcessImpl registerProcess;
+    @Resource
+    public RegisterProcess registerProcess;
     //private static Lin
     @Resource
     TestSaveRepository testSaveRepository;

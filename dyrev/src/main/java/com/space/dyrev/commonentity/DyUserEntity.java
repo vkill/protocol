@@ -60,6 +60,8 @@ public class DyUserEntity {
     // 登陆的时候header返回的
     private String xTtToken;
 
+    private String accountStatus;//账号状态 1表示账号异常 0 表示账号正常
+
 
     @Transient
     private boolean isCaptcha = false;
@@ -177,6 +179,14 @@ public class DyUserEntity {
 
     public void setEventId(int eventId) {
         this.eventId = eventId;
+    }
+
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
     @Override

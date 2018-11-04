@@ -229,6 +229,7 @@ public class RegisterProcessImpl implements RegisterProcess {
         }else {
 //            System.out.println(dyUserEntity.toString());
             //如果不需要验证码，表明登陆成功，存储数据库
+            dyUserEntity.setAccountStatus("0");
             dyUserRepository.save(dyUserEntity);
         }
 
