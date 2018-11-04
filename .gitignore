@@ -52,3 +52,17 @@ dyrev/src/main/java/com/space/dyrev/testpackage/MainTest.java
 dyrev/src/main/java/com/space/dyrev/util/deviceinfoutil/CreateDevInfoUtil.java
 dyrev/src/main/java/com/space/dyrev/dao/SaveAcc.java
 dyrev/src/main/java/com/space/dyrev/DyrevApplication.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/dao/TempDeviceRepository.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/dao/TempDyUserRepository.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/entity/TempDevice.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/entity/TempUser.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/s.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/service/impl/TransServiceImpl.java
+dyrev/src/main/java/com/space/dyrev/systemprocess/transformmodule/service/TransService.java
+dyrev/src/main/java/com/space/dyrev/DyrevApplication.java
+dyrev/src/main/java/com/space/dyrev/testpackage/TestLogin.java
+dyrev/src/main/resources/application.yml
+register/out/artifacts/register_jar/register.jar
+dyrev/src/main/java/com/space/dyrev/DyrevApplication.java
+dyrev/src/main/java/com/space/dyrev/testpackage/TestLogin.java
+dyrev/src/main/resources/application.yml

@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/dy270?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://192.168.0.104:3306/dy270?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
     username: root
     password: rootroot
     hikari:
@@ -30,7 +30,7 @@ logging:
 async:
   executor:
     thread:
-      core_pool_size: 20 # 配置核心线程数
+      core_pool_size: 30 # 配置核心线程数
       max_pool_size: 50 # 配置最大线程数
       queue_capacity: 99999
       name:
