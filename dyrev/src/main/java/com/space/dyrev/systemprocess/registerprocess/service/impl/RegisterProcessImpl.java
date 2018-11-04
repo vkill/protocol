@@ -221,10 +221,11 @@ public class RegisterProcessImpl implements RegisterProcess {
         dyUserEntity = operationService.login(okHttpClient, dyUserEntity);
         if(dyUserEntity.isCaptcha()){
             //如果需要验证码，会返回验证的base64字段
-            String code = dyUserEntity.getCaptcha();
-            String codes = codeDistinguishApi.parsingEnglishAndNumCode(code);
-            dyUserEntity.setCaptcha(codes);
-
+//            String code = dyUserEntity.getCaptcha();
+//            String codes = codeDistinguishApi.parsingEnglishAndNumCode(code);
+//            dyUserEntity.setCaptcha(codes);
+            dyUserEntity.setAccountStatus("0");
+            dyUserRepository.save(dyUserEntity);
 //            System.out.println(dyUserEntity.getCaptcha());
         }else {
 //            System.out.println(dyUserEntity.toString());

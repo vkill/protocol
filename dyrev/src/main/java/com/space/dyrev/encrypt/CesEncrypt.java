@@ -35,7 +35,7 @@ import java.util.Map;
  **/
 public class CesEncrypt {
 
-    private static final String HOST = "192.168.0.105";
+    private static final String HOST = "192.168.0.103";
 
     private static final String PORT = "11600";
 
