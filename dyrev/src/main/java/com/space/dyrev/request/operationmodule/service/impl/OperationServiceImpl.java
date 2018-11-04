@@ -299,6 +299,34 @@ public class OperationServiceImpl implements OperationService {
         return result;
     }
 
+    @Override
+    public String digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id) {
+
+        String url = Digg270Params.constructUrl(dyUserEntity, aweme_id);
+
+        Map header = Digg270Params.constructHeader(dyUserEntity);
+
+        Request.Builder builder = new Request.Builder();
+        builder.url(url);
+        Map<String,String> headerParams = header;
+        for(String key : headerParams.keySet()){
+            builder.addHeader(key, headerParams.get(key));
+        }
+        Request request = builder.get().build();
+
+        Call call = okHttpClient.newCall(request);
+        try {
+            Response response = call.execute();
+            System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return "1";
+
+    }
+
     public static Request constructPost(RequestEntity requestEntity){
         // 构建POST请求，并设置请求消息头
         //requestEntity中包含三部分，Url、Header和Body
