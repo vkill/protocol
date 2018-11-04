@@ -8,19 +8,23 @@ import com.space.dyrev.dao.DeviceRepository;
 import com.space.dyrev.dao.DyUserRepository;
 import com.space.dyrev.dao.TestSaveRepository;
 import com.space.dyrev.ordermodule.dao.OrderEntityRepository;
+import com.space.dyrev.systemprocess.registerprocess.service.impl.RegisterProcessImpl;
 import com.space.dyrev.thread.service.UserThreadService;
 import com.space.dyrev.thread.service.tools.IPThread;
 import com.space.dyrev.thread.service.tools.OrderGetterThread;
 import com.space.dyrev.thread.service.tools.UserGetterThread;
+import okhttp3.OkHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
+import java.net.Proxy;
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -70,6 +74,7 @@ public class UserThreadServiceImpl implements UserThreadService {
 
     public static Thread orderThread = new Thread(new OrderGetterThread(orderEntitiesQueue));
 
+    public static RegisterProcessImpl registerProcess;
     //private static Lin
     @Resource
     TestSaveRepository testSaveRepository;
@@ -77,11 +82,17 @@ public class UserThreadServiceImpl implements UserThreadService {
     @Override
     @Async("asyncServiceExecutor")
     public void registerNewUser() {
-            if(ipThread.isAlive()){
+            if(ipThread.isAlive()&&dyUserThread.isAlive()){
 
             }else{
                ipThread.start();
+               dyUserThread.start();
             }
+        OkHttpClient okHttpClient;
+            if(registerProcess==null){
+                registerProcess = new RegisterProcessImpl();
+            }
+
             do{
                 HostIPPo hostIPPo = null;
                 logger.info("获取ip");
@@ -92,16 +103,16 @@ public class UserThreadServiceImpl implements UserThreadService {
                     continue;
                 }
                 logger.info("获取ip成功");
+                okHttpClient = new OkHttpClient.Builder()
+                        .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
+                        .writeTimeout(60, TimeUnit.SECONDS)//设置写的超时时间
+                        .connectTimeout(60,TimeUnit.SECONDS)//设置连接超时时间
+                        .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostIPPo.host, hostIPPo.port)))
+                        .build();
             for(int i =0;i<2;i++){
                 try {
-                    //注册用户实现方法~~~~~~~~~~~~~~~~~~~
-                    logger.info("成功注册新账号");
-                    if(false){
-                        throw new IOException();
-                    }
-                    synchronized (testSaveRepository){
-                        logger.info(Thread.currentThread().getName()+" 成功注册用户并存储到订单中");
-                    }
+                    DyUserEntity dyUserEntity = dyUserEntitiesQueue.take();
+                    registerProcess.passwordLogin(okHttpClient,dyUserEntity);
                 } catch (IOException e) {
                     logger.info("死掉了 一个  IP");
                     logger.info(hostIPPo.host+" "+hostIPPo.port);

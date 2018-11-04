@@ -21,10 +21,10 @@ public class CodeDistinguishApi {
     private int codeLength = 0;
     public int codeType = 30;
     private int isPrecise = 0;
-    private CodeDistinguishApi codeDistinguishApi = new CodeDistinguishApi();
+    private static CodeDistinguishApi codeDistinguishApi = new CodeDistinguishApi();
     //但不需要更改密码时，直接调用单粒方法，节省内存
 
-    public CodeDistinguishApi getInstrance(){
+    public static CodeDistinguishApi getInstrance(){
         return codeDistinguishApi;
     }
     private CodeDistinguishApi(){

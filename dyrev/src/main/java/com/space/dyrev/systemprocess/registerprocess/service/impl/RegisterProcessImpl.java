@@ -2,6 +2,7 @@ package com.space.dyrev.systemprocess.registerprocess.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.space.dyrev.apisupport.CodeDistinguishApi;
 import com.space.dyrev.apisupport.codeapi.DaShiZiCodeApi;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
@@ -76,8 +77,7 @@ public class RegisterProcessImpl implements RegisterProcess {
     @Resource
     private OperationService operationService;
 
-
-
+    public CodeDistinguishApi codeDistinguishApi = CodeDistinguishApi.getInstrance();
 
     @Override
     @Async("asyncServiceExecutor")
@@ -221,6 +221,10 @@ public class RegisterProcessImpl implements RegisterProcess {
         dyUserEntity = operationService.login(okHttpClient, dyUserEntity);
         if(dyUserEntity.isCaptcha()){
             //如果需要验证码，会返回验证的base64字段
+            String code = dyUserEntity.getCaptcha();
+            String codes = codeDistinguishApi.parsingEnglishAndNumCode(code);
+            dyUserEntity.setCaptcha(codes);
+
 //            System.out.println(dyUserEntity.getCaptcha());
         }else {
 //            System.out.println(dyUserEntity.toString());
