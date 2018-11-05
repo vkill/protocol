@@ -2,6 +2,7 @@ package com.space.dyrev;
 
 import com.space.dyrev.thread.config.ExecutorConfig;
 import com.space.dyrev.thread.service.UserThreadService;
+import com.space.dyrev.thread.service.impl.MessionThread;
 import com.space.dyrev.util.springutils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,11 +48,13 @@ public class DyrevApplication {
 //        digg.digg(okHttpClient, 112984, "6609453344350014728");
 
         //AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ExecutorConfig.class);
-        logger.info("------------服务注册成功------------");
-        UserThreadService asyncService = (UserThreadService) SpringUtil.getBean("asyncService");
-        for (int i = 0; i < 100000; i++) {
-            asyncService.registerNewUser();
-        }
-        logger.info("------------订单插入成功------------");
+//        logger.info("------------服务注册成功------------");
+//        UserThreadService asyncService = (UserThreadService) SpringUtil.getBean("asyncService");
+//        for (int i = 0; i < 100000; i++) {
+//            asyncService.registerNewUser();
+//        }
+//        logger.info("------------订单插入成功------------");
+        MessionThread messionThread = MessionThread.getInstrance();
+        messionThread.newlyLogin();
     }
 }

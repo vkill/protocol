@@ -50,12 +50,7 @@ public class MessionThread {
     }
 
     public void newlyLogin(){
-            if(ipThread.isAlive()&dyUserThread.isAlive()){
-
-            }else{
-                ipThread.start();
-                dyUserThread.start();
-            }
+        makeAllThreadAlive(false);
         logger.info("------------开始多线程重新登陆账户------------");
         UserThreadService asyncService = (UserThreadService) SpringUtil.getBean("asyncService");
         for (int i = 0; i < 40; i++) {
@@ -64,4 +59,24 @@ public class MessionThread {
         logger.info("------------对应状态的用户登陆完成------------");
     }
 
+    public void diggAndthumbUp(){
+        makeAllThreadAlive(true);
+        logger.info("------------开始多线程进行点赞关注------------");
+        UserThreadService asyncService = (UserThreadService) SpringUtil.getBean("asyncService");
+        for (int i = 0; i < 40; i++) {
+            asyncService.diggAndThumbUp();
+        }
+        logger.info("------------点赞和关注执行完成------------");
+    }
+    private void makeAllThreadAlive(boolean needOrder){
+        if(!ipThread.isAlive()){
+            ipThread.start();
+        }
+        if(!dyUserThread.isAlive()){
+            dyUserThread.start();
+        }
+        if(needOrder&orderThread.isAlive()){
+            orderThread.start();
+        }
+    }
 }

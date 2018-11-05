@@ -92,18 +92,9 @@ public class UserThreadServiceImpl implements UserThreadService {
     @Override
     @Async("asyncServiceExecutor")
     public void diggAndThumbUp() {
-        if(MessionThread.dyUserThread.isAlive()&&MessionThread.orderThread.isAlive()&&MessionThread.ipThread.isAlive()){
-
-        }else{
-            MessionThread.ipThread.start();
-            MessionThread.dyUserThread.start();
-            MessionThread.orderThread.start();
-        }
 
         try {
             DyUserEntity dyUserEntity = MessionThread.dyUserEntitiesQueue.take();
-            logger.info(dyUserEntity.getUserCookies());
-            logger.info(dyUserEntity.getDevice().getDeviceCookies());
             for(int i=0;i<MessionThread.orderEntitiesQueue.size();i++){
                 if(MessionThread.orderEntitiesQueue.size()>i){
                     logger.info("全部完成了");
@@ -123,17 +114,6 @@ public class UserThreadServiceImpl implements UserThreadService {
 
 
     }
-
-//    @Override
-//    @Async("asyncServiceExecutor")
-//    public void managerData() {
-//        try {
-//            Thread.sleep(10000);
-//            logger.info("----------------------没有ip，插入ip-----------------");
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public static OkHttpClient getOkhttpForWork(){
         HostIPPo hostIPPo = null;
