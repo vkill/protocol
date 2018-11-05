@@ -38,6 +38,10 @@ public class OrderEntity {
 
     private String videoId;
 
+    private String qq;
+
+    private double price;
+
     private OrderTypeEnum orderTypeEnum; // 点赞还是关注还是浏览量
 
     private int orderCount; // 下单的数量
@@ -110,4 +114,35 @@ public class OrderEntity {
         this.videoId = videoId;
     }
 
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "id=" + id +
+                ", orderNumber='" + orderNumber + '\'' +
+                ", time='" + time + '\'' +
+                ", videoId='" + videoId + '\'' +
+                ", qq='" + qq + '\'' +
+                ", price=" + price +
+                ", orderTypeEnum=" + orderTypeEnum.getOrderType() +
+                ", orderCount=" + orderCount +
+                ", operationCount=" + operationCount +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

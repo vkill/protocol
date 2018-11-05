@@ -91,4 +91,14 @@ public interface OperationService {
      * @return
      */
     String getUidByVideoId(OkHttpClient okHttpClient,String aweme_id) throws Exception;
+
+
+    /**
+     * 来自贾莛的点赞
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @param aweme_id
+     * @return
+     */
+    String digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
 }
