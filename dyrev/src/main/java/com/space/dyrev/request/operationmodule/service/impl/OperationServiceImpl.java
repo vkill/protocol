@@ -248,6 +248,7 @@ public class OperationServiceImpl implements OperationService {
 
 //            System.out.println(String.valueOf(msg1.get("captcha")));
             user.setCaptcha(String.valueOf(msg1.get("captcha")));
+
             user.setCaptcha(true);
         }else {
             int responseHeadersLength = responseHeaders.size();

@@ -71,7 +71,7 @@ public class DiggParams {
         result.put("sdk-version", "1");
         result.put("X-SS-REQ-TICKET", Long.toString(System.currentTimeMillis()));
         result.put("X-SS-TC", "0");
-        result.put("X-Tt-Token", dyUserEntity.getxTtToken());
+//        result.put("X-Tt-Token", dyUserEntity.getxTtToken());
         result.put("User-Agent",CommonParams.getUserAgent(dyUserEntity.getDevice().getDeviceType()));
         return result;
     }

@@ -22,7 +22,7 @@ public class CommonParams {
 
     public static final String AC = "wifi";
 
-    public static final String CHANNEL = "wandoujia";
+    public static final String CHANNEL = "meizu";
 
     public static final String AID = "1128";
 
