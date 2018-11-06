@@ -250,6 +250,7 @@ public class OperationServiceImpl implements OperationService {
             user.setCaptcha(String.valueOf(msg1.get("captcha")));
 
             user.setCaptcha(true);
+
         }else {
             int responseHeadersLength = responseHeaders.size();
             JSONObject jsonObject = new JSONObject();
@@ -261,9 +262,24 @@ public class OperationServiceImpl implements OperationService {
                     String []temp = headerValue.split(";")[0].split("=");
                     jsonObject.put(temp[0], temp[1]);
                 }
+
+//                logger.info("----- header = {} ----->  value = {}", headerName ,headerValue);
+                if (headerName.equals("X-Tt-Token")) {
+//                    String tmp = s.split(":")[1];
+//                    user.setxTtToken(tmp);
+                    user.setxTtToken(headerValue);
+//                    logger.info("----- X-Tt-Token ----- = {}", headerValue);
+                }
+
+                if (headerName.equals("X-Tt-Token-Sign")) {
+//                    user.setxTtTokenSign(s.split(":")[1]);
+                    user.setxTtTokenSign(headerValue);
+//                    logger.info("----- X-Tt-Token-Sign ----- = {}", headerValue);
+                }
             }
             user.setCaptcha(false);
             user.setUserCookies(jsonObject.toJSONString());
+            logger.info("----- 电话号码 = {}，登陆成功 -----", (user.getArea()+" "+user.getAccount()));
         }
 
         return user;
@@ -301,7 +317,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public String digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id) {
+    public boolean digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id) {
 
         String url = Digg270Params.constructUrl(dyUserEntity, aweme_id);
 
@@ -318,14 +334,32 @@ public class OperationServiceImpl implements OperationService {
         Call call = okHttpClient.newCall(request);
         try {
             Response response = call.execute();
-            System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
+            String string = GzipGetteer.uncompressToString(response.body().bytes());
+            JSONObject jsonObject = JSONObject.parseObject(string);
+
+            // TODO - 点赞的输出结果被我注释掉了
+//            logger.info(" ----- 帐号 = {} 点赞视频 = {} -----> 点赞结果 = {}", (dyUserEntity.getArea() + " " + dyUserEntity.getAccount()), aweme_id, string);
+
+            if (jsonObject.getInteger("status_code") == 0) {
+                // 请求成功
+
+                if (jsonObject.getInteger("is_digg") == 1) {
+                    // 点赞失败
+//                    logger.info(" ----- 帐号 = {}，点赞视频 = {} -----> 点赞结果 = {}", (dyUserEntity.getArea() + " " + dyUserEntity.getAccount()), aweme_id,"点赞失败");
+                    return false;
+                } else {
+                    // 点赞成功
+//                    logger.info(" ----- 帐号 = {} -----> 点赞结果 = {}", (dyUserEntity.getArea() + " " + dyUserEntity.getAccount()), "点赞成功");
+                    return true;
+                }
+
+            }
+
+//            System.out.println(GzipGetteer.uncompressToString(response.body().bytes() ,"utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return "1";
-
+        return false;
     }
 
     public static Request constructPost(RequestEntity requestEntity){

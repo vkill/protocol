@@ -357,13 +357,14 @@ public class DevRegisterServiceImpl implements DeviceRegisterService {
 
 
             // TODO logger remove
-            logger.info("----- 设备注册成功 ----- 结果 -> device = {}",resultJson.toJSONString());
+            logger.info("----- 设备注册成功 ----- 请求结果 -> device = {}",resultJson.toJSONString());
 
             deviceEntity.setInstallId(String.valueOf((long)resultJson.get("install_id")));
             deviceEntity.setDeviceId(String.valueOf((long)resultJson.get("device_id")));
             device.setTimeFirstSendInstallApp(String.valueOf(System.currentTimeMillis()));
 
-            System.out.println(deviceEntity.toString());
+            // TODO logger remove
+            logger.info("----- 设备注册成功 ----- 设备信息 -> device = {}", deviceEntity.toString());
 
         } catch (IOException e) {
             logger.error("设备注册失败");

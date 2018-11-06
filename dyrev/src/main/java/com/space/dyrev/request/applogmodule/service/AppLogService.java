@@ -44,5 +44,12 @@ public interface AppLogService {
     void service2AppLog(OkHttpClient okHttpClient, DeviceEntity deviceEntity);
 
 
+    /**
+     * 登陆后的applog
+     * @param okHttpClient
+     * @param dyUserEntity
+     */
+    void service2AppLog(OkHttpClient okHttpClient, DyUserEntity dyUserEntity);
+
     void Applog270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
 }

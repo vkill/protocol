@@ -24,7 +24,7 @@ public class SaveAcc {
         DeviceEntity deviceEntity = JSONObject.parseObject(DEVICE_STRING).toJavaObject(DeviceEntity.class);
         deviceEntity.setTimeFirstSendInstallApp("1540484693038");
         deviceEntity.setCarries("中国移动");
-        deviceEntity.setChannel("tengxun");
+        deviceEntity.setChannel("meizu");
         deviceEntity.setAccess("4g");
         deviceEntity.setSimICCid("89860116425560756729");
         return deviceEntity;

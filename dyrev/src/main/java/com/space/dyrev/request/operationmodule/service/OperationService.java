@@ -100,5 +100,5 @@ public interface OperationService {
      * @param aweme_id
      * @return
      */
-    String digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
+    boolean digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
 }

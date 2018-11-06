@@ -19,6 +19,25 @@ public class DateUtil {
     }
 
     /**
+     * 根据时间戳转成时间形式
+     * @param l
+     * @return
+     */
+    public static String getFormatFromTs(long l) {
+        Date date = new Date();
+        date.setTime(l);
+        SimpleDateFormat ft =
+                new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+        return ft.format(date);
+
+    }
+
+    public static void main(String[] args) {
+        long l = System.currentTimeMillis();
+        System.out.println(getFormatFromTs(l));
+        System.out.println(getFormatFromTs(l + 1000));
+    }
+    /**
      * 形式转换，根据format转成Date
      * @param time
      * @param format
@@ -56,12 +75,12 @@ public class DateUtil {
 
     }
 
-
-    public static void main(String[] args) {
-        String time = "2018-10-07 15:50:00";
-        String format = "yyyy-MM-dd HH:mm:ss";
-        long l = calculateDif(time, format);
-
-        System.out.println(l/(60));
-    }
+//
+//    public static void main(String[] args) {
+//        String time = "2018-10-07 15:50:00";
+//        String format = "yyyy-MM-dd HH:mm:ss";
+//        long l = calculateDif(time, format);
+//
+//        System.out.println(l/(60));
+//    }
 }

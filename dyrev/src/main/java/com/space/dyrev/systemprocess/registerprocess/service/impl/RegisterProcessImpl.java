@@ -224,6 +224,8 @@ public class RegisterProcessImpl implements RegisterProcess {
 //            String code = dyUserEntity.getCaptcha();
 //            String codes = codeDistinguishApi.parsingEnglishAndNumCode(code);
 //            dyUserEntity.setCaptcha(codes);
+
+
             dyUserEntity.setAccountStatus("1");
             dyUserRepository.save(dyUserEntity);
 //            System.out.println(dyUserEntity.getCaptcha());

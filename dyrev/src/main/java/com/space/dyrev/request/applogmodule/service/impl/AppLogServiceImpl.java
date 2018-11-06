@@ -99,8 +99,36 @@ public class AppLogServiceImpl implements AppLogService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void service2AppLog(OkHttpClient okHttpClient, DyUserEntity dyUserEntity) {
+        // log.snssdk.com/service/2/app_log/?
 
+        DeviceEntity deviceEntity = dyUserEntity.getDevice();
+
+        String url = Service2AppLogParams.constructUrl(deviceEntity);
+
+        Map header = Service2AppLogParams.constructHeader(dyUserEntity);
+
+        byte[] body = Service2AppLogParams.constructBody(deviceEntity);
+
+        RequestEntity req = new RequestEntity(RequestEnum.POST_OCT);
+        req.setUrl(url);
+        req.setOkHttpClient(okHttpClient);
+        req.setHeaders(header);
+        req.setBytesBody(body);
+        req.setBytesType("oct");
+
+        try {
+            Response response = OkHttpTool.handleHttpReq(req);
+            String result = GzipGetteer.uncompressToString(response.body().bytes());
+            // TODO applog输出呗我屏蔽掉了
+//            logger.info("请求AppLog 登陆后 ----- log.snssdk.com/service/2/app_log/? -----> json = {}", result);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
