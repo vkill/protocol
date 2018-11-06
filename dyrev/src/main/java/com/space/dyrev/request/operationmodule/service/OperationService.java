@@ -1,9 +1,12 @@
 package com.space.dyrev.request.operationmodule.service;
 
+import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
 import com.space.dyrev.util.httputil.OkHttpTool;
 import okhttp3.OkHttpClient;
+
+import java.util.ArrayList;
 
 /**
  *           .]]]]]]`.            .]]]]`           .]]]]].            .,]]]]]`        .]]]]`
@@ -101,4 +104,12 @@ public interface OperationService {
      * @return
      */
     boolean digg270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
+
+    /**
+     * 拉取视频的
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @return
+     */
+    ArrayList<String> feed(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity);
 }
