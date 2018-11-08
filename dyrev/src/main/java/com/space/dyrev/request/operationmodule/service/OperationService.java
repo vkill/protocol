@@ -1,5 +1,6 @@
 package com.space.dyrev.request.operationmodule.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.PhoneEntity;
@@ -112,4 +113,14 @@ public interface OperationService {
      * @return
      */
     ArrayList<String> feed(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity);
+
+    /**
+     * 拉取视频的 返回一串json
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @param deviceEntity
+     * @param type "json" 返回json格式的
+     * @return {"impr_id":"xxxxxxxxxxxxxxxx", "aweme_list":[{"author_id":"999999999","aweme_id":"999999999"},{{"authorId":"999999999","videoId":"999999999"}}]}
+     */
+    JSONObject feed(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity, String type);
 }

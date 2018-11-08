@@ -124,7 +124,28 @@ public class AppLogCommonParams {
     }
 
 
+    /**
+     * 根据type来判断是否第一次
+     * @param sessionId
+     * @param type "0"：第一次启动，"1"：不是第一次启动
+     * @return
+     */
+    public static JSONArray launch(String sessionId, String type) {
 
+        if (type.equals("0")) {
+            return launch(sessionId);
+        } else if (type.equals("1")){
+            long time = System.currentTimeMillis();
+            JSONArray jsonArray = new JSONArray();
+            JSONObject obj2 = new JSONObject();
+            obj2.put("datetime", DateUtil.getFormatFromTs(time + 1000));
+            obj2.put("session_id", sessionId);
+
+            jsonArray.add(obj2);
+            return jsonArray;
+        }
+        return null;
+    }
 
     /**
      * applog内的sessionID
@@ -145,8 +166,6 @@ public class AppLogCommonParams {
 
         jsonArray.add(obj1);
         jsonArray.add(obj2);
-
-
         return jsonArray;
     }
 
@@ -156,6 +175,7 @@ public class AppLogCommonParams {
         jsonObject.put("local_time", System.currentTimeMillis()/1000);
         return jsonObject;
     }
+
 
     public static void main(String[] args) {
 //        DeviceEntity device = SaveAcc.getDevice();

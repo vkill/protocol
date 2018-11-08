@@ -93,7 +93,7 @@ public class Service2AppLogParams {
      *
      * @return
      */
-    private static JSONObject constructJSONBody(DeviceEntity deviceEntity){
+    public static JSONObject constructJSONBody(DeviceEntity deviceEntity){
 
         String sessionId = CreateDevInfoUtil.createClientUdid();
         JSONObject jsonObject = new JSONObject();

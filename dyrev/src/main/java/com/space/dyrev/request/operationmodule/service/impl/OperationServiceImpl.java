@@ -1,5 +1,6 @@
 package com.space.dyrev.request.operationmodule.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
@@ -368,6 +369,100 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public ArrayList<String> feed(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity) {
+//        String _rticket = String.valueOf(System.currentTimeMillis());
+//        char []temp = _rticket.toCharArray();
+//        String ts = "";
+//        for(int i = 0;i < temp.length - 3;i++){
+//            ts += temp[i];
+//        }
+//        long temp_ts = Long.parseLong(ts);
+//        temp_ts ++;
+//        ts = String.valueOf(temp_ts);
+//
+//        String url = "https://aweme.snssdk.com/aweme/v1/feed/?type=0&max_cursor=0&min_cursor=" +
+//                "0&count=6&volume=0.0&pull_type=0&need_relieve_aweme=0&filter_warn=0&req_from=" +
+//                "enter_auto&is_cold_start=1&ts="+ts+"&app_type=normal&" +
+//                "os_api="+CommonParams.OS_API +"&device_type="+deviceEntity.getDeviceType()+"&device_platform=" +
+//                "android&ssmix=a&manifest_version_code=270&dpi="+deviceEntity.getDpi()+"&uuid="+deviceEntity.getUuid()+"&versi" +
+//                "on_code=270&app_name=aweme&version_name=2.7.0&openudid="+deviceEntity.getOpenudid()+"&device_i" +
+//                "d="+deviceEntity.getDeviceId()+"&resolution="+deviceEntity.getResolution()+"&os_versi" +
+//                "on="+CommonParams.OS_VERSION+"&language=zh&device_brand="+deviceEntity.getDeviceBrand()+"&ac=wifi&update_vers" +
+//                "ion_code=2702&aid=1128&ch" +
+//                "annel=meizu&_rticket="+_rticket+"&as=a1iosdfgh&cp=androide1";
+//
+//
+//        Map<String, String> header = new HashMap<String, String>();
+//        header.put("Accept-Encoding","gzip");
+//        header.put("Host","aweme.snssdk.com");
+//        header.put("Connection","Keep-Alive");
+//        //header.put("Cookie","install_id="+iid+";qh[360]=1;odin_tt="+odin_tt+";sid_guard="+sid_guard+";uid_tt="+uid_tt+";sid_tt="+sid_tt+";sessionid="+sessionid);
+//        header.put("User-Agent","okhttp/3.10.0.1");
+//        header.put("X-SS-REQ-TICKET",_rticket);
+//        header.put("sdk-version","1");
+//
+//        RequestEntity requestEntity = new RequestEntity(RequestEnum.GET);
+//        requestEntity.setOkHttpClient(okHttpClient);
+//        requestEntity.setUrl(url);
+//        requestEntity.setHeaders(header);
+//        String result = "";
+//        try {
+//            Response response = OkHttpTool.handleHttpReq(requestEntity);
+//            result = GzipGetteer.uncompressToString(response.body().bytes());
+//
+//            // 2018-11-07 修改输出格式，返回一个json
+//            // 返回格式 {"impr_id":"xxxxxxxxxxxxxxxx", "data":[{"authorId":"999999999","videoId":"999999999"},{{"authorId":"999999999","videoId":"999999999"}}]}
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        String result = feedString(okHttpClient, dyUserEntity, deviceEntity);
+
+        return getAwemeIdList(result);
+    }
+
+
+
+    @Override
+    public JSONObject feed(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity, String type) {
+        if (type.equals("json")) {
+
+            String resultStr = feedString(okHttpClient, dyUserEntity, deviceEntity);
+            JSONObject feed = JSONObject.parseObject(resultStr);
+            JSONObject result = new JSONObject();
+            if (feed.getInteger("status_code") == 0) {
+                // 拉取成功
+                result.put("impr_id", feed.getJSONObject("log_pb").getString("impr_id"));
+                JSONArray data = new JSONArray();
+                JSONArray list = feed.getJSONArray("aweme_list");
+                result.put("aweme_list", data);
+                for (int i = 0; i < list.size(); i++) {
+                    JSONObject aweme = (JSONObject) list.get(i);
+//                    logger.info("拉取某个视频信息 = {}", aweme);
+                    String uid = aweme.getJSONObject("author").getString("uid");
+                    String awemeId = aweme.getJSONObject("status").getString("aweme_id");
+//                    logger.info("拉取某个视频信息 作者id = {}，视频id = {}", uid, awemeId);
+                    JSONObject tmp = new JSONObject();
+                    tmp.put("author_id", uid);
+                    tmp.put("aweme_id", awemeId);
+                    data.add(tmp);
+                }
+                return result;
+            }
+//            logger.info(" feed 拉取视频结果 = {}", feed);
+        }
+
+        //{"impr_id":"xxxxxxxxxxxxxxxx", "aweme_list":[{"authorId":"999999999","aweme_id":"999999999"},{{"authorId":"999999999","videoId":"999999999"}}]}
+        return null;
+    }
+
+    /**
+     * 公共的feed
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @param deviceEntity
+     * @return
+     */
+    private String feedString(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity) {
         String _rticket = String.valueOf(System.currentTimeMillis());
         char []temp = _rticket.toCharArray();
         String ts = "";
@@ -407,11 +502,16 @@ public class OperationServiceImpl implements OperationService {
         try {
             Response response = OkHttpTool.handleHttpReq(requestEntity);
             result = GzipGetteer.uncompressToString(response.body().bytes());
+
+            return result;
+            // 2018-11-07 修改输出格式，返回一个json
+            // 返回格式 {"impr_id":"xxxxxxxxxxxxxxxx", "data":[{"authorId":"999999999","videoId":"999999999"},{{"authorId":"999999999","videoId":"999999999"}}]}
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
 
-        return getAwemeIdList(result);
     }
 
     public static Request constructPost(RequestEntity requestEntity){

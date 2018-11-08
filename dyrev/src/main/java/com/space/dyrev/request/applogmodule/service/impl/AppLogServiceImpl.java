@@ -1,8 +1,10 @@
 package com.space.dyrev.request.applogmodule.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import com.space.dyrev.commonentity.RequestEntity;
+import com.space.dyrev.encrypt.TTEncrypt;
 import com.space.dyrev.enumeration.RequestEnum;
 import com.space.dyrev.request.applogmodule.params.Applog270Params;
 import com.space.dyrev.request.applogmodule.params.Service2AppLogParams;
@@ -106,12 +108,42 @@ public class AppLogServiceImpl implements AppLogService {
         // log.snssdk.com/service/2/app_log/?
 
         DeviceEntity deviceEntity = dyUserEntity.getDevice();
+//
+//        String url = Service2AppLogParams.constructUrl(deviceEntity);
+//
+//        Map header = Service2AppLogParams.constructHeader(dyUserEntity);
+//
+        JSONObject body = Service2AppLogParams.constructJSONBody(deviceEntity);
+        service2AppLog(okHttpClient, dyUserEntity, body);
+//
+//        RequestEntity req = new RequestEntity(RequestEnum.POST_OCT);
+//        req.setUrl(url);
+//        req.setOkHttpClient(okHttpClient);
+//        req.setHeaders(header);
+//        req.setBytesBody(body);
+//        req.setBytesType("oct");
+//
+//        try {
+//            Response response = OkHttpTool.handleHttpReq(req);
+//            String result = GzipGetteer.uncompressToString(response.body().bytes());
+////            logger.info("请求AppLog 登陆后 ----- log.snssdk.com/service/2/app_log/? -----> json = {}", result);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    @Override
+    public void service2AppLog(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, JSONObject jsonBody) {
+        DeviceEntity deviceEntity = dyUserEntity.getDevice();
 
         String url = Service2AppLogParams.constructUrl(deviceEntity);
 
         Map header = Service2AppLogParams.constructHeader(dyUserEntity);
 
-        byte[] body = Service2AppLogParams.constructBody(deviceEntity);
+//        byte[] body = Service2AppLogParams.constructBody(deviceEntity);
+        byte[] compress = GzipGetteer.compress(jsonBody.toJSONString());
+        byte[] body = TTEncrypt.encode(compress);
 
         RequestEntity req = new RequestEntity(RequestEnum.POST_OCT);
         req.setUrl(url);
@@ -124,7 +156,7 @@ public class AppLogServiceImpl implements AppLogService {
             Response response = OkHttpTool.handleHttpReq(req);
             String result = GzipGetteer.uncompressToString(response.body().bytes());
             // TODO applog输出呗我屏蔽掉了
-//            logger.info("请求AppLog 登陆后 ----- log.snssdk.com/service/2/app_log/? -----> json = {}", result);
+            logger.info("自定义构造的applog发送结果 -----> json = {}", result);
 
         } catch (IOException e) {
             e.printStackTrace();

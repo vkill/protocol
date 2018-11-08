@@ -1,5 +1,6 @@
 package com.space.dyrev.request.applogmodule.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.space.dyrev.commonentity.DeviceEntity;
 import com.space.dyrev.commonentity.DyUserEntity;
 import okhttp3.OkHttpClient;
@@ -50,6 +51,8 @@ public interface AppLogService {
      * @param dyUserEntity
      */
     void service2AppLog(OkHttpClient okHttpClient, DyUserEntity dyUserEntity);
+
+    void service2AppLog(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, JSONObject body);
 
     void Applog270(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String aweme_id);
 }
