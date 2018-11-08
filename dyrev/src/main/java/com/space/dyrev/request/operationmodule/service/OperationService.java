@@ -123,4 +123,13 @@ public interface OperationService {
      * @return {"impr_id":"xxxxxxxxxxxxxxxx", "aweme_list":[{"author_id":"999999999","aweme_id":"999999999"},{{"authorId":"999999999","videoId":"999999999"}}]}
      */
     JSONObject feed(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, DeviceEntity deviceEntity, String type);
+
+
+    /**
+     * 刷浏览量的请求
+     * @param okHttpClient
+     * @param dyUserEntity
+     * @param awemeId
+     */
+    void BrowseVideo(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String awemeId);
 }

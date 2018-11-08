@@ -455,6 +455,37 @@ public class OperationServiceImpl implements OperationService {
         return null;
     }
 
+    @Override
+    public void BrowseVideo(OkHttpClient okHttpClient, DyUserEntity dyUserEntity, String awemeId) {
+
+        String url = BrowseVideo.constructUrl(dyUserEntity);
+
+        Map header = BrowseVideo.constructHeader(dyUserEntity);
+
+        Map body = BrowseVideo.constructBody(dyUserEntity, awemeId);
+
+        RequestEntity req = new RequestEntity(RequestEnum.POST_FORM);
+
+        req.setOkHttpClient(okHttpClient);
+
+        req.setUrl(url);
+
+        req.setHeaders(header);
+
+        req.setBody(body);
+
+        String result = "";
+        Call call = okHttpClient.newCall(constructPost(req));
+        try {
+            Response response = call.execute();
+            result = GzipGetteer.uncompressToString(response.body().bytes());
+            //返回结果示例：{"status_code":0,"extra":{"now":1541659384000},"log_pb":{"impr_id":"201811081443040100180260121585E3"}}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     /**
      * 公共的feed
      * @param okHttpClient
